@@ -1,4 +1,12 @@
 @echo off
 pushd "%~dp0"
-tools\NAnt\NAnt %*
+call :main %*
 popd
+goto :EOF
+
+:main
+    dotnet --info ^
+ && dotnet restore ^
+ && dotnet build --no-restore -c Debug ^
+ && dotnet build --no-restore -c Release
+goto :EOF
