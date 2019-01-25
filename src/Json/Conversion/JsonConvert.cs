@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -37,10 +37,10 @@ namespace Jayrock.Json.Conversion
     public delegate ImportContext ImportContextFactoryHandler();
 
     /// <summary>
-    /// Provides methods for converting between Common Language Runtime 
+    /// Provides methods for converting between Common Language Runtime
     /// (CLR) types and JSON types.
     /// </summary>
-    
+
     public sealed class JsonConvert
     {
         private static readonly ExportContextFactoryHandler _defaultExportContextFactoryHandler;
@@ -62,12 +62,12 @@ namespace Jayrock.Json.Conversion
 
             CreateExportContext().Export(value, writer);
         }
-        
+
         public static void Export(object value, TextWriter writer)
         {
             if (writer == null)
                 throw new ArgumentNullException("writer");
-            
+
             Export(value, JsonText.CreateWriter(writer));
         }
 
@@ -75,10 +75,10 @@ namespace Jayrock.Json.Conversion
         {
             if (sb == null)
                 throw new ArgumentNullException("sb");
-            
+
             Export(value, new StringWriter(sb));
         }
-        
+
         public static string ExportToString(object value)
         {
             StringBuilder sb = new StringBuilder();
@@ -100,7 +100,7 @@ namespace Jayrock.Json.Conversion
         {
             return Import(AnyType.Value, reader);
         }
-        
+
         public static object Import(Type type, string text)
         {
             return Import(type, new StringReader(text));

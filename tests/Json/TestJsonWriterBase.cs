@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -33,7 +33,7 @@ namespace Jayrock.Json
     public class TestJsonWriterBase
     {
         private JsonWriter _writer;
-        
+
         [ SetUp ]
         public void Init()
         {
@@ -45,7 +45,7 @@ namespace Jayrock.Json
         {
             Assert.AreEqual(0, _writer.Depth);
         }
-       
+
         [ Test ]
         public void DepthIncreasesInsideObject()
         {
@@ -72,7 +72,7 @@ namespace Jayrock.Json
             _writer.WriteEndArray();
             Assert.AreEqual(0, _writer.Depth);
         }
-        
+
         [ Test, ExpectedException(typeof(JsonException)) ]
         public void CannotWriteObjectAfterRoot()
         {
@@ -109,7 +109,7 @@ namespace Jayrock.Json
             _writer.WriteStartArray();
             _writer.WriteEndObject();
         }
-        
+
         [ Test, ExpectedException(typeof(JsonException)) ]
         public void CannotWriteStringWithoutMember()
         {
@@ -130,14 +130,14 @@ namespace Jayrock.Json
             _writer.WriteStartObject();
             _writer.WriteNumber(123);
         }
-        
+
         [ Test, ExpectedException(typeof(JsonException)) ]
         public void CannotWriteBooleanWithoutMember()
         {
             _writer.WriteStartObject();
             _writer.WriteBoolean(true);
         }
-        
+
         [ Test, ExpectedException(typeof(JsonException)) ]
         public void CannotWriteNestedObjectWithoutMember()
         {
@@ -172,14 +172,14 @@ namespace Jayrock.Json
             _writer.WriteStartArray();
             _writer.WriteBoolean(true);
         }
-        
+
         [ Test ]
         public void WriteNullInsideArray()
         {
             _writer.WriteStartArray();
             _writer.WriteNull();
         }
-     
+
         [ Test ]
         public void WriteObjectMemberString()
         {
@@ -203,7 +203,7 @@ namespace Jayrock.Json
             _writer.WriteMember("member");
             _writer.WriteBoolean(true);
         }
-        
+
         [ Test ]
         public void WriteObjectMemberNull()
         {
@@ -361,17 +361,17 @@ namespace Jayrock.Json
         {
             _writer.WriteStartObject();
             Assert.AreEqual(0, _writer.Index);
-            
+
             _writer.WriteMember("m1");
             Assert.AreEqual(0, _writer.Index);
             _writer.WriteNull();
             Assert.AreEqual(1, _writer.Index);
-            
+
             _writer.WriteMember("m2");
             Assert.AreEqual(1, _writer.Index);
             _writer.WriteString("foo");
             Assert.AreEqual(2, _writer.Index);
-            
+
             _writer.WriteMember("m3");
             Assert.AreEqual(2, _writer.Index);
             _writer.WriteNumber(42);
@@ -381,7 +381,7 @@ namespace Jayrock.Json
             Assert.AreEqual(3, _writer.Index);
             _writer.WriteBoolean(true);
             Assert.AreEqual(4, _writer.Index);
-            
+
             _writer.WriteEndObject();
             Assert.AreEqual(-1, _writer.Index);
         }
@@ -390,21 +390,21 @@ namespace Jayrock.Json
         public void IndexingAcrossNestings()
         {
             _writer.WriteStartObject();
-            
+
             _writer.WriteMember("m1");
             _writer.WriteNull();
             Assert.AreEqual(1, _writer.Index);
-            
+
             _writer.WriteMember("m2");
             _writer.WriteStartArray();
             Assert.AreEqual(0, _writer.Index);
-        
+
             _writer.WriteNull();
             Assert.AreEqual(1, _writer.Index);
 
             _writer.WriteNull();
             Assert.AreEqual(2, _writer.Index);
-            
+
             _writer.WriteNull();
             Assert.AreEqual(3, _writer.Index);
 
@@ -425,7 +425,7 @@ namespace Jayrock.Json
             _writer.MaxDepth = 42;
             Assert.AreEqual(42, _writer.MaxDepth);
         }
-        
+
         [ Test ]
         [ ExpectedException(typeof(Exception)) ]
         public void CannotExceedMaxDepth()

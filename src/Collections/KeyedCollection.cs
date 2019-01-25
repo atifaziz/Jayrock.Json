@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -56,7 +56,7 @@ namespace Jayrock.Collections
         {
             if (key == null)
                 throw new ArgumentNullException("key");
-            
+
             return ValueByKey[key];
         }
 
@@ -64,7 +64,7 @@ namespace Jayrock.Collections
         {
             if (key == null)
                 throw new ArgumentNullException("key");
-            
+
             return ValueByKey.ContainsKey(key);
         }
 
@@ -74,10 +74,10 @@ namespace Jayrock.Collections
                 throw new ArgumentNullException("key");
 
             object value = GetByKey(key);
-            
+
             if (value == null)
                 return false;
-            
+
             List.Remove(value);
             return true;
         }
@@ -85,7 +85,7 @@ namespace Jayrock.Collections
         protected override void OnValidate(object value)
         {
             base.OnValidate(value);
-            
+
             if (KeyFromValue(value) == null)
                 throw new ArgumentException(null, "value");
         }
@@ -119,7 +119,7 @@ namespace Jayrock.Collections
         {
             if (keys == null)
                 throw new ArgumentNullException("keys");
-            
+
             if (keys.Rank != 1)
                 throw new ArgumentException(null, "keys");
 

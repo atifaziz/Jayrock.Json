@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -34,7 +34,7 @@ namespace Jayrock.Json.Conversion
     #endregion
 
     /// <summary>
-    /// Specifies the default value for a property. At export time, if the 
+    /// Specifies the default value for a property. At export time, if the
     /// property value compares equal to the specified default value then its
     /// JSON representation is skipped.
     /// </summary>
@@ -59,10 +59,10 @@ namespace Jayrock.Json.Conversion
         public JsonDefaultValueAttribute(short value) : this((object) value) {}
         public JsonDefaultValueAttribute(byte value) : this((object) value) {}
         public JsonDefaultValueAttribute(char value) : this((object) value) {}
- 
+
         public JsonDefaultValueAttribute(Type type, string value) :
             this(TypeDescriptor.GetConverter(type).ConvertFromInvariantString(value)) {}
-        
+
         public object Value
         {
             get { return _value; }
@@ -71,7 +71,7 @@ namespace Jayrock.Json.Conversion
 
         void IPropertyDescriptorCustomization.Apply(PropertyDescriptor property)
         {
-            if (property == null) 
+            if (property == null)
                 throw new ArgumentNullException("property");
 
             if (Value == null)
@@ -101,7 +101,7 @@ namespace Jayrock.Json.Conversion
                 if (source == null) throw new ArgumentNullException("source");
 
                 object value = _property.GetValue(source);
-                
+
                 if (JsonNull.LogicallyEquals(value) || value.Equals(_defaultValue))
                     return;
 

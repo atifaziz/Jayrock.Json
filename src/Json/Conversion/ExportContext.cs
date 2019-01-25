@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -32,7 +32,7 @@ namespace Jayrock.Json.Conversion
     using Jayrock.Reflection;
 
     #endregion
-    
+
     [ Serializable ]
     public class ExportContext
     {
@@ -78,9 +78,9 @@ namespace Jayrock.Json.Conversion
 
             if (exporter != null)
                 return exporter;
-            
+
             exporter = StockExporters[type];
-            
+
             if (exporter == null)
                 exporter = FindCompatibleExporter(type);
 
@@ -89,7 +89,7 @@ namespace Jayrock.Json.Conversion
                 Register(exporter);
                 return exporter;
             }
-            
+
             return null;
         }
 
@@ -99,7 +99,7 @@ namespace Jayrock.Json.Conversion
             {
                 if (_items == null)
                     _items = new Hashtable();
-                
+
                 return _items;
             }
         }
@@ -111,18 +111,18 @@ namespace Jayrock.Json.Conversion
             if (typeof(IJsonExportable).IsAssignableFrom(type))
                 return new ExportAwareExporter(type);
 
-            #if !NET_1_0 && !NET_1_1 
+            #if !NET_1_0 && !NET_1_1
 
             if (Reflector.IsConstructionOfNullable(type))
                 return new NullableExporter(type);
 
             #endif
 
-            #if !NET_1_0 && !NET_1_1 && !NET_2_0 
-            
+            #if !NET_1_0 && !NET_1_1 && !NET_2_0
+
             if (Reflector.IsTupleFamily(type))
                 return new TupleExporter(type);
-            
+
             #endif
 
             if (type.IsClass && type != typeof(object))
@@ -137,7 +137,7 @@ namespace Jayrock.Json.Conversion
 
             if (typeof(IEnumerable).IsAssignableFrom(type))
                 return new EnumerableExporter(type);
-            
+
             if ((type.IsPublic || type.IsNestedPublic) &&
                 !type.IsPrimitive && !type.IsEnum &&
                 (type.IsValueType || type.GetConstructors().Length > 0))
@@ -165,21 +165,21 @@ namespace Jayrock.Json.Conversion
             if (exporter == null)
             {
                 exporter = StockExporters[baseType];
-                
+
                 if (exporter == null)
                     return FindBaseExporter(baseType.BaseType, actualType);
             }
 
             return (IExporter) Activator.CreateInstance(exporter.GetType(), new object[] { actualType });
         }
-        
+
         private ExporterCollection Exporters
         {
             get
             {
                 if (_exporters == null)
                     _exporters = new ExporterCollection();
-                
+
                 return _exporters;
             }
         }
@@ -218,7 +218,7 @@ namespace Jayrock.Json.Conversion
 
                     exporters.Add(new BigIntegerExporter());
                     exporters.Add(new ExpandoObjectExporter());
-                    
+
                     #endif // !NET_1_0 && !NET_1_1 && !NET_2_0
 
                     IList typeList = null; // TODO (IList)ConfigurationSettings.GetConfig("jayrock/json.conversion.exporters");
@@ -231,7 +231,7 @@ namespace Jayrock.Json.Conversion
 
                     _stockExporters = exporters;
                 }
-                
+
                 return _stockExporters;
             }
         }

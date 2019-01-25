@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -53,7 +53,7 @@ namespace Jayrock.Json.Conversion.Converters
                 throw new ArgumentNullException("reader");
 
             string text = reader.Text;
-            
+
             try
             {
                 return ReadReturning(reader, ConvertFromString(text));
@@ -80,10 +80,10 @@ namespace Jayrock.Json.Conversion.Converters
             return new JsonException(string.Format("Error importing JSON Number {0} as {1}.", text, OutputType.FullName), e);
         }
     }
-    
+
     public sealed class ByteImporter : NumberImporterBase
     {
-        public ByteImporter() : 
+        public ByteImporter() :
             base(typeof(byte)) {}
 
         protected override object ConvertFromString(string s)
@@ -94,7 +94,7 @@ namespace Jayrock.Json.Conversion.Converters
 
     public sealed class Int16Importer : NumberImporterBase
     {
-        public Int16Importer() : 
+        public Int16Importer() :
             base(typeof(short)) {}
 
         protected override object ConvertFromString(string s)
@@ -105,7 +105,7 @@ namespace Jayrock.Json.Conversion.Converters
 
     public sealed class Int32Importer : NumberImporterBase
     {
-        public Int32Importer() : 
+        public Int32Importer() :
             base(typeof(int)) {}
 
         protected override object ConvertFromString(string s)
@@ -116,7 +116,7 @@ namespace Jayrock.Json.Conversion.Converters
 
     public sealed class Int64Importer : NumberImporterBase
     {
-        public Int64Importer() : 
+        public Int64Importer() :
             base(typeof(long)) {}
 
         protected override object ConvertFromString(string s)
@@ -127,7 +127,7 @@ namespace Jayrock.Json.Conversion.Converters
 
     public sealed class SingleImporter : NumberImporterBase
     {
-        public SingleImporter() : 
+        public SingleImporter() :
             base(typeof(float)) {}
 
         protected override object ConvertFromString(string s)
@@ -138,7 +138,7 @@ namespace Jayrock.Json.Conversion.Converters
 
     public sealed class DoubleImporter : NumberImporterBase
     {
-        public DoubleImporter() : 
+        public DoubleImporter() :
             base(typeof(double)) {}
 
         protected override object ConvertFromString(string s)
@@ -149,7 +149,7 @@ namespace Jayrock.Json.Conversion.Converters
 
     public sealed class DecimalImporter : NumberImporterBase
     {
-        public DecimalImporter() : 
+        public DecimalImporter() :
             base(typeof(decimal)) {}
 
         protected override object ConvertFromString(string s)

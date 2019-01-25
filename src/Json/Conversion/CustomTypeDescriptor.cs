@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -30,13 +30,13 @@ namespace Jayrock.Json.Conversion
     using System.Diagnostics;
     using System.Globalization;
     using System.Reflection;
-    
+
     //
     // Types from System.ComponentModel must be imported explicitly because
-    // .NET Framework 2.0 also contains a CustomTypeDescriptor in 
+    // .NET Framework 2.0 also contains a CustomTypeDescriptor in
     // System.ComponentModel.
     //
-    
+
     using ICustomTypeDescriptor = System.ComponentModel.ICustomTypeDescriptor;
     using PropertyDescriptorCollection = System.ComponentModel.PropertyDescriptorCollection;
     using PropertyDescriptor = System.ComponentModel.PropertyDescriptor;
@@ -44,9 +44,9 @@ namespace Jayrock.Json.Conversion
     using TypeConverter = System.ComponentModel.TypeConverter;
     using EventDescriptor = System.ComponentModel.EventDescriptor;
     using EventDescriptorCollection = System.ComponentModel.EventDescriptorCollection;
-    
+
     #endregion
-    
+
     /// <summary>
     /// Provides an <see cref="ICustomTypeDescriptor"/> implementation on top of the
     /// public read/write fields and properties of a given type.
@@ -56,7 +56,7 @@ namespace Jayrock.Json.Conversion
     {
         private readonly PropertyDescriptorCollection _properties;
 
-        public CustomTypeDescriptor(Type type) : 
+        public CustomTypeDescriptor(Type type) :
             this(type, null) {}
 
         public CustomTypeDescriptor(Type type, MemberInfo[] members) :
@@ -67,28 +67,28 @@ namespace Jayrock.Json.Conversion
 
         private CustomTypeDescriptor(Type type, bool isAnonymousClass, MemberInfo[] members, string[] names)
         {
-            if (type == null) 
+            if (type == null)
                 throw new ArgumentNullException("type");
 
             // TODO Remove dependency on JsonIgnore & JsonExport
             // This class should not have any JSON specifics.
 
             //
-            // No members supplied? Get all public, instance-level fields and 
+            // No members supplied? Get all public, instance-level fields and
             // properties of the type that are not marked with the JsonIgnore
             // attribute.
             //
-            
+
             if (members == null)
             {
                 const BindingFlags bindings = BindingFlags.Instance | BindingFlags.Public;
                 FieldInfo[] fields = type.GetFields(bindings);
                 PropertyInfo[] properties = type.GetProperties(bindings);
-                
+
                 //
                 // Filter out members marked with JsonIgnore attribute.
                 //
-                
+
                 ArrayList memberList = new ArrayList(fields.Length + properties.Length);
                 memberList.AddRange(fields);
                 memberList.AddRange(properties);
@@ -96,20 +96,20 @@ namespace Jayrock.Json.Conversion
                 for (int i = 0; i < memberList.Count; i++)
                 {
                     MemberInfo member = (MemberInfo) memberList[i];
-                    
+
                     if (!member.IsDefined(typeof(JsonIgnoreAttribute), true))
                         continue;
-                    
+
                     memberList.RemoveAt(i--);
                 }
-                
+
                 members = (MemberInfo[]) memberList.ToArray(typeof(MemberInfo));
             }
-                        
+
             PropertyDescriptorCollection logicalProperties = new PropertyDescriptorCollection(null);
             bool immutable = true;
             int index = 0;
-            
+
             foreach (MemberInfo member in members)
             {
                 FieldInfo field = member as FieldInfo;
@@ -120,10 +120,10 @@ namespace Jayrock.Json.Conversion
                 if (field != null)
                 {
                     //
-                    // Add public fields that are not read-only and not 
+                    // Add public fields that are not read-only and not
                     // constant literals.
                     //
-            
+
                     if (field.DeclaringType != type && field.ReflectedType != type)
                         throw new ArgumentException(null, "members");
 
@@ -136,17 +136,17 @@ namespace Jayrock.Json.Conversion
                 else
                 {
                     PropertyInfo property = member as PropertyInfo;
-                    
+
                     if (property == null)
                         throw new ArgumentException(null, "members");
 
                     //
                     // Add public properties that can be read and modified.
-                    // If property is read-only yet has the JsonExport 
+                    // If property is read-only yet has the JsonExport
                     // attribute applied then include it anyhow (assuming
                     // that the type author probably has customizations
-                    // that know how to deal with the sceanrio more 
-                    // accurately). What's more, if the type is anonymous 
+                    // that know how to deal with the sceanrio more
+                    // accurately). What's more, if the type is anonymous
                     // then the rule that the proerty must be writeable is
                     // also bypassed.
                     //
@@ -161,9 +161,9 @@ namespace Jayrock.Json.Conversion
                         property.GetIndexParameters().Length == 0)
                     {
                         //
-                        // Properties of an anonymous class will always use 
-                        // their original property name so that no 
-                        // transformation (like auto camel-casing) is 
+                        // Properties of an anonymous class will always use
+                        // their original property name so that no
+                        // transformation (like auto camel-casing) is
                         // applied. The rationale for the exception here is
                         // that since the user does not have a chance to
                         // decorate properties of an anonymous class with
@@ -171,11 +171,11 @@ namespace Jayrock.Json.Conversion
                         // can be implemented.
                         //
 
-                        descriptor = new TypePropertyDescriptor(property, 
+                        descriptor = new TypePropertyDescriptor(property,
                             isAnonymousClass ? Mask.EmptyString(name, property.Name) : name);
                     }
                 }
-                
+
                 if (descriptor != null)
                 {
                     descriptor.ApplyCustomizations();
@@ -188,10 +188,10 @@ namespace Jayrock.Json.Conversion
 
                     logicalProperties.Add(descriptor);
                 }
-                
+
                 index++;
             }
-                
+
             _properties = logicalProperties;
         }
 
@@ -208,15 +208,15 @@ namespace Jayrock.Json.Conversion
         {
             if (field == null)
                 throw new ArgumentNullException("field");
-            
+
             return new TypeFieldDescriptor(field, field.Name);
         }
-            
+
         public static PropertyDescriptor CreateProperty(PropertyInfo property)
         {
             if (property == null)
                 throw new ArgumentNullException("property");
-            
+
             return new TypePropertyDescriptor(property, property.Name);
         }
 
@@ -231,16 +231,16 @@ namespace Jayrock.Json.Conversion
         }
 
         /// <summary>
-        /// Forward-compatible way to see if the given type is an anonymous 
-        /// class (introduced since C# 3.0). 
+        /// Forward-compatible way to see if the given type is an anonymous
+        /// class (introduced since C# 3.0).
         /// </summary>
         /// <remarks>
-        /// There is no sure shot method so we have rely to rely on a 
+        /// There is no sure shot method so we have rely to rely on a
         /// heuristic approach by looking for a few known characteristics.
-        /// Note also that we take a "duck" approach to look for the 
-        /// CompilerGenerated attribute under .NET Framework 1.x, which does 
-        /// not seem like an appaling idea considering that the C# compiler 
-        /// does the same with ExtensionAttribute when it comes to extension 
+        /// Note also that we take a "duck" approach to look for the
+        /// CompilerGenerated attribute under .NET Framework 1.x, which does
+        /// not seem like an appaling idea considering that the C# compiler
+        /// does the same with ExtensionAttribute when it comes to extension
         /// methods.
         /// </remarks>
         ///
@@ -351,32 +351,32 @@ namespace Jayrock.Json.Conversion
             private Type _propertyType;
             private IPropertyImpl _impl;
             private ServiceContainer _services;
-            
-            protected TypeMemberDescriptor(MemberInfo member, string name , Type propertyType) : 
+
+            protected TypeMemberDescriptor(MemberInfo member, string name , Type propertyType) :
                 base(ChooseName(name, member.Name), null)
             {
                 Debug.Assert(propertyType != null);
-                
+
                 _impl = this;
                 _propertyType = propertyType;
             }
 
             protected abstract MemberInfo Member { get; }
-                
+
             public override bool Equals(object obj)
             {
                 TypeMemberDescriptor other = obj as TypeMemberDescriptor;
                 return other != null && other.Member.Equals(Member);
             }
-            
+
             public override int GetHashCode() { return Member.GetHashCode(); }
             public override void ResetValue(object component) {}
             public override bool CanResetValue(object component) { return false; }
             public override bool ShouldSerializeValue(object component) { return true; }
             public override Type ComponentType { get { return Member.DeclaringType; } }
-                
-            public override Type PropertyType 
-            { 
+
+            public override Type PropertyType
+            {
                 get { return _propertyType; }
             }
 
@@ -389,7 +389,7 @@ namespace Jayrock.Json.Conversion
             {
                 if (IsReadOnly)
                     throw new NotSupportedException();
-                
+
                 _impl.SetValue(component, value);
             }
 
@@ -432,7 +432,7 @@ namespace Jayrock.Json.Conversion
             {
                 if (type == null)
                     throw new ArgumentNullException("type");
-                
+
                 _propertyType = type;
             }
 
@@ -440,7 +440,7 @@ namespace Jayrock.Json.Conversion
             {
                 if (impl == null)
                     throw new ArgumentNullException("impl");
-                
+
                 IPropertyImpl baseImpl = _impl;
                 _impl = impl;
                 return baseImpl;
@@ -449,7 +449,7 @@ namespace Jayrock.Json.Conversion
             internal void ApplyCustomizations()
             {
                 IPropertyDescriptorCustomization[] customizations = (IPropertyDescriptorCustomization[]) Member.GetCustomAttributes(typeof(IPropertyDescriptorCustomization), true);
-                
+
                 if (customizations == null)
                     return;
 
@@ -461,7 +461,7 @@ namespace Jayrock.Json.Conversion
             {
                 if (Mask.NullString(propsedName).Length > 0)
                     return propsedName;
-                
+
                 return ToCamelCase(baseName);
             }
 
@@ -469,7 +469,7 @@ namespace Jayrock.Json.Conversion
             {
                 if (s == null || s.Length == 0)
                     return s;
-                
+
                 return char.ToLower(s[0], CultureInfo.InvariantCulture) + s.Substring(1);
             }
 
@@ -479,7 +479,7 @@ namespace Jayrock.Json.Conversion
                 {
                     if (_services == null)
                         _services = new ServiceContainer();
-                    
+
                     return _services;
                 }
             }
@@ -535,7 +535,7 @@ namespace Jayrock.Json.Conversion
         {
             private readonly FieldInfo _field;
 
-            public TypeFieldDescriptor(FieldInfo field, string name) : 
+            public TypeFieldDescriptor(FieldInfo field, string name) :
                 base(field, name, field.FieldType)
             {
                 _field = field;
@@ -556,13 +556,13 @@ namespace Jayrock.Json.Conversion
                 return _field.GetValue(component);
             }
 
-            protected override void SetValueImpl(object component, object value) 
+            protected override void SetValueImpl(object component, object value)
             {
-                _field.SetValue(component, value); 
+                _field.SetValue(component, value);
                 OnValueChanged(component, EventArgs.Empty);
             }
         }
-            
+
         /// <summary>
         /// A <see cref="PropertyDescriptor"/> implementation around
         /// <see cref="PropertyInfo"/>.
@@ -572,7 +572,7 @@ namespace Jayrock.Json.Conversion
         {
             private readonly PropertyInfo _property;
 
-            public TypePropertyDescriptor(PropertyInfo property, string name) : 
+            public TypePropertyDescriptor(PropertyInfo property, string name) :
                 base(property, name, property.PropertyType)
             {
                 _property = property;
@@ -593,9 +593,9 @@ namespace Jayrock.Json.Conversion
                 return _property.GetValue(component, null);
             }
 
-            protected override void SetValueImpl(object component, object value) 
+            protected override void SetValueImpl(object component, object value)
             {
-                _property.SetValue(component, value, null); 
+                _property.SetValue(component, value, null);
                 OnValueChanged(component, EventArgs.Empty);
             }
         }

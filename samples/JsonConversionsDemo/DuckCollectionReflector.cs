@@ -20,7 +20,7 @@ namespace JsonConversionsDemo
         {
             if (type == null) throw new ArgumentNullException("type");
 
-            MemberInfo[] indexers = type.FindMembers(MemberTypes.Property, 
+            MemberInfo[] indexers = type.FindMembers(MemberTypes.Property,
                 BindingFlags.Instance | BindingFlags.Public, IsIndexer, null);
 
             if (indexers.Length == 0)
@@ -35,7 +35,7 @@ namespace JsonConversionsDemo
                 return false;
 
             Debug.Assert(m is PropertyInfo);
-            
+
             PropertyInfo property = (PropertyInfo) m;
             return property.CanRead && property.GetIndexParameters().Length == 1;
         }

@@ -13,7 +13,7 @@ namespace JsonConversionsDemo
     #endregion
 
     /// <summary>
-    /// DSL-ish facade for building custom types and registering them for 
+    /// DSL-ish facade for building custom types and registering them for
     /// importing and exporting JSON Data. It makes <see cref="CustomTypeDescriptor"/>
     /// construction a little more palatable.
     /// </summary>
@@ -82,7 +82,7 @@ namespace JsonConversionsDemo
             {
                 if (_customType == null)
                     _customType = new CustomTypeDescriptor(_type, _members.ToArray(), _names.ToArray());
-                
+
                 return _customType;
             }
 

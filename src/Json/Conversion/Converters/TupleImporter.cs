@@ -16,11 +16,11 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
-#if !NET_1_0 && !NET_1_1 && !NET_2_0 
+#if !NET_1_0 && !NET_1_1 && !NET_2_0
 
 namespace Jayrock.Json.Conversion.Converters
 {
@@ -52,22 +52,22 @@ namespace Jayrock.Json.Conversion.Converters
 
         protected override object ImportFromBoolean(ImportContext context, JsonReader reader)
         {
-            return _single 
-                 ? _importer(context, reader) 
+            return _single
+                 ? _importer(context, reader)
                  : base.ImportFromBoolean(context, reader);
         }
 
         protected override object ImportFromNumber(ImportContext context, JsonReader reader)
         {
-            return _single 
-                 ? _importer(context, reader) 
+            return _single
+                 ? _importer(context, reader)
                  : base.ImportFromNumber(context, reader);
         }
 
         protected override object ImportFromString(ImportContext context, JsonReader reader)
         {
-            return _single 
-                 ? _importer(context, reader) 
+            return _single
+                 ? _importer(context, reader)
                  : base.ImportFromString(context, reader);
         }
 
@@ -84,8 +84,8 @@ namespace Jayrock.Json.Conversion.Converters
 
         protected override object ImportFromObject(ImportContext context, JsonReader reader)
         {
-            return _single 
-                 ? _importer(context, reader) 
+            return _single
+                 ? _importer(context, reader)
                  : base.ImportFromObject(context, reader);
         }
 
@@ -104,7 +104,7 @@ namespace Jayrock.Json.Conversion.Converters
                                             .MakeGenericMethod(argTypes);
 
             //
-            // Suppose tupleType is Tuple<int, string, DateTime>, emit a 
+            // Suppose tupleType is Tuple<int, string, DateTime>, emit a
             // call expression like this:
             //
             //  Tuple.Create((int)      context.Import(typeof(int), reader),

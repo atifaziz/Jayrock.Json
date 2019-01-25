@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -78,12 +78,12 @@ namespace Jayrock.Json
         public void EmptyCannotBeIndexedInto()
         {
             /* JsonBuffer unused = */ JsonBuffer.Empty[0] /* [1] */ .ToString();
-            
+
             //
             // [1] The ToString call is unnecessary but it is added here
-            //     instead of taking the indexed value into an unused 
-            //     variable to avoid the CS0219 warning issue from Mono's 
-            //     C# compiler. See: 
+            //     instead of taking the indexed value into an unused
+            //     variable to avoid the CS0219 warning issue from Mono's
+            //     C# compiler. See:
             //     http://bugzilla.novell.com/show_bug.cgi?id=316137
         }
 
@@ -283,7 +283,7 @@ namespace Jayrock.Json
             Assert.AreEqual(3, (int) members[2].Buffer.GetNumber());
             Assert.IsTrue(members[3].IsEmpty);
         }
-        
+
         [Test]
         public void GetMembersIntoArrayPermitsNull()
         {
@@ -411,7 +411,7 @@ namespace Jayrock.Json
             JsonBuffer subBuffer = JsonBuffer.From(reader);
             //    ...create reader from the subbuffer
             JsonBufferReader reader2 = subBuffer.CreateReader();
-            
+
             // 3. Call reader.BufferValue() this should break
             JsonBuffer buffer2 = reader2.BufferValue();
             Assert.IsTrue(buffer2.IsObject);
@@ -425,7 +425,7 @@ namespace Jayrock.Json
             JsonBuffer.From(json);
         }
 
-        private static void AssertBufferedValueScalarOrNull(JsonToken expected, JsonBufferWriter writer) 
+        private static void AssertBufferedValueScalarOrNull(JsonToken expected, JsonBufferWriter writer)
         {
             JsonBuffer buffer = writer.GetBuffer();
             JsonBufferReader reader = buffer.CreateReader();

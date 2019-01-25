@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -59,7 +59,7 @@ namespace Jayrock.Json.Conversion.Converters
             DataSet ds = new DataSet();
             ds.Tables.Add(new DataTable("Table1"));
             ds.Tables.Add(new DataTable("Table2"));
-            
+
             JsonRecorder writer = new JsonRecorder();
             JsonConvert.Export(ds, writer);
             JsonReader reader = writer.CreatePlayer();

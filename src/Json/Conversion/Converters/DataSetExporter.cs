@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -35,7 +35,7 @@ namespace Jayrock.Json.Conversion.Converters
         public DataSetExporter() :
             this(typeof(DataSet)) {}
 
-        public DataSetExporter(Type inputType) : 
+        public DataSetExporter(Type inputType) :
             base(inputType) {}
 
         protected override void ExportValue(ExportContext context, object value, JsonWriter writer)
@@ -43,7 +43,7 @@ namespace Jayrock.Json.Conversion.Converters
             Debug.Assert(context != null);
             Debug.Assert(value != null);
             Debug.Assert(writer != null);
-            
+
             ExportDataSet(context, (DataSet) value, writer);
         }
 
@@ -54,25 +54,25 @@ namespace Jayrock.Json.Conversion.Converters
             Debug.Assert(writer != null);
 
             writer.WriteStartObject();
-    
+
             foreach (DataTable table in dataSet.Tables)
             {
                 writer.WriteMember(table.TableName);
 
                 //
-                // If there is an exporter (perhaps an override) for the 
-                // DataTable in effect then use it. Otherwise our 
+                // If there is an exporter (perhaps an override) for the
+                // DataTable in effect then use it. Otherwise our
                 // DataTableExporter.
                 //
 
                 IExporter tableExporter = context.FindExporter(table.GetType());
-                
+
                 if (tableExporter != null)
                     tableExporter.Export(context, table, writer);
                 else
                     DataTableExporter.ExportTable(context, table, writer);
             }
-    
+
             writer.WriteEndObject();
         }
     }

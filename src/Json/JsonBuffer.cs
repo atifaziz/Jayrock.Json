@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -68,8 +68,8 @@ namespace Jayrock.Json
         {
             Debug.Assert(storage != null);
             Debug.Assert(start >= 0);
-            Debug.Assert(end >= start); 
-            
+            Debug.Assert(end >= start);
+
             _storage = storage;
             _start = start;
             _end = end;
@@ -83,7 +83,7 @@ namespace Jayrock.Json
         public static JsonBuffer From(JsonToken token)
         {
             JsonTokenClass clazz = token.Class;
-            
+
             if (clazz == JsonTokenClass.Null)
                 return _null;
 
@@ -100,7 +100,7 @@ namespace Jayrock.Json
 
         public static JsonBuffer From(JsonReader reader)
         {
-            if (reader == null) 
+            if (reader == null)
                 throw new ArgumentNullException("reader");
 
             JsonBufferReader bufferReader = reader as JsonBufferReader;
@@ -113,11 +113,11 @@ namespace Jayrock.Json
             if (reader.TokenClass == JsonTokenClass.Member)
                 reader.Read();
 
-            bool structured = reader.TokenClass == JsonTokenClass.Array 
+            bool structured = reader.TokenClass == JsonTokenClass.Array
                               || reader.TokenClass == JsonTokenClass.Object;
 
             JsonBufferWriter writer = new JsonBufferWriter();
-            writer.MaxDepth = reader.MaxDepth; 
+            writer.MaxDepth = reader.MaxDepth;
             writer.WriteFromReader(reader);
             JsonBuffer buffer = writer.GetBuffer();
 
@@ -128,7 +128,7 @@ namespace Jayrock.Json
                 bufferReader.Read();
                 buffer = bufferReader.BufferValue();
             }
-            
+
             return buffer;
         }
 
@@ -167,7 +167,7 @@ namespace Jayrock.Json
         /// </summary>
 
         public bool IsEmpty { get { return Length == 0; } }
-        
+
         /// <summary>
         /// Indicates whether the buffer represents simply a JSON null or not.
         /// </summary>
@@ -181,7 +181,7 @@ namespace Jayrock.Json
         /// Indicates whether the buffer represents a JSON scalar value
         /// (number, string or Boolean) or not.
         /// </summary>
-        
+
         public bool IsScalar
         {
             get { return Length == 1 && FirstToken.Class.IsScalar; }
@@ -281,20 +281,20 @@ namespace Jayrock.Json
 
             reader.ReadToken(JsonTokenClass.Array);
             int readCount = 0;
-            
+
             while (reader.TokenClass != JsonTokenClass.EndArray)
             {
                 if (count-- == 0)
                     return ~readCount;
-                
+
                 if (values != null)
                     values[index++] = reader.BufferValue();
                 else
                     reader.Skip();
-                
+
                 readCount++;
             }
-            
+
             return readCount;
         }
 
@@ -314,29 +314,29 @@ namespace Jayrock.Json
                 throw new ArgumentOutOfRangeException("index", index, null);
 
             JsonBufferReader reader = CreateReader();
-            
+
             if (!reader.MoveToContent())
                 throw new JsonException("Unexpected EOF.");
-            
+
             if (reader.TokenClass == JsonTokenClass.Null)
                 return 0;
 
             reader.ReadToken(JsonTokenClass.Object);
             int readCount = 0;
-            
+
             while (reader.TokenClass == JsonTokenClass.Member)
             {
                 if (count-- == 0)
                     return ~readCount;
-                
+
                 if (members != null)
                     members[index++] = new NamedJsonBuffer(reader.Text, reader.BufferValue());
                 else
                     reader.Skip();
-                
+
                 readCount++;
             }
-            
+
             return readCount;
         }
 

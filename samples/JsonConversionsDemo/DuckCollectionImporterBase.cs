@@ -9,16 +9,16 @@ namespace JsonConversionsDemo
     #endregion
 
     /// <summary>
-    /// An base importer implementation capable of importing a duck-typed 
+    /// An base importer implementation capable of importing a duck-typed
     /// collection of elements from a JSON array.
     /// </summary>
 
     public abstract class DuckCollectionImporterBase : CollectionImporterBase
     {
-        public DuckCollectionImporterBase(Type outputType, Type elementType) : 
+        public DuckCollectionImporterBase(Type outputType, Type elementType) :
             base(outputType, elementType) {}
-        
-        protected override void ImportElements(object collection, ImportContext context, JsonReader reader) 
+
+        protected override void ImportElements(object collection, ImportContext context, JsonReader reader)
         {
             if (collection == null) throw new ArgumentNullException("collection");
             if (context == null) throw new ArgumentNullException("context");
@@ -35,13 +35,13 @@ namespace JsonConversionsDemo
             }
         }
 
-        protected override object CreateCollection() 
+        protected override object CreateCollection()
         {
             return Activator.CreateInstance(OutputType);
         }
 
         /// <remarks>
-        /// The <see cref="args"/> parameter is always an array of a single 
+        /// The <see cref="args"/> parameter is always an array of a single
         /// element containing the value to add to the collection.
         /// </remarks>
 

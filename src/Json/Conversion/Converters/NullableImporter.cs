@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -36,14 +36,14 @@ namespace Jayrock.Json.Conversion.Converters
     {
         private readonly Type _underlyingType;
 
-        public NullableImporter(Type outputType) : 
+        public NullableImporter(Type outputType) :
             base(outputType)
         {
             if (!Reflector.IsConstructionOfNullable(outputType))
                 throw new ArgumentException(null, "outputType");
-            _underlyingType = 
+            _underlyingType =
             #if !MONO
-                Nullable.GetUnderlyingType(outputType);            
+                Nullable.GetUnderlyingType(outputType);
             #else
                 outputType.GetGenericArguments()[0];
             #endif

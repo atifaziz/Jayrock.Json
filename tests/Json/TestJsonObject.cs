@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -32,11 +32,11 @@ namespace Jayrock.Json
     using NUnit.Framework;
 
     #if !NET_1_0 && !NET_1_1
-    
+
     using System.Collections.Generic;
-    
+
     #endif
-    
+
     #if !NET_1_0 && !NET_1_1 && !NET_2_0
 
     using System.Dynamic;
@@ -131,12 +131,12 @@ namespace Jayrock.Json
             Assert.AreEqual(3, values[2]);
             Assert.AreEqual(4, values[3]);
         }
-        
+
         [ Test ]
         public void Import()
         {
             JsonObject article = new JsonObject();
-            
+
             article.Import(new JsonTextReader(new StringReader(@"
                 /* Article */ {
                     Title : 'Introduction to JSON',
@@ -144,7 +144,7 @@ namespace Jayrock.Json
                     Abstract : null,
                     Author : {
                         Name : 'John Doe',
-                        'E-Mail Address' : 'john.doe@example.com' 
+                        'E-Mail Address' : 'john.doe@example.com'
                     },
                     References : [
                         { Title : 'JSON RPC', Link : 'http://www.json-rpc.org/' }
@@ -156,7 +156,7 @@ namespace Jayrock.Json
             Assert.AreEqual("Introduction to JSON", article["Title"]);
             Assert.AreEqual(2, (int) (JsonNumber) article["Rating"]);
             Assert.AreEqual(null, article["Abstract"]);
-            
+
             IDictionary author = (IDictionary) article["Author"];
             Assert.IsNotNull(author);
             Assert.AreEqual(2, author.Count);
@@ -173,7 +173,7 @@ namespace Jayrock.Json
             Assert.AreEqual("JSON RPC", reference["Title"]);
             Assert.AreEqual("http://www.json-rpc.org/", reference["Link"]);
         }
-        
+
         [ Test ]
         public void ContentsClearedBeforeImporting()
         {
@@ -255,7 +255,7 @@ namespace Jayrock.Json
         {
             (new SubJsonObject()).SubExport(new ExportContext(), null);
         }
-        
+
         [ Test, ExpectedException(typeof(ArgumentNullException)) ]
         public void CannotAccumulateUsingNullName()
         {
@@ -305,9 +305,9 @@ namespace Jayrock.Json
             o.Add("two", 2);
             o.Add("three", 3);
             o.Add("four", 4);
-            
+
             JsonObject.JsonMemberEnumerator e = o.GetEnumerator();
-            
+
             Assert.IsNotNull(e);
 
             Assert.IsTrue(e.MoveNext());
@@ -342,7 +342,7 @@ namespace Jayrock.Json
         [ Test ]
         public void DynamicallyGetMember()
         {
-            var obj = new JsonObject { { "foo", "bar" } };            
+            var obj = new JsonObject { { "foo", "bar" } };
             Assert.AreEqual("bar", ((dynamic) obj).foo);
         }
 
@@ -357,7 +357,7 @@ namespace Jayrock.Json
 
         private class FakeGetMemberBinder : GetMemberBinder
         {
-            public FakeGetMemberBinder(string name, bool ignoreCase) : 
+            public FakeGetMemberBinder(string name, bool ignoreCase) :
                 base(name, ignoreCase) {}
 
             public override DynamicMetaObject FallbackGetMember(DynamicMetaObject target, DynamicMetaObject errorSuggestion)
@@ -595,7 +595,7 @@ namespace Jayrock.Json
             ICollection<KeyValuePair<string, object>> obj = new JsonObject();
             obj.CopyTo(new KeyValuePair<string, object>[0], -1);
         }
-        
+
         [ Test, ExpectedException(typeof(ArgumentException)) ]
         public void CannotCopyToViaGenericCollectionWithTooSmallArray()
         {
@@ -608,10 +608,10 @@ namespace Jayrock.Json
         public void KeyValuePairEnumeration()
         {
             ICollection<KeyValuePair<string, object>> obj = new JsonObject();
-            
+
             KeyValuePair<string, object> first = new KeyValuePair<string, object>("first", 123);
             obj.Add(first);
-            
+
             KeyValuePair<string, object> second = new KeyValuePair<string, object>("second", 456);
             obj.Add(second);
 
@@ -649,7 +649,7 @@ namespace Jayrock.Json
                 from i in Enumerable.Range(0, 10)
                 let ch = (char)('a' + i)
                 select new JsonMember(ch.ToString(), i));
-            
+
             Assert.AreEqual(10, obj.Count);
             Assert.AreEqual(0, obj["a"]);
             Assert.AreEqual(1, obj["b"]);

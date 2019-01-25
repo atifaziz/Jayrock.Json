@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -38,7 +38,7 @@ namespace Jayrock.Json.Conversion.Converters
         {
             if (outputType == null)
                 throw new ArgumentNullException("outputType");
-            
+
             _outputType = outputType;
         }
 
@@ -51,13 +51,13 @@ namespace Jayrock.Json.Conversion.Converters
         {
             if (context == null)
                 throw new ArgumentNullException("context");
-            
+
             if (reader == null)
                 throw new ArgumentNullException("reader");
-            
+
             if (!reader.MoveToContent())
                 throw new JsonException("Unexpected EOF.");
-            
+
             if (reader.TokenClass == JsonTokenClass.Null)
             {
                 return ImportNull(context, reader);
@@ -82,13 +82,13 @@ namespace Jayrock.Json.Conversion.Converters
             {
                 return ImportFromObject(context, reader);
             }
-            else 
+            else
             {
                 throw new JsonException(string.Format("{0} not expected.", reader.TokenClass));
             }
         }
 
-        protected virtual object ImportNull(ImportContext context, JsonReader reader) 
+        protected virtual object ImportNull(ImportContext context, JsonReader reader)
         {
             reader.Read();
             return null;
@@ -100,14 +100,14 @@ namespace Jayrock.Json.Conversion.Converters
         protected virtual object ImportFromArray(ImportContext context, JsonReader reader) { return ThrowNotSupported(JsonTokenClass.Array); }
         protected virtual object ImportFromObject(ImportContext context, JsonReader reader) { return ThrowNotSupported(JsonTokenClass.Object); }
 
-        internal static object ReadReturning(JsonReader reader, object result) 
+        internal static object ReadReturning(JsonReader reader, object result)
         {
             Debug.Assert(reader != null);
             reader.Read();
             return result;
         }
 
-        protected virtual JsonException GetImportException(string jsonValueType) 
+        protected virtual JsonException GetImportException(string jsonValueType)
         {
             return new JsonException(string.Format("Cannot import {0} from a JSON {1} value.", OutputType, jsonValueType));
         }

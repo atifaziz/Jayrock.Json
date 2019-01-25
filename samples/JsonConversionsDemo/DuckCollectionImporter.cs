@@ -10,12 +10,12 @@ namespace JsonConversionsDemo
     #endregion
 
     /// <summary>
-    /// An importer for importing a duck-typed collection of elements from a 
+    /// An importer for importing a duck-typed collection of elements from a
     /// JSON array.
     /// </summary>
     /// <remarks>
     /// The importer can infer the element type provided that
-    /// the collection has an instance-base and public Add method that 
+    /// the collection has an instance-base and public Add method that
     /// takes a single argument of the element type.
     /// </remarks>
 
@@ -77,7 +77,7 @@ namespace JsonConversionsDemo
 
             //
             // NOTE! This implementation is horribly slow.
-            // It is provided here only for sake of completeness but it 
+            // It is provided here only for sake of completeness but it
             // should never be needed for any practical reason.
             //
 

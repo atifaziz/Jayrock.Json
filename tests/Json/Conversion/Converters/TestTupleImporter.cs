@@ -16,11 +16,11 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
-#if !NET_1_0 && !NET_1_1 && !NET_2_0 
+#if !NET_1_0 && !NET_1_1 && !NET_2_0
 
 namespace Jayrock.Json.Conversion.Converters
 {
@@ -102,7 +102,7 @@ namespace Jayrock.Json.Conversion.Converters
         {
             AssertImport(Tuple.Create(42, "foo", true), "[42,foo,true]");
         }
-        
+
         [ Test, ExpectedException(typeof(JsonException)) ]
         public void CannotImportTuple2FromNumber()
         {
@@ -170,7 +170,7 @@ namespace Jayrock.Json.Conversion.Converters
             public bool ForceNullContext;
             public bool ForceNullWriter;
 
-            public ExportValueTestExporter(Type inputType) : 
+            public ExportValueTestExporter(Type inputType) :
                 base(inputType) {}
 
             protected override void ExportValue(ExportContext context, object value, JsonWriter writer)

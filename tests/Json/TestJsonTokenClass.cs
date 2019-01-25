@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -55,7 +55,7 @@ namespace Jayrock.Json
             foreach (JsonTokenClass tokenClass in JsonTokenClass.All)
                 Assert.IsTrue(tokenClass.Name.Equals(tokenClass.ToString()));
         }
-        
+
         [ Test ]
         public void HashCodeFromName()
         {
@@ -79,28 +79,28 @@ namespace Jayrock.Json
         public void All()
         {
             ArrayList list = new ArrayList();
-            
+
             foreach (FieldInfo field in typeof(JsonTokenClass).GetFields(BindingFlags.Static | BindingFlags.Public))
             {
                 if (typeof(JsonTokenClass).IsAssignableFrom(field.FieldType))
                     list.Add(field.GetValue(null));
             }
-           
+
             Assert.AreEqual(list.Count, JsonTokenClass.All.Count);
-            
+
             foreach (JsonTokenClass tokenClass in JsonTokenClass.All)
                 list.Remove(tokenClass);
-            
+
             if (list.Count > 0)
                 Assert.Fail("{0} not found in All collection.", list[0]);
         }
-        
+
         [ Test ]
         public void NullToken()
         {
             Assert.AreEqual(JsonTokenClass.Null, JsonToken.Null().Class);
         }
-        
+
         [ Test ]
         public void StringToken()
         {
@@ -160,14 +160,14 @@ namespace Jayrock.Json
             Assert.AreEqual(JsonTokenClass.Array, JsonToken.Array().Class);
             Assert.AreEqual(JsonTokenClass.EndArray, JsonToken.EndArray().Class);
         }
-        
+
         [ Test ]
         public void BOFEOF()
         {
             Assert.AreEqual(JsonTokenClass.BOF, JsonToken.BOF().Class);
             Assert.AreEqual(JsonTokenClass.EOF, JsonToken.EOF().Class);
         }
-        
+
         [ Test ]
         public void DeserializesToFactoryInstance()
         {

@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -31,15 +31,15 @@ namespace Jayrock.Json.Conversion.Converters
 
     public sealed class JsonNumberExporter : ExporterBase
     {
-        public JsonNumberExporter() : 
+        public JsonNumberExporter() :
             base(typeof(JsonNumber)) {}
-        
+
         protected override void ExportValue(ExportContext context, object value, JsonWriter writer)
         {
             Debug.Assert(context != null);
             Debug.Assert(value != null);
             Debug.Assert(writer != null);
-            
+
             writer.WriteNumber(((JsonNumber) value).ToString());
         }
     }

@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -143,7 +143,7 @@ namespace Jayrock.JsonML
         {
             JsonReader reader = EncodeArray(
                 "<a ichi='1' ni='2'><b>The content of b</b> and " +
-                "<c san='3'>The content of c</c><d>do</d><e></e>" + 
+                "<c san='3'>The content of c</c><d>do</d><e></e>" +
                 "<d>re</d><f/><d>mi</d></a>");
 
             reader.ReadToken(JsonTokenClass.Array);
@@ -154,14 +154,14 @@ namespace Jayrock.JsonML
             Assert.AreEqual("ni", reader.ReadMember());
             Assert.AreEqual("2", reader.ReadString());
             reader.ReadToken(JsonTokenClass.EndObject);
-            
+
             reader.ReadToken(JsonTokenClass.Array);
             Assert.AreEqual("b", reader.ReadString());
             Assert.AreEqual("The content of b", reader.ReadString());
             reader.ReadToken(JsonTokenClass.EndArray);
-            
+
             Assert.AreEqual(" and ", reader.ReadString());
-            
+
             reader.ReadToken(JsonTokenClass.Array);
             Assert.AreEqual("c", reader.ReadString());
             reader.ReadToken(JsonTokenClass.Object);
@@ -170,12 +170,12 @@ namespace Jayrock.JsonML
             reader.ReadToken(JsonTokenClass.EndObject);
             Assert.AreEqual("The content of c", reader.ReadString());
             reader.ReadToken(JsonTokenClass.EndArray);
-            
+
             reader.ReadToken(JsonTokenClass.Array);
             Assert.AreEqual("d", reader.ReadString());
             Assert.AreEqual("do", reader.ReadString());
             reader.ReadToken(JsonTokenClass.EndArray);
-            
+
             reader.ReadToken(JsonTokenClass.Array);
             Assert.AreEqual("e", reader.ReadString());
             reader.ReadToken(JsonTokenClass.EndArray);
@@ -273,7 +273,7 @@ namespace Jayrock.JsonML
                     <child2 />
                     <child3 />
                 </root>");
-            
+
             reader.ReadToken(JsonTokenClass.Object);
             Assert.AreEqual("tagName", reader.ReadMember());
             Assert.AreEqual("root", reader.ReadString());
@@ -284,17 +284,17 @@ namespace Jayrock.JsonML
                 Assert.AreEqual("tagName", reader.ReadMember());
                 Assert.AreEqual("child1", reader.ReadString());
                 reader.ReadToken(JsonTokenClass.EndObject);
-                
+
                 reader.ReadToken(JsonTokenClass.Object);
                 Assert.AreEqual("tagName", reader.ReadMember());
                 Assert.AreEqual("child2", reader.ReadString());
                 reader.ReadToken(JsonTokenClass.EndObject);
-                
+
                 reader.ReadToken(JsonTokenClass.Object);
                 Assert.AreEqual("tagName", reader.ReadMember());
                 Assert.AreEqual("child3", reader.ReadString());
                 reader.ReadToken(JsonTokenClass.EndObject);
-            
+
             reader.ReadToken(JsonTokenClass.EndArray);
             reader.ReadToken(JsonTokenClass.EndObject);
         }
@@ -311,7 +311,7 @@ namespace Jayrock.JsonML
             reader.ReadToken(JsonTokenClass.Array);
 
                 Assert.AreEqual("text1", reader.ReadString());
-            
+
                 reader.ReadToken(JsonTokenClass.Object);
                 Assert.AreEqual("tagName", reader.ReadMember());
                 Assert.AreEqual("e1", reader.ReadString());
@@ -325,7 +325,7 @@ namespace Jayrock.JsonML
                 reader.ReadToken(JsonTokenClass.EndObject);
 
                 Assert.AreEqual("text3", reader.ReadString());
-            
+
             reader.ReadToken(JsonTokenClass.EndArray);
             reader.ReadToken(JsonTokenClass.EndObject);
         }
@@ -349,7 +349,7 @@ namespace Jayrock.JsonML
         {
             JsonReader reader = EncodeObject(
                 "<a ichi='1' ni='2'><b>The content of b</b> and " +
-                "<c san='3'>The content of c</c><d>do</d><e></e>" + 
+                "<c san='3'>The content of c</c><d>do</d><e></e>" +
                 "<d>re</d><f/><d>mi</d></a>");
 
             reader.ReadToken(JsonTokenClass.Object);
@@ -369,7 +369,7 @@ namespace Jayrock.JsonML
                 reader.ReadToken(JsonTokenClass.Array);
                 Assert.AreEqual("The content of b", reader.ReadString());
                 reader.ReadToken(JsonTokenClass.EndArray);
-            
+
                 Assert.AreEqual(" and ", reader.ReadString());
 
                 reader.ReadToken(JsonTokenClass.Object);
@@ -416,7 +416,7 @@ namespace Jayrock.JsonML
                 Assert.AreEqual("mi", reader.ReadString());
                 reader.ReadToken(JsonTokenClass.EndArray);
                 reader.ReadToken(JsonTokenClass.EndObject);
-                
+
             reader.ReadToken(JsonTokenClass.EndArray);
             reader.ReadToken(JsonTokenClass.EndObject); // a
         }
@@ -640,7 +640,7 @@ namespace Jayrock.JsonML
         [Test]
         public void DecodeObjectOnSingleElementWithAttributesAndContent()
         {
-            Assert.AreEqual("<root a='1' b='2'>content</root>", 
+            Assert.AreEqual("<root a='1' b='2'>content</root>",
                 DecodeObject("{tagName:root,a:1,b:2,childNodes:[content]}"));
         }
 
@@ -691,7 +691,7 @@ namespace Jayrock.JsonML
         [Test]
         public void DecodeObjectOnInterspersedElementsAndText()
         {
-            Assert.AreEqual("<root>text1<e1 />text2<e2 />text3</root>", 
+            Assert.AreEqual("<root>text1<e1 />text2<e2 />text3</root>",
                 DecodeObject(@"{
                     tagName: root,
                     childNodes: [
@@ -707,7 +707,7 @@ namespace Jayrock.JsonML
         [Test]
         public void DecodeObjectSkipsNullsInsideChildNodes()
         {
-            Assert.AreEqual("<root>text1<e1 /><e2 /></root>", 
+            Assert.AreEqual("<root>text1<e1 /><e2 /></root>",
                 DecodeObject(@"{
                     tagName: root,
                     childNodes: [
@@ -761,12 +761,12 @@ namespace Jayrock.JsonML
                     ni: 2,
                     childNodes: [ {
                             tagName: b,
-                            childNodes: [ 'The content of b' ] 
+                            childNodes: [ 'The content of b' ]
                         },
                         ' and ', {
                             tagName: c,
                             san: 3,
-                            childNodes: [ 'The content of c' ] 
+                            childNodes: [ 'The content of c' ]
                         },
                         { tagName: d, childNodes: [ do ] },
                         { tagName: e },

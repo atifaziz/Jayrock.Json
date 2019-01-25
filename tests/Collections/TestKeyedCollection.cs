@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -70,7 +70,7 @@ namespace Jayrock.Collections
             NamedValueCollection values = new NamedValueCollection();
             values.Contains(null);
         }
-        
+
         [ Test ]
         public void RemoveValue()
         {
@@ -187,9 +187,9 @@ namespace Jayrock.Collections
 
             //
             // [1] The ToString call is unnecessary but it is added here
-            //     instead of taking the indexed value into an unused 
-            //     variable to avoid the CS0219 warning issue from Mono's 
-            //     C# compiler. See: 
+            //     instead of taking the indexed value into an unused
+            //     variable to avoid the CS0219 warning issue from Mono's
+            //     C# compiler. See:
             //     http://bugzilla.novell.com/show_bug.cgi?id=316137
         }
 
@@ -217,7 +217,7 @@ namespace Jayrock.Collections
             Assert.IsTrue(collection.OnDeserializationCallbackCalled);
             NamedValue entry = collection["foo"];
             Assert.IsNotNull(entry);
-            Assert.AreEqual("foo", entry.Name); 
+            Assert.AreEqual("foo", entry.Name);
             Assert.AreEqual("bar", entry.Value);
         }
 
@@ -233,7 +233,7 @@ namespace Jayrock.Collections
                 Value = value;
             }
         }
-        
+
         [ Serializable ]
         private sealed class NamedValueCollection : KeyedCollection
         {
@@ -248,7 +248,7 @@ namespace Jayrock.Collections
             {
                 base.Add(value);
             }
-            
+
             public bool Contains(string key)
             {
                 return base.Contains(key);

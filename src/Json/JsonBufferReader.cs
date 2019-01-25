@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -30,7 +30,7 @@ namespace Jayrock.Json
     #endregion
 
     /// <summary>
-    /// Represents a reader that provides fast, non-cached, forward-only 
+    /// Represents a reader that provides fast, non-cached, forward-only
     /// access to a <see cref="JsonBuffer" /> object.
     /// </summary>
 
@@ -39,7 +39,7 @@ namespace Jayrock.Json
         private readonly JsonBuffer _buffer;
         private int _index;
 
-        public JsonBufferReader(JsonBuffer buffer) : 
+        public JsonBufferReader(JsonBuffer buffer) :
             this(buffer, -1) {}
 
         private JsonBufferReader(JsonBuffer buffer, int index)
@@ -68,10 +68,10 @@ namespace Jayrock.Json
                 {
                     case 0: return JsonToken.Array();
                     case 1: return _buffer[0];
-                    case 2: return JsonToken.EndArray();                    
+                    case 2: return JsonToken.EndArray();
                 }
             }
-            
+
             return JsonToken.EOF();
         }
 
@@ -88,7 +88,7 @@ namespace Jayrock.Json
 
             if (!_buffer.IsStructured)
                 return _buffer;
-            
+
             JsonTokenClass tokenClass = TokenClass;
             if (tokenClass.IsTerminator || tokenClass == JsonTokenClass.Member)
                 Read();

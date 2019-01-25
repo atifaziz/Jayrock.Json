@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -32,7 +32,7 @@ namespace Jayrock.Json.Conversion
     /// Instructs a JSON serializer to write out the value of a public property
     /// when it wouldn't be included otherwise.
     /// </summary>
-    
+
     [ Serializable ]
     [ AttributeUsage(AttributeTargets.Property) ]
     public sealed class JsonExportAttribute : Attribute

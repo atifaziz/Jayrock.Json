@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -28,12 +28,12 @@ namespace Jayrock.Json
     using System.Collections;
     using System.Diagnostics;
     using System.IO;
-   
+
     using Jayrock.Dynamic;
     using Jayrock.Json.Conversion;
 
     #if !NET_1_0 && !NET_1_1
-    
+
     using System.Collections.Generic;
 
     #endif
@@ -53,8 +53,8 @@ namespace Jayrock.Json
     /// </summary>
     /// <remarks>
     /// <para>
-    /// Althought the collection should be considered unordered by the user, 
-    /// the implementation does internally try to remember the order in which 
+    /// Althought the collection should be considered unordered by the user,
+    /// the implementation does internally try to remember the order in which
     /// the keys were added in order facilitate human-readability as in when
     /// an instance is rendered as text.</para>
     /// <para>
@@ -65,20 +65,20 @@ namespace Jayrock.Json
     [ Serializable ]
     public class JsonObject : DictionaryBase, IJsonImportable, IJsonExportable, IEnumerable
         #if !NET_1_0 && !NET_1_1
-        /* ... */ , 
+        /* ... */ ,
         IEnumerable<JsonMember>,
         System.Collections.Generic.IDictionary<string, object>
         #endif
         #if !NET_1_0 && !NET_1_1 && !NET_2_0
-        /* ... */ , 
+        /* ... */ ,
         System.Dynamic.IDynamicMetaObjectProvider
         #endif
     {
         private ArrayList _nameIndexList;
         [ NonSerialized ] private IList _readOnlyNameIndexList;
-        
+
         #if !NET_1_0 && !NET_1_1
-        
+
         [ NonSerialized ] string[] _keys;
         [ NonSerialized ] object[] _values;
 
@@ -87,11 +87,11 @@ namespace Jayrock.Json
             _keys = null;
             _values = null;
         }
-        
+
         #else
-        
+
         private void OnUpdating() { /* NOP */ }
-        
+
         #endif
 
         public JsonObject() {}
@@ -155,7 +155,7 @@ namespace Jayrock.Json
         {
             return GetEnumerator();
         }
-        
+
         #endif
 
         [Serializable]
@@ -275,10 +275,10 @@ namespace Jayrock.Json
             {
                 Put(name, value);
             }
-            else 
+            else
             {
                 IList values = current as IList;
-                
+
                 if (values != null)
                 {
                     values.Add(value);
@@ -370,7 +370,7 @@ namespace Jayrock.Json
         /// <summary>
         /// Overridden to return a JSON formatted object as a string.
         /// </summary>
-        
+
         public override string ToString()
         {
             StringWriter writer = new StringWriter();
@@ -397,10 +397,10 @@ namespace Jayrock.Json
                 throw new ArgumentNullException("writer");
 
             writer.WriteStartObject();
-            
+
             foreach (string name in NameIndexList)
             {
-                writer.WriteMember(name);    
+                writer.WriteMember(name);
                 context.Export(InnerHashtable[name], writer);
             }
 
@@ -408,15 +408,15 @@ namespace Jayrock.Json
         }
 
         /// <remarks>
-        /// This method is not exception-safe. If an error occurs while 
+        /// This method is not exception-safe. If an error occurs while
         /// reading then the object may be partially imported.
         /// </remarks>
-        
+
         public void Import(JsonReader reader)
         {
             Import(JsonConvert.CreateImportContext(), reader);
         }
-        
+
         void IJsonImportable.Import(ImportContext context, JsonReader reader)
         {
             Import(context, reader);
@@ -433,14 +433,14 @@ namespace Jayrock.Json
             // FIXME: Consider making this method exception-safe.
             // Right now this is a problem because of reliance on
             // DictionaryBase.
-            
+
             Clear();
-            
+
             reader.ReadToken(JsonTokenClass.Object);
-            
+
             while (reader.TokenClass != JsonTokenClass.EndObject)
                 Put(reader.ReadMember(), context.Import(reader));
-            
+
             reader.Read();
         }
 
@@ -458,7 +458,7 @@ namespace Jayrock.Json
         protected override void OnInsert(object key, object value)
         {
             OnUpdating();
-            
+
             //
             // NOTE: OnInsert leads one to believe that keys are ordered in the
             // base dictionary in that they can be inserted somewhere in the
@@ -510,7 +510,7 @@ namespace Jayrock.Json
                 value = null;
                 return false;
             }
-            
+
             value = this[key];
             return true;
         }
@@ -557,7 +557,7 @@ namespace Jayrock.Json
         {
             Add(item.Key, item.Value);
         }
-        
+
         bool ICollection<KeyValuePair<string, object>>.Contains(KeyValuePair<string, object> item)
         {
             return Contains(item);
@@ -572,7 +572,7 @@ namespace Jayrock.Json
 
         void ICollection<KeyValuePair<string, object>>.CopyTo(KeyValuePair<string, object>[] array, int arrayIndex)
         {
-            if (array == null) 
+            if (array == null)
                 throw new ArgumentNullException("array");
             if (arrayIndex < 0)
                 throw new ArgumentOutOfRangeException("arrayIndex", arrayIndex, null);
@@ -630,7 +630,7 @@ namespace Jayrock.Json
 
         private static bool TrySetMember(JsonObject obj, SetMemberBinder binder, object value)
         {
-            obj[binder.Name] = value; 
+            obj[binder.Name] = value;
             return true;
         }
 

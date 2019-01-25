@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -38,7 +38,7 @@ namespace Jayrock.Json
 
         public NamedJsonBuffer(string name, JsonBuffer buffer)
         {
-            if (name == null) 
+            if (name == null)
                 throw new ArgumentNullException("name");
 
             if (buffer.IsEmpty)
@@ -74,7 +74,7 @@ namespace Jayrock.Json
 
         public static JsonBuffer ToObject(params NamedJsonBuffer[] members)
         {
-            if (members == null) 
+            if (members == null)
                 throw new ArgumentNullException("members");
 
             if (members.Length == 0)

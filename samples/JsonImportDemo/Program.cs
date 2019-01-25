@@ -10,7 +10,7 @@ namespace JsonImportDemo
     #endregion
 
     /// <summary>
-    /// This project demonstrates using JsonConvert to unpack JSON text into 
+    /// This project demonstrates using JsonConvert to unpack JSON text into
     /// a given set of application and general types.
     /// </summary>
 
@@ -49,8 +49,8 @@ namespace JsonImportDemo
 
             //
             // The above menu definition in JSON text is imported using
-            // two approaches in the demonstrations. The first method 
-            // unpacks the data into application-supplied types. The 
+            // two approaches in the demonstrations. The first method
+            // unpacks the data into application-supplied types. The
             // second, unpacks into general types supplied by Jayrock.
             //
 
@@ -59,7 +59,7 @@ namespace JsonImportDemo
             AutoImportDemo(text);
         }
 
-        private static void ImportByTypeDemo(string text) 
+        private static void ImportByTypeDemo(string text)
         {
             Menu menu = (Menu) JsonConvert.Import(typeof(Menu), text);
 
@@ -67,7 +67,7 @@ namespace JsonImportDemo
 
             Console.WriteLine(menu.Header);
             Console.WriteLine(separator);
-            
+
             foreach (MenuItem item in menu.Items)
             {
                 Console.Write('\t');
@@ -104,7 +104,7 @@ namespace JsonImportDemo
             // Without any type specification, Import will unpack
             // a JSON object as JsonObject, array as JsonArray,
             // and string as System.String, number as JsonNumber,
-            // Boolean as System.Boolean and null simply as a 
+            // Boolean as System.Boolean and null simply as a
             // local null reference.
             //
 

@@ -10,7 +10,7 @@ namespace YahooJsonNewsReader
     #endregion
 
     /// <summary>
-    /// This program demonstrates using JsonTextReader to parse JSON text in 
+    /// This program demonstrates using JsonTextReader to parse JSON text in
     /// a forward-only, stream-oriented fashion.
     /// </summary>
 
@@ -19,7 +19,7 @@ namespace YahooJsonNewsReader
         private static void Main(string[] args)
         {
             const int keywordsLimit = 70;
-            
+
             Console.WriteLine("Yahoo (JSON) News Reader");
             Console.WriteLine();
             Console.WriteLine("When prompted, enter keywords (e.g. Ray Charles) to search");
@@ -65,12 +65,12 @@ namespace YahooJsonNewsReader
                 // string value of object member named "Title". The
                 // shape of the news data looks something like this:
                 //
-                //  { 
+                //  {
                 //      "ResultSet" : {
                 //          "totalResultsAvailable" : ...,
                 //          "totalResultsReturned" : ...,
                 //          "firstResultPosition": ...,
-                //          "Result" : [ 
+                //          "Result" : [
                 //             {
                 //                  "Title" : "..."
                 //                 ...
@@ -86,7 +86,7 @@ namespace YahooJsonNewsReader
                     while (reader.Read())
                     {
                         if (reader.Depth == 4 &&
-                            reader.TokenClass == JsonTokenClass.Member && 
+                            reader.TokenClass == JsonTokenClass.Member &&
                             reader.Text == "Title")
                         {
                             reader.Read(/* member */);

@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -31,13 +31,13 @@ namespace Jayrock.Reflection
 
     public sealed class Reflector
     {
-        #if !NET_1_0 && !NET_1_1 
+        #if !NET_1_0 && !NET_1_1
 
         /// <summary>
         /// Determines if type is a constructed type of <see cref="System.Nullable{T}"/>.
         /// </summary>
-        /// 
-        
+        ///
+
         // Source Mannex: http://mannex.googlecode.com
         // License: http://code.google.com/p/mannex/wiki/License
 
@@ -48,12 +48,12 @@ namespace Jayrock.Reflection
 
         /// <summary>
         /// Determines if type is a constructed type of generic type definition.
-        /// For example, this method can be used to test if <see cref="System.Nullable{T}"/> 
-        /// of <see cref="int" /> is indeed a construction of the generic type definition 
+        /// For example, this method can be used to test if <see cref="System.Nullable{T}"/>
+        /// of <see cref="int" /> is indeed a construction of the generic type definition
         /// <see cref="System.Nullable{T}"/>.
         /// </summary>
         /// <exception cref="System.ArgumentNullException">
-        /// Either <paramref name="type"/> or <paramref name="genericTypeDefinition"/> 
+        /// Either <paramref name="type"/> or <paramref name="genericTypeDefinition"/>
         /// is a null reference.
         /// </exception>
         /// <exception cref="System.ArgumentException">
@@ -63,7 +63,7 @@ namespace Jayrock.Reflection
 
         // Source Mannex: http://mannex.googlecode.com
         // License: http://code.google.com/p/mannex/wiki/License
-        
+
         internal static bool IsConstructionOfGenericTypeDefinition(Type type, Type genericTypeDefinition)
         {
             if (type == null) throw new ArgumentNullException("type");
@@ -78,12 +78,12 @@ namespace Jayrock.Reflection
         }
 
         /// <summary>
-        /// Finds and returns the constructed type of an interface 
+        /// Finds and returns the constructed type of an interface
         /// generic type definition if the type implements it. Otherwise
         /// returns a <c>null</c> reference.
         /// </summary>
         /// <exception cref="System.ArgumentNullException">
-        /// Either <paramref name="type"/> or <paramref name="genericTypeDefinition"/> 
+        /// Either <paramref name="type"/> or <paramref name="genericTypeDefinition"/>
         /// is a null reference.
         /// </exception>
 
@@ -101,24 +101,24 @@ namespace Jayrock.Reflection
             return IsConstructionOfGenericTypeDefinition(type, (Type) criteria);
         }
 
-        #endif // !NET_1_0 && !NET_1_1 
+        #endif // !NET_1_0 && !NET_1_1
 
-        #if !NET_1_0 && !NET_1_1 && !NET_2_0 
+        #if !NET_1_0 && !NET_1_1 && !NET_2_0
 
         private static readonly Type[] _commonTupleTypes = new[]
         {
             // Tuple of 1 not expected to be common so excluded from here
             typeof(Tuple<,>), typeof(Tuple<,,>), typeof(Tuple<,,,>), typeof(Tuple<,,,,>)
         };
-        
+
         /// <summary>
         /// Determines if a type is one of the generic <see cref="System.Tuple"/> family
         /// of types.
         /// </summary>
-        
+
         public static bool IsTupleFamily(Type type)
         {
-            if (type == null) 
+            if (type == null)
                 throw new ArgumentNullException("type");
 
             if (!type.IsGenericType || type.IsGenericTypeDefinition)
@@ -127,15 +127,15 @@ namespace Jayrock.Reflection
             //
             // Quick check against common generic type definitions
             //
-            
+
             if (Array.IndexOf(_commonTupleTypes, type.GetGenericTypeDefinition()) >= 0)
                 return true;
 
             //
-            // Slower check for less common cases like tuple of 1 or 
+            // Slower check for less common cases like tuple of 1 or
             // just way too many items.
             //
-            
+
             var someTupleType = _commonTupleTypes[0];
             const char tick = '`';
             var i = type.FullName.IndexOf(tick);

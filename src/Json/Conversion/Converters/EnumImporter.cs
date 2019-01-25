@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -38,7 +38,7 @@ namespace Jayrock.Json.Conversion.Converters
         {
             if (!type.IsEnum)
                 throw new ArgumentException(string.Format("{0} does not inherit from System.Enum.", type), "type");
-            
+
             if (type.IsDefined(typeof(FlagsAttribute), true))
                 throw new ArgumentException(string.Format("{0} is a bit field, which are not currently supported.", type), "type");
         }
@@ -49,11 +49,11 @@ namespace Jayrock.Json.Conversion.Converters
             Debug.Assert(reader != null);
 
             string s = reader.Text.Trim();
-        
+
             if (s.Length > 0)
             {
                 char ch = s[0];
-            
+
                 if (Char.IsDigit(ch) || ch == '+' || ch == '-')
                     throw Error(s, null);
             }
@@ -65,11 +65,11 @@ namespace Jayrock.Json.Conversion.Converters
             catch (ArgumentException e)
             {
                 //
-                // Value is either an empty string ("") or only contains 
+                // Value is either an empty string ("") or only contains
                 // white space. Value is a name, but not one of the named
                 // constants defined for the enumeration.
                 //
-            
+
                 throw Error(s, e);
             }
         }

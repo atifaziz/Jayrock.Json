@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -45,7 +45,7 @@ namespace Jayrock.Json
         /// Public Domain 2002 JSON.org, ported to C# by Are Bjolseth
         /// (teleplan.no) and nearly re-written by Atif Aziz (www.raboof.com)
         /// </remarks>
-    
+
         public static string Enquote(string str)
         {
             if (str == null || str.Length == 0)
@@ -53,7 +53,7 @@ namespace Jayrock.Json
 
             return Enquote(str, null).ToString();
         }
-        
+
         public static StringBuilder Enquote(string str, StringBuilder sb)
         {
             return EnquoteStringOrChars(str, null, 0, Mask.NullString(str).Length, sb);
@@ -80,9 +80,9 @@ namespace Jayrock.Json
 
             if (sb == null)
                 sb = new StringBuilder(length + 4);
-            
+
             sb.Append('"');
-            
+
             char last;
             char ch = '\0';
 
@@ -111,7 +111,7 @@ namespace Jayrock.Json
                     sb.Append(ch);
                     break;
                 }
-                        
+
                 case '/':
                 {
                     if (last == '<')
@@ -119,13 +119,13 @@ namespace Jayrock.Json
                     sb.Append(ch);
                     break;
                 }
-                    
+
                 case '\b': sb.Append("\\b"); break;
                 case '\t': sb.Append("\\t"); break;
                 case '\n': sb.Append("\\n"); break;
                 case '\f': sb.Append("\\f"); break;
                 case '\r': sb.Append("\\r"); break;
-                    
+
                 default:
                 {
                     if (ch < ' ')
@@ -137,7 +137,7 @@ namespace Jayrock.Json
                     {
                         sb.Append(ch);
                     }
-                    
+
                     break;
                 }
             }
@@ -151,9 +151,9 @@ namespace Jayrock.Json
         /// </summary>
         /// <param name="quote">The quoting character, either " or '</param>
         /// <returns>A String.</returns>
-        
+
         // TODO: Consider rendering Dequote public
-        
+
         internal static string Dequote(BufferedCharReader input, char quote)
         {
             return Dequote(input, quote, null).ToString();
@@ -165,14 +165,14 @@ namespace Jayrock.Json
 
             if (output == null)
                 output = new StringBuilder();
-            
+
             char[] hexDigits = null;
-            
+
             while (true)
             {
                 char ch = input.Next();
 
-                if ((ch == BufferedCharReader.EOF) || (ch == '\n') || (ch == '\r')) 
+                if ((ch == BufferedCharReader.EOF) || (ch == '\n') || (ch == '\r'))
                     throw new FormatException("Unterminated string.");
 
                 if (ch == '\\')
@@ -185,17 +185,17 @@ namespace Jayrock.Json
                         case 't': output.Append('\t'); break; // Horizontal tab
                         case 'n': output.Append('\n'); break; // Newline
                         case 'f': output.Append('\f'); break; // Form feed
-                        case 'r': output.Append('\r'); break; // Carriage return 
-                            
+                        case 'r': output.Append('\r'); break; // Carriage return
+
                         case 'u':
                         {
                             if (hexDigits == null)
                                 hexDigits = new char[4];
-                            
-                            output.Append(ParseHex(input, hexDigits)); 
+
+                            output.Append(ParseHex(input, hexDigits));
                             break;
                         }
-                            
+
                         default:
                             output.Append(ch);
                             break;
@@ -210,24 +210,24 @@ namespace Jayrock.Json
                 }
             }
         }
-        
+
         /// <summary>
         /// Eats the next four characters, assuming hex digits, and converts
         /// into the represented character value.
         /// </summary>
         /// <returns>The parsed character.</returns>
 
-        private static char ParseHex(BufferedCharReader input, char[] hexDigits) 
+        private static char ParseHex(BufferedCharReader input, char[] hexDigits)
         {
             Debug.Assert(input != null);
             Debug.Assert(hexDigits != null);
             Debug.Assert(hexDigits.Length == 4);
-            
+
             hexDigits[0] = input.Next();
             hexDigits[1] = input.Next();
             hexDigits[2] = input.Next();
             hexDigits[3] = input.Next();
-            
+
             return (char) ushort.Parse(new string(hexDigits), NumberStyles.HexNumber);
         }
 

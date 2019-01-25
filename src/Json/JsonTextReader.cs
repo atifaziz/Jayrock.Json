@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -34,8 +34,8 @@ namespace Jayrock.Json
     #endregion
 
     /// <summary>
-    /// Represents a reader that provides fast, non-cached, forward-only 
-    /// access to JSON data over JSON text (RFC 4627). 
+    /// Represents a reader that provides fast, non-cached, forward-only
+    /// access to JSON data over JSON text (RFC 4627).
     /// </summary>
 
     public sealed class JsonTextReader : JsonReaderBase
@@ -139,12 +139,12 @@ namespace Jayrock.Json
             //
             // Accumulate characters until we reach the end of the text or a
             // formatting character.
-            // 
+            //
 
             StringBuilder sb = new StringBuilder();
             char b = ch;
 
-            while (ch >= ' ' && ",:]}/\\\"[{;=#".IndexOf(ch) < 0) 
+            while (ch >= ' ' && ",:]}/\\\"[{;=#".IndexOf(ch) < 0)
             {
                 sb.Append(ch);
                 ch = _reader.Next();
@@ -156,30 +156,30 @@ namespace Jayrock.Json
 
             if (s.Length == 0)
                 throw SyntaxError("Missing value.");
-            
-            
+
+
             //
             // Boolean
             //
 
             if (s == JsonBoolean.TrueText || s == JsonBoolean.FalseText)
                 return Yield(JsonToken.Boolean(s == JsonBoolean.TrueText));
-            
+
             //
             // Null
             //
 
             if (s == JsonNull.Text)
                 return Yield(JsonToken.Null());
-            
+
             //
             // Number
             //
-            // Try converting it. We support the 0- and 0x- conventions. 
+            // Try converting it. We support the 0- and 0x- conventions.
             // If a number cannot be produced, then the value will just
-            // be a string. Note that the 0-, 0x-, plus, and implied 
-            // string conventions are non-standard, but a JSON text parser 
-            // is free to accept non-JSON text forms as long as it accepts 
+            // be a string. Note that the 0-, 0x-, plus, and implied
+            // string conventions are non-standard, but a JSON text parser
+            // is free to accept non-JSON text forms as long as it accepts
             // all correct JSON text forms.
             //
 
@@ -208,7 +208,7 @@ namespace Jayrock.Json
                     return Yield(JsonToken.Number(s));
                 }
             }
-            
+
             //
             // Treat as String in all other cases, e.g. when unquoted.
             //
@@ -402,7 +402,7 @@ namespace Jayrock.Json
             }
         }
 
-        /// <summary> 
+        /// <summary>
         /// Yields control back to the reader's user while updating the
         /// reader with the new found token and its text.
         /// </summary>
@@ -412,14 +412,14 @@ namespace Jayrock.Json
             return Yield(token, null);
         }
 
-        /// <summary> 
+        /// <summary>
         /// Yields control back to the reader's user while updating the
-        /// reader with the new found token, its text and the next 
+        /// reader with the new found token, its text and the next
         /// continuation point into the reader.
         /// </summary>
         /// <remarks>
-        /// By itself, this method cannot affect the stack such tha control 
-        /// is returned back to the reader's user. This must be done by 
+        /// By itself, this method cannot affect the stack such tha control
+        /// is returned back to the reader's user. This must be done by
         /// Yield's caller by way of explicit return.
         /// </remarks>
 
@@ -427,16 +427,16 @@ namespace Jayrock.Json
         {
             if (continuation != null)
                 Push(continuation);
-            
+
             return token;
         }
- 
+
         /// <summary>
         /// Get the next char in the string, skipping whitespace
         /// and comments (slashslash and slashstar).
         /// </summary>
         /// <returns>A character, or 0 if there are no more characters.</returns>
-        
+
         private char NextClean()
         {
             Debug.Assert(_reader != null);
@@ -483,12 +483,12 @@ namespace Jayrock.Json
                         }
                     }
                 }
-                else if (ch == '#') 
+                else if (ch == '#')
                 {
-                    do 
+                    do
                     {
                         ch = _reader.Next();
-                    } 
+                    }
                     while (ch != '\n' && ch != '\r' && ch != BufferedCharReader.EOF);
                 }
                 else if (ch == BufferedCharReader.EOF || ch > ' ')
@@ -509,17 +509,17 @@ namespace Jayrock.Json
                 throw SyntaxError(e.Message, e);
             }
         }
-        
+
         private void Push(Continuation continuation)
         {
             Debug.Assert(continuation != null);
-            
+
             if (_stack == null)
                 _stack = new Stack(6);
-            
+
             _stack.Push(continuation);
         }
-        
+
         private Continuation Pop()
         {
             Debug.Assert(_stack != null);

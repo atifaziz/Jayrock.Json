@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -102,7 +102,7 @@ namespace Jayrock.Json.Conversion
             if (_type.IsValueType)
             {
                 //
-                // Value types always have a default constructor available 
+                // Value types always have a default constructor available
                 // but one which does not show up in reflection. If no other
                 // constructors matched then just use the default one.
                 //
@@ -122,7 +122,7 @@ namespace Jayrock.Json.Conversion
             Debug.Assert(members != null);
 
             ParameterInfo[] parameters = ctor.GetParameters();
-            
+
             if (parameters.Length > members.Length)
                 return null;
 
@@ -135,7 +135,7 @@ namespace Jayrock.Json.Conversion
             for (int i = 0; i < bindings.Length; i++)
             {
                 int binding = bindings[i] - 1;
-                
+
                 if (binding >= 0)
                 {
                     if (args == null)
@@ -163,15 +163,15 @@ namespace Jayrock.Json.Conversion
             if (tailw != null)
                 tailw.WriteEndObject();
 
-            if (argc != parameters.Length) 
+            if (argc != parameters.Length)
                 return null;
 
             object obj = ctor.Invoke(args);
 
-            JsonBuffer tail = tailw != null 
-                            ? tailw.GetBuffer() 
+            JsonBuffer tail = tailw != null
+                            ? tailw.GetBuffer()
                             : StockJsonBuffers.EmptyObject;
-            
+
             return new ObjectConstructionResult(obj, tail.CreateReader());
         }
 
@@ -179,7 +179,7 @@ namespace Jayrock.Json.Conversion
         /// Bound indicies returned in the resulting array are one-based
         /// therefore zero means unbound.
         /// </remarks>
-        
+
         private static int[] Bind(ImportContext context, ParameterInfo[] parameters, NamedJsonBuffer[] members)
         {
             if (context == null) throw new ArgumentNullException("context");
@@ -187,16 +187,16 @@ namespace Jayrock.Json.Conversion
             if (members == null) throw new ArgumentNullException("members");
 
             int[] bindings = new int[members.Length];
-            
+
             for (int i = 0; i < parameters.Length; i++)
             {
                 ParameterInfo parameter = parameters[i];
-                
+
                 if (parameter == null)
                     throw new ArgumentException(null, "parameters");
-                
+
                 int mi = FindMember(members, parameter.Name);
-                
+
                 if (mi >= 0)
                     bindings[mi] = i + 1;
             }
@@ -209,10 +209,10 @@ namespace Jayrock.Json.Conversion
             for (int i = 0; i < members.Length; i++)
             {
                 NamedJsonBuffer member = members[i];
-                
+
                 if (member.IsEmpty)
                     throw new ArgumentException(null, "members");
-                
+
                 if (0 == CultureInfo.InvariantCulture.CompareInfo.Compare(name, member.Name, CompareOptions.IgnoreCase))
                     return i;
             }
@@ -224,12 +224,12 @@ namespace Jayrock.Json.Conversion
         {
             if (obj == null)
                 throw new ArgumentNullException("obj");
-            
+
             MethodBase method = obj as MethodBase;
-            
+
             if (method == null)
                 throw new ArgumentException("obj");
-            
+
             return method.GetParameters().Length;
         }
     }

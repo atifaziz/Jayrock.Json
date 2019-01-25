@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -39,7 +39,7 @@ namespace Jayrock.Json.Conversion.Converters
             TestImporter importer = new TestImporter();
             Assert.AreSame(typeof(object), importer.OutputType);
         }
-        
+
         [ Test ]
         public void NullHandling()
         {
@@ -48,7 +48,7 @@ namespace Jayrock.Json.Conversion.Converters
             Assert.IsNull(importer.Import(new ImportContext(), reader));
             Assert.IsTrue(reader.EOF);
         }
-        
+
         [ Test, ExpectedException(typeof(JsonException)) ]
         public void CannotImportNumber()
         {
@@ -78,7 +78,7 @@ namespace Jayrock.Json.Conversion.Converters
         {
             Import("[]");
         }
-        
+
         [ Test ]
         public void NumberCallsImportNumber()
         {
@@ -98,7 +98,7 @@ namespace Jayrock.Json.Conversion.Converters
             importer.String = result;
             Assert.AreEqual(result, importer.Import(new ImportContext(), reader));
         }
-        
+
         [ Test ]
         public void BooleanCallsImportBoolean()
         {
@@ -127,7 +127,7 @@ namespace Jayrock.Json.Conversion.Converters
             importer.Object = result;
             Assert.AreEqual(result, importer.Import(new ImportContext(), reader));
         }
-        
+
         private static void Import(string s)
         {
             (new TestImporter()).Import(new ImportContext(), CreateReader(s));
@@ -137,10 +137,10 @@ namespace Jayrock.Json.Conversion.Converters
         {
             return new JsonTextReader(new StringReader(s));
         }
-        
+
         private class TestImporter : ImporterBase
         {
-            public TestImporter() : 
+            public TestImporter() :
                 base(typeof(object)) {}
         }
 
@@ -156,7 +156,7 @@ namespace Jayrock.Json.Conversion.Converters
             {
                 Assert.IsNotNull(context);
                 Assert.IsNotNull(reader);
-                
+
                 return Boolean;
             }
 
@@ -164,7 +164,7 @@ namespace Jayrock.Json.Conversion.Converters
             {
                 Assert.IsNotNull(context);
                 Assert.IsNotNull(reader);
-                
+
                 return Number;
             }
 
@@ -172,7 +172,7 @@ namespace Jayrock.Json.Conversion.Converters
             {
                 Assert.IsNotNull(context);
                 Assert.IsNotNull(reader);
-                
+
                 return String;
             }
 
@@ -180,7 +180,7 @@ namespace Jayrock.Json.Conversion.Converters
             {
                 Assert.IsNotNull(context);
                 Assert.IsNotNull(reader);
-                
+
                 return Array;
             }
 
@@ -188,7 +188,7 @@ namespace Jayrock.Json.Conversion.Converters
             {
                 Assert.IsNotNull(context);
                 Assert.IsNotNull(reader);
-                
+
                 return Object;
             }
         }

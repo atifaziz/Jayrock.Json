@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -32,20 +32,20 @@ namespace Jayrock.Json.Conversion.Converters
 
     public abstract class NumberExporterBase : ExporterBase
     {
-        protected NumberExporterBase(Type inputType) : 
+        protected NumberExporterBase(Type inputType) :
             base(inputType) {}
-        
+
         protected override void ExportValue(ExportContext context, object value, JsonWriter writer)
         {
             if (context == null)
                 throw new ArgumentNullException("context");
-            
+
             if (value == null)
                 throw new ArgumentNullException("value");
 
             if (writer == null)
                 throw new ArgumentNullException("writer");
-            
+
             string s;
 
             try
@@ -59,13 +59,13 @@ namespace Jayrock.Json.Conversion.Converters
 
             writer.WriteNumber(s);
         }
-        
+
         protected abstract string ConvertToString(object value);
     }
-    
+
     public class ByteExporter : NumberExporterBase
     {
-        public ByteExporter() : 
+        public ByteExporter() :
             base(typeof(byte)) {}
 
         protected override string ConvertToString(object value)
@@ -76,7 +76,7 @@ namespace Jayrock.Json.Conversion.Converters
 
     public class Int16Exporter : NumberExporterBase
     {
-        public Int16Exporter() : 
+        public Int16Exporter() :
             base(typeof(short)) {}
 
         protected override string ConvertToString(object value)
@@ -87,7 +87,7 @@ namespace Jayrock.Json.Conversion.Converters
 
     public class Int32Exporter : NumberExporterBase
     {
-        public Int32Exporter() : 
+        public Int32Exporter() :
             base(typeof(int)) {}
 
         protected override string ConvertToString(object value)
@@ -98,7 +98,7 @@ namespace Jayrock.Json.Conversion.Converters
 
     public class Int64Exporter : NumberExporterBase
     {
-        public Int64Exporter() : 
+        public Int64Exporter() :
             base(typeof(long)) {}
 
         protected override string ConvertToString(object value)
@@ -109,7 +109,7 @@ namespace Jayrock.Json.Conversion.Converters
 
     public class SingleExporter : NumberExporterBase
     {
-        public SingleExporter() : 
+        public SingleExporter() :
             base(typeof(float)) {}
 
         protected override string ConvertToString(object value)
@@ -120,7 +120,7 @@ namespace Jayrock.Json.Conversion.Converters
 
     public class DoubleExporter : NumberExporterBase
     {
-        public DoubleExporter() : 
+        public DoubleExporter() :
             base(typeof(double)) {}
 
         protected override string ConvertToString(object value)
@@ -131,7 +131,7 @@ namespace Jayrock.Json.Conversion.Converters
 
     public class DecimalExporter : NumberExporterBase
     {
-        public DecimalExporter() : 
+        public DecimalExporter() :
             base(typeof(decimal)) {}
 
         protected override string ConvertToString(object value)

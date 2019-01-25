@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -43,7 +43,7 @@ namespace Jayrock.Json.Conversion
         private IDictionary _items;
 
         private static ImporterCollection _stockImporters;
-        
+
         public virtual object Import(JsonReader reader)
         {
             return Import(AnyType.Value, reader);
@@ -53,7 +53,7 @@ namespace Jayrock.Json.Conversion
         {
             if (type == null)
                 throw new ArgumentNullException("type");
-            
+
             if (reader == null)
                 throw new ArgumentNullException("reader");
 
@@ -79,20 +79,20 @@ namespace Jayrock.Json.Conversion
         {
             if (importer == null)
                 throw new ArgumentNullException("importer");
-            
+
             Importers.Put(importer);
         }
 
-        public virtual IImporter FindImporter(Type type) 
+        public virtual IImporter FindImporter(Type type)
         {
             if (type == null)
                 throw new ArgumentNullException("type");
 
             IImporter importer = Importers[type];
-            
+
             if (importer != null)
                 return importer;
-            
+
             importer = StockImporters[type];
 
             if (importer == null)
@@ -113,12 +113,12 @@ namespace Jayrock.Json.Conversion
             {
                 if (_items == null)
                     _items = new Hashtable();
-                
+
                 return _items;
             }
         }
 
-        private static IImporter FindCompatibleImporter(Type type) 
+        private static IImporter FindCompatibleImporter(Type type)
         {
             Debug.Assert(type != null);
 
@@ -131,7 +131,7 @@ namespace Jayrock.Json.Conversion
             if (type.IsEnum)
                 return new EnumImporter(type);
 
-            #if !NET_1_0 && !NET_1_1 
+            #if !NET_1_0 && !NET_1_1
 
             if (Reflector.IsConstructionOfNullable(type))
                 return new NullableImporter(type);
@@ -139,11 +139,11 @@ namespace Jayrock.Json.Conversion
             bool isGenericList = Reflector.IsConstructionOfGenericTypeDefinition(type, typeof(IList<>));
             bool isGenericCollection = !isGenericList && Reflector.IsConstructionOfGenericTypeDefinition(type, typeof(ICollection<>));
             bool isSequence = !isGenericCollection && (type == typeof(IEnumerable) || Reflector.IsConstructionOfGenericTypeDefinition(type, typeof(IEnumerable<>)));
-            
+
             if (isGenericList || isGenericCollection || isSequence)
             {
-                Type itemType = type.IsGenericType 
-                              ? type.GetGenericArguments()[0] 
+                Type itemType = type.IsGenericType
+                              ? type.GetGenericArguments()[0]
                               : typeof(object);
                 Type importerType = typeof(CollectionImporter<,>).MakeGenericType(new Type[] { type, itemType });
                 return (IImporter) Activator.CreateInstance(importerType, new object[] { isSequence });
@@ -163,8 +163,8 @@ namespace Jayrock.Json.Conversion
                 return (IImporter)Activator.CreateInstance(typeof(DictionaryImporter<,,>).MakeGenericType(args3));
             }
 
-            #endif // !NET_1_0 && !NET_1_1 
-            
+            #endif // !NET_1_0 && !NET_1_1
+
             #if !NET_1_0 && !NET_1_1 && !NET_2_0
 
             if (Reflector.IsConstructionOfGenericTypeDefinition(type, typeof(ISet<>)))
@@ -178,9 +178,9 @@ namespace Jayrock.Json.Conversion
                 return new TupleImporter(type);
 
             #endif
-            
-            if ((type.IsPublic || type.IsNestedPublic) && 
-                !type.IsPrimitive && 
+
+            if ((type.IsPublic || type.IsNestedPublic) &&
+                !type.IsPrimitive &&
                 (type.IsValueType || type.GetConstructors().Length > 0))
             {
                 return new ComponentImporter(type, new ObjectConstructor(type));
@@ -199,7 +199,7 @@ namespace Jayrock.Json.Conversion
             {
                 if (_importers == null)
                     _importers = new ImporterCollection();
-                
+
                 return _importers;
             }
         }
@@ -235,7 +235,7 @@ namespace Jayrock.Json.Conversion
 
                     importers.Add(new BigIntegerImporter());
                     importers.Add(new ExpandoObjectImporter());
-                    
+
                     #endif // !NET_1_0 && !NET_1_1 && !NET_2_0
 
                     IList typeList = null; // TODO (IList) ConfigurationSettings.GetConfig("jayrock/json.conversion.importers");
@@ -248,7 +248,7 @@ namespace Jayrock.Json.Conversion
 
                     _stockImporters = importers;
                 }
-                
+
                 return _stockImporters;
             }
         }

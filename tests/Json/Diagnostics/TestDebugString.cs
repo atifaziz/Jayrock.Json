@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -56,18 +56,18 @@ namespace Jayrock.Diagnostics
         public void ControlsCharactersSuppression()
         {
             int[] ranges = { 0, 0x1f, 0x7f, 0x7f, 0x80, 0x9f };
-            
+
             int count = 0;
             for (int i = 0; i < ranges.Length; i += 2)
                 count += (ranges[i + 1] - ranges[i]) + 1;
-            
+
             char[] controls = new char[count];
-            
+
             int running = 0;
             for (int i = 0; i < ranges.Length; i += 2)
                 for (int j = ranges[i]; j <= ranges[i + 1]; j++)
                     controls[running++] = (char) j;
-            
+
             Assert.AreEqual(new string(DebugString.ControlReplacement, count), DebugString.Format(new string(controls), count));
         }
     }

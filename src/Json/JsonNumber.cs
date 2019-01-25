@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -31,15 +31,15 @@ namespace Jayrock.Json
     using Jayrock.Json.Conversion;
 
     #endregion
-    
-    /// <summary> 
-    /// Represents a JSON Number.  This class models a number as a string 
-    /// and only converts to a native numerical representation when needed 
-    /// and therefore told.  
+
+    /// <summary>
+    /// Represents a JSON Number.  This class models a number as a string
+    /// and only converts to a native numerical representation when needed
+    /// and therefore told.
     /// </summary>
     /// <remarks>
     /// This class cannot be used to compare two numbers or perform
-    /// mathematical operations like addition and substraction without 
+    /// mathematical operations like addition and substraction without
     /// first converting to an actual native numerical data type.
     /// Use <see cref="LogicallyEquals"/> to test for equality.
     /// </remarks>
@@ -51,7 +51,7 @@ namespace Jayrock.Json
 
         public JsonNumber(string value)
         {
-            if (value != null && !IsValid(value)) 
+            if (value != null && !IsValid(value))
                 throw new ArgumentException("value");
 
             _value = value;
@@ -61,7 +61,7 @@ namespace Jayrock.Json
         {
             get { return Mask.EmptyString(_value, "0"); }
         }
-        
+
         public override int GetHashCode()
         {
             return Value.GetHashCode();
@@ -81,17 +81,17 @@ namespace Jayrock.Json
         {
             return Value;
         }
-        
+
         public bool LogicallyEquals(object o)
         {
-            if (o == null) 
+            if (o == null)
                 return false;
-            
+
             return Convert.ChangeType(this, o.GetType(), CultureInfo.InvariantCulture).Equals(o);
         }
 
         //
-        // IMPORTANT! The following ToXXX methods will throw 
+        // IMPORTANT! The following ToXXX methods will throw
         // OverflowException in case the JsonNumber instance contains a value
         // that is too big or small to be represented as the request type.
         //
@@ -250,10 +250,10 @@ namespace Jayrock.Json
         object IConvertible.ToType(Type conversionType, IFormatProvider provider)
         {
             #if !NET_1_0 && !NET_1_1 && !NET_2_0
-            
+
             if (conversionType == typeof(System.Numerics.BigInteger))
                 return ToBigInteger(provider);
-            
+
             #endif // !NET_1_0 && !NET_1_1 && !NET_2_0
 
             return Convert.ChangeType(this, conversionType, provider);
@@ -264,7 +264,7 @@ namespace Jayrock.Json
         //
         // Explicit conversion operators.
         //
-        
+
         public static explicit operator byte(JsonNumber number)
         {
             return number.ToByte();
@@ -279,27 +279,27 @@ namespace Jayrock.Json
         {
             return number.ToInt32();
         }
-        
+
         public static explicit operator long(JsonNumber number)
         {
             return number.ToInt64();
         }
-        
+
         public static explicit operator float(JsonNumber number)
         {
             return number.ToSingle();
         }
-        
+
         public static explicit operator double(JsonNumber number)
         {
             return number.ToDouble();
         }
-        
+
         public static explicit operator decimal(JsonNumber number)
         {
             return number.ToDecimal();
         }
-        
+
         public static explicit operator DateTime(JsonNumber number)
         {
             return number.ToDateTime();
@@ -340,7 +340,7 @@ namespace Jayrock.Json
         }
 
         // WARNING! There be dragons!
-        // We assume that MS will never change the values assigned to 
+        // We assume that MS will never change the values assigned to
         // the members of NumberStyles, at least not the following ones.
 
         private static readonly Regex[] _grammars = new Regex[]
@@ -354,7 +354,7 @@ namespace Jayrock.Json
         private static Regex Regex(bool lws, bool rws)
         {
             return new Regex(
-                "^" 
+                "^"
                 + (lws ? @"\s*" : null)
                 /*
                         number = [ minus ] int [ frac ] [ exp ]
@@ -373,16 +373,16 @@ namespace Jayrock.Json
                         (  0                #   zero
                            | [1-9][0-9]* )  #   / ( digit1-9 *DIGIT )
                                             # [ frac ]
-                        ( \.                #   decimal-point 
+                        ( \.                #   decimal-point
                           [0-9]+ )?         #   1*DIGIT
                                             # [ exp ]
                         ( [eE]              #   e
                           [+-]?             #   [ minus / plus ]
                           [0-9]+ )?         #   1*DIGIT
-                  " // NOTE! DO NOT move the closing quote 
+                  " // NOTE! DO NOT move the closing quote
                     // Moving it to the line above change the pattern!
                 + (rws ? @"\s*" : null)
-                + "$", 
+                + "$",
                 RegexOptions.IgnorePatternWhitespace
                 | RegexOptions.ExplicitCapture
                 | RegexOptions.Compiled);

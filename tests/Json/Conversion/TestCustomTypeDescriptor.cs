@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -242,7 +242,7 @@ namespace Jayrock.Json.Conversion
             Assert.IsNotNull(properties["property"]);
         }
 
-        private static void AddServiceToServiceContainer(IServiceContainer sc) 
+        private static void AddServiceToServiceContainer(IServiceContainer sc)
         {
             object service = new object();
             Type serviceType = service.GetType();
@@ -251,7 +251,7 @@ namespace Jayrock.Json.Conversion
             Assert.AreSame(service, sc.GetService(serviceType));
         }
 
-        private static void CannotAddServiceTwiceToServiceContainer(IServiceContainer sc) 
+        private static void CannotAddServiceTwiceToServiceContainer(IServiceContainer sc)
         {
             object service = new object();
             Type serviceType = service.GetType();
@@ -260,7 +260,7 @@ namespace Jayrock.Json.Conversion
             sc.AddService(serviceType, service);
         }
 
-        private static void AddThenRemoveService(IServiceContainer sc) 
+        private static void AddThenRemoveService(IServiceContainer sc)
         {
             object service = new object();
             Type serviceType = service.GetType();
@@ -274,7 +274,7 @@ namespace Jayrock.Json.Conversion
         public sealed class ImmutableThing
         {
             public readonly object Field;
-            
+
             private object _property;
             public object Property { get { return _property; } }
 
@@ -296,7 +296,7 @@ namespace Jayrock.Json.Conversion
             [ JsonIgnore ] public object Property2 { get { return null; } set { } }
             public object Property3 { get { return null; } set { } }
             public object ReadOnlyProperty { get { return null; } }
-            
+
             public static PropertyDescriptor GetField1Property()
             {
                 return CustomTypeDescriptor.CreateProperty(typeof(Thing).GetField("Field1"));
@@ -381,8 +381,8 @@ namespace Jayrock.Json.Conversion
 #if NET_1_0 || NET_1_1
 namespace System.Runtime.CompilerServices
 {
-    [SerializableAttribute] 
-    [AttributeUsageAttribute(AttributeTargets.All, Inherited=true)] 
+    [SerializableAttribute]
+    [AttributeUsageAttribute(AttributeTargets.All, Inherited=true)]
     internal sealed class CompilerGeneratedAttribute : Attribute {}
 }
 #endif

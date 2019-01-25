@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -35,17 +35,17 @@ namespace Jayrock.Json
     public class TestJsonWriter
     {
         private bool _disposed;
-        
+
         [ SetUp ]
         public void Init()
         {
             _disposed = false;
         }
-        
+
         [ Test ]
         public void ClosingRaisesDisposed()
         {
-            JsonWriter writer = new StubJsonWriter();   
+            JsonWriter writer = new StubJsonWriter();
             writer.Disposed += new EventHandler(Writer_Disposed);
             Assert.IsFalse(_disposed);
             writer.Close();
@@ -55,7 +55,7 @@ namespace Jayrock.Json
         [ Test ]
         public void CloseWithoutDisposedHandlerHarmless()
         {
-            JsonWriter writer = new StubJsonWriter();   
+            JsonWriter writer = new StubJsonWriter();
             writer.Close();
         }
 
@@ -63,16 +63,16 @@ namespace Jayrock.Json
         public void AutoCompletion()
         {
             JsonRecorder writer = new JsonRecorder();
-            
+
             writer.WriteStartArray();
             writer.WriteStartObject();
             writer.WriteMember("outer");
             writer.WriteStartObject();
             writer.WriteMember("inner");
             writer.AutoComplete();
-            
+
             JsonReader reader = writer.CreatePlayer();
-            
+
             reader.ReadToken(JsonTokenClass.Array);
             reader.ReadToken(JsonTokenClass.Object);
             Assert.AreEqual("outer", reader.ReadMember());

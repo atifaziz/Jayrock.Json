@@ -46,13 +46,13 @@ namespace Jayrock.Json.Conversion.Converters
         {
             AssertImport(null, "[]");
         }
-        
+
         [ Test, ExpectedException(typeof(JsonException)) ]
         public void CannotImportObject()
         {
             AssertImport(null, "{}");
         }
-        
+
         private static void AssertImport(Uri expected, string input)
         {
             JsonTextReader reader = new JsonTextReader(new StringReader(input));

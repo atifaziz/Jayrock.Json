@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -35,7 +35,7 @@ namespace Jayrock.Json.Conversion.Converters
 
     public class ListImporter : ImportAwareImporter
     {
-        public ListImporter() : 
+        public ListImporter() :
             base(typeof(IList)) {}
 
         protected override IJsonImportable CreateObject()
@@ -44,18 +44,18 @@ namespace Jayrock.Json.Conversion.Converters
         }
     }
 
-    #if !NET_1_0 && !NET_1_1 
+    #if !NET_1_0 && !NET_1_1
 
-    internal class CollectionImporter<TCollection, TOutput, TItem> : ImporterBase 
+    internal class CollectionImporter<TCollection, TOutput, TItem> : ImporterBase
         where TCollection : ICollection<TItem>, new()
         where TOutput : IEnumerable
     {
         private readonly bool _isOutputReadOnly;
 
-        public CollectionImporter() : 
+        public CollectionImporter() :
             this(false) {}
 
-        public CollectionImporter(bool isOutputReadOnly) : 
+        public CollectionImporter(bool isOutputReadOnly) :
             base(typeof(TOutput))
         {
             _isOutputReadOnly = isOutputReadOnly;
@@ -79,18 +79,18 @@ namespace Jayrock.Json.Conversion.Converters
                           : collection;
 
             return ReadReturning(reader, result);
-        } 
+        }
     }
 
-    internal class CollectionImporter<TOutput, TItem> : 
+    internal class CollectionImporter<TOutput, TItem> :
         CollectionImporter<List<TItem>, TOutput, TItem>
         where TOutput : IEnumerable
     {
         public CollectionImporter() {}
 
-        public CollectionImporter(bool isOututReadOnly) : 
+        public CollectionImporter(bool isOututReadOnly) :
             base(isOututReadOnly) {}
     }
 
-    #endif // !NET_1_0 && !NET_1_1 
+    #endif // !NET_1_0 && !NET_1_1
 }

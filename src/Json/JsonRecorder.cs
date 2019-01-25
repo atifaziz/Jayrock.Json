@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -99,17 +99,17 @@ namespace Jayrock.Json
 
         public JsonReader CreatePlayer()
         {
-            if (Bracket != JsonWriterBracket.Pending && 
+            if (Bracket != JsonWriterBracket.Pending &&
                 Bracket != JsonWriterBracket.Closed)
             {
                 throw new InvalidOperationException("JSON data cannot be read before it is complete.");
             }
 
             JsonToken[] tokens = new JsonToken[_count + 2];
-            
+
             if (_count > 0)
                 Array.Copy(_tokens, 0, tokens, 1, _count);
-            
+
             tokens[0] = JsonToken.BOF();
             tokens[tokens.Length - 1] = JsonToken.EOF();
 
@@ -143,7 +143,7 @@ namespace Jayrock.Json
             public JsonPlayer(JsonToken[] tokens)
             {
                 Debug.Assert(tokens != null);
-                
+
                 _tokens = tokens;
             }
 

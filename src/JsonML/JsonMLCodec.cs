@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -34,40 +34,40 @@ namespace Jayrock.JsonML
 
     #region JsonML BNF grammar
     //
-    // The following BNF grammar represents how XML-based markup (e.g. XHTML) 
+    // The following BNF grammar represents how XML-based markup (e.g. XHTML)
     // is encoded into JsonML:
     //
-    //  element 
-    //      = '[' tag-name ',' attributes ',' element-list ']' 
-    //      | '[' tag-name ',' attributes ']' 
-    //      | '[' tag-name ',' element-list ']' 
-    //      | '[' tag-name ']' 
-    //      | json-string 
-    //      ; 
-    //  tag-name 
-    //      = json-string 
-    //      ; 
-    //  attributes 
-    //      = '{' attribute-list '}' 
-    //      | '{' '}' 
-    //      ; 
-    //  attribute-list 
-    //      = attribute ',' attribute-list 
-    //      | attribute 
-    //      ; 
-    //  attribute 
-    //      = attribute-name ':' attribute-value 
-    //      ; 
-    //  attribute-name 
-    //      = json-string 
-    //      ; 
-    //  attribute-value 
-    //      = json-string 
-    //      ; 
-    //  element-list 
-    //      = element ',' element-list 
-    //      | element 
-    //      ; 
+    //  element
+    //      = '[' tag-name ',' attributes ',' element-list ']'
+    //      | '[' tag-name ',' attributes ']'
+    //      | '[' tag-name ',' element-list ']'
+    //      | '[' tag-name ']'
+    //      | json-string
+    //      ;
+    //  tag-name
+    //      = json-string
+    //      ;
+    //  attributes
+    //      = '{' attribute-list '}'
+    //      | '{' '}'
+    //      ;
+    //  attribute-list
+    //      = attribute ',' attribute-list
+    //      | attribute
+    //      ;
+    //  attribute
+    //      = attribute-name ':' attribute-value
+    //      ;
+    //  attribute-name
+    //      = json-string
+    //      ;
+    //  attribute-value
+    //      = json-string
+    //      ;
+    //  element-list
+    //      = element ',' element-list
+    //      | element
+    //      ;
     //
     #endregion
 
@@ -81,7 +81,7 @@ namespace Jayrock.JsonML
         /// Converts JsonML in object or array form to XML.
         /// </summary>
         /// <remarks>
-        /// The JsonML form is automatically detected. If the reader is 
+        /// The JsonML form is automatically detected. If the reader is
         /// positioned on an object then decoding occurs using the object
         /// form. Otherwise the array form is assumed.
         /// </remarks>
@@ -120,7 +120,7 @@ namespace Jayrock.JsonML
         /// <summary>
         /// Converts JsonML in array form to XML.
         /// </summary>
-        
+
         public static void DecodeArrayForm(JsonReader reader, XmlWriter writer)
         {
             if (reader == null) throw new ArgumentNullException("reader");
@@ -218,11 +218,11 @@ namespace Jayrock.JsonML
             JsonObject attributes = null;
             JsonRecorder childNodes = null;
             ArrayList childNodesList = null;
-            
+
             while (reader.TokenClass != JsonTokenClass.EndObject)
             {
                 string memberName = reader.ReadMember();
-                
+
                 switch (memberName)
                 {
                     case "tagName":
@@ -245,7 +245,7 @@ namespace Jayrock.JsonML
                         {
                             if (reader.TokenClass != JsonTokenClass.Array)
                                 throw new JsonMLException("Child nodes must be a JSON array.");
-                            
+
                             JsonRecorder aChildNodes = new JsonRecorder();
                             aChildNodes.WriteFromReader(reader);
                             if (childNodes == null)
@@ -307,13 +307,13 @@ namespace Jayrock.JsonML
                 DecodeChildNodes(recording.CreatePlayer(), writer);
         }
 
-        private static void DecodeChildNodes(JsonReader reader, XmlWriter writer) 
+        private static void DecodeChildNodes(JsonReader reader, XmlWriter writer)
         {
             Debug.Assert(reader != null);
             Debug.Assert(writer != null);
 
             reader.ReadToken(JsonTokenClass.Array);
-            
+
             while (reader.TokenClass != JsonTokenClass.EndArray)
             {
                 if (reader.TokenClass == JsonTokenClass.Object)
@@ -331,7 +331,7 @@ namespace Jayrock.JsonML
                     reader.Read();
                 }
             }
-            
+
             reader.Read();
         }
 
@@ -471,8 +471,8 @@ namespace Jayrock.JsonML
                 XmlNodeType nodeType;
                 while ((nodeType = reader.NodeType) != XmlNodeType.EndElement)
                 {
-                    if (nodeType == XmlNodeType.Text 
-                        || nodeType == XmlNodeType.CDATA 
+                    if (nodeType == XmlNodeType.Text
+                        || nodeType == XmlNodeType.CDATA
                         || nodeType == XmlNodeType.Element)
                     {
                         if (childCount == 0)

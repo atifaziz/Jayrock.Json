@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -31,7 +31,7 @@ namespace Jayrock.Json.Conversion.Converters
 
     public sealed class ExportAwareExporter : ExporterBase
     {
-        public ExportAwareExporter(Type type) : 
+        public ExportAwareExporter(Type type) :
             base(type) {}
 
         protected override void ExportValue(ExportContext context, object value, JsonWriter writer)

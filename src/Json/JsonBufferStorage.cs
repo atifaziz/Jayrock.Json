@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -29,8 +29,8 @@ namespace Jayrock.Json
     #endregion
 
     /// <summary>
-    /// Serves as the shared backing storage for <see cref="JsonBuffer" /> 
-    /// objects. A <see cref="JsonBuffer" /> object is merely a 
+    /// Serves as the shared backing storage for <see cref="JsonBuffer" />
+    /// objects. A <see cref="JsonBuffer" /> object is merely a
     /// constrained view on an object of this type.
     /// </summary>
 

@@ -113,8 +113,8 @@ where BRUSH may be:
 
     Null
     Boolean
-    Number 
-    String 
+    Number
+    String
     Object
     Array
 

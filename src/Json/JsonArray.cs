@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -184,7 +184,7 @@ namespace Jayrock.Json
             Export(JsonText.CreateWriter(writer));
             return writer.ToString();
         }
-        
+
         /// <summary>
         /// Make an JSON external form string of this JsonArray. For
         /// compactness, no unnecessary whitespace is added.
@@ -210,15 +210,15 @@ namespace Jayrock.Json
 
             if (writer == null)
                 throw new ArgumentNullException("writer");
-            
+
             writer.WriteStartArray();
 
             foreach (object value in this)
                 context.Export(value, writer);
-            
+
             writer.WriteEndArray();
         }
-        
+
         public virtual void Import(JsonReader reader)
         {
             Import(JsonConvert.CreateImportContext(), reader);
@@ -233,26 +233,26 @@ namespace Jayrock.Json
         {
             if (context == null)
                 throw new ArgumentNullException("context");
-            
+
             if (reader == null)
                 throw new ArgumentNullException("reader");
-            
+
             //
             // IMPORTANT! A new list is created and then committed to make
             // sure that this method is exception-safe. If something goes
-            // wrong during the import of elements then this instance 
+            // wrong during the import of elements then this instance
             // will remain largely untouched.
             //
-            
+
             ArrayList list = new ArrayList();
-            
+
             reader.ReadToken(JsonTokenClass.Array);
-            
+
             while (reader.TokenClass != JsonTokenClass.EndArray)
                 list.Add(context.Import(reader));
-            
+
             reader.Read();
-            
+
             InnerList.Clear();
             InnerList.AddRange(list);
         }
@@ -296,7 +296,7 @@ namespace Jayrock.Json
         /// Use the <see cref="Concat"/> method to join the elements from two or
         /// more arrays.
         /// </remarks>
-        
+
         public virtual int Push(object value)
         {
             Add(value);
@@ -358,7 +358,7 @@ namespace Jayrock.Json
                 foreach (object value in values)
                 {
                     JsonArray arrayValue = value as JsonArray;
-                    
+
                     if (arrayValue != null)
                     {
                         foreach (object arrayValueValue in arrayValue)
@@ -439,7 +439,7 @@ namespace Jayrock.Json
         }
 
         /// <summary>
-        /// Copies the elements to an <see cref="T:System.Array"/>, 
+        /// Copies the elements to an <see cref="T:System.Array"/>,
         /// starting at a particular given index.
         /// </summary>
 
@@ -466,7 +466,7 @@ namespace Jayrock.Json
         {
             List.Insert(index, item);
         }
-        
+
         #endif // !NET_1_0 && !NET_1_1
     }
 }

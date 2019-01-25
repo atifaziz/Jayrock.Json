@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -45,33 +45,33 @@ namespace Jayrock.Json
         public static readonly JsonTokenClass Member = new JsonTokenClass("Member");
         public static readonly JsonTokenClass BOF = new JsonTokenClass("BOF", Superclass.Terminator);
         public static readonly JsonTokenClass EOF = new JsonTokenClass("EOF", Superclass.Terminator);
-            
+
         public static readonly ICollection All = ArrayList.ReadOnly(new JsonTokenClass[]
         {
-            BOF, EOF, 
-            Null, Boolean, Number, String, 
-            Array, EndArray, 
+            BOF, EOF,
+            Null, Boolean, Number, String,
+            Array, EndArray,
             Object, EndObject, Member
         });
-            
+
         private readonly string _name;
         [ NonSerialized ] private readonly Superclass _superclass;
-        
+
         private enum Superclass
         {
             Unspecified,
             Scalar,
             Terminator
         }
-           
+
         private JsonTokenClass(string name) :
             this(name, Superclass.Unspecified) {}
-        
+
         private JsonTokenClass(string name, Superclass superclass)
         {
             Debug.Assert(name != null);
             Debug.Assert(name.Length > 0);
-                
+
             _name = name;
             _superclass = superclass;
         }
@@ -95,12 +95,12 @@ namespace Jayrock.Json
         {
             return Name.GetHashCode();
         }
-            
+
         public override string ToString()
         {
             return Name;
         }
-            
+
         object IObjectReference.GetRealObject(StreamingContext context)
         {
             foreach (JsonTokenClass clazz in All)
@@ -108,7 +108,7 @@ namespace Jayrock.Json
                 if (string.CompareOrdinal(clazz.Name, Name) == 0)
                     return clazz;
             }
-                
+
             throw new SerializationException(string.Format("{0} is not a valid {1} instance.", Name, typeof(JsonTokenClass).FullName));
         }
     }

@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -35,10 +35,10 @@ namespace Jayrock.Json
     public class InvalidMemberException : Exception
     {
         private const string _defaultMessage = "No element exists at the specified index.";
-        
+
         public InvalidMemberException() : this(null) {}
 
-        public InvalidMemberException(string message) : 
+        public InvalidMemberException(string message) :
             base(Mask.NullString(message, _defaultMessage)) {}
 
         public InvalidMemberException(string message, Exception innerException) :

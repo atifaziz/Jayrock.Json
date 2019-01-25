@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -32,7 +32,7 @@ namespace Jayrock.Json
     {
         public const string TrueText = "true";
         public const string FalseText = "false";
-        
+
         private JsonBoolean()
         {
             throw new NotSupportedException();

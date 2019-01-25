@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -29,9 +29,9 @@ namespace Jayrock.Json
     using System.Globalization;
 
     #endregion
-    
+
     /// <summary>
-    /// Represents a writer that provides a fast, non-cached, forward-only means of 
+    /// Represents a writer that provides a fast, non-cached, forward-only means of
     /// emitting JSON data.
     /// </summary>
 
@@ -52,12 +52,12 @@ namespace Jayrock.Json
         public abstract int MaxDepth { get; set; }
 
         /// <summary>
-        /// Return the current index within a JSON Array 
+        /// Return the current index within a JSON Array
         /// (also valid for a JSON Object but indicates member count).
         /// </summary>
-        
+
         public abstract int Index { get; }
-                
+
         /// <summary>
         /// Determines the current bracket of the writer.
         /// </summary>
@@ -65,14 +65,14 @@ namespace Jayrock.Json
         public abstract JsonWriterBracket Bracket { get; }
 
         /// <summary>
-        /// When overridden in a derived class, writes out the start of a 
+        /// When overridden in a derived class, writes out the start of a
         /// JSON object.
         /// </summary>
 
         public abstract void WriteStartObject();
 
         /// <summary>
-        /// When overridden in a derived class, writes out the end of a 
+        /// When overridden in a derived class, writes out the end of a
         /// JSON object.
         /// </summary>
 
@@ -86,21 +86,21 @@ namespace Jayrock.Json
         public abstract void WriteMember(string name);
 
         /// <summary>
-        /// When overridden in a derived class, writes out the start of a 
+        /// When overridden in a derived class, writes out the start of a
         /// JSON array.
         /// </summary>
 
         public abstract void WriteStartArray();
 
         /// <summary>
-        /// When overridden in a derived class, writes out the end of a 
+        /// When overridden in a derived class, writes out the end of a
         /// JSON array.
         /// </summary>
 
         public abstract void WriteEndArray();
 
         /// <summary>
-        /// When overridden in a derived class, writes out a JSON string 
+        /// When overridden in a derived class, writes out a JSON string
         /// value.
         /// </summary>
 
@@ -126,45 +126,45 @@ namespace Jayrock.Json
         }
 
         /// <summary>
-        /// When overridden in a derived class, writes out a JSON number 
+        /// When overridden in a derived class, writes out a JSON number
         /// value.
         /// </summary>
 
         public abstract void WriteNumber(string value);
 
         /// <summary>
-        /// When overridden in a derived class, writes out a JSON boolean 
+        /// When overridden in a derived class, writes out a JSON boolean
         /// value.
         /// </summary>
-        
+
         public abstract void WriteBoolean(bool value);
 
         /// <summary>
         /// When overridden in a derived class, writes out the JSON null
         /// value.
         /// </summary>
-        
+
         public abstract void WriteNull();
-        
+
         /// <summary>
-        /// When overridden in a derived class, flushes whatever is in the 
-        /// buffer to the underlying streams and also flushes the 
+        /// When overridden in a derived class, flushes whatever is in the
+        /// buffer to the underlying streams and also flushes the
         /// underlying stream. The default implementation does nothing.
         /// </summary>
-        
+
         public virtual void Flush() {}
 
         /// <summary>
-        /// Closes the writer and releases any underlying resources 
+        /// Closes the writer and releases any underlying resources
         /// associated with the writer.
         /// </summary>
-        
+
         public virtual void Close()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-        
+
         /// <summary>
         /// Writes a JSON number from a <see cref="Byte"/> value.
         /// </summary>
@@ -248,7 +248,7 @@ namespace Jayrock.Json
             else
             {
                 WriteStartArray();
-                        
+
                 foreach (object value in values)
                 {
                     if (JsonNull.LogicallyEquals(value))
@@ -256,13 +256,13 @@ namespace Jayrock.Json
                     else
                         WriteString(value.ToString());
                 }
-                        
+
                 WriteEndArray();
             }
         }
 
         /// <summary>
-        /// Writes a JSON array of JSON strings given an array of 
+        /// Writes a JSON array of JSON strings given an array of
         /// <see cref="String"/> values.
         /// </summary>
 
@@ -275,7 +275,7 @@ namespace Jayrock.Json
             else
             {
                 WriteStartArray();
-                        
+
                 foreach (string value in values)
                 {
                     if (JsonNull.LogicallyEquals(value))
@@ -283,7 +283,7 @@ namespace Jayrock.Json
                     else
                         WriteString(value);
                 }
-                        
+
                 WriteEndArray();
             }
         }
@@ -297,7 +297,7 @@ namespace Jayrock.Json
 
         public virtual void WriteFromReader(JsonReader reader)
         {
-            if (reader == null)            
+            if (reader == null)
                 throw new ArgumentNullException("reader");
 
             if (!reader.MoveToContent())
@@ -305,7 +305,7 @@ namespace Jayrock.Json
 
             if (reader.TokenClass == JsonTokenClass.String)
             {
-                WriteString(reader.Text); 
+                WriteString(reader.Text);
             }
             else if (reader.TokenClass == JsonTokenClass.Number)
             {
@@ -313,7 +313,7 @@ namespace Jayrock.Json
             }
             else if (reader.TokenClass == JsonTokenClass.Boolean)
             {
-                WriteBoolean(reader.Text == JsonBoolean.TrueText); 
+                WriteBoolean(reader.Text == JsonBoolean.TrueText);
             }
             else if (reader.TokenClass == JsonTokenClass.Null)
             {
@@ -333,7 +333,7 @@ namespace Jayrock.Json
             {
                 reader.Read();
                 WriteStartObject();
-                    
+
                 while (reader.TokenClass != JsonTokenClass.EndObject)
                 {
                     WriteMember(reader.ReadMember());
@@ -342,29 +342,29 @@ namespace Jayrock.Json
 
                 WriteEndObject();
             }
-            else 
+            else
             {
                 throw new JsonException(string.Format("{0} not expected.", reader.TokenClass));
             }
 
             reader.Read();
         }
-        
+
         public void AutoComplete()
         {
             if (Depth == 0)
                 throw new InvalidOperationException();
-            
+
             if (Bracket == JsonWriterBracket.Member)
                 WriteNull();
-            
+
             while (Depth > 0)
             {
                 if (Bracket == JsonWriterBracket.Object)
                     WriteEndObject();
                 else if (Bracket == JsonWriterBracket.Array)
                     WriteEndArray();
-                else 
+                else
                     throw new Exception("Implementation error.");
             }
         }
@@ -372,14 +372,14 @@ namespace Jayrock.Json
         /// <summary>
         /// Represents the method that handles the Disposed event of a reader.
         /// </summary>
-        
+
         public virtual event EventHandler Disposed;
-        
+
         void IDisposable.Dispose()
         {
             Close();
         }
-        
+
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)
@@ -389,7 +389,7 @@ namespace Jayrock.Json
         private void OnDisposed(EventArgs e)
         {
             EventHandler handler = Disposed;
-            
+
             if (handler != null)
                 handler(this, e);
         }

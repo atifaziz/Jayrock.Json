@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -73,7 +73,7 @@ namespace Jayrock.Json.Conversion.Converters
             AppendRow(table, new object[] { null });
             Assert.AreEqual("[{\"id\":1},{\"id\":null},{\"id\":3},{\"id\":null}]", Format(table));
         }
-        
+
         private static void AppendRow(DataTable table, params object[] values)
         {
             table.Rows.Add(values);
@@ -85,7 +85,7 @@ namespace Jayrock.Json.Conversion.Converters
             JsonConvert.Export(new FakeDataTableReader(table), writer);
             return writer.ToString();
         }
-        
+
         //
         // NOTE: The .NET Framework 2.0 has a DataTableReader implementation.
         // The following is a stub implementation for testing under 1.x.
@@ -100,10 +100,10 @@ namespace Jayrock.Json.Conversion.Converters
             public FakeDataTableReader(DataTable table)
             {
                 Debug.Assert(table != null);
-                
+
                 _table = table;
             }
-            
+
             private DataRow CurrentRow
             {
                 get { return _table.Rows[_index]; }
@@ -123,7 +123,7 @@ namespace Jayrock.Json.Conversion.Converters
             {
                 if (_index + 1 >= _table.Rows.Count)
                     return false;
-                
+
                 _index++;
                 return true;
             }
@@ -182,12 +182,12 @@ namespace Jayrock.Json.Conversion.Converters
             }
 
             #region Unimplemented and uninteresting IDataRecord/Reader members
-            
+
             //
             // The remaining IDataRecord/Reader members are not implemented
-            // because DbEnumerator never seems to call them. 
+            // because DbEnumerator never seems to call them.
             //
-            // NOTE: It may be that this assumption no longer holds true in 
+            // NOTE: It may be that this assumption no longer holds true in
             // a future implementation of the DbEnumerator and there for
             // this test fixutre may entirely fail. Consider finishing the
             // implementation minimally.
@@ -297,7 +297,7 @@ namespace Jayrock.Json.Conversion.Converters
             {
                 get { throw new NotImplementedException(); }
             }
-            
+
             #endregion
         }
     }

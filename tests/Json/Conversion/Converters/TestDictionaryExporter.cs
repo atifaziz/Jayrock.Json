@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -36,7 +36,7 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void Superclass()
         {
-            Assert.IsInstanceOf<ExporterBase>(new DictionaryExporter(typeof(Hashtable)));    
+            Assert.IsInstanceOf<ExporterBase>(new DictionaryExporter(typeof(Hashtable)));
         }
 
         [ Test ]
@@ -59,27 +59,27 @@ namespace Jayrock.Json.Conversion.Converters
         public void ExportFlat()
         {
             Hashtable h = new Hashtable();
-         
+
             h.Add("FirstName", "John");
             h.Add("LastName", "Doe");
             h.Add("MiddleName", null);
-            
+
             JsonReader reader = Export(h);
-            
+
             //
-            // We need a complex assertions loop here because the order in 
+            // We need a complex assertions loop here because the order in
             // which members are written cannot be guaranteed to follow
             // the order of insertion.
             //
-            
+
             reader.ReadToken(JsonTokenClass.Object);
             while (reader.TokenClass != JsonTokenClass.EndObject)
             {
                 string member = reader.ReadMember();
                 Assert.IsTrue(h.Contains(member));
-            
+
                 object expected = h[member];
-                
+
                 if (expected == null)
                     reader.ReadNull();
                 else

@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -37,11 +37,11 @@ namespace Jayrock.Json.Conversion.Converters
 
         public virtual object Import(ImportContext context, JsonReader reader)
         {
-            if (context == null) 
+            if (context == null)
                 throw new ArgumentNullException("context");
-            if (reader == null) 
+            if (reader == null)
                 throw new ArgumentNullException("reader");
-            
+
             return JsonBuffer.From(reader);
         }
     }

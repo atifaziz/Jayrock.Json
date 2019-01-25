@@ -18,11 +18,11 @@ namespace JsonConversionsDemo
     {
         private readonly Type _elementType;
 
-        public CollectionImporterBase(Type outputType, Type elementType) : 
+        public CollectionImporterBase(Type outputType, Type elementType) :
             base(outputType)
         {
             if (elementType == null) throw new ArgumentNullException("elementType");
-            
+
             _elementType = elementType;
         }
 

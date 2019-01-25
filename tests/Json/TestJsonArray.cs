@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -77,7 +77,7 @@ namespace Jayrock.Json
             Assert.AreEqual(a[2], reader.ReadBoolean());
             reader.ReadToken(JsonTokenClass.EndArray);
         }
-        
+
         [ Test ]
         public void ContentsClearedBeforeImporting()
         {
@@ -87,14 +87,14 @@ namespace Jayrock.Json
             a.Import(new JsonTextReader(new StringReader("[123]")));
             Assert.AreEqual(1, a.Length);
         }
-        
+
         [ Test ]
         public void ImportIsExceptionSafe()
         {
             JsonArray a = new JsonArray();
             object o = new object();
             a.Add(o);
-            
+
             try
             {
                 a.Import(new JsonTextReader(new StringReader("[123,456,")));
@@ -102,11 +102,11 @@ namespace Jayrock.Json
             catch (JsonException)
             {
             }
-            
+
             Assert.AreEqual(1, a.Count);
             Assert.AreSame(o, a[0]);
         }
-        
+
         [ Test, ExpectedException(typeof(ArgumentNullException)) ]
         public void CannotUseNullReaderWithImport()
         {

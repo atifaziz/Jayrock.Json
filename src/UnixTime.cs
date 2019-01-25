@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -33,27 +33,27 @@ namespace Jayrock
         public static readonly DateTime EpochUtc = new DateTime(1970, 1, 1);
 
         /// <summary>
-        /// Converts Unix time (UTC) into a DateTime instance that 
+        /// Converts Unix time (UTC) into a DateTime instance that
         /// represents the same time in local time with a maximum
         /// precision of a milliseconds.
         /// </summary>
         /// <remarks>
-        /// This method works with time expressed up through 
+        /// This method works with time expressed up through
         /// 23:59:59, December 31, 3000, UTC.
         /// </remarks>
-        
+
         public static DateTime ToDateTime(double time)
         {
             return ToDateTime((long) time, (int) Math.Round(time % 1 * 1000));
         }
-        
+
         /// <summary>
-        /// Converts Unix time (UTC) into a DateTime instance that 
+        /// Converts Unix time (UTC) into a DateTime instance that
         /// represents the same time in local time with a maximum
         /// precision of a second.
         /// </summary>
         /// <remarks>
-        /// This method works with time expressed up through 
+        /// This method works with time expressed up through
         /// 23:59:59, December 31, 3000, UTC.
         /// </remarks>
 
@@ -61,16 +61,16 @@ namespace Jayrock
         {
             return ToDateTime(time, 0);
         }
-        
+
         /// <summary>
         /// Converts a 64-bit Unix time (UTC) into a DateTime instance that
         /// represents the same time in local time (precision can be a second
-        /// or a millisecond depending on whether the second parameter is 
+        /// or a millisecond depending on whether the second parameter is
         /// zero or not).
         /// </summary>
         /// <remarks>
         /// See <a href="http://en.wikipedia.org/wiki/Unix_time">Unix time on Wikipedia</a>
-        /// for more information. This method works with time expressed 
+        /// for more information. This method works with time expressed
         /// up through 23:59:59, December 31, 3000, UTC.
         /// </remarks>
 
@@ -94,7 +94,7 @@ namespace Jayrock
 
             return EpochUtc.AddSeconds(time).AddMilliseconds(ms).ToLocalTime();
         }
-        
+
         /// <summary>
         /// Converts a DateTime instance (assumed to represent local time)
         /// to Unix time (UTC) with a maximum precision of a second.

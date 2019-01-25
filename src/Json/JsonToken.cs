@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -43,7 +43,7 @@ namespace Jayrock.Json
             _class = clazz;
             _text = text;
         }
-        
+
         /// <summary>
         /// Gets the class/type/category of the token.
         /// </summary>
@@ -66,7 +66,7 @@ namespace Jayrock.Json
         {
             return Text == null ? Class.Name : Class.Name + ":" + DebugString.Format(Text);
         }
-        
+
         public override int GetHashCode()
         {
             return Class.GetHashCode() ^ (Text == null ? 0 : Text.GetHashCode());
@@ -140,15 +140,15 @@ namespace Jayrock.Json
         {
             return Boolean(false);
         }
-        
+
         public static JsonToken Number(string text)
         {
-            if (text == null)                   
+            if (text == null)
                 throw new ArgumentNullException("text");
-                    
+
             if (text.Length == 0)
                 throw new ArgumentException("Number text cannot zero in length.", "text");
-                    
+
             return new JsonToken(JsonTokenClass.Number, text);
         }
 

@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -87,13 +87,13 @@ namespace Jayrock.Json.Conversion.Converters
         {
             Import("[]");
         }
-        
+
         [ Test, ExpectedException(typeof(JsonException)) ]
         public void CannotImportObject()
         {
             Import("{}");
         }
-        
+
         [ Test, ExpectedException(typeof(JsonException)) ]
         public void CannotImportOutOfRangeNumber()
         {
@@ -150,7 +150,7 @@ namespace Jayrock.Json.Conversion.Converters
             Assert.IsInstanceOf<DateTime>(o);
             if (expectingUTC)
                 Assert.AreEqual(expected, ((DateTime) o).ToUniversalTime());
-            else 
+            else
                 Assert.AreEqual(expected, o);
         }
 
@@ -169,8 +169,8 @@ namespace Jayrock.Json.Conversion.Converters
         {
             TimeSpan offset = TimeZone.CurrentTimeZone.GetUtcOffset(localTime);
             string offsetString = offset.ToString();
-            return offset.Ticks < 0 ? 
-                   (offsetString.Substring(0, 6)) : 
+            return offset.Ticks < 0 ?
+                   (offsetString.Substring(0, 6)) :
                    ("+" + offsetString.Substring(0, 5));
         }
     }

@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -65,11 +65,11 @@ namespace Jayrock.Json.Conversion.Converters
         {
             AssertImport(new int[] { 123, 789, 456 }, "[ 123, 789, 456 ]");
         }
-        
+
         [ Test ]
         public void ImportStringArray()
         {
-            AssertImport(new string[] { "see no evil", "hear no evil", "speak no evil" }, 
+            AssertImport(new string[] { "see no evil", "hear no evil", "speak no evil" },
                 "[ 'see no evil', 'hear no evil', 'speak no evil' ]");
         }
 
@@ -78,7 +78,7 @@ namespace Jayrock.Json.Conversion.Converters
         {
             AssertImport(new DateTime[] { new DateTime(1999, 12, 31), new DateTime(2000, 1, 1),  }, "[ '1999-12-31', '2000-01-01' ]");
         }
-        
+
         [ Test ]
         public void ImportStringAsArray()
         {
@@ -103,14 +103,14 @@ namespace Jayrock.Json.Conversion.Converters
         private static void AssertImport(Array expected, string s)
         {
             JsonReader reader = CreateReader(s);
-            
-            ImportContext context = new ImportContext();            
+
+            ImportContext context = new ImportContext();
             object o = context.Import(expected.GetType(), reader);
             Assert.IsTrue(reader.EOF);
 
             if (expected == null)
                 Assert.IsNull(o);
-            
+
             Assert.AreEqual(expected, o);
         }
 

@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -87,7 +87,7 @@ namespace Jayrock.Json
             AssertTokenText(JsonTokenClass.Boolean, "true");
             AssertEOF();
         }
-        
+
         [ Test ]
         public void BooleanFalse()
         {
@@ -187,11 +187,11 @@ namespace Jayrock.Json
             AssertMember("menu", JsonTokenClass.Object);
             AssertMember("header", "SVG Viewer");
             AssertMember("items", JsonTokenClass.Array);
-            
+
             AssertToken(JsonTokenClass.Object);
             AssertMember("id", "Open");
             AssertToken(JsonTokenClass.EndObject);
-            
+
             AssertToken(JsonTokenClass.Object);
             AssertMember("id", "OpenNew");
             AssertMember("label", "Open New");
@@ -215,7 +215,7 @@ namespace Jayrock.Json
             AssertToken(JsonTokenClass.EndObject);
 
             AssertToken(JsonTokenClass.Null);
-            
+
             AssertToken(JsonTokenClass.Object);
             AssertMember("id", "Quality");
             AssertToken(JsonTokenClass.EndObject);
@@ -227,7 +227,7 @@ namespace Jayrock.Json
             AssertToken(JsonTokenClass.Object);
             AssertMember("id", "Mute");
             AssertToken(JsonTokenClass.EndObject);
-            
+
             AssertToken(JsonTokenClass.EndArray);
             AssertToken(JsonTokenClass.EndObject);
             AssertToken(JsonTokenClass.EndObject);
@@ -237,7 +237,7 @@ namespace Jayrock.Json
         [ Test ]
         public void OneLevelDepth()
         {
-         
+
             CreateReader("[]");
             Assert.AreEqual(0, _reader.Depth);
             AssertToken(JsonTokenClass.Array);
@@ -250,7 +250,7 @@ namespace Jayrock.Json
 
         [ Test ]
         public void TwoLevelDepth()
-        {         
+        {
             CreateReader("[{}]");
             Assert.AreEqual(0, _reader.Depth);
 
@@ -261,14 +261,14 @@ namespace Jayrock.Json
             Assert.AreEqual(2, _reader.Depth);
             AssertToken(JsonTokenClass.EndObject);
             Assert.AreEqual(2, _reader.Depth);
-            
+
             AssertToken(JsonTokenClass.EndArray);
             Assert.AreEqual(1, _reader.Depth);
 
             AssertEOF();
             Assert.AreEqual(0, _reader.Depth);
         }
-        
+
         [ Test ]
         public void NestedDepths()
         {
@@ -278,7 +278,7 @@ namespace Jayrock.Json
             for (int i = 0; i < maxDepth; i++)
             {
                 Assert.AreEqual(i, _reader.Depth);
-                
+
                 if (i % 2 == 0)
                 {
                     AssertToken(JsonTokenClass.Array);
@@ -339,7 +339,7 @@ namespace Jayrock.Json
         {
             JsonReader reader = CreateReader(@"
                 {'web-app': {
-                'servlet': [   
+                'servlet': [
                     {
                     'servlet-name': 'cofaxCDS',
                     'servlet-class': 'org.cofax.cds.CDSServlet',
@@ -395,7 +395,7 @@ namespace Jayrock.Json
                     {
                     'servlet-name': 'cofaxAdmin',
                     'servlet-class': 'org.cofax.cds.AdminServlet'},
-                 
+
                     {
                     'servlet-name': 'fileServlet',
                     'servlet-class': 'org.cofax.cds.FileServlet'},
@@ -422,7 +422,7 @@ namespace Jayrock.Json
                     'cofaxAdmin': '/admin/*',
                     'fileServlet': '/static/*',
                     'cofaxTools': '/tools/*'},
-                 
+
                 'taglib': {
                     'taglib-uri': 'cofax.tld',
                     'taglib-location': '/WEB-INF/tlds/cofax.tld'}}}");
@@ -461,7 +461,7 @@ namespace Jayrock.Json
             reader.MoveToContent();
             reader.StepOut();
         }
-        
+
         [ Test, ExpectedException(typeof(JsonException)) ]
         public void MissingObjectMember()
         {
@@ -612,7 +612,7 @@ namespace Jayrock.Json
         {
             Assert.AreEqual("\n", CreateReader("'\\n'").ReadString());
         }
-        
+
         [ Test ]
         public void StringWithEscapedFormFeed()
         {
@@ -624,7 +624,7 @@ namespace Jayrock.Json
         {
             Assert.AreEqual("\r", CreateReader("'\\r'").ReadString());
         }
-        
+
         [ Test, ExpectedException(typeof(JsonException)) ]
         public void StringWithIncompleteHexEscaping()
         {
@@ -647,7 +647,7 @@ namespace Jayrock.Json
             catch (JsonException e)
             {
                 Assert.AreEqual(
-                    "The text '-Infinity' has the incorrect syntax for a number.", 
+                    "The text '-Infinity' has the incorrect syntax for a number.",
                     e.Message.Substring(0, e.Message.IndexOf('.') + 1));
             }
         }
@@ -812,7 +812,7 @@ namespace Jayrock.Json
         {
             AssertMember(name, JsonTokenClass.String, value);
         }
-        
+
         private void AssertMember(string name, JsonTokenClass valueToken, string valueText)
         {
             AssertTokenText(JsonTokenClass.Member, name);

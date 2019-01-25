@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -65,7 +65,7 @@ namespace Jayrock.Json.Conversion
             AssertInStock(typeof(UriImporter), typeof(Uri));
             AssertInStock(typeof(JsonBufferImporter), typeof(JsonBuffer));
 
-            #if !NET_1_0 && !NET_1_1 
+            #if !NET_1_0 && !NET_1_1
 
             AssertInStock(typeof(NullableImporter), typeof(int?));
             AssertInStock(typeof(DictionaryImporter<string, string>), typeof(System.Collections.Generic.IDictionary<string, string>));
@@ -84,7 +84,7 @@ namespace Jayrock.Json.Conversion
 
             // TODO Use AssertInStock once CollectionImporter is public
             Assert.IsNotNull(new ImportContext().FindImporter(typeof(System.Collections.Generic.ISet<string>)));
-            
+
             AssertInStock(typeof(BigIntegerImporter), typeof(System.Numerics.BigInteger));
             AssertInStock(typeof(ExpandoObjectImporter), typeof(System.Dynamic.ExpandoObject));
 
@@ -132,7 +132,7 @@ namespace Jayrock.Json.Conversion
             Assert.IsNotNull(importer, "No importer found for {0}", type.FullName);
             Assert.IsInstanceOf(expected, importer, type.FullName);
         }
-        
+
         private sealed class ImportableThing : IJsonImportable
         {
             public void Import(ImportContext context, JsonReader reader)
@@ -155,14 +155,14 @@ namespace Jayrock.Json.Conversion
                 throw new NotImplementedException();
             }
         }
-    
+
         public struct ValueThing
         {
             public int Field1;
             public int Field2;
         }
 
-        #if !NET_1_0 && !NET_1_1 
+        #if !NET_1_0 && !NET_1_1
 
         internal class DictionaryThing : System.Collections.Generic.IDictionary<Guid, string>
         {

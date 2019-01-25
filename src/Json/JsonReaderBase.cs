@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -27,7 +27,7 @@ namespace Jayrock.Json
     using System;
 
     #endregion
-    
+
     /// <summary>
     /// Base implementation of <see cref="JsonReader"/> that can be used
     /// as a starting point for sub-classes of <see cref="JsonReader"/>.
@@ -93,14 +93,14 @@ namespace Jayrock.Json
                 if (TokenClass == JsonTokenClass.Object || TokenClass == JsonTokenClass.Array)
                     _depth++;
             }
-            
+
             return !EOF;
         }
 
         /// <summary>
         /// Reads the next token and returns it.
         /// </summary>
-        
+
         protected abstract JsonToken ReadTokenImpl();
     }
 }

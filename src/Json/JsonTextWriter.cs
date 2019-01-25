@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -28,9 +28,9 @@ namespace Jayrock.Json
     using System.IO;
 
     #endregion
-    
+
     /// <summary>
-    /// Represents a writer that provides a fast, non-cached, forward-only means of 
+    /// Represents a writer that provides a fast, non-cached, forward-only means of
     /// emitting JSON data formatted as JSON text (RFC 4627).
     /// </summary>
 
@@ -43,13 +43,13 @@ namespace Jayrock.Json
         // http://developer.mozilla.org/es4/proposals/json_encoding_and_decoding.html
         //
         // <quote>
-        // ...linefeeds are inserted after each { and , and before } , and multiples 
-        // of 4 spaces are inserted to indicate the level of nesting, and one space 
-        // will be inserted after :. Otherwise, no whitespace is inserted between 
+        // ...linefeeds are inserted after each { and , and before } , and multiples
+        // of 4 spaces are inserted to indicate the level of nesting, and one space
+        // will be inserted after :. Otherwise, no whitespace is inserted between
         // the tokens.
         // </quote>
         //
-        
+
         private bool _prettyPrint;
         private bool _newLine;
         private int _indent;
@@ -82,7 +82,7 @@ namespace Jayrock.Json
         public override string ToString()
         {
             StringWriter stringWriter = _writer as StringWriter;
-            return stringWriter != null ? 
+            return stringWriter != null ?
                 stringWriter.ToString() : base.ToString();
         }
 
@@ -92,7 +92,7 @@ namespace Jayrock.Json
             WriteDelimiter('{');
             PrettySpace();
         }
-        
+
         protected override void WriteEndObjectImpl()
         {
             if (Index > 0)
@@ -116,7 +116,7 @@ namespace Jayrock.Json
                 PrettyLine();
                 _indent++;
             }
-            
+
             WriteStringImpl(name);
             WriteDelimiter(':');
             PrettySpace();
@@ -163,12 +163,12 @@ namespace Jayrock.Json
             PrettyIndent();
             _writer.Write(text);
         }
-        
+
         private bool IsNonEmptyArray()
         {
             return Bracket == JsonWriterBracket.Array && Index > 0;
         }
-        
+
         //
         // Methods below are mostly related to pretty-printing of JSON text.
         //
@@ -201,23 +201,23 @@ namespace Jayrock.Json
             _newLine = true;
         }
 
-        private void PrettyIndent() 
+        private void PrettyIndent()
         {
             if (!_prettyPrint)
                 return;
-            
+
             if (_newLine)
             {
                 if (_indent > 0)
                 {
                     int spaces = _indent * 4;
-                    
+
                     if (_indentBuffer == null || _indentBuffer.Length < spaces)
                         _indentBuffer = new string(' ', spaces * 4).ToCharArray();
-                    
+
                     _writer.Write(_indentBuffer, 0, spaces);
                 }
-                
+
                 _newLine = false;
             }
         }

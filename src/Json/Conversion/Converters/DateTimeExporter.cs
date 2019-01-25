@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -32,13 +32,13 @@ namespace Jayrock.Json.Conversion.Converters
     #endregion
 
     /// <remarks>
-    /// See <a href="http://www.w3.org/TR/NOTE-datetime">W3C note on date 
+    /// See <a href="http://www.w3.org/TR/NOTE-datetime">W3C note on date
     /// and time formats</a>.
     /// </remarks>
 
     public class DateTimeExporter : ExporterBase
     {
-        public DateTimeExporter() : 
+        public DateTimeExporter() :
             base(typeof(DateTime)) {}
 
         protected override void ExportValue(ExportContext context, object value, JsonWriter writer)
@@ -71,7 +71,7 @@ namespace Jayrock.Json.Conversion.Converters
             chars[19] = '.';
 
             // Date
-            
+
             Digits4(chars, when.Year,  0);
             Digits2(chars, when.Month, 5);
             Digits2(chars, when.Day,   8);
@@ -89,7 +89,7 @@ namespace Jayrock.Json.Conversion.Converters
             chars[27] = offset.Ticks >= 0 ? '+' : '-';
             Digits2(chars, Math.Abs(offset.Hours),   28);
             Digits2(chars, offset.Minutes, 31);
-            
+
             return chars;
         }
 
@@ -98,13 +98,13 @@ namespace Jayrock.Json.Conversion.Converters
             buffer[offset++] = (char) ('0' + (value / 10));
             buffer[offset]   = (char) ('0' + (value % 10));
         }
-        
+
         static void Digits3(char[] buffer, int value, int offset)
         {
             buffer[offset++] = (char) ('0' + (value / 100));
             Digits2(buffer, value % 100, offset);
         }
-        
+
         static void Digits4(char[] buffer, int value, int offset)
         {
             buffer[offset++] = (char) ('0' + (value / 1000));

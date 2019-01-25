@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -30,7 +30,7 @@ namespace Jayrock.Json.Conversion.Converters
     using CustomTypeDescriptor = Conversion.CustomTypeDescriptor;
 
     #endregion
-    
+
     public sealed class ComponentImporter : ImporterBase
     {
         private readonly PropertyDescriptorCollection _properties; // TODO: Review thread-safety of PropertyDescriptorCollection
@@ -40,10 +40,10 @@ namespace Jayrock.Json.Conversion.Converters
         public ComponentImporter(Type type) :
             this(type, null, null) {}
 
-        public ComponentImporter(Type type, ICustomTypeDescriptor typeDescriptor) : 
+        public ComponentImporter(Type type, ICustomTypeDescriptor typeDescriptor) :
             this(type, typeDescriptor, null) {}
 
-        public ComponentImporter(Type type, IObjectConstructor constructor) : 
+        public ComponentImporter(Type type, IObjectConstructor constructor) :
             this(type, null, constructor) {}
 
         public ComponentImporter(Type type, ICustomTypeDescriptor typeDescriptor, IObjectConstructor constructor) :
@@ -51,23 +51,23 @@ namespace Jayrock.Json.Conversion.Converters
         {
             if (typeDescriptor == null)
                 typeDescriptor = new CustomTypeDescriptor(type);
-            
+
             int count = 0;
             PropertyDescriptorCollection properties = typeDescriptor.GetProperties();
             IObjectMemberImporter[] importers = new IObjectMemberImporter[properties.Count];
-            
+
             for (int i = 0; i < properties.Count; i++)
             {
                 IServiceProvider sp = properties[i] as IServiceProvider;
-                
+
                 if (sp == null)
                     continue;
-                
+
                 IObjectMemberImporter importer = (IObjectMemberImporter) sp.GetService(typeof(IObjectMemberImporter));
-                
+
                 if (importer == null)
                     continue;
-                
+
                 importers[i] = importer;
                 count++;
             }
@@ -102,53 +102,53 @@ namespace Jayrock.Json.Conversion.Converters
             }
 
             INonObjectMemberImporter otherImporter = obj as INonObjectMemberImporter;
-            
+
             while (reader.TokenClass != JsonTokenClass.EndObject)
             {
                 string memberName = reader.ReadMember();
-               
+
                 PropertyDescriptor property = _properties.Find(memberName, true);
-                
+
                 //
                 // Skip over the member value and continue with reading if
                 // the property was not found or if the property found cannot
                 // be set.
                 //
-                
+
                 if (property == null || property.IsReadOnly)
                 {
                     if (otherImporter == null || !otherImporter.Import(context, memberName, reader))
                         reader.Skip();
                     continue;
                 }
-                
+
                 //
                 // Check if the property defines a custom import scheme.
-                // If yes, ask it to import the value into the property 
+                // If yes, ask it to import the value into the property
                 // and then continue with the next.
                 //
-                
+
                 if (_importers != null)
                 {
                     int index = _properties.IndexOf(property);
-                    
+
                     IObjectMemberImporter importer = _importers[index];
-                    
+
                     if (importer != null)
                     {
                         importer.Import(context, reader, obj);
                         continue;
                     }
                 }
-                    
+
                 //
-                // Import from reader based on the property type and 
+                // Import from reader based on the property type and
                 // then set the value of the property.
                 //
-                
+
                 property.SetValue(obj, context.Import(property.PropertyType, reader));
             }
-         
+
             return ReadReturning(reader, obj);
         }
     }

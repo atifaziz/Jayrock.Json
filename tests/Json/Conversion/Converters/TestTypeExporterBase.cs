@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -33,7 +33,7 @@ namespace Jayrock.Json.Conversion.Converters
     public class TestTypeExporterBase
     {
         private readonly ThingExporter _exporter = new ThingExporter();
-        
+
         [ Test ]
         public void ExportNull()
         {
@@ -51,14 +51,14 @@ namespace Jayrock.Json.Conversion.Converters
         {
             _exporter.Export(null, null, null);
         }
- 
+
         private JsonReader Export(object value)
         {
             JsonRecorder writer = new JsonRecorder();
             _exporter.Export(new ExportContext(), value, writer);
             return writer.CreatePlayer();
         }
-        
+
         private class Thing
         {
         }
@@ -66,7 +66,7 @@ namespace Jayrock.Json.Conversion.Converters
         private class ThingExporter : ExporterBase
         {
             public ThingExporter() : base(typeof(Thing)) {}
-            
+
             protected override void ExportValue(ExportContext context, object value, JsonWriter writer)
             {
             }

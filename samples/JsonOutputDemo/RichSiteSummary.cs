@@ -13,14 +13,14 @@ namespace JsonOutputDemo
     //
 
     [ XmlRoot("rss", Namespace = "", IsNullable = false) ]
-    public class RichSiteSummary 
+    public class RichSiteSummary
     {
         public Channel channel;
         [ XmlAttribute ]
         public string version;
     }
-    
-    public class Channel 
+
+    public class Channel
     {
         public string title;
         [ XmlElement(DataType = "anyURI") ]
@@ -45,8 +45,8 @@ namespace JsonOutputDemo
         [ XmlElement("item") ]
         public Item[] item;
     }
-    
-    public class Image 
+
+    public class Image
     {
         public string title;
         [ XmlElement(DataType = "anyURI") ]
@@ -61,8 +61,8 @@ namespace JsonOutputDemo
         public bool heightSpecified;
         public string description;
     }
-    
-    public class Item 
+
+    public class Item
     {
         public string title;
         public string description;
@@ -70,8 +70,8 @@ namespace JsonOutputDemo
         [ XmlElement(DataType = "anyURI") ]
         public string link;
     }
-    
-    public class TextInput 
+
+    public class TextInput
     {
         public string title;
         public string description;
@@ -80,7 +80,7 @@ namespace JsonOutputDemo
         public string link;
     }
 
-    public enum Day 
+    public enum Day
     {
         Monday,
         Tuesday,

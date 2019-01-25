@@ -12,8 +12,8 @@ namespace JsonOutputDemo
     #endregion
 
     /// <summary>
-    /// This program demonstrates using JsonTextWriter to emit JSON text in 
-    /// a forward-only, stream-oriented fashion. It also demonstrates 
+    /// This program demonstrates using JsonTextWriter to emit JSON text in
+    /// a forward-only, stream-oriented fashion. It also demonstrates
     /// using JsonConvert to format CLR types into JSON text.
     /// </summary>
 
@@ -25,12 +25,12 @@ namespace JsonOutputDemo
 
         private static void Main()
         {
-            Demo[] demos = new Demo[] 
+            Demo[] demos = new Demo[]
             {
-                WriteContinents, 
-                WriteContact, 
-                WriteRssToJson, 
-                ExportRssToJson, 
+                WriteContinents,
+                WriteContact,
+                WriteRssToJson,
+                ExportRssToJson,
             };
 
             foreach (Demo demo in demos)
@@ -65,12 +65,12 @@ namespace JsonOutputDemo
             using (JsonWriter writer = CreateJsonWriter(Console.Out))
             {
                 writer.WriteStartObject();              //  {
-                writer.WriteMember("Name");             //      "Name" : 
+                writer.WriteMember("Name");             //      "Name" :
                 writer.WriteString("John Doe");         //          "John Doe",
                 writer.WriteMember("PermissionToCall"); //      "PermissionToCall" :
                 writer.WriteBoolean(true);              //          true,
                 writer.WriteMember("PhoneNumbers");     //      "PhoneNumbers" :
-                writer.WriteStartArray();               //          [ 
+                writer.WriteStartArray();               //          [
                 WritePhoneNumber(writer,                //            { "Location": "Home",
                     "Home", "555-555-1234");            //              "Number": "555-555-1234" },
                 WritePhoneNumber(writer,                //            { "Location": "Work",
@@ -83,8 +83,8 @@ namespace JsonOutputDemo
         private static void WritePhoneNumber(JsonWriter writer, string location, string number)
         {
             writer.WriteStartObject();      //  {
-            writer.WriteMember("Location"); //      "Location" : 
-            writer.WriteString(location);   //          "...", 
+            writer.WriteMember("Location"); //      "Location" :
+            writer.WriteString(location);   //          "...",
             writer.WriteMember("Number");   //      "Number" :
             writer.WriteString(number);     //          "..."
             writer.WriteEndObject();        //  }
@@ -97,9 +97,9 @@ namespace JsonOutputDemo
         }
 
         //
-        // NOTE: For sake of brevity, the following WriteRss* methods do not 
+        // NOTE: For sake of brevity, the following WriteRss* methods do not
         // write out all the members of the RichSiteSummary and related types.
-        // 
+        //
 
         private static void WriteRssToJson(RichSiteSummary rss, JsonWriter writer)
         {

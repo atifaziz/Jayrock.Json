@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -24,7 +24,7 @@ namespace Jayrock.Json.Conversion
 {
     using System;
     using System.ComponentModel;
-    
+
     /// <summary>
     /// Marks a type, typically an attribute, as a customization targeting
     /// a <see cref="PropertyDescriptor"/>.
@@ -34,9 +34,9 @@ namespace Jayrock.Json.Conversion
     {
         void Apply(PropertyDescriptor property);
     }
-    
+
     /// <summary>
-    /// Defines getter and setter methods that encapsulate a property 
+    /// Defines getter and setter methods that encapsulate a property
     /// implementation.
     /// </summary>
 
@@ -45,7 +45,7 @@ namespace Jayrock.Json.Conversion
         object GetValue(object obj);
         void SetValue(object obj, object value);
     }
-    
+
     /// <summary>
     /// Advertises a property that can be customized at run-time.
     /// </summary>

@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -29,8 +29,8 @@ namespace Jayrock.Json
     #endregion
 
     /// <summary>
-    /// Represents a reader that provides fast, non-cached, forward-only 
-    /// access to JSON data. 
+    /// Represents a reader that provides fast, non-cached, forward-only
+    /// access to JSON data.
     /// </summary>
 
     public abstract class JsonReader : IDisposable
@@ -80,10 +80,10 @@ namespace Jayrock.Json
         public abstract int MaxDepth { get; set; }
 
         /// <summary>
-        /// Closes the reader and releases any underlying resources 
+        /// Closes the reader and releases any underlying resources
         /// associated with the reader.
         /// </summary>
-        
+
         public virtual void Close()
         {
             Dispose(true);
@@ -91,7 +91,7 @@ namespace Jayrock.Json
         }
 
         /// <summary>
-        /// Returns a <see cref="String"/> that represents the state of the 
+        /// Returns a <see cref="String"/> that represents the state of the
         /// instance.
         /// </summary>
 
@@ -99,7 +99,7 @@ namespace Jayrock.Json
         {
             return Token.ToString();
         }
-        
+
         /// <summary>
         /// Indicates whether the reader has reached the end of input source.
         /// </summary>
@@ -110,30 +110,30 @@ namespace Jayrock.Json
         }
 
         /// <summary>
-        /// Reads the next token ensuring that it matches the specified 
+        /// Reads the next token ensuring that it matches the specified
         /// token. If not, an exception is thrown.
         /// </summary>
 
         public string ReadToken(JsonTokenClass token)
         {
             int depth = Depth;
-            
+
             if (!token.IsTerminator)
                 MoveToContent();
-            
+
             //
             // We allow an exception to the simple case of validating
             // the token and returning its value. If the reader is still at
             // the start (depth is zero) and we're being asked to check
-            // for the null token or a scalar-type token then we allow that 
+            // for the null token or a scalar-type token then we allow that
             // to be appear within a one-length array. This is done because
             // valid JSON text must begin with an array or object. Our
-            // JsonWriterBase automatically wraps a scalar value in an 
+            // JsonWriterBase automatically wraps a scalar value in an
             // array if not done explicitly. This exception here allow
             // that case to pass as being logically valid, as if the
             // token appeared entirely on its own between BOF and EOF.
             //
-            
+
             string text;
 
             if (depth == 0 && TokenClass == JsonTokenClass.Array &&
@@ -147,16 +147,16 @@ namespace Jayrock.Json
             {
                 if (TokenClass != token)
                     throw new JsonException(string.Format("Found {0} where {1} was expected.", TokenClass, token));
-            
+
                 text = Text;
                 Read();
             }
-            
+
             return text;
         }
 
         /// <summary>
-        /// Reads the next token, ensures it is a String and returns its 
+        /// Reads the next token, ensures it is a String and returns its
         /// text. If the next token is not a String, then an exception
         /// is thrown instead.
         /// </summary>
@@ -167,8 +167,8 @@ namespace Jayrock.Json
         }
 
         /// <summary>
-        /// Reads the next token, ensures it is a Boolean and returns its 
-        /// value. If the next token is not a Boolean, then an exception 
+        /// Reads the next token, ensures it is a Boolean and returns its
+        /// value. If the next token is not a Boolean, then an exception
         /// is thrown instead.
         /// </summary>
 
@@ -178,8 +178,8 @@ namespace Jayrock.Json
         }
 
         /// <summary>
-        /// Reads the next token, ensures it is a Number and returns its 
-        /// text representation. If the next token is not a Number, then 
+        /// Reads the next token, ensures it is a Number and returns its
+        /// text representation. If the next token is not a Number, then
         /// an exception is thrown instead.
         /// </summary>
 
@@ -189,18 +189,18 @@ namespace Jayrock.Json
         }
 
         /// <summary>
-        /// Reads the next token, ensures it is a Null. If the next token 
+        /// Reads the next token, ensures it is a Null. If the next token
         /// is not a Null, then an exception is thrown instead.
         /// </summary>
-        
+
         public void ReadNull()
         {
             ReadToken(JsonTokenClass.Null);
         }
 
         /// <summary>
-        /// Reads the next token, ensures it is Member (of an object) and 
-        /// returns its text. If the next token is not a Member, then an 
+        /// Reads the next token, ensures it is Member (of an object) and
+        /// returns its text. If the next token is not a Member, then an
         /// exception is thrown instead.
         /// </summary>
 
@@ -208,23 +208,23 @@ namespace Jayrock.Json
         {
             return ReadToken(JsonTokenClass.Member);
         }
-        
+
         /// <summary>
-        /// Steps out of the current depth to the level immediately above. 
-        /// Usually this skips the current Object or Array being read, 
+        /// Steps out of the current depth to the level immediately above.
+        /// Usually this skips the current Object or Array being read,
         /// including all nested structures.
         /// </summary>
-        
+
         public void StepOut()
         {
             int depth = Depth;
-            
+
             if (depth == 0)
                 throw new InvalidOperationException();
 
             while (Depth > depth || (TokenClass != JsonTokenClass.EndObject && TokenClass != JsonTokenClass.EndArray))
                 Read();
-            
+
             Read(/* past tail */);
         }
 
@@ -239,7 +239,7 @@ namespace Jayrock.Json
         {
             if (!MoveToContent())
                 return;
-            
+
             if (TokenClass == JsonTokenClass.Object || TokenClass == JsonTokenClass.Array)
             {
                 StepOut();
@@ -256,11 +256,11 @@ namespace Jayrock.Json
         }
 
         /// <summary>
-        /// Ensures that the reader is positioned on content (a JSON value) 
+        /// Ensures that the reader is positioned on content (a JSON value)
         /// ready to be read. If the reader is already aligned on the start
         /// of a value then no further action is taken.
         /// </summary>
-        /// <returns>Return true if content was found. Otherwise false to 
+        /// <returns>Return true if content was found. Otherwise false to
         /// indicate EOF.</returns>
 
         public bool MoveToContent()
@@ -281,14 +281,14 @@ namespace Jayrock.Json
         /// <summary>
         /// Represents the method that handles the Disposed event of a reader.
         /// </summary>
-        
+
         public virtual event EventHandler Disposed;
-        
+
         void IDisposable.Dispose()
         {
             Close();
         }
-        
+
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)
@@ -298,7 +298,7 @@ namespace Jayrock.Json
         private void OnDisposed(EventArgs e)
         {
             EventHandler handler = Disposed;
-            
+
             if (handler != null)
                 handler(this, e);
         }

@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -30,7 +30,7 @@ namespace Jayrock
     #endregion
 
     /// <summary>
-    /// Provides date and time parsing according to the formats described in 
+    /// Provides date and time parsing according to the formats described in
     /// RFC 822/1123 specification.
     /// </summary>
 
@@ -57,22 +57,22 @@ namespace Jayrock
             //
             //   date-time   =  [ day "," ] date time ; dd mm yy
             //                                        ;  hh:mm:ss zzz
-            //  
+            //
             //   day         =  "Mon"  / "Tue" /  "Wed"  / "Thu"
             //               /  "Fri"  / "Sat" /  "Sun"
-            //  
+            //
             //   date        =  1*2DIGIT month 2DIGIT ; day month year
             //                                        ;  e.g. 20 Jun 82
-            //  
+            //
             //   month       =  "Jan"  /  "Feb" /  "Mar"  /  "Apr"
             //               /  "May"  /  "Jun" /  "Jul"  /  "Aug"
             //               /  "Sep"  /  "Oct" /  "Nov"  /  "Dec"
-            //  
+            //
             //   time        =  hour zone             ; ANSI and Military
-            //  
+            //
             //   hour        =  2DIGIT ":" 2DIGIT [":" 2DIGIT]
             //                                        ; 00:00:00 - 23:59:59
-            //  
+            //
             //   zone        =  "UT"  / "GMT"         ; Universal Time
             //                                        ; North American : UT
             //               /  "EST" / "EDT"         ;  Eastern:  - 5/ - 4
@@ -90,7 +90,7 @@ namespace Jayrock
             //
 
             //
-            // Start by processing the time zone component, which is the 
+            // Start by processing the time zone component, which is the
             // part that cannot be delegated to DateTime.ParseExact.
             //
 
@@ -123,7 +123,7 @@ namespace Jayrock
                 && zfirst == 'U' && zlast == 'T') // Universal Time (UT)
             {
                 zzz = 0000;
-            } 
+            }
             else if (zone.Length == 3 && zlast == 'T')
             {
                 char zmiddle = zone[1];
@@ -172,8 +172,8 @@ namespace Jayrock
             }
 
             //
-            // Strip the time zone component along with any trailing space 
-            // and parse out just the time piece by simply delegating to 
+            // Strip the time zone component along with any trailing space
+            // and parse out just the time piece by simply delegating to
             // DateTime.ParseExact.
             //
 
@@ -181,17 +181,17 @@ namespace Jayrock
             DateTime time = DateTime.ParseExact(input, _formats, CultureInfo.InvariantCulture, DateTimeStyles.AllowInnerWhite);
 
             //
-            // Subtract the offset to produce zulu time and then return the 
+            // Subtract the offset to produce zulu time and then return the
             // result as local time.
             //
 
-            TimeSpan offset = new TimeSpan(zzz / 100, zzz % 100, 0);                    
+            TimeSpan offset = new TimeSpan(zzz / 100, zzz % 100, 0);
             return time.Subtract(offset).ToLocalTime();
         }
 
         private InternetDate()
         {
-            throw new NotSupportedException();   
+            throw new NotSupportedException();
         }
     }
 }

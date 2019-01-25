@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -33,25 +33,25 @@ namespace Jayrock.Json.Conversion.Converters
 
     public class DateTimeImporter : ImporterBase
     {
-        private static readonly string[] _formats = new string[] 
-        { 
-            "yyyy-MM-dd'T'HH:mm:ss.fffffffK", 
-            "yyyy-MM-dd'T'HH:mm:ss.ffffK", 
-            "yyyy-MM-dd'T'HH:mm:ss.fffK", 
-            "yyyy-MM-dd'T'HH:mm:ss.ffK", 
-            "yyyy-MM-dd'T'HH:mm:ss.fK", 
-            "yyyy-MM-dd'T'HH:mm:ssK", 
-            "yyyy-MM-dd'T'HH:mm:ss.fffffK", 
-            "yyyy-MM-dd'T'HH:mm:ss.ffffffK", 
-            "yyyy-MM-dd'T'HH:mm:ss.ffffffffK", 
-            "yyyy-MM-dd'T'HH:mm:ss.fffffffffK", 
+        private static readonly string[] _formats = new string[]
+        {
+            "yyyy-MM-dd'T'HH:mm:ss.fffffffK",
+            "yyyy-MM-dd'T'HH:mm:ss.ffffK",
+            "yyyy-MM-dd'T'HH:mm:ss.fffK",
+            "yyyy-MM-dd'T'HH:mm:ss.ffK",
+            "yyyy-MM-dd'T'HH:mm:ss.fK",
+            "yyyy-MM-dd'T'HH:mm:ssK",
+            "yyyy-MM-dd'T'HH:mm:ss.fffffK",
+            "yyyy-MM-dd'T'HH:mm:ss.ffffffK",
+            "yyyy-MM-dd'T'HH:mm:ss.ffffffffK",
+            "yyyy-MM-dd'T'HH:mm:ss.fffffffffK",
             "yyyy-MM-dd'T'HH:mm:ss.ffffffffffK",
-            "yyyy-MM-dd", 
+            "yyyy-MM-dd",
         };
 
-        public DateTimeImporter() : 
+        public DateTimeImporter() :
             base(typeof(DateTime)) {}
-        
+
         protected override object ImportFromString(ImportContext context, JsonReader reader)
         {
             Debug.Assert(context != null);
@@ -60,9 +60,9 @@ namespace Jayrock.Json.Conversion.Converters
             try
             {
                 //
-                // Date object, represented in JSON as "\/Date(number of ticks)\/". 
-                // The number of ticks is a positive or negative long value 
-                // that indicates the number of ticks (milliseconds) that 
+                // Date object, represented in JSON as "\/Date(number of ticks)\/".
+                // The number of ticks is a positive or negative long value
+                // that indicates the number of ticks (milliseconds) that
                 // have elapsed since midnight 01 January, 1970 UTC.
                 // See also: http://msdn.microsoft.com/en-us/library/system.web.script.serialization.javascriptserializer.aspx
                 //

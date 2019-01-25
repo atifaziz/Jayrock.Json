@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -29,7 +29,7 @@ namespace Jayrock.Json
     #endregion
 
     /// <summary>
-    /// Represents a writer that provides a fast, non-cached, forward-only means of 
+    /// Represents a writer that provides a fast, non-cached, forward-only means of
     /// emitting JSON data info a memory.
     /// </summary>
 
@@ -37,7 +37,7 @@ namespace Jayrock.Json
     {
         private readonly JsonBufferStorage _storage;
 
-        public JsonBufferWriter() : 
+        public JsonBufferWriter() :
             this(16) {}
 
         public JsonBufferWriter(int initialCapacity)
@@ -59,7 +59,7 @@ namespace Jayrock.Json
         /// <returns>Returns a <see cref="JsonBuffer"/> object with the
         /// written and buffered JSON data.</returns>
         /// <remarks>
-        /// This method method auto-completes the JSON data if it has not 
+        /// This method method auto-completes the JSON data if it has not
         /// been written in its entirety.
         /// </remarks>
 

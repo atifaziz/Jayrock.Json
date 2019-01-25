@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -63,13 +63,13 @@ namespace Jayrock.Json
         {
             Number("one");
         }
-        
+
         [ Test ]
         public void ToInt32()
         {
             Assert.AreEqual(123456789, Number("123456789").ToInt32());
         }
-        
+
         [ Test ]
         public void ToInt16()
         {
@@ -155,9 +155,9 @@ namespace Jayrock.Json
         {
             Convert.ChangeType(Number("1.5"), typeof(System.Numerics.BigInteger));
         }
-        
+
         #endif
-        
+
         [ Test ]
         public void LogicalEquality()
         {
@@ -165,14 +165,14 @@ namespace Jayrock.Json
             Assert.IsTrue(Number("123").LogicallyEquals(123), "integer");
             Assert.IsTrue(Number("123.5").LogicallyEquals(123.5m), "decimal");
         }
-        
+
         [ Test ]
         public void TypeCodeIsObject()
         {
             IConvertible n = new JsonNumber();
             Assert.AreEqual(TypeCode.Object, n.GetTypeCode());
         }
-        
+
         [ Test ]
         public void ConversionToDecimalUsingExponentialNotation()
         {
@@ -268,8 +268,8 @@ namespace Jayrock.Json
         {
             TestValidity
             (
-                true, NumberStyles.AllowLeadingWhite, 
-                "123.456e+789", 
+                true, NumberStyles.AllowLeadingWhite,
+                "123.456e+789",
                 "\r\n\t 123.456e+789"
             );
         }
@@ -285,8 +285,8 @@ namespace Jayrock.Json
         {
             TestValidity
             (
-                true, NumberStyles.AllowTrailingWhite, 
-                "123.456e+789", 
+                true, NumberStyles.AllowTrailingWhite,
+                "123.456e+789",
                 "123.456e+789 \t\r\n"
             );
         }
@@ -302,9 +302,9 @@ namespace Jayrock.Json
         {
             TestValidity
             (
-                true, 
-                NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite, 
-                "-123.456e+789", 
+                true,
+                NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite,
+                "-123.456e+789",
                 "\r\n\t -123.456e+789",
                 "-123.456e+789 \t\r\n"
             );

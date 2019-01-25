@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -26,7 +26,7 @@ namespace Jayrock.Json
 
     using System;
     using NUnit.Framework;
-   
+
     #endregion
 
     [ TestFixture ]
@@ -72,7 +72,7 @@ namespace Jayrock.Json
             Assert.AreEqual(789, helper.ReadMember("z").ReadNumber().ToInt32());
             Assert.AreEqual(JsonTokenClass.EndObject, helper.BaseReader.TokenClass);
         }
-        
+
         [ Test ]
         public void TailMemberAfterUnorderedReader()
         {
@@ -117,11 +117,11 @@ namespace Jayrock.Json
         public void TailReading()
         {
             FreeJsonMemberReadingHelper helper = CreateHelper(@"
-                { y: 456, 
-                  x: 123, 
-                  z: 789, 
-                  obj1: { foo: bar }, 
-                  comment: null, 
+                { y: 456,
+                  x: 123,
+                  z: 789,
+                  obj1: { foo: bar },
+                  comment: null,
                   arr: [ 123, 456, 789 ],
                   obj2: { a: 1, b: 2, }, }");
             Assert.AreEqual(123, helper.ReadMember("x").ReadNumber().ToInt32());

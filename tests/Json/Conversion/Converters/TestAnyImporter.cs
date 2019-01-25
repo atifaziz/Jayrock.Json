@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -42,7 +42,7 @@ namespace Jayrock.Json.Conversion.Converters
         public void ParseString()
         {
             // TODO: Move some of these test to JsonTextWriter since these have more to do with parsing than importing.
-            
+
             Assert.AreEqual("Hello World", Parse("\"Hello World\""), "Double-quoted string.");
             Assert.AreEqual("Hello World", Parse("'Hello World'"), "Single-quoted string.");
             Assert.AreEqual("Hello 'World'", Parse("\"Hello 'World'\""));
@@ -99,7 +99,7 @@ namespace Jayrock.Json.Conversion.Converters
                     Abstract : null,
                     Author : {
                         Name : 'John Doe',
-                        'E-Mail Address' : 'john.doe@example.com' 
+                        'E-Mail Address' : 'john.doe@example.com'
                     },
                     References : [
                         { Title : 'JSON RPC', Link : 'http://www.json-rpc.org/' }
@@ -112,7 +112,7 @@ namespace Jayrock.Json.Conversion.Converters
             Assert.AreEqual(2, (int) (JsonNumber) article["Rating"]);
             Assert.IsTrue(article.Contains("Abstract"));
             Assert.IsNull(article["Abstract"]);
-            
+
             JsonObject author = (JsonObject) article["Author"];
             Assert.IsNotNull(author);
             Assert.AreEqual(2, author.Count);

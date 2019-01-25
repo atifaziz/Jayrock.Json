@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -34,14 +34,14 @@ namespace Jayrock.Json.Conversion
 
         public ObjectSurrogateConstructor(Type surrogateType)
         {
-            if (surrogateType == null) 
+            if (surrogateType == null)
                 throw new ArgumentNullException("surrogateType");
 
             if (!typeof(IObjectSurrogateConstructor).IsAssignableFrom(surrogateType))
             {
                 throw new ArgumentException(string.Format(
                     "Surrogate type must implement {0} whereas {1} does not.",
-                        typeof (IObjectSurrogateConstructor), surrogateType), 
+                        typeof (IObjectSurrogateConstructor), surrogateType),
                     "surrogateType");
             }
 
@@ -52,9 +52,9 @@ namespace Jayrock.Json.Conversion
 
         public virtual ObjectConstructionResult CreateObject(ImportContext context, JsonReader reader)
         {
-            if (context == null) 
+            if (context == null)
                 throw new ArgumentNullException("context");
-            if (reader == null) 
+            if (reader == null)
                 throw new ArgumentNullException("reader");
 
             IObjectSurrogateConstructor ctor = (IObjectSurrogateConstructor) context.Import(_surrogateType, reader);

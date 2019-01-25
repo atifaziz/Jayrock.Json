@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -31,10 +31,10 @@ namespace Jayrock.Json
     #endregion
 
     /// <summary>
-    /// This type supports the Jayrock JSON infrastructure and is not 
-    /// intended to be used directly from your code. 
+    /// This type supports the Jayrock JSON infrastructure and is not
+    /// intended to be used directly from your code.
     /// Beware! There be dragons!
-    /// </summary>    
+    /// </summary>
     /// <remarks>
     /// This type may become inaccessible in the future. It is public
     /// for the purpose of unit testing.
@@ -61,11 +61,11 @@ namespace Jayrock.Json
 
         public BufferedCharReader(TextReader reader) :
             this(reader, 0) {}
-        
+
         public BufferedCharReader(TextReader reader, int bufferSize)
         {
             Debug.Assert(reader != null);
-            
+
             _reader = reader;
             _bufferSize = Math.Max(256, bufferSize);
         }
@@ -83,19 +83,19 @@ namespace Jayrock.Json
         /// This implementation currently does not support backing up more
         /// than a single character (the last read).
         /// </remarks>
-        
+
         public void Back()
         {
             Debug.Assert(!_backed);
 
-            if (_charCount == 0) 
+            if (_charCount == 0)
                 return;
 
             _backed = true;
-            
+
             _charCount--;
             _linePosition--;
-            
+
             if (_linePosition == 0)
             {
                 _lineNumber--;
@@ -109,17 +109,17 @@ namespace Jayrock.Json
         /// can consume.
         /// </summary>
         /// <returns>true if not yet at the end of the source.</returns>
-        
+
         public bool More()
         {
             if (!_backed && _index == _end)
             {
                 if (_buffer == null)
                     _buffer = new char[_bufferSize];
-                
+
                 _index = 0;
                 _end = _reader.Read(_buffer, 0, _buffer.Length);
-                
+
                 if (_end == 0)
                     return false;
             }
@@ -131,7 +131,7 @@ namespace Jayrock.Json
         /// Get the next character in the source string.
         /// </summary>
         /// <returns>The next character, or 0 if past the end of the source string.</returns>
-        
+
         public char Next()
         {
             char ch;
@@ -153,7 +153,7 @@ namespace Jayrock.Json
             return UpdateCounters(ch);
         }
 
-        private char UpdateCounters(char ch) 
+        private char UpdateCounters(char ch)
         {
             _charCount++;
 

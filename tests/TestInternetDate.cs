@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -124,12 +124,12 @@ namespace Jayrock
         {
             foreach (string zone in new string[] {"ZT", "ZZT", "EZT", "ZST"})
             {
-                try 
-                { 
+                try
+                {
                     InternetDate.Parse("Sun, 26 Feb 2006 17:52:20 " + zone);
                     Assert.Fail("{0} is not a valid zone.", zone);
-                } 
-                catch (FormatException) 
+                }
+                catch (FormatException)
                 {
                     continue;
                 }

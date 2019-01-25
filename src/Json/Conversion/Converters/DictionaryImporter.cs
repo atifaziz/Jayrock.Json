@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -26,7 +26,7 @@ namespace Jayrock.Json.Conversion.Converters
 
     using System;
     using System.Collections;
-    #if !NET_1_0 && !NET_1_1 
+    #if !NET_1_0 && !NET_1_1
     using System.Collections.Generic;
     #endif
 
@@ -34,7 +34,7 @@ namespace Jayrock.Json.Conversion.Converters
 
     public class DictionaryImporter : ImportAwareImporter
     {
-        public DictionaryImporter() : 
+        public DictionaryImporter() :
             base(typeof(IDictionary)) {}
 
         protected override IJsonImportable CreateObject()
@@ -43,7 +43,7 @@ namespace Jayrock.Json.Conversion.Converters
         }
     }
 
-    #if !NET_1_0 && !NET_1_1 
+    #if !NET_1_0 && !NET_1_1
 
     public class DictionaryImporter<TKey, TValue> : ImporterBase
     {
@@ -89,8 +89,8 @@ namespace Jayrock.Json.Conversion.Converters
 
         protected virtual IDictionary<TKey, TValue> CreateDictionary()
         {
-            IEqualityComparer<TKey> comparer = IsKeyOfString 
-                ? (IEqualityComparer<TKey>) StringComparer.Ordinal 
+            IEqualityComparer<TKey> comparer = IsKeyOfString
+                ? (IEqualityComparer<TKey>) StringComparer.Ordinal
                 : null;
 
             return new Dictionary<TKey, TValue>(comparer);
@@ -102,11 +102,11 @@ namespace Jayrock.Json.Conversion.Converters
         }
     }
 
-    internal sealed class DictionaryImporter<TDictionary, TKey, TValue> : 
+    internal sealed class DictionaryImporter<TDictionary, TKey, TValue> :
         DictionaryImporter<TKey, TValue>
         where TDictionary : IDictionary<TKey, TValue>, new()
     {
-        public DictionaryImporter() : 
+        public DictionaryImporter() :
             base(typeof(TDictionary)) {}
 
         protected override IDictionary<TKey, TValue> CreateDictionary()
@@ -115,5 +115,5 @@ namespace Jayrock.Json.Conversion.Converters
         }
     }
 
-    #endif // !NET_1_0 && !NET_1_1 
+    #endif // !NET_1_0 && !NET_1_1
 }

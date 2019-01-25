@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -74,8 +74,8 @@ namespace Jayrock.Json.Conversion
             AssertInStock(typeof(JsonNumberExporter), typeof(JsonNumber));
             AssertInStock(typeof(JsonBufferExporter), typeof(JsonBuffer));
             AssertInStock(typeof(ComponentExporter), typeof(ThingWithConstructor));
-            
-            #if !NET_1_0 && !NET_1_1 
+
+            #if !NET_1_0 && !NET_1_1
 
             AssertInStock(typeof(NullableExporter), typeof(int?));
 
@@ -122,7 +122,7 @@ namespace Jayrock.Json.Conversion
             context = new ExportContext();
             Assert.AreNotSame(exporter, context.FindExporter(typeof(Thing)));
         }
-        
+
         [ Test ]
         public void ExportJsonNullValue()
         {
@@ -142,7 +142,7 @@ namespace Jayrock.Json.Conversion
             Assert.AreSame(type, exporter.InputType, "{0} reported {1} when expecting {2}.", exporter, exporter.InputType, type);
             Assert.IsInstanceOf(expected, exporter, type.FullName);
         }
-        
+
         private sealed class ExportableThing : IJsonExportable
         {
             public void Export(ExportContext context, JsonWriter writer)
@@ -154,17 +154,17 @@ namespace Jayrock.Json.Conversion
         private sealed class MyDataSet : DataSet
         {
         }
-        
+
         private sealed class MyDataTable : DataTable
         {
         }
-        
+
         private sealed class MyDataRow : DataRow
         {
-            public MyDataRow(DataRowBuilder builder) : 
+            public MyDataRow(DataRowBuilder builder) :
                 base(builder) {}
-        }        
-        
+        }
+
         private sealed class Thing {}
 
         private sealed class ThingExporter : IExporter
@@ -179,7 +179,7 @@ namespace Jayrock.Json.Conversion
                 throw new NotImplementedException();
             }
         }
-        
+
         public struct ValueThing
         {
             public int Field1;

@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -61,7 +61,7 @@ namespace Jayrock.Json.Conversion
         }
 
         [Test]
-        public void SetConvention() 
+        public void SetConvention()
         {
             JsonMemberNamingConventionAttribute attribute = new JsonMemberNamingConventionAttribute();
             Assert.AreEqual(NamingConvention.None, attribute.Convention);
@@ -70,7 +70,7 @@ namespace Jayrock.Json.Conversion
         }
 
         [Test]
-        public void SetUnderscores() 
+        public void SetUnderscores()
         {
             JsonMemberNamingConventionAttribute attribute = new JsonMemberNamingConventionAttribute();
             Assert.AreEqual(UnderscoreConvention.None, attribute.Underscores);
@@ -146,7 +146,7 @@ namespace Jayrock.Json.Conversion
         }
 
         [Test]
-        public void UnderscorePrefixApplication() 
+        public void UnderscorePrefixApplication()
         {
             TestNamingCase("FooBarBaz", NamingConvention.Camel, UnderscoreConvention.Prefix, "_FooBarBaz");
             TestNamingCase("FooBarBaz", NamingConvention.Pascal, UnderscoreConvention.Prefix, "_FooBarBaz");
@@ -155,7 +155,7 @@ namespace Jayrock.Json.Conversion
         }
 
         [Test]
-        public void UnderscoreSeparatorApplication() 
+        public void UnderscoreSeparatorApplication()
         {
             TestNamingCase("FooBarBaz", NamingConvention.Camel, UnderscoreConvention.Separate, "foo_Bar_Baz");
             TestNamingCase("FooBarBaz", NamingConvention.Pascal, UnderscoreConvention.Separate, "Foo_Bar_Baz");
@@ -164,18 +164,18 @@ namespace Jayrock.Json.Conversion
             TestNamingCase("foobarbaz", NamingConvention.None, UnderscoreConvention.Separate, "foobarbaz");
         }
 
-        private static void TestNamingCase(string baseName, NamingConvention testCase, UnderscoreConvention testUnder, string expected) 
+        private static void TestNamingCase(string baseName, NamingConvention testCase, UnderscoreConvention testUnder, string expected)
         {
             JsonMemberNamingConventionAttribute attribute = new JsonMemberNamingConventionAttribute(testCase, testUnder);
             TestPropertyDescriptor property = CreateTestProperty(baseName);
             IPropertyDescriptorCustomization customization = attribute;
-            
+
             customization.Apply(property);
-            
+
             Assert.AreEqual(expected, property.CustomizedName);
         }
 
-        private static TestPropertyDescriptor CreateTestProperty(string baseName) 
+        private static TestPropertyDescriptor CreateTestProperty(string baseName)
         {
             TestPropertyDescriptor property = new TestPropertyDescriptor(baseName);
             Assert.AreEqual(baseName, property.Name);

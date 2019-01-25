@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -47,7 +47,7 @@ namespace Jayrock.Dynamic
     [Serializable]
     internal struct Option<T> : IEquatable<Option<T>>
     {
-        // warning CS0649: Field 'Jayrock.Dynamic.Option<T>.None' is never assigned to, and will always have its default value 
+        // warning CS0649: Field 'Jayrock.Dynamic.Option<T>.None' is never assigned to, and will always have its default value
         // ReSharper disable RedundantDefaultFieldInitializer
         public static readonly Option<T> None = new Option<T>();
         // ReSharper restore RedundantDefaultFieldInitializer
@@ -127,12 +127,12 @@ namespace Jayrock.Dynamic
 
 /* ****************************************************************************
  *
- * Copyright (c) Microsoft Corporation. 
+ * Copyright (c) Microsoft Corporation.
  *
- * This source code is subject to terms and conditions of the Microsoft Public License. A 
- * copy of the license can be found in the License.html file at the root of this distribution. If 
- * you cannot locate the  Microsoft Public License, please send an email to 
- * dlr@microsoft.com. By using this source code in any fashion, you are agreeing to be bound 
+ * This source code is subject to terms and conditions of the Microsoft Public License. A
+ * copy of the license can be found in the License.html file at the root of this distribution. If
+ * you cannot locate the  Microsoft Public License, please send an email to
+ * dlr@microsoft.com. By using this source code in any fashion, you are agreeing to be bound
  * by the terms of the Microsoft Public License.
  *
  * You must not remove this notice, or any other, from this software.
@@ -154,8 +154,8 @@ namespace Jayrock.Dynamic
     #endregion
 
     /// <remarks>
-    /// This DMO implementation has been adapted from that of 
-    /// System.Dynamic.DynamicObject, from the CodePlex DLR 1.0 sources, 
+    /// This DMO implementation has been adapted from that of
+    /// System.Dynamic.DynamicObject, from the CodePlex DLR 1.0 sources,
     /// and therefore licensed under the terms and conditions of
     /// <a href="http://www.opensource.org/licenses/ms-pl.html">Ms-PL</a>.
     /// </remarks>
@@ -203,8 +203,8 @@ namespace Jayrock.Dynamic
 
         public override DynamicMetaObject BindConvert(ConvertBinder binder)
         {
-            return _runtime.TryConvert != null 
-                 ? CallMethodWithResult("TryConvert", binder, NoArgs, e => binder.FallbackConvert(this, e)) 
+            return _runtime.TryConvert != null
+                 ? CallMethodWithResult("TryConvert", binder, NoArgs, e => binder.FallbackConvert(this, e))
                  : base.BindConvert(binder);
         }
 
@@ -244,7 +244,7 @@ namespace Jayrock.Dynamic
                 ),
                 null
             );
-            
+
             return _dontFallbackFirst ? call : fallback(call);
             //
             // See http://gist.github.com/386261 for why this is commented out
@@ -266,7 +266,7 @@ namespace Jayrock.Dynamic
         public override DynamicMetaObject BindCreateInstance(CreateInstanceBinder binder, DynamicMetaObject[] args)
         {
             return _runtime.TryCreateInstance != null
-                 ? CallMethodWithResult("TryCreateInstance", binder, GetArgArray(args), e => binder.FallbackCreateInstance(this, args, e)) 
+                 ? CallMethodWithResult("TryCreateInstance", binder, GetArgArray(args), e => binder.FallbackCreateInstance(this, args, e))
                  : base.BindCreateInstance(binder, args);
         }
 
@@ -287,29 +287,29 @@ namespace Jayrock.Dynamic
 
         public override DynamicMetaObject BindUnaryOperation(UnaryOperationBinder binder)
         {
-            return _runtime.TryUnaryOperation != null 
-                 ? CallMethodWithResult("TryUnaryOperation", binder, NoArgs, e => binder.FallbackUnaryOperation(this, e)) 
+            return _runtime.TryUnaryOperation != null
+                 ? CallMethodWithResult("TryUnaryOperation", binder, NoArgs, e => binder.FallbackUnaryOperation(this, e))
                  : base.BindUnaryOperation(binder);
         }
 
         public override DynamicMetaObject BindGetIndex(GetIndexBinder binder, DynamicMetaObject[] indexes)
         {
-            return _runtime.TryGetIndex != null 
-                 ? CallMethodWithResult("TryGetIndex", binder, GetArgArray(indexes), e => binder.FallbackGetIndex(this, indexes, e)) 
+            return _runtime.TryGetIndex != null
+                 ? CallMethodWithResult("TryGetIndex", binder, GetArgArray(indexes), e => binder.FallbackGetIndex(this, indexes, e))
                  : base.BindGetIndex(binder, indexes);
         }
 
         public override DynamicMetaObject BindSetIndex(SetIndexBinder binder, DynamicMetaObject[] indexes, DynamicMetaObject value)
         {
-            return _runtime.TrySetIndex != null 
-                 ? CallMethodReturnLast("TrySetIndex", binder, GetArgArray(indexes, value), e => binder.FallbackSetIndex(this, indexes, value, e)) 
+            return _runtime.TrySetIndex != null
+                 ? CallMethodReturnLast("TrySetIndex", binder, GetArgArray(indexes, value), e => binder.FallbackSetIndex(this, indexes, value, e))
                  : base.BindSetIndex(binder, indexes, value);
         }
 
         public override DynamicMetaObject BindDeleteIndex(DeleteIndexBinder binder, DynamicMetaObject[] indexes)
         {
-            return _runtime.TryDeleteIndex != null 
-                 ? CallMethodNoResult("TryDeleteIndex", binder, GetArgArray(indexes), e => binder.FallbackDeleteIndex(this, indexes, e)) 
+            return _runtime.TryDeleteIndex != null
+                 ? CallMethodNoResult("TryDeleteIndex", binder, GetArgArray(indexes), e => binder.FallbackDeleteIndex(this, indexes, e))
                  : base.BindDeleteIndex(binder, indexes);
         }
 
@@ -329,7 +329,7 @@ namespace Jayrock.Dynamic
 
         private static Expression[] GetArgArray(DynamicMetaObject[] args, DynamicMetaObject value)
         {
-            return new Expression[] 
+            return new Expression[]
             {
                 Expression.NewArrayInit(typeof(object), GetArgs(args)),
                 Expression.Convert(value.Expression, typeof(object))
@@ -394,7 +394,7 @@ namespace Jayrock.Dynamic
             // }
             // {
             //   Option<object> result;
-            //   result = TryGetMember(payload, out result) 
+            //   result = TryGetMember(payload, out result)
             //   result.HasValue ? fallbackInvoke(result.Value) : fallbackResult
             // }
             //
@@ -563,7 +563,7 @@ namespace Jayrock.Dynamic
         // can use the Name and IgnoreCase properties.
         private sealed class GetBinderAdapter : GetMemberBinder
         {
-            internal GetBinderAdapter(InvokeMemberBinder binder) : 
+            internal GetBinderAdapter(InvokeMemberBinder binder) :
                 base(binder.Name, binder.IgnoreCase) {}
 
             public override DynamicMetaObject FallbackGetMember(DynamicMetaObject target, DynamicMetaObject errorSuggestion)
@@ -572,6 +572,6 @@ namespace Jayrock.Dynamic
             }
         }
     }
-    
+
     #endif // !NET_1_0 && !NET_1_1 && !NET_2_0
 }

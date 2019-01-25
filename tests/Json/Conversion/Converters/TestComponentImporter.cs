@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -50,7 +50,7 @@ namespace Jayrock.Json.Conversion.Converters
             Assert.IsNull(m.Husband, "Husband");
             Assert.IsNull(m.Wife, "Wife");
         }
-                
+
         [ Test ]
         public void ImportObject()
         {
@@ -67,17 +67,17 @@ namespace Jayrock.Json.Conversion.Converters
                     Id : 42,
                     FullName : 'Bob'
                 },
-                Wife : { 
-                    FullName : 'Alice', 
+                Wife : {
+                    FullName : 'Alice',
                     Id       : 43
-                } 
+                }
             }");
             Assert.AreEqual(42, m.Husband.Id, "Husband.Id");
             Assert.AreEqual("Bob", m.Husband.FullName, "Husband.FullName");
             Assert.AreEqual(43, m.Wife.Id, "Wife.Id");
             Assert.AreEqual("Alice", m.Wife.FullName, "Wife.FullName");
         }
-        
+
         [ Test ]
         public void YahooNewsSearch()
         {
@@ -115,7 +115,7 @@ namespace Jayrock.Json.Conversion.Converters
                                 'Height': '82',
                                 'Width': '76'
                             }
-                        }, 
+                        },
                         {
                             'Title': 'Yahoo Finance revises charts, chat, other features',
                             'Summary': ' Yahoo Inc. on Monday will unveil an upgraded version of its top-ranked financial information site that features new stock charting tools, improved investor chat rooms and financial video news.',
@@ -130,21 +130,21 @@ namespace Jayrock.Json.Conversion.Converters
                     ]
                 }
             }";
-            
+
             JsonTextReader reader = new JsonTextReader(new StringReader(text));
             ImportContext context = new ImportContext();
             YahooResponse response = (YahooResponse) context.Import(typeof(YahooResponse), reader);
             Assert.IsNotNull(response);
-            
+
             YahooResultSet resultSet = response.ResultSet;
             Assert.IsNotNull(resultSet);
             Assert.AreEqual(2393,  resultSet.totalResultsAvailable);
             Assert.AreEqual(3,  resultSet.totalResultsReturned);
             Assert.AreEqual(1,  resultSet.firstResultPosition);
             Assert.AreEqual(3,  resultSet.Result.Length);
-            
+
             YahooResult result = resultSet.Result[0];
-            
+
             Assert.IsNotNull(result);
             Assert.AreEqual("Yahoo invites its users to shoot ads", result.Title);
             Assert.AreEqual(" Yahoo first encouraged consumers to create blogs and photo pages with text and pictures. Now, the Internet portal wants them to make advertisements, too. On Monday, Yahoo touts a new look for its front page by asking people to pull out the video camera, open up the editing software and create 12-second spot for Yahoo.", result.Summary);
@@ -155,7 +155,7 @@ namespace Jayrock.Json.Conversion.Converters
             Assert.AreEqual("en", result.Language);
             Assert.AreEqual(1153133816, result.PublishDate);
             Assert.AreEqual(1153134044, result.ModificationDate);
-            
+
             result = resultSet.Result[1];
 
             Assert.AreEqual("Yahoo to launch new finance features", result.Title);
@@ -183,8 +183,8 @@ namespace Jayrock.Json.Conversion.Converters
             Assert.AreEqual(1153113288, result.PublishDate);
             Assert.AreEqual(1153113674, result.ModificationDate);
         }
-        
-        
+
+
         [ Test ]
         public void SkipsReadOnlyProperty()
         {
@@ -223,7 +223,7 @@ namespace Jayrock.Json.Conversion.Converters
             ComponentImporter importer = new ComponentImporter(typeof(Thing), logicalType);
             ImportContext context = new ImportContext();
             context.Register(importer);
-            
+
             JsonRecorder writer = new JsonRecorder();
             writer.WriteStartObject();
             writer.WriteMember("prop1");
@@ -283,7 +283,7 @@ namespace Jayrock.Json.Conversion.Converters
         {
             public bool SetValueCalled;
 
-            public ReadOnlyPropertyDescriptor(string name) : 
+            public ReadOnlyPropertyDescriptor(string name) :
                 base(name, null) {}
 
             public override void SetValue(object component, object value)
@@ -304,7 +304,7 @@ namespace Jayrock.Json.Conversion.Converters
             public override bool ShouldSerializeValue(object component) { throw new NotImplementedException(); }
             public override Type ComponentType { get { throw new NotImplementedException(); } }
             public override Type PropertyType { get { throw new NotImplementedException(); } }
-            
+
             #endregion
         }
 
@@ -323,7 +323,7 @@ namespace Jayrock.Json.Conversion.Converters
         {
             return new JsonTextReader(new StringReader(s));
         }
-        
+
         public sealed class Marriage
         {
             private Person _husband;
@@ -406,7 +406,7 @@ namespace Jayrock.Json.Conversion.Converters
             public int Height = 0;
             public int Width = 0;
         }
- 
+
         private sealed class TestObjectMemberImporter : IObjectMemberImporter
         {
             public object[] ImportArgs;
@@ -437,7 +437,7 @@ namespace Jayrock.Json.Conversion.Converters
                 _services = services;
                 _propertyType = type;
             }
-            
+
             public override bool IsReadOnly { get { return false; } }
             public override void SetValue(object component, object value) { }
 
@@ -455,7 +455,7 @@ namespace Jayrock.Json.Conversion.Converters
             public override void ResetValue(object component) { throw new NotImplementedException(); }
             public override bool ShouldSerializeValue(object component) { throw new NotImplementedException(); }
             public override Type ComponentType { get { throw new NotImplementedException(); } }
-            
+
             #endregion
         }
 

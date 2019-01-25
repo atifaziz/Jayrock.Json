@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -184,7 +184,7 @@ namespace Jayrock.Tests.Json.Conversion
             public Thing(int num, bool flag, string str) :
                 this(num, flag, str, null, (ConstructorInfo)MethodBase.GetCurrentMethod()) { }
 
-            public Thing(int num, bool flag, string str, IDictionary obj) : 
+            public Thing(int num, bool flag, string str, IDictionary obj) :
                 this(num, flag, str, obj, (ConstructorInfo) MethodBase.GetCurrentMethod()) {}
 
             private Thing(int num, bool flag, string str, IDictionary obj, ConstructorInfo ctor)

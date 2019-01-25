@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -32,14 +32,14 @@ namespace Jayrock.Json.Conversion.Converters
 
     public class BooleanImporter : ImporterBase
     {
-        public BooleanImporter() : 
+        public BooleanImporter() :
             base(typeof(bool)) { }
 
         protected override object ImportFromBoolean(ImportContext context, JsonReader reader)
         {
             Debug.Assert(context != null);
             Debug.Assert(reader != null);
-            
+
             return BooleanObject.Box(reader.ReadBoolean());
         }
 
@@ -50,7 +50,7 @@ namespace Jayrock.Json.Conversion.Converters
 
             try
             {
-                return BooleanObject.Box(reader.ReadNumber().ToInt64() != 0);                
+                return BooleanObject.Box(reader.ReadNumber().ToInt64() != 0);
             }
             catch (FormatException e)
             {

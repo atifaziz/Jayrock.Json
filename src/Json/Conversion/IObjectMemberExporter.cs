@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -25,11 +25,11 @@ namespace Jayrock.Json.Conversion
     /// <summary>
     /// Defines methods to export a single JSON Object member.
     /// </summary>
-    
+
     public interface IObjectMemberExporter
     {
         /// <summary>
-        /// Gets a value from a source object and exports it as a JSON 
+        /// Gets a value from a source object and exports it as a JSON
         /// Object member (name plus value).
         /// </summary>
         /// <remarks>
@@ -40,7 +40,7 @@ namespace Jayrock.Json.Conversion
         /// null then the implementation could just do nothing instead
         /// of emitting the member name with a value of JSON Null.
         /// </remarks>
-        
+
         void Export(ExportContext context, JsonWriter writer, object source);
     }
 }

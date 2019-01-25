@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -28,7 +28,7 @@ namespace Jayrock.Json.Conversion
     using Jayrock.Collections;
 
     #endregion
-    
+
     [ Serializable ]
     internal sealed class ImporterCollection : KeyedCollection
     {
@@ -36,12 +36,12 @@ namespace Jayrock.Json.Conversion
         {
             get { return (IImporter) GetByKey(type); }
         }
-       
+
         public void Put(IImporter importer)
         {
             if (importer == null)
                 throw new ArgumentNullException("importer");
-            
+
             Remove(importer.OutputType);
             Add(importer);
         }
@@ -50,10 +50,10 @@ namespace Jayrock.Json.Conversion
         {
             if (importer == null)
                 throw new ArgumentNullException("importer");
-            
+
             base.Add(importer);
         }
-        
+
         protected override object KeyFromValue(object value)
         {
             return ((IImporter) value).OutputType;

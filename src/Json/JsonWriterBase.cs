@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -45,7 +45,7 @@ namespace Jayrock.Json
         {
             _state = new WriterState(JsonWriterBracket.Pending);
         }
-        
+
         public sealed override int Depth
         {
             get { return HasStates ? States.Count : 0; }
@@ -61,7 +61,7 @@ namespace Jayrock.Json
         {
             get { return Depth == 0 ? -1 : _state.Index; }
         }
-        
+
         public sealed override JsonWriterBracket Bracket
         {
             get { return _state.Bracket; }
@@ -78,7 +78,7 @@ namespace Jayrock.Json
         {
             if (_state.Bracket != JsonWriterBracket.Object)
                 throw new JsonException("JSON Object tail not expected at this time.");
-            
+
             WriteEndObjectImpl();
             ExitBracket();
         }
@@ -103,7 +103,7 @@ namespace Jayrock.Json
         {
             if (_state.Bracket != JsonWriterBracket.Array)
                 throw new JsonException("JSON Array tail not expected at this time.");
-            
+
             WriteEndArrayImpl();
             ExitBracket();
         }
@@ -124,7 +124,7 @@ namespace Jayrock.Json
             if (Depth == 0)
             {
                 WriteStartArray();
-                if (chars != null) 
+                if (chars != null)
                     WriteString(chars, offset, length);
                 else
                     WriteString(value);
@@ -175,26 +175,26 @@ namespace Jayrock.Json
             {
                 WriteStartArray(); WriteNull(); WriteEndArray();
             }
-            else 
+            else
             {
                 EnsureMemberOnObjectBracket();
                 WriteNullImpl();
                 OnValueWritten();
             }
         }
-        
+
         //
         // Actual methods that need to be implemented by the subclass.
-        // These methods do not need to check for the structural 
+        // These methods do not need to check for the structural
         // integrity since this is checked by this base implementation.
         //
-        
+
         protected abstract void WriteStartObjectImpl();
         protected abstract void WriteEndObjectImpl();
         protected abstract void WriteMemberImpl(string name);
         protected abstract void WriteStartArrayImpl();
         protected abstract void WriteEndArrayImpl();
-        protected abstract void WriteStringImpl(string value);        
+        protected abstract void WriteStringImpl(string value);
         protected virtual  void WriteStringImpl(char[] buffers, int offset, int length) { WriteStringImpl(new string(buffers, offset, length)); }
         protected abstract void WriteNumberImpl(string value);
         protected abstract void WriteBooleanImpl(bool value);
@@ -211,7 +211,7 @@ namespace Jayrock.Json
             {
                 if (_stateStack == null)
                     _stateStack = new WriterStateStack();
-                
+
                 return _stateStack;
             }
         }
@@ -230,30 +230,30 @@ namespace Jayrock.Json
         private void EnterBracket(JsonWriterBracket newBracket)
         {
             Debug.Assert(newBracket == JsonWriterBracket.Array || newBracket == JsonWriterBracket.Object);
-            
+
             States.Push(_state);
             _state = new WriterState(newBracket);
         }
-        
+
         private void ExitBracket()
         {
             _state = States.Pop();
 
             if (_state.Bracket == JsonWriterBracket.Pending)
                 _state.Bracket = JsonWriterBracket.Closed;
-            else            
+            else
                 OnValueWritten();
         }
 
         private void OnValueWritten()
         {
-            if (_state.Bracket == JsonWriterBracket.Member) 
+            if (_state.Bracket == JsonWriterBracket.Member)
                 _state.Bracket = JsonWriterBracket.Object;
-            
+
             _state.Index++;
         }
 
-        private void EnsureMemberOnObjectBracket() 
+        private void EnsureMemberOnObjectBracket()
         {
             if (_state.Bracket == JsonWriterBracket.Object)
                 throw new JsonException("A JSON member value inside a JSON object must be preceded by its member name.");
@@ -277,7 +277,7 @@ namespace Jayrock.Json
                 Index = 0;
             }
         }
-        
+
         [ Serializable ]
         private sealed class WriterStateStack
         {
@@ -301,20 +301,20 @@ namespace Jayrock.Json
                     _states.CopyTo(items, 0);
                     _states = items;
                 }
-                
+
                 _states[_count++] = state;
             }
-            
+
             public WriterState Pop()
             {
                 if (_count == 0)
                     throw new InvalidOperationException();
-                
+
                 WriterState state = _states[--_count];
-                
+
                 if (_count == 0)
                     _states = null;
-                
+
                 return state;
             }
         }

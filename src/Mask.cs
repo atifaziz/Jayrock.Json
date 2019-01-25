@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -34,17 +34,17 @@ namespace Jayrock
 
     internal sealed class Mask
     {
-        public static string NullString(string actual) 
+        public static string NullString(string actual)
         {
             return actual == null ? string.Empty : actual;
         }
 
-        public static string NullString(string actual, string mask) 
+        public static string NullString(string actual, string mask)
         {
             return actual == null ? mask : actual;
         }
 
-        public static string EmptyString(string actual, string emptyValue) 
+        public static string EmptyString(string actual, string emptyValue)
         {
             return Mask.NullString(actual).Length == 0 ? emptyValue : actual;
         }

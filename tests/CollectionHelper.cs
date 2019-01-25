@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -29,16 +29,16 @@ namespace Jayrock
 
     #endregion
 
-    /// <summary> 
+    /// <summary>
     /// Helper methods for collections. This type supports the
     /// Jayrock infrastructure and is not intended to be used directly from
-    /// your code. 
+    /// your code.
     /// </summary>
-    
+
     public sealed class CollectionHelper
     {
         private static readonly object[] _zeroObjects = new object[0];
-        
+
         public static object[] ToArray(ICollection collection)
         {
             if (collection == null)
@@ -48,18 +48,18 @@ namespace Jayrock
             collection.CopyTo(values, 0);
             return values;
         }
-        
+
         public static Array ToArray(ICollection collection, Type elementType)
         {
             if (elementType == null)
                 elementType = typeof(object);
-            
+
             if (collection == null)
                 return _zeroObjects;
 
             return (new ArrayList(collection)).ToArray(elementType);
         }
-        
+
         public static IList ToList(ICollection collection)
         {
             return collection != null ? new ArrayList(collection) : new ArrayList();

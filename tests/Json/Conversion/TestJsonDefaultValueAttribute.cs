@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -140,7 +140,7 @@ namespace Jayrock.Json.Conversion
             writer.WriteStartObject();
             exporter.Export(context, writer, new object());
             writer.WriteEndObject();
-            
+
             JsonReader reader = writer.CreatePlayer();
             reader.ReadToken(JsonTokenClass.Object);
             Assert.AreEqual(propertyName, reader.ReadMember());
@@ -189,7 +189,7 @@ namespace Jayrock.Json.Conversion
             Assert.AreEqual("foobar", attribute.Value);
         }
 
-        private static IObjectMemberExporter CreatePropertyExporter(string name, int value, int defaultValue) 
+        private static IObjectMemberExporter CreatePropertyExporter(string name, int value, int defaultValue)
         {
             TestPropertyDescriptor property = new TestPropertyDescriptor(name, value);
             JsonDefaultValueAttribute attribute = new JsonDefaultValueAttribute(defaultValue);

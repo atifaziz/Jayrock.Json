@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -37,40 +37,40 @@ namespace Jayrock.Json
 
     /// <summary>
     /// Helps reading JSON members from an underlying <see cref="JsonReader"/>
-    /// without regard to the order (free) in which they appear. Members are 
+    /// without regard to the order (free) in which they appear. Members are
     /// buffered or streamed as needed.
     /// </summary>
     /// <remarks>
-    /// A <see cref="JsonReader"/> has a stream-oriented interface where 
+    /// A <see cref="JsonReader"/> has a stream-oriented interface where
     /// the underlying JSON data is tokenized and yielded sequentially.
-    /// When reading a JSON object, members must be processed in the order 
-    /// in which they are yielded by the underlying reader. If an 
+    /// When reading a JSON object, members must be processed in the order
+    /// in which they are yielded by the underlying reader. If an
     /// application requires some members of a JSON object to correctly
-    /// process the remaining members then those member may need to be read 
+    /// process the remaining members then those member may need to be read
     /// in advance to prepare for further processing. For example, suppose
     /// the JSON object <c>{ "type": "date", "format": "M/d/yyyy", "value": "5/5/2008" }</c>
-    /// represents a date encoded in the <c>value</c> member as a JSON 
+    /// represents a date encoded in the <c>value</c> member as a JSON
     /// string. Suppose further, the <c>type</c> confirms that the entire
     /// JSON object indeed describes a date and the <c>format</c> member
-    /// specifies how to interpret the <c>value</c> member. To correctly 
-    /// create the date, an application would have to assert the <c>type</c> 
-    /// member, then read the <c>format</c> member to determine how to 
+    /// specifies how to interpret the <c>value</c> member. To correctly
+    /// create the date, an application would have to assert the <c>type</c>
+    /// member, then read the <c>format</c> member to determine how to
     /// decode the <c>value</c> member value correctly. If the application
-    /// assumes that the members are always provided in the natural order 
-    /// just described then it can simply use a <see cref="JsonReader"/> and 
-    /// process them in sequence along with their values. However, if the 
-    /// JSON object instead has members out of order, as in 
+    /// assumes that the members are always provided in the natural order
+    /// just described then it can simply use a <see cref="JsonReader"/> and
+    /// process them in sequence along with their values. However, if the
+    /// JSON object instead has members out of order, as in
     /// <c>{ "value": "5/5/2008", "type": "date", "format": "M/d/yyyy" }</c>,
-    /// then reading becomes a bit more cumbersome. The application would 
-    /// have to buffer the <c>value</c> and <c>format</c> member values 
-    /// until it has at least seen the <c>type</c> member and asserted its 
-    /// value to be <c>date</c>. Then it has to return to the buffered value 
-    /// of the <c>format</c> member and use it to finally decode the 
-    /// also-buffered <c>value</c> member. This is where 
+    /// then reading becomes a bit more cumbersome. The application would
+    /// have to buffer the <c>value</c> and <c>format</c> member values
+    /// until it has at least seen the <c>type</c> member and asserted its
+    /// value to be <c>date</c>. Then it has to return to the buffered value
+    /// of the <c>format</c> member and use it to finally decode the
+    /// also-buffered <c>value</c> member. This is where
     /// <see cref="FreeJsonMemberReadingHelper"/> can help tremendously.
     /// The application can call its <see cref="ReadMember"/> method to
     /// read members in the natural order of processing (e.g., <c>type</c>,
-    /// <c>format</c> and <c>value</c>) rather than how they have been 
+    /// <c>format</c> and <c>value</c>) rather than how they have been
     /// actually ordered by some source. <see cref="FreeJsonMemberReadingHelper"/>
     /// will buffer or stream from the underlying <see cref="JsonReader"/>
     /// as needed. Once the required members have been processed, the
@@ -87,7 +87,7 @@ namespace Jayrock.Json
 
         public FreeJsonMemberReadingHelper(JsonReader reader)
         {
-            if (reader == null) 
+            if (reader == null)
                 throw new ArgumentNullException("reader");
 
             JsonTokenClass clazz = reader.TokenClass;
@@ -130,7 +130,7 @@ namespace Jayrock.Json
         }
 
         /// <summary>
-        /// Reads a member with a given (case-sensitive) name and returns 
+        /// Reads a member with a given (case-sensitive) name and returns
         /// a <see cref="JsonReader"/> that can be used to read the value.
         /// Otherwise it throws an exception.
         /// </summary>
@@ -158,8 +158,8 @@ namespace Jayrock.Json
         }
 
         /// <summary>
-        /// Attempts to locate a member with a given (case-sensitive) name 
-        /// and returns a <see cref="JsonReader"/> that can be used to read 
+        /// Attempts to locate a member with a given (case-sensitive) name
+        /// and returns a <see cref="JsonReader"/> that can be used to read
         /// the value. Otherwise it returns <c>null</c>.
         /// </summary>
         /// <remarks>
@@ -172,7 +172,7 @@ namespace Jayrock.Json
         public JsonReader TryReadMember(string name)
         {
             //
-            // Is the member already buffered? If yes then return a reader 
+            // Is the member already buffered? If yes then return a reader
             // on its buffered value.
             //
 
@@ -210,7 +210,7 @@ namespace Jayrock.Json
             }
 
             //
-            // If the base reader is sitting on the start of an object then 
+            // If the base reader is sitting on the start of an object then
             // move into it. This case should only arise on the first read
             // into a JSON object.
             //
@@ -276,8 +276,8 @@ namespace Jayrock.Json
         }
 
         /// <summary>
-        /// Returns the same string returned by the 
-        /// <see cref="JsonReader.ToString"/> implementation of 
+        /// Returns the same string returned by the
+        /// <see cref="JsonReader.ToString"/> implementation of
         /// <see cref="BaseReader"/>.
         /// </summary>
 
@@ -343,7 +343,7 @@ namespace Jayrock.Json
                         if (value.IsStructured) // JSON Array or Object
                         {
                             //
-                            // Get a reader on the structured (array or 
+                            // Get a reader on the structured (array or
                             // object) value if not already acquired.
                             //
 
@@ -372,21 +372,21 @@ namespace Jayrock.Json
                             Debug.Assert(value.IsNull || value.IsScalar);
 
                             //
-                            // Establish state to proceed with next and 
+                            // Establish state to proceed with next and
                             // serve token pertaining to scalar value.
                             //
 
                             _memberValue = JsonBuffer.Empty;
                             _index++;
-                            
-                            return value.IsNull 
-                                       ? JsonToken.Null() 
+
+                            return value.IsNull
+                                       ? JsonToken.Null()
                                        : value.CreateReader().Token;
                         }
                     }
 
                     //
-                    // Serve buffered member name and establish state so 
+                    // Serve buffered member name and establish state so
                     // that the value will be served next.
                     //
 
@@ -409,7 +409,7 @@ namespace Jayrock.Json
                 // released so that on next read, the above will signal EOF.
                 //
 
-                if (baseReader.Depth == _innerDepth 
+                if (baseReader.Depth == _innerDepth
                     && baseReader.TokenClass == JsonTokenClass.EndObject)
                 {
                     _reader = null;

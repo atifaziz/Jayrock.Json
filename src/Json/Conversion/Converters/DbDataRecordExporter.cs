@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -37,7 +37,7 @@ namespace Jayrock.Json.Conversion.Converters
         public DbDataRecordExporter() :
             this(typeof(DbDataRecord)) {}
 
-        public DbDataRecordExporter(Type inputType) : 
+        public DbDataRecordExporter(Type inputType) :
             base(inputType) {}
 
         protected override void ExportValue(ExportContext context, object value, JsonWriter writer)
@@ -45,7 +45,7 @@ namespace Jayrock.Json.Conversion.Converters
             Debug.Assert(context != null);
             Debug.Assert(value != null);
             Debug.Assert(writer != null);
-            
+
             ExportRecord(context, (DbDataRecord) value, writer);
         }
 
@@ -54,9 +54,9 @@ namespace Jayrock.Json.Conversion.Converters
             Debug.Assert(context != null);
             Debug.Assert(record != null);
             Debug.Assert(writer != null);
-            
+
             writer.WriteStartObject();
-                        
+
             foreach (PropertyDescriptor property in record.GetProperties())
             {
                 writer.WriteMember(property.Name);

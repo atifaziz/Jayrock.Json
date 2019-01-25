@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -29,15 +29,15 @@ namespace Jayrock.Json.Conversion.Converters
     using System.Collections.Specialized;
     using System.ComponentModel;
     using System.Diagnostics;
-    
+
     #endregion
 
     public sealed class NameValueCollectionExporter : ExporterBase
     {
-        public NameValueCollectionExporter() : 
+        public NameValueCollectionExporter() :
             this(typeof(NameValueCollection)) {}
 
-        public NameValueCollectionExporter(Type inputType) : 
+        public NameValueCollectionExporter(Type inputType) :
             base(inputType) {}
 
         protected override void ExportValue(ExportContext context, object value, JsonWriter writer)

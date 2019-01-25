@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -31,25 +31,25 @@ namespace Jayrock.Json.Conversion.Converters
     using Jayrock.Json.Conversion;
 
     #endregion
-    
+
     public sealed class ArrayImporter : ImporterBase
     {
         public ArrayImporter() : this(null) {}
 
-        public ArrayImporter(Type arrayType) : 
+        public ArrayImporter(Type arrayType) :
             base(AssertArrayType(arrayType)) {}
 
         private static Type AssertArrayType(Type type)
         {
             if (type == null)
                 return typeof(object[]);
-            
+
             if (!type.IsArray)
                 throw new ArgumentException(string.Format("{0} is not an array.", type.FullName), "type");
-            
+
             if (type.GetArrayRank() != 1)
                 throw new ArgumentException(string.Format("{0} is not one-dimension array. Multi-dimensional arrays are not supported.", type.FullName), "arrayType");
-            
+
             return type;
         }
 

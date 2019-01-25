@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -48,7 +48,7 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void PublicProperties()
         {
-            Car car = new Car();            
+            Car car = new Car();
             car.Manufacturer = "BMW";
             car.Model = "350";
             car.Year = 2000;
@@ -81,7 +81,7 @@ namespace Jayrock.Json.Conversion.Converters
             Person albert = new Person();
             albert.Id = 1;
             albert.FullName = "Albert White";
-            
+
             Marriage m = new Marriage();
             m.Husband = albert;
             m.Wife = snow;
@@ -120,8 +120,8 @@ namespace Jayrock.Json.Conversion.Converters
             Person john = new Person();
             john.Id = 123;
             john.FullName = "John Doe";
-            
-            Car beamer = new Car();            
+
+            Car beamer = new Car();
             beamer.Manufacturer = "BMW";
             beamer.Model = "350";
             beamer.Year = 2000;
@@ -132,14 +132,14 @@ namespace Jayrock.Json.Conversion.Converters
             johnCars.Cars.Add(beamer);
 
             JsonObject test = new JsonObject(
-                new string[] { "owner", "cars" }, 
+                new string[] { "owner", "cars" },
                 new object[] {
                     /* Owner */ new JsonObject(
-                        new string[] { "id", "fullName" }, 
+                        new string[] { "id", "fullName" },
                         new object[] { john.Id,  john.FullName }),
                     /* Cars */ new object[] {
                         new JsonObject(
-                            new string[] { "manufacturer", "model", "year", "color" }, 
+                            new string[] { "manufacturer", "model", "year", "color" },
                             new object[] { beamer.Manufacturer, beamer.Model, beamer.Year, beamer.Color })
                     }
                 });
@@ -157,7 +157,7 @@ namespace Jayrock.Json.Conversion.Converters
             thing.Other = thing;
             exporter.Export(context, thing, new EmptyJsonWriter());
         }
-        
+
         [ Test, ExpectedException(typeof(JsonException)) ]
         public void DeepCircularReferenceDetection()
         {
@@ -183,7 +183,7 @@ namespace Jayrock.Json.Conversion.Converters
             parent.Child.Parent = parent;
             exporter.Export(context, parent, new EmptyJsonWriter());
         }
-        
+
         [ Test ]
         public void MemberExportCustomization()
         {
@@ -207,7 +207,7 @@ namespace Jayrock.Json.Conversion.Converters
             ComponentExporter exporter = new ComponentExporter(typeof(Thing), logicalType);
             ExportContext context = new ExportContext();
             context.Register(exporter);
-            
+
             JsonRecorder writer = new JsonRecorder();
             Thing thing = new Thing();
             context.Export(thing, writer);
@@ -228,7 +228,7 @@ namespace Jayrock.Json.Conversion.Converters
             public object[] ExportArgs;
 
             private readonly IList _sequence;
-            
+
             public TestObjectMemberExporter(IList recorder)
             {
                 _sequence = recorder;
@@ -249,7 +249,7 @@ namespace Jayrock.Json.Conversion.Converters
             {
                 _services = services;
             }
-            
+
             object IServiceProvider.GetService(Type serviceType)
             {
                 return _services[serviceType];
@@ -265,7 +265,7 @@ namespace Jayrock.Json.Conversion.Converters
             public override Type ComponentType { get { throw new NotImplementedException(); } }
             public override bool IsReadOnly { get { throw new NotImplementedException(); } }
             public override Type PropertyType { get { throw new NotImplementedException(); } }
-            
+
             #endregion
         }
 
@@ -299,12 +299,12 @@ namespace Jayrock.Json.Conversion.Converters
         {
             public Thing Other;
         }
-        
+
         private sealed class Parent
         {
             public ParentChild Child;
         }
-        
+
         private sealed class ParentChild
         {
             public Parent Parent;
@@ -333,7 +333,7 @@ namespace Jayrock.Json.Conversion.Converters
         {
             reader.MoveToContent();
             reader.ReadToken(JsonTokenClass.Object);
-            
+
             while (reader.TokenClass != JsonTokenClass.EndObject)
             {
                 string name = reader.ReadMember();
@@ -341,7 +341,7 @@ namespace Jayrock.Json.Conversion.Converters
                 expected.Remove(name);
                 TestValue(value, reader, path + "/" + name);
             }
-            
+
             Assert.AreEqual(0, expected.Count);
             reader.Read();
         }
@@ -441,7 +441,7 @@ namespace Jayrock.Json.Conversion.Converters
             public Person Husband;
             public Person Wife;
         }
-            
+
         public sealed class OwnerCars
         {
             public Person Owner;
@@ -452,9 +452,9 @@ namespace Jayrock.Json.Conversion.Converters
         {
             private int _x;
             private int _y;
-            
+
             private static readonly ICustomTypeDescriptor _componentType;
-            
+
             static Point()
             {
                 Type type = typeof(Point);

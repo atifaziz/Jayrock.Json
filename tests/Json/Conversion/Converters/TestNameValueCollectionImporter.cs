@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -40,7 +40,7 @@ namespace Jayrock.Json.Conversion.Converters
         {
             Assert.IsNull(UncheckedImport("null"));
         }
-        
+
         [ Test ]
         public void ImportEmpty()
         {
@@ -55,7 +55,7 @@ namespace Jayrock.Json.Conversion.Converters
             Assert.AreEqual(1, collection.Count);
             Assert.AreEqual("bar", collection["foo"]);
         }
-        
+
         [ Test ]
         public void ImportEmptyName()
         {

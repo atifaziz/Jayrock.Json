@@ -16,11 +16,11 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
-#if !NET_1_0 && !NET_1_1 && !NET_2_0 
+#if !NET_1_0 && !NET_1_1 && !NET_2_0
 
 namespace Jayrock.Json.Conversion.Converters
 {
@@ -67,7 +67,7 @@ namespace Jayrock.Json.Conversion.Converters
             var context = Expression.Parameter(typeof(ExportContext), "context");
             var obj     = Expression.Parameter(typeof(object), "obj");
             var writer  = Expression.Parameter(typeof(JsonWriter), "writer");
-            
+
             var tuple   = Expression.Variable(tupleType, "tuple");
             var body    = Expression.Block
                           (
@@ -99,8 +99,8 @@ namespace Jayrock.Json.Conversion.Converters
             return from property in properties
                    select Expression.Call
                    (
-                       context, _exportMethod, 
-                           Expression.Convert(Expression.MakeMemberAccess(tuple, property), typeof(object)), 
+                       context, _exportMethod,
+                           Expression.Convert(Expression.MakeMemberAccess(tuple, property), typeof(object)),
                            writer
                    );
         }

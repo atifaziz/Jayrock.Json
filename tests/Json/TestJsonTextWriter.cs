@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -191,26 +191,27 @@ namespace Jayrock.Json
             JsonTextWriter writer = new JsonTextWriter();
             writer.PrettyPrint = true;
             writer.WriteFromReader(new JsonTextReader(new StringReader("{'menu':{'id':'file','value':'File:','popup':{'menuitem':[{'value':'New','onclick':'CreateNewDoc()'},{'value':'Open','onclick':'OpenDoc()'},{'value':'Close','onclick':'CloseDoc()'}]}}}")));
-            Assert.AreEqual(RewriteLines(@"{ 
-    ""menu"": { 
-        ""id"": ""file"",
-        ""value"": ""File:"",
-        ""popup"": { 
-            ""menuitem"": [ { 
-                ""value"": ""New"",
-                ""onclick"": ""CreateNewDoc()""
-            }, { 
-                ""value"": ""Open"",
-                ""onclick"": ""OpenDoc()""
-            }, { 
-                ""value"": ""Close"",
-                ""onclick"": ""CloseDoc()""
-            } ]
+            Assert.AreEqual(RewriteLines(string.Empty
+                + "{ \n"
+                + "    \"menu\": { \n"
+                + "        \"id\": \"file\",\n"
+                + "        \"value\": \"File:\",\n"
+                + "        \"popup\": { \n"
+                + "            \"menuitem\": [ { \n"
+                + "                \"value\": \"New\",\n"
+                + "                \"onclick\": \"CreateNewDoc()\"\n"
+                + "            }, { \n"
+                + "                \"value\": \"Open\",\n"
+                + "                \"onclick\": \"OpenDoc()\"\n"
+                + "            }, { \n"
+                + "                \"value\": \"Close\",\n"
+                + "                \"onclick\": \"CloseDoc()\"\n"
+                + "            } ]\n"
+                + "        }\n"
+                + "    }\n"
+                + "}\n"), writer.ToString() + Environment.NewLine);
         }
-    }
-}"), writer.ToString() + Environment.NewLine);
-        }
-        
+
         private static string WriteValue(object value)
         {
             JsonTextWriter writer = new JsonTextWriter(new StringWriter());
@@ -229,7 +230,7 @@ namespace Jayrock.Json
                 writer.WriteLine(line);
                 line = reader.ReadLine();
             }
-            
+
             return writer.ToString();
         }
     }

@@ -16,7 +16,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public License
 // along with this library; if not, write to the Free Software Foundation, Inc.,
-// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 #endregion
 
@@ -29,13 +29,13 @@ namespace Jayrock.Json.Conversion.Converters
     using System.Diagnostics;
 
     #endregion
-    
+
     public sealed class DataTableExporter : ExporterBase
     {
         public DataTableExporter() :
             this(typeof(DataTable)) {}
 
-        public DataTableExporter(Type inputType) : 
+        public DataTableExporter(Type inputType) :
             base(inputType) {}
 
         protected override void ExportValue(ExportContext context, object value, JsonWriter writer)
@@ -56,13 +56,13 @@ namespace Jayrock.Json.Conversion.Converters
             DataView view = table.DefaultView;
 
             //
-            // If there is an exporter (perhaps an override) for the 
-            // DataView in effect then use it. Otherwise our 
+            // If there is an exporter (perhaps an override) for the
+            // DataView in effect then use it. Otherwise our
             // DataViewExporter.
             //
 
             IExporter exporter = context.FindExporter(view.GetType());
-            
+
             if (exporter != null)
                 exporter.Export(context, view, writer);
             else
