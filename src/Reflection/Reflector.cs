@@ -29,7 +29,7 @@ namespace Jayrock.Reflection
 
     #endregion
 
-    public static class Reflector
+    static class Reflector
     {
         /// <summary>
         /// Determines if type is a constructed type of <see cref="System.Nullable{T}"/>.

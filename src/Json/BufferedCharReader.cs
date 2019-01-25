@@ -30,19 +30,7 @@ namespace Jayrock.Json
 
     #endregion
 
-    /// <summary>
-    /// This type supports the Jayrock JSON infrastructure and is not
-    /// intended to be used directly from your code.
-    /// Beware! There be dragons!
-    /// </summary>
-    /// <remarks>
-    /// This type may become inaccessible in the future. It is public
-    /// for the purpose of unit testing.
-    /// </remarks>
-
-    // TODO: Make internal and use InternalsVisibleToAttribute when code base has been upgraded to .NET 2.0.
-
-    public sealed class BufferedCharReader
+    sealed class BufferedCharReader
     {
         private readonly TextReader _reader;
         private readonly int _bufferSize;

@@ -34,7 +34,7 @@ namespace Jayrock
     /// RFC 822/1123 specification.
     /// </summary>
 
-    public static class InternetDate
+    static class InternetDate
     {
         private static readonly string[] _formats =
         {

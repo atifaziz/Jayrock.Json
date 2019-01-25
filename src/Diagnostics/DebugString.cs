@@ -30,12 +30,7 @@ namespace Jayrock.Diagnostics
 
     #endregion
 
-    /// <summary>
-    /// This type supports the Jayrock infrastructure and is not intended to
-    /// be used directly from your code.
-    /// </summary>
-
-    public static class DebugString
+    static class DebugString
     {
         public static readonly string Ellipsis = "\x2026";
         public static readonly char ControlReplacement = '?';

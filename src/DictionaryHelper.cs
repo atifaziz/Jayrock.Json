@@ -29,13 +29,7 @@ namespace Jayrock
 
     #endregion
 
-    /// <summary>
-    /// Helper methods for dictionaries. This type supports the
-    /// Jayrock infrastructure and is not intended to be used directly from
-    /// your code.
-    /// </summary>
-
-    public static class DictionaryHelper
+    static class DictionaryHelper
     {
         private static readonly DictionaryEntry[] _zeroEntries = new DictionaryEntry[0];
 

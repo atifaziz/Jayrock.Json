@@ -29,13 +29,7 @@ namespace Jayrock
 
     #endregion
 
-    /// <summary>
-    /// Helper methods for collections. This type supports the
-    /// Jayrock infrastructure and is not intended to be used directly from
-    /// your code.
-    /// </summary>
-
-    public static class CollectionHelper
+    static class CollectionHelper
     {
         private static readonly object[] _zeroObjects = new object[0];
 
