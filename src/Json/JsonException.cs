@@ -40,10 +40,10 @@ namespace Jayrock.Json
             this(null) {}
 
         public JsonException(string message) :
-            base(Mask.NullString(message, _defaultMessage), null) {}
+            base(message ?? _defaultMessage, null) {}
 
         public JsonException(string message, Exception innerException) :
-            base(Mask.NullString(message, _defaultMessage), innerException) {}
+            base(message ?? _defaultMessage, innerException) {}
 
         protected JsonException(SerializationInfo info, StreamingContext context) :
             base(info, context) {}

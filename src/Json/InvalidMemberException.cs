@@ -39,10 +39,10 @@ namespace Jayrock.Json
         public InvalidMemberException() : this(null) {}
 
         public InvalidMemberException(string message) :
-            base(Mask.NullString(message, _defaultMessage)) {}
+            base(message ?? _defaultMessage) {}
 
         public InvalidMemberException(string message, Exception innerException) :
-            base(Mask.NullString(message, _defaultMessage), innerException) {}
+            base(message ?? _defaultMessage, innerException) {}
 
         protected InvalidMemberException(SerializationInfo info, StreamingContext context) :
             base(info, context) {}
