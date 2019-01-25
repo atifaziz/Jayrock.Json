@@ -29,7 +29,6 @@ namespace Jayrock.Json.Conversion
     using System.ComponentModel.Design;
     using System.Diagnostics;
     using Jayrock.Json;
-    using Jayrock.Json.Conversion;
 
     #endregion
 

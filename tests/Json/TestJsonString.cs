@@ -25,7 +25,6 @@ namespace Jayrock.Json
     #region Imports
 
     using System;
-    using Jayrock.Tests;
     using NUnit.Framework;
 
     #endregion

@@ -24,8 +24,6 @@ namespace Jayrock
 {
     #region Imports
 
-    using System;
-
     #endregion
 
     /// <summary>

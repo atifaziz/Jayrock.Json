@@ -32,8 +32,6 @@ namespace TidyJson
 {
     #region Imports
 
-    using System;
-
     #endregion
 
     /// <summary>

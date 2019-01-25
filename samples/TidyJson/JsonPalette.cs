@@ -34,7 +34,6 @@ namespace TidyJson
 
     using System;
     using System.Collections.Generic;
-    using System.Configuration;
     using System.IO;
     using Jayrock.Json;
     using Jayrock.Json.Conversion;

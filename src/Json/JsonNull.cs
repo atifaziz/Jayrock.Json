@@ -26,7 +26,6 @@ namespace Jayrock.Json
 
     using System;
     using System.Runtime.Serialization;
-    using Jayrock.Json.Conversion;
 
     #endregion
 

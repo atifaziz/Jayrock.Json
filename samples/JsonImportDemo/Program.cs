@@ -3,7 +3,6 @@ namespace JsonImportDemo
     #region Imports
 
     using System;
-    using System.Collections;
     using Jayrock.Json;
     using Jayrock.Json.Conversion;
 

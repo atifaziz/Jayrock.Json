@@ -24,7 +24,6 @@ namespace Jayrock.Json
 {
     #region Imports
 
-    using System;
     using System.IO;
 
     #endregion

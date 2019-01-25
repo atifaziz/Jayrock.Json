@@ -26,7 +26,6 @@ namespace Jayrock.Json.Conversion
 
     using System;
     using System.Collections;
-    using System.Configuration;
     using System.Diagnostics;
     using Jayrock.Json.Conversion.Converters;
     using Jayrock.Reflection;

@@ -27,7 +27,6 @@ namespace Jayrock.Json
     using System;
     using System.IO;
     using System.Text;
-    using Jayrock.Json;
 
     #endregion
 

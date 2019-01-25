@@ -25,8 +25,6 @@ namespace Jayrock.Reflection
     #region Imports
 
     using System;
-    using System.Reflection;
-    using Jayrock.Tests;
     using NUnit.Framework;
 
     #endregion

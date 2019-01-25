@@ -28,7 +28,6 @@ namespace Jayrock.Json.Conversion
     using System.ComponentModel;
     using System.ComponentModel.Design;
     using System.Runtime.CompilerServices;
-    using Jayrock.Json.Conversion.Converters;
     using NUnit.Framework;
 
     #endregion

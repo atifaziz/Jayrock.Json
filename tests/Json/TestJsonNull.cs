@@ -25,10 +25,8 @@ namespace Jayrock.Json
     #region Imports
 
     using System;
-    using System.Data.SqlTypes;
     using System.IO;
     using System.Runtime.Serialization.Formatters.Binary;
-    using Jayrock.Json.Conversion;
     using NUnit.Framework;
 
     #endregion

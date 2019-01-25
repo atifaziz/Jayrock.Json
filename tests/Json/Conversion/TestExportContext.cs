@@ -29,7 +29,6 @@ namespace Jayrock.Json.Conversion
     using System.Collections.Specialized;
     using System.Data;
     using System.Data.Common;
-    using System.Web.UI;
     using Jayrock.Json.Conversion.Converters;
     using NUnit.Framework;
 

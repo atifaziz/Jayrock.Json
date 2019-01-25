@@ -24,8 +24,6 @@ namespace Jayrock.Json
 {
     #region Imports
 
-    using System;
-
     #endregion
 
     public static class JsonBoolean

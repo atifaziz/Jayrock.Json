@@ -24,7 +24,6 @@ namespace Jayrock.Json
 {
     #region Imports
 
-    using System;
     using System.Collections;
     using System.IO;
     using NUnit.Framework;

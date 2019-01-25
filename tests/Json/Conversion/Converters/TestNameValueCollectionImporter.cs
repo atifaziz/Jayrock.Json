@@ -24,7 +24,6 @@ namespace Jayrock.Json.Conversion.Converters
 {
     #region Imports
 
-    using System;
     using System.Collections.Specialized;
     using System.IO;
     using Jayrock.Json.Conversion;

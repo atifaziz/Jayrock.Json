@@ -27,8 +27,6 @@ namespace Jayrock.Json.Conversion.Converters
     using System;
     using System.Collections;
     using System.ComponentModel;
-    using System.ComponentModel.Design;
-    using System.Globalization;
     using System.IO;
     using System.Reflection;
     using NUnit.Framework;

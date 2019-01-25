@@ -25,7 +25,6 @@ namespace Jayrock.Json.Conversion.Converters
     #region Imports
 
     using System;
-    using System.Collections;
     using Jayrock.Json.Conversion;
     using NUnit.Framework;
 
