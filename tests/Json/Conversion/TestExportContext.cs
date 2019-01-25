@@ -74,18 +74,9 @@ namespace Jayrock.Json.Conversion
             AssertInStock(typeof(JsonNumberExporter), typeof(JsonNumber));
             AssertInStock(typeof(JsonBufferExporter), typeof(JsonBuffer));
             AssertInStock(typeof(ComponentExporter), typeof(ThingWithConstructor));
-
-            #if !NET_1_0 && !NET_1_1
-
             AssertInStock(typeof(NullableExporter), typeof(int?));
-
-            #endif
-
-            #if !NET_1_0 && !NET_1_1 && !NET_2_0
-
             AssertInStock(typeof(BigIntegerExporter), typeof(System.Numerics.BigInteger));
             AssertInStock(typeof(ExpandoObjectExporter), typeof(System.Dynamic.ExpandoObject));
-
             AssertInStock(typeof(TupleExporter), typeof(Tuple<int>));
             AssertInStock(typeof(TupleExporter), typeof(Tuple<int, int>));
             AssertInStock(typeof(TupleExporter), typeof(Tuple<int, int, int>));
@@ -94,8 +85,6 @@ namespace Jayrock.Json.Conversion
             AssertInStock(typeof(TupleExporter), typeof(Tuple<int, int, int, int, int, int>));
             AssertInStock(typeof(TupleExporter), typeof(Tuple<int, int, int, int, int, int, int>));
             AssertInStock(typeof(TupleExporter), typeof(Tuple<int, int, int, int, int, int, int, int>));
-
-            #endif // !NET_1_0 && !NET_1_1 && !NET_2_0
         }
 
         [ Test ]

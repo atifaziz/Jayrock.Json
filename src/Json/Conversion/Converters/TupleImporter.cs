@@ -20,8 +20,6 @@
 //
 #endregion
 
-#if !NET_1_0 && !NET_1_1 && !NET_2_0
-
 namespace Jayrock.Json.Conversion.Converters
 {
     #region Imports
@@ -121,5 +119,3 @@ namespace Jayrock.Json.Conversion.Converters
         }
     }
 }
-
-#endif // !NET_1_0 && !NET_1_1 && !NET_2_0

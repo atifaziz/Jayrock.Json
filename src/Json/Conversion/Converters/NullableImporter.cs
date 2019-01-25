@@ -20,8 +20,6 @@
 //
 #endregion
 
-#if !NET_1_0 && !NET_1_1
-
 namespace Jayrock.Json.Conversion.Converters
 {
     #region Imports
@@ -42,11 +40,8 @@ namespace Jayrock.Json.Conversion.Converters
             if (!Reflector.IsConstructionOfNullable(outputType))
                 throw new ArgumentException(null, "outputType");
             _underlyingType =
-            #if !MONO
                 Nullable.GetUnderlyingType(outputType);
-            #else
-                outputType.GetGenericArguments()[0];
-            #endif
+                // MONO: outputType.GetGenericArguments()[0];
         }
 
         private object ImportUnderlyingType(ImportContext context, JsonReader reader)
@@ -82,5 +77,3 @@ namespace Jayrock.Json.Conversion.Converters
         }
     }
 }
-
-#endif // !NET_1_0 && !NET_1_1

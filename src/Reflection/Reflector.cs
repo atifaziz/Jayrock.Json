@@ -31,8 +31,6 @@ namespace Jayrock.Reflection
 
     public static class Reflector
     {
-        #if !NET_1_0 && !NET_1_1
-
         /// <summary>
         /// Determines if type is a constructed type of <see cref="System.Nullable{T}"/>.
         /// </summary>
@@ -101,10 +99,6 @@ namespace Jayrock.Reflection
             return IsConstructionOfGenericTypeDefinition(type, (Type) criteria);
         }
 
-        #endif // !NET_1_0 && !NET_1_1
-
-        #if !NET_1_0 && !NET_1_1 && !NET_2_0
-
         private static readonly Type[] _commonTupleTypes = new[]
         {
             // Tuple of 1 not expected to be common so excluded from here
@@ -143,7 +137,5 @@ namespace Jayrock.Reflection
                 && i == someTupleType.FullName.IndexOf(tick)
                 && 0 == string.CompareOrdinal(someTupleType.FullName, 0, type.FullName, 0, i);
         }
-
-        #endif // !NET_1_0 && !NET_1_1 && !NET_2_0
     }
 }

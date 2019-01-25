@@ -219,11 +219,7 @@ namespace Jayrock.Json.Conversion
         [ Test ]
         public void AnonymousClassPropertiesExcepted()
         {
-#if NET_1_0 || NET_1_1
-            CustomTypeDescriptor anon = CustomTypeDescriptor.TryCreateForAnonymousClass(typeof(AnonymousThing));
-#else
             CustomTypeDescriptor anon = CustomTypeDescriptor.TryCreateForAnonymousClass(typeof(AnonymousThing<string>));
-#endif
             Assert.IsNotNull(anon);
             PropertyDescriptorCollection properties = anon.GetProperties();
             Assert.AreEqual(1, properties.Count);
@@ -349,20 +345,6 @@ namespace Jayrock.Json.Conversion
         }
     }
 
-#if NET_1_0 || NET_1_1
-    [CompilerGenerated]
-    internal sealed class AnonymousThing
-    {
-        private readonly string _value;
-
-        AnonymousThing(string value)
-        {
-            _value = value;
-        }
-
-        public string Value { get { return _value; } }
-    }
-#else
     [CompilerGenerated]
     internal sealed class AnonymousThing<T>
     {
@@ -375,14 +357,4 @@ namespace Jayrock.Json.Conversion
 
         public T Value { get { return _value; } }
     }
-#endif
 }
-
-#if NET_1_0 || NET_1_1
-namespace System.Runtime.CompilerServices
-{
-    [SerializableAttribute]
-    [AttributeUsageAttribute(AttributeTargets.All, Inherited=true)]
-    internal sealed class CompilerGeneratedAttribute : Attribute {}
-}
-#endif

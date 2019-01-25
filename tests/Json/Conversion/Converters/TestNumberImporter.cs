@@ -82,15 +82,11 @@ namespace Jayrock.Json.Conversion.Converters
             AssertImport(0, "false");
         }
 
-        #if !NET_1_0 && !NET_1_1 && !NET_2_0
-
         [ Test ]
         public void ImportBigInteger()
         {
             AssertImport(System.Numerics.BigInteger.Pow(long.MaxValue, 3), "784637716923335095224261902710254454442933591094742482943");
         }
-
-        #endif // !NET_1_0 && !NET_1_1 && !NET_2_0
 
         [ Test ]
         public void ImportDecimalUsingExponentialNotation()

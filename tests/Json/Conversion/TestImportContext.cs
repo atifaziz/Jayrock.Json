@@ -64,9 +64,6 @@ namespace Jayrock.Json.Conversion
             AssertInStock(typeof(ComponentImporter), typeof(ValueThing));
             AssertInStock(typeof(UriImporter), typeof(Uri));
             AssertInStock(typeof(JsonBufferImporter), typeof(JsonBuffer));
-
-            #if !NET_1_0 && !NET_1_1
-
             AssertInStock(typeof(NullableImporter), typeof(int?));
             AssertInStock(typeof(DictionaryImporter<string, string>), typeof(System.Collections.Generic.IDictionary<string, string>));
             AssertInStock(typeof(DictionaryImporter<int, object>), typeof(System.Collections.Generic.IDictionary<int, object>));
@@ -77,11 +74,6 @@ namespace Jayrock.Json.Conversion
             Assert.IsNotNull(new ImportContext().FindImporter(typeof(System.Collections.Generic.ICollection<string>)));
             Assert.IsNotNull(new ImportContext().FindImporter(typeof(System.Collections.Generic.IEnumerable<string>)));
             Assert.IsNotNull(new ImportContext().FindImporter(typeof(IEnumerable)));
-
-            #endif // !NET_1_0 && !NET_1_1
-
-            #if !NET_1_0 && !NET_1_1 && !NET_2_0
-
             // TODO Use AssertInStock once CollectionImporter is public
             Assert.IsNotNull(new ImportContext().FindImporter(typeof(System.Collections.Generic.ISet<string>)));
 
@@ -96,8 +88,6 @@ namespace Jayrock.Json.Conversion
             AssertInStock(typeof(TupleImporter), typeof(Tuple<int, int, int, int, int, int>));
             AssertInStock(typeof(TupleImporter), typeof(Tuple<int, int, int, int, int, int, int>));
             AssertInStock(typeof(TupleImporter), typeof(Tuple<int, int, int, int, int, int, int, int>));
-
-            #endif // !NET_1_0 && !NET_1_1 && !NET_2_0
         }
 
         [ Test ]
@@ -161,8 +151,6 @@ namespace Jayrock.Json.Conversion
             public int Field1;
             public int Field2;
         }
-
-        #if !NET_1_0 && !NET_1_1
 
         internal class DictionaryThing : System.Collections.Generic.IDictionary<Guid, string>
         {
@@ -263,7 +251,5 @@ namespace Jayrock.Json.Conversion
         private sealed class SubDictionaryThing : DictionaryThing
         {
         }
-
-        #endif // !NET_1_0 && !NET_1_1
     }
 }

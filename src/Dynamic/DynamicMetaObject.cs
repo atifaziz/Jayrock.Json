@@ -22,8 +22,6 @@
 
 namespace Jayrock.Dynamic
 {
-    #if !NET_1_0 && !NET_1_1 && !NET_2_0
-
     #region Imports
 
     using System;
@@ -572,6 +570,4 @@ namespace Jayrock.Dynamic
             }
         }
     }
-
-    #endif // !NET_1_0 && !NET_1_1 && !NET_2_0
 }

@@ -337,8 +337,6 @@ namespace Jayrock.Json
             }
         }
 
-        #if !NET_1_0 && !NET_1_1 && !NET_2_0
-
         [ Test ]
         public void DynamicallyGetMember()
         {
@@ -398,10 +396,6 @@ namespace Jayrock.Json
         }
 
         // TODO Add test for dynamically deleting member
-
-        #endif // !NET_1_0 && !NET_1_1 && !NET_2_0
-
-        #if !NET_1_0 && !NET_1_1
 
         [ Test ]
         public void AddViaGenericDictionary()
@@ -640,8 +634,6 @@ namespace Jayrock.Json
             Assert.AreEqual(obj.GetEnumerator().GetType(), ((IEnumerable) obj).GetEnumerator().GetType());
         }
 
-        #if !NET_2_0
-
         [ Test ]
         public void InitWithJsonMemberSequence()
         {
@@ -662,8 +654,5 @@ namespace Jayrock.Json
             Assert.AreEqual(8, obj["i"]);
             Assert.AreEqual(9, obj["j"]);
         }
-
-        #endif // !NET_2_0
-        #endif // !NET_1_0 && !NET_1_1
     }
 }

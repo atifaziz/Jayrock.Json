@@ -26,25 +26,15 @@ namespace Jayrock.Json
 
     using System;
     using System.Collections;
-    using System.Diagnostics;
-    using System.IO;
-
-    using Jayrock.Dynamic;
-    using Jayrock.Json.Conversion;
-
-    #if !NET_1_0 && !NET_1_1
-
     using System.Collections.Generic;
-
-    #endif
-
-    #if !NET_1_0 && !NET_1_1 && !NET_2_0
-
+    using System.Diagnostics;
     using System.Dynamic;
+    using System.IO;
     using System.Linq;
     using System.Linq.Expressions;
 
-    #endif
+    using Jayrock.Dynamic;
+    using Jayrock.Json.Conversion;
 
     #endregion
 
@@ -63,21 +53,13 @@ namespace Jayrock.Json
     /// </remarks>
 
     [ Serializable ]
-    public class JsonObject : DictionaryBase, IJsonImportable, IJsonExportable, IEnumerable
-        #if !NET_1_0 && !NET_1_1
-        /* ... */ ,
+    public class JsonObject : DictionaryBase, IJsonImportable, IJsonExportable,
         IEnumerable<JsonMember>,
-        System.Collections.Generic.IDictionary<string, object>
-        #endif
-        #if !NET_1_0 && !NET_1_1 && !NET_2_0
-        /* ... */ ,
-        System.Dynamic.IDynamicMetaObjectProvider
-        #endif
+        IDictionary<string, object>,
+        IDynamicMetaObjectProvider
     {
         private ArrayList _nameIndexList;
         [ NonSerialized ] private IList _readOnlyNameIndexList;
-
-        #if !NET_1_0 && !NET_1_1
 
         [ NonSerialized ] string[] _keys;
         [ NonSerialized ] object[] _values;
@@ -87,12 +69,6 @@ namespace Jayrock.Json
             _keys = null;
             _values = null;
         }
-
-        #else
-
-        private void OnUpdating() { /* NOP */ }
-
-        #endif
 
         public JsonObject() {}
 
@@ -140,8 +116,6 @@ namespace Jayrock.Json
             return GetEnumerator();
         }
 
-        #if !NET_1_0 && !NET_1_1
-
         public JsonObject(IEnumerable<JsonMember> members)
         {
             if (members == null)
@@ -156,13 +130,8 @@ namespace Jayrock.Json
             return GetEnumerator();
         }
 
-        #endif
-
         [Serializable]
-        public sealed class JsonMemberEnumerator : IEnumerator, IDisposable
-            #if !NET_1_0 && !NET_1_1
-            , IEnumerator<JsonMember>
-            #endif
+        public sealed class JsonMemberEnumerator : IEnumerator<JsonMember>
         {
             private JsonObject _obj;
             private IEnumerator _enumerator;
@@ -501,8 +470,6 @@ namespace Jayrock.Json
             NameIndexList.Clear();
         }
 
-        #if !NET_1_0 && !NET_1_1
-
         bool IDictionary<string, object>.TryGetValue(string key, out object value)
         {
             if (!Contains(key))
@@ -597,10 +564,6 @@ namespace Jayrock.Json
             get { return InnerHashtable.IsReadOnly; }
         }
 
-        #endif // !NET_1_0 && !NET_1_1
-
-        #if !NET_1_0 && !NET_1_1 && !NET_2_0
-
         DynamicMetaObject IDynamicMetaObjectProvider.GetMetaObject(Expression parameter)
         {
             return new DynamicMetaObject<JsonObject>(parameter, this, _runtime, /* dontFallbackFirst */ true);
@@ -647,7 +610,5 @@ namespace Jayrock.Json
             }
             return Option.Value(value);
         }
-
-        #endif // !NET_1_0 && !NET_1_1 && !NET_2_0
     }
 }

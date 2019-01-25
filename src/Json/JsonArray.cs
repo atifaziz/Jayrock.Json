@@ -26,13 +26,10 @@ namespace Jayrock.Json
 
     using System;
     using System.Collections;
+    using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
     using Jayrock.Json.Conversion;
-
-    #if !NET_1_0 && !NET_1_1
-    using System.Collections.Generic;
-    #endif
 
     #endregion
 
@@ -47,10 +44,8 @@ namespace Jayrock.Json
     /// </remarks>
 
     [ Serializable ]
-    public class JsonArray : CollectionBase, IJsonImportable, IJsonExportable
-        #if !NET_1_0 && !NET_1_1
-        , IList<object>
-        #endif
+    public class JsonArray :
+        CollectionBase, IJsonImportable, IJsonExportable, IList<object>
     {
         public JsonArray() {}
 
@@ -425,8 +420,6 @@ namespace Jayrock.Json
             // NOP other base implementation does not allow null values.
         }
 
-        #if !NET_1_0 && !NET_1_1
-
         /// <summary>
         /// Returns an enumerator that iterates through the elements
         /// of the array.
@@ -466,7 +459,5 @@ namespace Jayrock.Json
         {
             List.Insert(index, item);
         }
-
-        #endif // !NET_1_0 && !NET_1_1
     }
 }

@@ -251,39 +251,9 @@ namespace Jayrock.Json.Conversion
 
             return type.IsNotPublic && type.IsClass && type.IsSealed
                 && type.GetConstructor(Type.EmptyTypes) == null
-#if NET_1_0 || NET_1_1
-                && AnyObjectByTypeName(type.GetCustomAttributes(false),
-                       "System.Runtime.CompilerServices.CompilerGeneratedAttribute")
-#else
                 && type.IsGenericType
-                && type.IsDefined(typeof(System.Runtime.CompilerServices.CompilerGeneratedAttribute), false)
-#endif
-                ;
+                && type.IsDefined(typeof(System.Runtime.CompilerServices.CompilerGeneratedAttribute), false);
         }
-
-#if NET_1_0 || NET_1_1
-
-        private static bool AnyObjectByTypeName(object[] objects, string typeNameSought)
-        {
-            return FindFirstObjectByTypeName(objects, typeNameSought) != null;
-        }
-
-        private static object FindFirstObjectByTypeName(object[] objects, string typeNameSought)
-        {
-            Debug.Assert(objects != null);
-            Debug.Assert(typeNameSought != null);
-            Debug.Assert(typeNameSought.Length > 0);
-
-            foreach (object obj in objects)
-            {
-                if (obj != null && 0 == string.CompareOrdinal(obj.GetType().FullName, typeNameSought))
-                    return obj;
-            }
-
-            return null;
-        }
-
-#endif
 
         #region Uninteresting implementations of ICustomTypeDescriptor members
 

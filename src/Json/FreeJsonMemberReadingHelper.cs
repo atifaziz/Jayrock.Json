@@ -26,12 +26,7 @@ namespace Jayrock.Json
 
     using System;
     using System.Diagnostics;
-
-    #if NET_1_0 || NET_1_1
-        using NamedJsonBufferList = System.Collections.ArrayList;
-    #else
-        using NamedJsonBufferList = System.Collections.Generic.List<NamedJsonBuffer>;
-    #endif
+    using NamedJsonBufferList = System.Collections.Generic.List<NamedJsonBuffer>;
 
     #endregion
 

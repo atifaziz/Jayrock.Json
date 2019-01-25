@@ -26,9 +26,7 @@ namespace Jayrock.Json.Conversion.Converters
 
     using System;
     using System.Collections;
-    #if !NET_1_0 && !NET_1_1
     using System.Collections.Generic;
-    #endif
 
     #endregion
 
@@ -42,8 +40,6 @@ namespace Jayrock.Json.Conversion.Converters
             return new JsonObject();
         }
     }
-
-    #if !NET_1_0 && !NET_1_1
 
     public class DictionaryImporter<TKey, TValue> : ImporterBase
     {
@@ -114,6 +110,4 @@ namespace Jayrock.Json.Conversion.Converters
             return new TDictionary();
         }
     }
-
-    #endif // !NET_1_0 && !NET_1_1
 }

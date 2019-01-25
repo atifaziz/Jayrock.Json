@@ -122,8 +122,6 @@ namespace Jayrock.Json.Conversion
             return CreateImportContext().Import(type, reader);
         }
 
-#if !NET_1_0 && !NET_1_1
-
         //
         // Generic versions of Import methods.
         //
@@ -142,8 +140,6 @@ namespace Jayrock.Json.Conversion
         {
             return (T) Import(typeof(T), reader);
         }
-
-#endif
 
         public static ExportContext CreateExportContext()
         {

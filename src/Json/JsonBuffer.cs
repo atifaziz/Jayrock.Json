@@ -25,12 +25,9 @@ namespace Jayrock.Json
     #region Imports
 
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Text;
-
-#if !NET_1_0 && !NET_1_1
-    using System.Collections.Generic;
-#endif
 
     #endregion
 
@@ -374,8 +371,6 @@ namespace Jayrock.Json
             return true;
         }
 
-#if !NET_1_0 && !NET_1_1
-
         public IEnumerable<NamedJsonBuffer> GetMembers()
         {
             JsonBufferReader reader = CreateReader();
@@ -383,8 +378,6 @@ namespace Jayrock.Json
             while (reader.TokenClass == JsonTokenClass.Member)
                 yield return new NamedJsonBuffer(reader.Text, reader.BufferValue());
         }
-
-#endif
 
         /// <summary>
         /// Returns the content of the buffer formatted as JSON text.

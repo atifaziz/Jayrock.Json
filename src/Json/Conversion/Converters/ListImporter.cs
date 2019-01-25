@@ -26,10 +26,8 @@ namespace Jayrock.Json.Conversion.Converters
 
     using System;
     using System.Collections;
-    #if !NET_1_0 && !NET_1_1
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
-    #endif
 
     #endregion
 
@@ -43,8 +41,6 @@ namespace Jayrock.Json.Conversion.Converters
             return new JsonArray();
         }
     }
-
-    #if !NET_1_0 && !NET_1_1
 
     internal class CollectionImporter<TCollection, TOutput, TItem> : ImporterBase
         where TCollection : ICollection<TItem>, new()
@@ -91,6 +87,4 @@ namespace Jayrock.Json.Conversion.Converters
         public CollectionImporter(bool isOututReadOnly) :
             base(isOututReadOnly) {}
     }
-
-    #endif // !NET_1_0 && !NET_1_1
 }

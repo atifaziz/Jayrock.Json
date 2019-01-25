@@ -25,6 +25,7 @@ namespace Jayrock.Json.Conversion.Converters
     #region Imports
 
     using System;
+    using System.Numerics;
     using NUnit.Framework;
 
     #endregion
@@ -143,18 +144,6 @@ namespace Jayrock.Json.Conversion.Converters
             return new DecimalExporter();
         }
     }
-}
-
-#if !NET_1_0 && !NET_1_1 && !NET_2_0
-
-namespace Jayrock.Json.Conversion.Converters
-{
-    #region Imports
-
-    using System.Numerics;
-    using NUnit.Framework;
-
-    #endregion
 
     [ TestFixture ]
     public class TestBigIntegerExporter : TestNumberExporter
@@ -170,5 +159,3 @@ namespace Jayrock.Json.Conversion.Converters
         }
     }
 }
-
-#endif // !NET_1_0 && !NET_1_1 && !NET_2_0

@@ -26,13 +26,11 @@ namespace Jayrock.Json.Conversion
 
     using System;
     using System.Collections;
+    using System.Collections.Generic;
     using System.Configuration;
     using System.Diagnostics;
     using Jayrock.Json.Conversion.Converters;
     using Jayrock.Reflection;
-    #if !NET_1_0 && !NET_1_1
-    using System.Collections.Generic;
-    #endif
 
     #endregion
 
@@ -66,14 +64,10 @@ namespace Jayrock.Json.Conversion
             return importer.Import(this, reader);
         }
 
-#if !NET_1_0 && !NET_1_1
-
         public virtual T Import<T>(JsonReader reader)
         {
             return (T) Import(typeof(T), reader);
         }
-
-#endif
 
         public virtual void Register(IImporter importer)
         {
@@ -131,8 +125,6 @@ namespace Jayrock.Json.Conversion
             if (type.IsEnum)
                 return new EnumImporter(type);
 
-            #if !NET_1_0 && !NET_1_1
-
             if (Reflector.IsConstructionOfNullable(type))
                 return new NullableImporter(type);
 
@@ -163,10 +155,6 @@ namespace Jayrock.Json.Conversion
                 return (IImporter)Activator.CreateInstance(typeof(DictionaryImporter<,,>).MakeGenericType(args3));
             }
 
-            #endif // !NET_1_0 && !NET_1_1
-
-            #if !NET_1_0 && !NET_1_1 && !NET_2_0
-
             if (Reflector.IsConstructionOfGenericTypeDefinition(type, typeof(ISet<>)))
             {
                 Type[] typeArguments = type.GetGenericArguments();
@@ -176,8 +164,6 @@ namespace Jayrock.Json.Conversion
 
             if (Reflector.IsTupleFamily(type))
                 return new TupleImporter(type);
-
-            #endif
 
             if ((type.IsPublic || type.IsNestedPublic) &&
                 !type.IsPrimitive &&
@@ -230,13 +216,8 @@ namespace Jayrock.Json.Conversion
                     importers.Add(new ListImporter());
                     importers.Add(new NameValueCollectionImporter());
                     importers.Add(new JsonBufferImporter());
-
-                    #if !NET_1_0 && !NET_1_1 && !NET_2_0
-
                     importers.Add(new BigIntegerImporter());
                     importers.Add(new ExpandoObjectImporter());
-
-                    #endif // !NET_1_0 && !NET_1_1 && !NET_2_0
 
                     IList typeList = null; // TODO (IList) ConfigurationSettings.GetConfig("jayrock/json.conversion.importers");
 

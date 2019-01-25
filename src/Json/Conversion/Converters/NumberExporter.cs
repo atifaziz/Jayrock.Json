@@ -27,6 +27,7 @@ namespace Jayrock.Json.Conversion.Converters
     using System;
     using System.Diagnostics;
     using System.Globalization;
+    using System.Numerics;
 
     #endregion
 
@@ -139,18 +140,6 @@ namespace Jayrock.Json.Conversion.Converters
             return ((decimal) value).ToString(CultureInfo.InvariantCulture);
         }
     }
-}
-
-#if !NET_1_0 && !NET_1_1 && !NET_2_0
-
-namespace Jayrock.Json.Conversion.Converters
-{
-    #region Imports
-
-    using System.Globalization;
-    using System.Numerics;
-
-    #endregion
 
     public class BigIntegerExporter : NumberExporterBase
     {
@@ -163,5 +152,3 @@ namespace Jayrock.Json.Conversion.Converters
         }
     }
 }
-
-#endif // !NET_1_0 && !NET_1_1 && !NET_2_0

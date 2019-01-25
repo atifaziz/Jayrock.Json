@@ -128,8 +128,6 @@ namespace Jayrock.Json
             Assert.AreEqual(new DateTime(2006, 7, 17, 10, 56, 56), Number("1153133816").ToDateTime().ToUniversalTime());
         }
 
-        #if NET_4_0
-
         [ Test ]
         public void ToBigInteger()
         {
@@ -155,8 +153,6 @@ namespace Jayrock.Json
         {
             Convert.ChangeType(Number("1.5"), typeof(System.Numerics.BigInteger));
         }
-
-        #endif
 
         [ Test ]
         public void LogicalEquality()

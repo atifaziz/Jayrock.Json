@@ -141,8 +141,6 @@ namespace Jayrock.Json
             return decimal.Parse(Value, NumberStyles.Float, CultureInfo.InvariantCulture);
         }
 
-        #if !NET_1_0 && !NET_1_1 && !NET_2_0
-
         public System.Numerics.BigInteger ToBigInteger()
         {
             return ToBigInteger(CultureInfo.InvariantCulture);
@@ -157,8 +155,6 @@ namespace Jayrock.Json
         {
             return number.ToBigInteger();
         }
-
-        #endif // !NET_1_0 && !NET_1_1 && !NET_2_0
 
         public DateTime ToDateTime()
         {
@@ -249,12 +245,8 @@ namespace Jayrock.Json
 
         object IConvertible.ToType(Type conversionType, IFormatProvider provider)
         {
-            #if !NET_1_0 && !NET_1_1 && !NET_2_0
-
             if (conversionType == typeof(System.Numerics.BigInteger))
                 return ToBigInteger(provider);
-
-            #endif // !NET_1_0 && !NET_1_1 && !NET_2_0
 
             return Convert.ChangeType(this, conversionType, provider);
         }

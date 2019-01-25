@@ -111,19 +111,11 @@ namespace Jayrock.Json.Conversion
             if (typeof(IJsonExportable).IsAssignableFrom(type))
                 return new ExportAwareExporter(type);
 
-            #if !NET_1_0 && !NET_1_1
-
             if (Reflector.IsConstructionOfNullable(type))
                 return new NullableExporter(type);
 
-            #endif
-
-            #if !NET_1_0 && !NET_1_1 && !NET_2_0
-
             if (Reflector.IsTupleFamily(type))
                 return new TupleExporter(type);
-
-            #endif
 
             if (type.IsClass && type != typeof(object))
             {
@@ -213,13 +205,8 @@ namespace Jayrock.Json.Conversion
                     exporters.Add(new DbDataRecordExporter());
                     exporters.Add(new StringExporter(typeof(Uri)));
                     exporters.Add(new StringExporter(typeof(Guid)));
-
-                    #if !NET_1_0 && !NET_1_1 && !NET_2_0
-
                     exporters.Add(new BigIntegerExporter());
                     exporters.Add(new ExpandoObjectExporter());
-
-                    #endif // !NET_1_0 && !NET_1_1 && !NET_2_0
 
                     IList typeList = null; // TODO (IList)ConfigurationSettings.GetConfig("jayrock/json.conversion.exporters");
 
