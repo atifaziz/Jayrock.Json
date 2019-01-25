@@ -28,13 +28,8 @@ namespace Jayrock.Json.Conversion
 
     #endregion
 
-    public sealed class AnyType
+    public static class AnyType
     {
         public static readonly Type Value = typeof(object);
-
-        private AnyType()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

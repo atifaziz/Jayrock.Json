@@ -39,7 +39,7 @@ namespace Jayrock.Json
     /// that work with JSON text.
     /// </summary>
 
-    public sealed class JsonText
+    public static class JsonText
     {
         private static readonly JsonTextReaderFactoryHandler _defaultReaderFactory;
         private static readonly JsonTextWriterFactoryHandler _defaultWriterFactory;
@@ -110,11 +110,6 @@ namespace Jayrock.Json
         public static JsonWriter CreateWriter(StringBuilder sb)
         {
             return CreateWriter(new StringWriter(sb));
-        }
-
-        private JsonText()
-        {
-            throw new NotSupportedException();
         }
     }
 }

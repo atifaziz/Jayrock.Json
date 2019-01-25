@@ -29,7 +29,7 @@ namespace Jayrock.Reflection
 
     #endregion
 
-    public sealed class Reflector
+    public static class Reflector
     {
         #if !NET_1_0 && !NET_1_1
 
@@ -145,10 +145,5 @@ namespace Jayrock.Reflection
         }
 
         #endif // !NET_1_0 && !NET_1_1 && !NET_2_0
-
-        private Reflector()
-        {
-            throw new NotSupportedException();
-        }
     }
 }

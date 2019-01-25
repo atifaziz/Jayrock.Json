@@ -14,7 +14,7 @@ namespace JsonConversionsDemo
     /// collection as long as it seems like one.
     /// </summary>
 
-    public sealed class DuckCollectionReflector
+    public static class DuckCollectionReflector
     {
         public static Type InferElementType(Type type)
         {
@@ -100,7 +100,5 @@ namespace JsonConversionsDemo
 
             return (Action<Element>) Delegate.CreateDelegate(typeof(Action<Element>), collection, adder);
         }
-
-        private DuckCollectionReflector() {}
     }
 }

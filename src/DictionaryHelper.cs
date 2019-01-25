@@ -35,7 +35,7 @@ namespace Jayrock
     /// your code.
     /// </summary>
 
-    public sealed class DictionaryHelper
+    public static class DictionaryHelper
     {
         private static readonly DictionaryEntry[] _zeroEntries = new DictionaryEntry[0];
 
@@ -80,11 +80,6 @@ namespace Jayrock
                 if (disposable != null)
                     disposable.Dispose();
             }
-        }
-
-        private DictionaryHelper()
-        {
-            throw new NotSupportedException();
         }
     }
 }

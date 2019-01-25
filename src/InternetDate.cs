@@ -34,7 +34,7 @@ namespace Jayrock
     /// RFC 822/1123 specification.
     /// </summary>
 
-    public sealed class InternetDate
+    public static class InternetDate
     {
         private static readonly string[] _formats =
         {
@@ -187,11 +187,6 @@ namespace Jayrock
 
             TimeSpan offset = new TimeSpan(zzz / 100, zzz % 100, 0);
             return time.Subtract(offset).ToLocalTime();
-        }
-
-        private InternetDate()
-        {
-            throw new NotSupportedException();
         }
     }
 }

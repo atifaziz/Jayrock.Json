@@ -32,7 +32,7 @@ namespace Jayrock.Json
 
     #endregion
 
-    public sealed class JsonString
+    public static class JsonString
     {
         /// <summary>
         /// Produces a string in double quotes with backslash sequences in all
@@ -229,11 +229,6 @@ namespace Jayrock.Json
             hexDigits[3] = input.Next();
 
             return (char) ushort.Parse(new string(hexDigits), NumberStyles.HexNumber);
-        }
-
-        private JsonString()
-        {
-            throw new NotSupportedException();
         }
     }
 }

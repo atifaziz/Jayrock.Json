@@ -36,7 +36,7 @@ namespace Jayrock.Diagnostics
     /// be used directly from your code.
     /// </summary>
 
-    public sealed class DebugString
+    public static class DebugString
     {
         public static readonly string Ellipsis = "\x2026";
         public static readonly char ControlReplacement = '?';
@@ -67,11 +67,6 @@ namespace Jayrock.Diagnostics
             }
 
             return sb.ToString();
-        }
-
-        private DebugString()
-        {
-            throw new NotSupportedException();
         }
     }
 }

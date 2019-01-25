@@ -32,7 +32,7 @@ namespace Jayrock
     /// Provides masking services where one value masks another given a test.
     /// </summary>
 
-    internal sealed class Mask
+    internal static class Mask
     {
         public static string NullString(string actual)
         {
@@ -47,11 +47,6 @@ namespace Jayrock
         public static string EmptyString(string actual, string emptyValue)
         {
             return Mask.NullString(actual).Length == 0 ? emptyValue : actual;
-        }
-
-        private Mask()
-        {
-            throw new NotSupportedException();
         }
     }
 }

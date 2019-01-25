@@ -28,7 +28,7 @@ namespace Jayrock
 
     #endregion
 
-    public sealed class UnixTime
+    public static class UnixTime
     {
         public static readonly DateTime EpochUtc = new DateTime(1970, 1, 1);
 
@@ -115,11 +115,6 @@ namespace Jayrock
         public static double ToDouble(DateTime time)
         {
             return (time.ToUniversalTime() - new DateTime(1970, 1, 1)).TotalSeconds;
-        }
-
-        private UnixTime()
-        {
-            throw new NotSupportedException();
         }
     }
 }

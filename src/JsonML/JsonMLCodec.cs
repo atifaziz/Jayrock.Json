@@ -75,7 +75,7 @@ namespace Jayrock.JsonML
     /// Encodes or decodes JsonML.
     /// </summary>
 
-    public sealed class JsonMLCodec
+    public static class JsonMLCodec
     {
         /// <summary>
         /// Converts JsonML in object or array form to XML.
@@ -505,11 +505,6 @@ namespace Jayrock.JsonML
 
             writer.WriteEndObject();
             reader.Read();
-        }
-
-        private JsonMLCodec()
-        {
-            throw new NotSupportedException();
         }
     }
 }

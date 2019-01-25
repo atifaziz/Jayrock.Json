@@ -35,7 +35,7 @@ namespace Jayrock
     /// your code.
     /// </summary>
 
-    public sealed class CollectionHelper
+    public static class CollectionHelper
     {
         private static readonly object[] _zeroObjects = new object[0];
 
@@ -63,11 +63,6 @@ namespace Jayrock
         public static IList ToList(ICollection collection)
         {
             return collection != null ? new ArrayList(collection) : new ArrayList();
-        }
-
-        private CollectionHelper()
-        {
-            throw new NotSupportedException();
         }
     }
 }

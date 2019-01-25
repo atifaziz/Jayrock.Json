@@ -41,7 +41,7 @@ namespace Jayrock.Json.Conversion
     /// (CLR) types and JSON types.
     /// </summary>
 
-    public sealed class JsonConvert
+    public static class JsonConvert
     {
         private static readonly ExportContextFactoryHandler _defaultExportContextFactoryHandler;
         private static readonly ImportContextFactoryHandler _defaultImportContextFactoryHandler;
@@ -199,11 +199,6 @@ namespace Jayrock.Json.Conversion
         private static ImportContext CreateDefaultImportContext()
         {
             return new ImportContext();
-        }
-
-        private JsonConvert()
-        {
-            throw new NotSupportedException();
         }
     }
 }

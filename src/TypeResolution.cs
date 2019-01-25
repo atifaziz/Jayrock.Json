@@ -30,7 +30,7 @@ namespace Jayrock
 
     public delegate Type TypeResolutionHandler(string typeName, bool throwOnError, bool ignoreCase);
 
-    public sealed class TypeResolution
+    public static class TypeResolution
     {
         private static TypeResolutionHandler _current;
         private static readonly TypeResolutionHandler _default;
@@ -66,11 +66,6 @@ namespace Jayrock
         public static Type GetType(string typeName)
         {
             return Current(typeName, /* throwOnError = */ true, /* ignoreCase = */ false);
-        }
-
-        private TypeResolution()
-        {
-            throw new NotSupportedException();
         }
     }
 }

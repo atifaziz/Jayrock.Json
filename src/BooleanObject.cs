@@ -28,7 +28,7 @@ namespace Jayrock
 
     #endregion
 
-    internal sealed class BooleanObject
+    internal static class BooleanObject
     {
         //
         // The following two statics are only used as an optimization so that we
@@ -42,11 +42,6 @@ namespace Jayrock
         public static object Box(bool value)
         {
             return value ? True : False;
-        }
-
-        private BooleanObject()
-        {
-            throw new NotSupportedException();
         }
     }
 }
