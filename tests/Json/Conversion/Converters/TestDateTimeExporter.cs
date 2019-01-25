@@ -61,7 +61,7 @@ namespace Jayrock.Json.Conversion.Converters
 
         private static string Tzd(DateTime localTime)
         {
-            TimeSpan offset = TimeZone.CurrentTimeZone.GetUtcOffset(localTime);
+            TimeSpan offset = TimeZoneInfo.Local.GetUtcOffset(localTime);
             string offsetString = offset.ToString();
             return offset.Ticks < 0 ?
                    (offsetString.Substring(0, 6)) :

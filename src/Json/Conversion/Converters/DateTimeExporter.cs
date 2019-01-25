@@ -85,7 +85,7 @@ namespace Jayrock.Json.Conversion.Converters
 
             // UTC offset
 
-            TimeSpan offset = TimeZone.CurrentTimeZone.GetUtcOffset(when);
+            TimeSpan offset = TimeZoneInfo.Local.GetUtcOffset(when);
             chars[27] = offset.Ticks >= 0 ? '+' : '-';
             Digits2(chars, Math.Abs(offset.Hours),   28);
             Digits2(chars, offset.Minutes, 31);
