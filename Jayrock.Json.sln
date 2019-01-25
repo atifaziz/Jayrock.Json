@@ -33,8 +33,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsonOutputDemo", "samples\J
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TidyJson", "samples\TidyJson\TidyJson.csproj", "{2415F58C-4882-4852-AE66-880C3988C85F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YahooJsonNewsReader", "samples\YahooJsonNewsReader\YahooJsonNewsReader.csproj", "{56C4F992-9556-4697-85C9-3E0CDCBE1C93}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,18 +115,6 @@ Global
 		{2415F58C-4882-4852-AE66-880C3988C85F}.Release|x64.Build.0 = Release|Any CPU
 		{2415F58C-4882-4852-AE66-880C3988C85F}.Release|x86.ActiveCfg = Release|Any CPU
 		{2415F58C-4882-4852-AE66-880C3988C85F}.Release|x86.Build.0 = Release|Any CPU
-		{56C4F992-9556-4697-85C9-3E0CDCBE1C93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{56C4F992-9556-4697-85C9-3E0CDCBE1C93}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{56C4F992-9556-4697-85C9-3E0CDCBE1C93}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{56C4F992-9556-4697-85C9-3E0CDCBE1C93}.Debug|x64.Build.0 = Debug|Any CPU
-		{56C4F992-9556-4697-85C9-3E0CDCBE1C93}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{56C4F992-9556-4697-85C9-3E0CDCBE1C93}.Debug|x86.Build.0 = Debug|Any CPU
-		{56C4F992-9556-4697-85C9-3E0CDCBE1C93}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{56C4F992-9556-4697-85C9-3E0CDCBE1C93}.Release|Any CPU.Build.0 = Release|Any CPU
-		{56C4F992-9556-4697-85C9-3E0CDCBE1C93}.Release|x64.ActiveCfg = Release|Any CPU
-		{56C4F992-9556-4697-85C9-3E0CDCBE1C93}.Release|x64.Build.0 = Release|Any CPU
-		{56C4F992-9556-4697-85C9-3E0CDCBE1C93}.Release|x86.ActiveCfg = Release|Any CPU
-		{56C4F992-9556-4697-85C9-3E0CDCBE1C93}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -138,7 +124,6 @@ Global
 		{238EDD6E-767E-4706-9334-7D458D7FC427} = {220A3B01-8FA2-42CE-B225-D4D65DAD7B17}
 		{EDFC4C55-2E09-4930-BA30-0055223BE067} = {220A3B01-8FA2-42CE-B225-D4D65DAD7B17}
 		{2415F58C-4882-4852-AE66-880C3988C85F} = {220A3B01-8FA2-42CE-B225-D4D65DAD7B17}
-		{56C4F992-9556-4697-85C9-3E0CDCBE1C93} = {220A3B01-8FA2-42CE-B225-D4D65DAD7B17}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2FBD4665-5838-4EC3-B31E-49FC4211DCC4}
