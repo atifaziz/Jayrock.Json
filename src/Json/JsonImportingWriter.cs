@@ -22,12 +22,12 @@
 
 namespace Jayrock.Json
 {
-    using System.Collections;
+    using System.Collections.Generic;
 
     public class JsonImportingWriter : JsonWriterBase
     {
-        private readonly Stack _valueStack = new Stack();
-        private readonly Stack _memberStack = new Stack();
+        private readonly Stack<object> _valueStack = new Stack<object>();
+        private readonly Stack<string> _memberStack = new Stack<string>();
         private JsonObject _object;
         private JsonArray _array;
         private object _value;
@@ -51,7 +51,7 @@ namespace Jayrock.Json
         {
             object current = _value;
             object popped = _valueStack.Pop();
-            _member = (string) _memberStack.Pop();
+            _member = _memberStack.Pop();
             if (popped == null) // Final result?
                 return;
             _object = popped as JsonObject;

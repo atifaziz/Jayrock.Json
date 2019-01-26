@@ -25,7 +25,7 @@ namespace Jayrock.Json
     #region Imports
 
     using System;
-    using System.Collections;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Globalization;
     using System.IO;
@@ -43,7 +43,7 @@ namespace Jayrock.Json
         private static readonly char[] _numNonDigitChars = new char[] { '.', 'e', 'E', '+', '-'};
 
         private BufferedCharReader _reader;
-        private Stack _stack;
+        private Stack<Continuation> _stack;
         private int _endLineNumber;
         private int _endLinePosition;
         private int _endCharCount;
@@ -515,7 +515,7 @@ namespace Jayrock.Json
             Debug.Assert(continuation != null);
 
             if (_stack == null)
-                _stack = new Stack(6);
+                _stack = new Stack<Continuation>(6);
 
             _stack.Push(continuation);
         }
@@ -523,7 +523,7 @@ namespace Jayrock.Json
         private Continuation Pop()
         {
             Debug.Assert(_stack != null);
-            return (Continuation) _stack.Pop();
+            return _stack.Pop();
         }
 
         private JsonException SyntaxError(string message)
