@@ -25,7 +25,7 @@ namespace Jayrock.Json
     #region Imports
 
     using System;
-    using System.Collections;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Runtime.Serialization;
 
@@ -46,13 +46,14 @@ namespace Jayrock.Json
         public static readonly JsonTokenClass BOF = new JsonTokenClass("BOF", Superclass.Terminator);
         public static readonly JsonTokenClass EOF = new JsonTokenClass("EOF", Superclass.Terminator);
 
-        public static readonly ICollection All = ArrayList.ReadOnly(new JsonTokenClass[]
-        {
-            BOF, EOF,
-            Null, Boolean, Number, String,
-            Array, EndArray,
-            Object, EndObject, Member
-        });
+        public static readonly IReadOnlyCollection<JsonTokenClass>
+            All = System.Array.AsReadOnly(new JsonTokenClass[]
+            {
+                BOF, EOF,
+                Null, Boolean, Number, String,
+                Array, EndArray,
+                Object, EndObject, Member
+            });
 
         private readonly string _name;
         [ NonSerialized ] private readonly Superclass _superclass;
