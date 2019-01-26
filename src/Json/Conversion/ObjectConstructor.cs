@@ -25,7 +25,7 @@ namespace Jayrock.Json.Conversion
     #region Imports
 
     using System;
-    using System.Collections;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Globalization;
     using System.Reflection;
@@ -37,7 +37,10 @@ namespace Jayrock.Json.Conversion
         private readonly Type _type;
         private readonly ConstructorInfo[] _ctors;
 
-        private static readonly IComparer _arrayLengthComparer = new ReverseComparer(new DelegatingComparer(new ComparableSelector(GetParametersCount)));
+        private static readonly IComparer<ConstructorInfo>
+            _arrayLengthComparer =
+                Comparer<ConstructorInfo>.Create((a, b) =>
+                    -1 * a.GetParameters().Length.CompareTo(b.GetParameters().Length));
 
         public ObjectConstructor(Type type) : this(type, null) {}
 
@@ -218,19 +221,6 @@ namespace Jayrock.Json.Conversion
             }
 
             return -1;
-        }
-
-        private static IComparable GetParametersCount(object obj)
-        {
-            if (obj == null)
-                throw new ArgumentNullException("obj");
-
-            MethodBase method = obj as MethodBase;
-
-            if (method == null)
-                throw new ArgumentException("obj");
-
-            return method.GetParameters().Length;
         }
     }
 }
