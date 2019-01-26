@@ -22,122 +22,56 @@
 
 namespace Jayrock.Collections
 {
-    #region Imports
-
     using System;
-    using System.Collections;
-    using System.Runtime.Serialization;
+    using System.Collections.Generic;
+    using System.Linq;
 
-    #endregion
-
-    [ Serializable ]
-    public abstract class KeyedCollection : CollectionBase, IDeserializationCallback
+    public abstract class KeyedCollection<TKey, TValue> :
+        System.Collections.ObjectModel.KeyedCollection<TKey, TValue>
     {
-        [ NonSerialized ]
-        private Hashtable _valueByKey;
+        protected IEnumerable<TKey> KeysByIndex =>
+            from item in Items
+            select GetKeyForItem(item);
 
-        private Hashtable ValueByKey
+        public void Put(TValue value)
         {
-            get
+            var key = GetKeyForItem(value);
+            if (Dictionary is IDictionary<TKey, TValue> dict
+                && !dict.ContainsKey(key))
             {
-                if (_valueByKey == null)
-                    _valueByKey = new Hashtable(4);
-
-                return _valueByKey;
+                Add(value);
+                return;
             }
+
+            for (var i = 0; i < Count; i++)
+            {
+                if (Comparer.Equals(GetKeyForItem(Items[i]), key))
+                {
+                    SetItem(i, value);
+                    return;
+                }
+            }
+
+            Add(value);
         }
 
-        protected void Add(object value)
-        {
-            List.Add(value);
-        }
+        protected override void SetItem(int index, TValue item) =>
+            base.SetItem(index, ValidateItem(item));
 
-        protected object GetByKey(object key)
-        {
-            if (key == null)
-                throw new ArgumentNullException("key");
+        protected override void InsertItem(int index, TValue item) =>
+            base.InsertItem(index, ValidateItem(item));
 
-            return ValueByKey[key];
-        }
+        private TValue ValidateItem(TValue item)
+            => GetKeyForItem(item) == null
+             ? throw new ArgumentException(null, nameof(item))
+             : item;
 
-        protected bool Contains(object key)
-        {
-            if (key == null)
-                throw new ArgumentNullException("key");
-
-            return ValueByKey.ContainsKey(key);
-        }
-
-        protected bool Remove(object key)
-        {
-            if (key == null)
-                throw new ArgumentNullException("key");
-
-            object value = GetByKey(key);
-
-            if (value == null)
-                return false;
-
-            List.Remove(value);
-            return true;
-        }
-
-        protected override void OnValidate(object value)
-        {
-            base.OnValidate(value);
-
-            if (KeyFromValue(value) == null)
-                throw new ArgumentException(null, "value");
-        }
-
-        protected override void OnInsertComplete(int index, object value)
-        {
-            ValueByKey.Add(KeyFromValue(value), value);
-            base.OnInsertComplete(index, value);
-        }
-
-        protected override void OnRemoveComplete(int index, object value)
-        {
-            ValueByKey.Remove(KeyFromValue(value));
-            base.OnRemoveComplete(index, value);
-        }
-
-        protected override void OnSetComplete(int index, object oldValue, object newValue)
-        {
-            ValueByKey.Remove(KeyFromValue(oldValue));
-            ValueByKey.Add(KeyFromValue(newValue), newValue);
-            base.OnSetComplete(index, oldValue, newValue);
-        }
-
-        protected override void OnClearComplete()
-        {
-            ValueByKey.Clear();
-            base.OnClearComplete();
-        }
-
-        protected void ListKeysByIndex(Array keys)
-        {
-            if (keys == null)
-                throw new ArgumentNullException("keys");
-
-            if (keys.Rank != 1)
-                throw new ArgumentException(null, "keys");
-
-            for (int i = 0; i < Math.Min(Count, keys.Length); i++)
-                keys.SetValue(KeyFromValue(InnerList[i]), i);
-        }
-
-        protected abstract object KeyFromValue(object value);
-
-        void IDeserializationCallback.OnDeserialization(object sender)
-        {
-            OnDeserializationCallback(sender);
-        }
-
-        protected virtual void OnDeserializationCallback(object sender)
-        {
-            foreach (object value in this)
-                ValueByKey[KeyFromValue(value)] = value;
-        }
+        public new TValue this[TKey key]
+            => key == null
+             ? throw new ArgumentNullException(nameof(key))
+             : Dictionary is IDictionary<TKey, TValue> dict
+               && dict.TryGetValue(key, out var value)
+             ? value
+             : Items.FirstOrDefault(item => Comparer.Equals(key, GetKeyForItem(item)));
     }
 }

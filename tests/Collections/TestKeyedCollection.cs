@@ -26,10 +26,8 @@ namespace Jayrock.Collections
 
     using System;
     using System.Collections;
-    using System.IO;
-    using System.Reflection;
-    using System.Runtime.Serialization;
-    using System.Runtime.Serialization.Formatters.Binary;
+    using System.Collections.Generic;
+    using System.Linq;
     using NUnit.Framework;
 
     #endregion
@@ -52,6 +50,17 @@ namespace Jayrock.Collections
         {
             NamedValueCollection values = new NamedValueCollection();
             values.Add(new NamedValue(null, new object()));
+        }
+
+        [ Test ]
+        public void Put()
+        {
+            NamedValueCollection values = new NamedValueCollection();
+            values.Put(new NamedValue("Foo", new object()));
+            NamedValue value = new NamedValue("Foo", new object());
+            values.Put(value);
+            Assert.AreEqual(1, values.Count);
+            Assert.AreSame(value, values[value.Name]);
         }
 
         [ Test ]
@@ -139,7 +148,7 @@ namespace Jayrock.Collections
             foreach (string name in names)
                 values.Add(new NamedValue(name, new object()));
             Assert.AreEqual(names.Length, values.Count);
-            string[] keys = values.GetKeys();
+            string[] keys = values.NamesByIndex.ToArray();
             Assert.AreEqual(names, keys);
         }
 
@@ -169,18 +178,6 @@ namespace Jayrock.Collections
         }
 
         [ Test, ExpectedException(typeof(ArgumentNullException)) ]
-        public void CannotSendNullArrayToBaseListKeysByIndex()
-        {
-            (new NamedValueCollection()).ListKeysTo(null);
-        }
-
-        [ Test, ExpectedException(typeof(ArgumentException)) ]
-        public void CannotSendMultiDimensionalArrayToBaseListKeysByIndex()
-        {
-            (new NamedValueCollection()).ListKeysTo(new string[0, 0]);
-        }
-
-        [ Test, ExpectedException(typeof(ArgumentNullException)) ]
         public void CannotIndexByNullKey()
         {
             /* object unused = */ new NamedValueCollection()[null] /* [1] */ .ToString();
@@ -191,34 +188,6 @@ namespace Jayrock.Collections
             //     variable to avoid the CS0219 warning issue from Mono's
             //     C# compiler. See:
             //     http://bugzilla.novell.com/show_bug.cgi?id=316137
-        }
-
-        [ Test ]
-        [ Ignore("Type 'System.Collections.CollectionBase' in Assembly 'System.Collections.NonGeneric' is not marked as serializable") ]
-        public void AddsNoSerializableState()
-        {
-            MemberInfo[] members = FormatterServices.GetSerializableMembers(typeof(KeyedCollection));
-            foreach (MemberInfo member in members)
-            Assert.AreNotEqual(typeof(KeyedCollection), member.DeclaringType);
-        }
-
-        [ Test ]
-        [ Ignore("Type 'System.Collections.CollectionBase' in Assembly 'System.Collections.NonGeneric' is not marked as serializable") ]
-        public void MappingIsRestoredUponDeserialization()
-        {
-            NamedValueCollection collection = new NamedValueCollection();
-            Assert.IsFalse(collection.OnDeserializationCallbackCalled);
-            collection.Add(new NamedValue("foo", "bar"));
-            BinaryFormatter formatter = new BinaryFormatter();
-            MemoryStream ms = new MemoryStream();
-            formatter.Serialize(ms, collection);
-            ms.Position = 0; // rewind
-            collection = (NamedValueCollection) formatter.Deserialize(ms);
-            Assert.IsTrue(collection.OnDeserializationCallbackCalled);
-            NamedValue entry = collection["foo"];
-            Assert.IsNotNull(entry);
-            Assert.AreEqual("foo", entry.Name);
-            Assert.AreEqual("bar", entry.Value);
         }
 
         [ Serializable ]
@@ -235,52 +204,13 @@ namespace Jayrock.Collections
         }
 
         [ Serializable ]
-        private sealed class NamedValueCollection : KeyedCollection
+        private sealed class NamedValueCollection : KeyedCollection<string, NamedValue>
         {
-            public bool OnDeserializationCallbackCalled;
+            protected override string GetKeyForItem(NamedValue item) =>
+                item.Name;
 
-            public NamedValue this[string key]
-            {
-                get { return (NamedValue) GetByKey(key); }
-            }
-
-            public void Add(NamedValue value)
-            {
-                base.Add(value);
-            }
-
-            public bool Contains(string key)
-            {
-                return base.Contains(key);
-            }
-
-            public bool Remove(string key)
-            {
-                return base.Remove(key);
-            }
-
-            public string[] GetKeys()
-            {
-                string[] keys = new string[Count];
-                ListKeysByIndex(keys);
-                return keys;
-            }
-
-            public void ListKeysTo(Array keys)
-            {
-                ListKeysByIndex(keys);
-            }
-
-            protected override object KeyFromValue(object value)
-            {
-                return ((NamedValue) value).Name;
-            }
-
-            protected override void OnDeserializationCallback(object sender)
-            {
-                OnDeserializationCallbackCalled = true;
-                base.OnDeserializationCallback(sender);
-            }
+            public IEnumerable<string> NamesByIndex =>
+                KeysByIndex;
         }
     }
 }
