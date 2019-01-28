@@ -478,7 +478,7 @@ namespace Jayrock.Json
 
         ICollection<string> IDictionary<string, object>.Keys
         {
-            get { return _keys ?? (_keys = GetMembers<string>(delegate(JsonMember m) { return m.Name; })); }
+            get { return _keys ?? (_keys = GetMembers(delegate(JsonMember m) { return m.Name; })); }
         }
 
         T[] GetMembers<T>(Converter<JsonMember, T> selector)
@@ -492,7 +492,7 @@ namespace Jayrock.Json
 
         ICollection<object> IDictionary<string, object>.Values
         {
-            get { return _values ?? (_values = GetMembers<object>(delegate(JsonMember m) { return m.Value; })); }
+            get { return _values ?? (_values = GetMembers(delegate(JsonMember m) { return m.Value; })); }
         }
 
         bool IDictionary<string, object>.ContainsKey(string key)
