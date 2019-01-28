@@ -39,7 +39,7 @@ namespace Jayrock.Json
     /// </remarks>
 
     [ Serializable ]
-    public struct JsonNumber : IConvertible
+    public struct JsonNumber : IEquatable<JsonNumber>, IConvertible
     {
         readonly string _value;
 
@@ -63,7 +63,7 @@ namespace Jayrock.Json
 
         public override bool Equals(object obj)
         {
-            return obj != null && (obj is JsonNumber) && Equals((JsonNumber) obj);
+            return obj is JsonNumber number && Equals(number);
         }
 
         public bool Equals(JsonNumber other)

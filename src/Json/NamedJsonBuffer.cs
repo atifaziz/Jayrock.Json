@@ -55,7 +55,7 @@ namespace Jayrock.Json
 
         public override bool Equals(object obj)
         {
-            return obj is NamedJsonBuffer && Equals((NamedJsonBuffer) obj);
+            return obj is NamedJsonBuffer buffer && Equals(buffer);
         }
 
         public override int GetHashCode()

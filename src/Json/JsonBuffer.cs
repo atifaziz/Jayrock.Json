@@ -32,7 +32,7 @@ namespace Jayrock.Json
     /// </summary>
 
     [ Serializable ]
-    public struct JsonBuffer
+    public struct JsonBuffer : IEquatable<JsonBuffer>
     {
         public static readonly JsonBuffer Empty = new JsonBuffer();
 
@@ -350,7 +350,7 @@ namespace Jayrock.Json
 
         public override bool Equals(object obj)
         {
-            return obj is JsonBuffer && Equals((JsonBuffer) obj);
+            return obj is JsonBuffer buffer && Equals(buffer);
         }
 
         public bool Equals(JsonBuffer other)

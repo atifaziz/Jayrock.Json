@@ -26,7 +26,7 @@ namespace Jayrock.Json
     #endregion
 
     [ Serializable ]
-    public struct JsonToken
+    public struct JsonToken : IEquatable<JsonToken>
     {
         readonly JsonTokenClass _class;
         readonly string _text;
@@ -70,7 +70,7 @@ namespace Jayrock.Json
 
         public override bool Equals(object obj)
         {
-            return obj != null && obj is JsonToken ? Equals((JsonToken) obj) : false;
+            return obj is JsonToken token && Equals(token);
         }
 
         public bool Equals(JsonToken other)
