@@ -31,19 +31,13 @@ namespace Jayrock.Json.Conversion
 
     public sealed class ObjectConstructionResult
     {
-        readonly object _obj;
-        readonly JsonReader _tail;
-
         public ObjectConstructionResult(object obj, JsonReader tail)
         {
-            if (obj == null) throw new ArgumentNullException(nameof(obj));
-            if (tail == null) throw new ArgumentNullException(nameof(tail));
-
-            _obj = obj;
-            _tail = tail;
+            Object = obj ?? throw new ArgumentNullException(nameof(obj));
+            TailReader = tail ?? throw new ArgumentNullException(nameof(tail));
         }
 
-        public object Object { get { return _obj; } }
-        public JsonReader TailReader { get { return _tail; } }
+        public object Object { get; }
+        public JsonReader TailReader { get; }
     }
 }
