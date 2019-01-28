@@ -32,21 +32,10 @@ namespace Jayrock.Json.Conversion.Converters
         public ArrayImporter() : this(null) {}
 
         public ArrayImporter(Type arrayType) :
-            base(AssertArrayType(arrayType)) {}
-
-        static Type AssertArrayType(Type type)
-        {
-            if (type == null)
-                return typeof(object[]);
-
-            if (!type.IsArray)
-                throw new ArgumentException(string.Format("{0} is not an array.", type.FullName), nameof(type));
-
-            if (type.GetArrayRank() != 1)
-                throw new ArgumentException(string.Format("{0} is not one-dimension array. Multi-dimensional arrays are not supported.", type.FullName), "arrayType");
-
-            return type;
-        }
+            base(arrayType == null ? typeof(object[])
+                 : !arrayType.IsArray ? throw new ArgumentException(string.Format("{0} is not an array.", arrayType.FullName), nameof(arrayType))
+                 : arrayType.GetArrayRank() != 1 ? throw new ArgumentException(string.Format("{0} is not one-dimension array. Multi-dimensional arrays are not supported.", arrayType.FullName), nameof(arrayType))
+                 : arrayType) {}
 
         protected override object ImportFromArray(ImportContext context, JsonReader reader)
         {
