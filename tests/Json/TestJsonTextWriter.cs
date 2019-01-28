@@ -90,7 +90,7 @@ namespace Jayrock.Json
         public void WriteEmptyArray()
         {
             var writer = new JsonTextWriter(new StringWriter());
-            writer.WriteStringArray(new string[0]);
+            writer.WriteStringArray();
             Assert.AreEqual("[]", writer.ToString());
         }
 

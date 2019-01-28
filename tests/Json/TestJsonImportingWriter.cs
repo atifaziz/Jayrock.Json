@@ -83,7 +83,7 @@ namespace Jayrock.Json
         public void WriteEmptyArray()
         {
             var writer = new JsonImportingWriter();
-            writer.WriteStringArray(new string[0]);
+            writer.WriteStringArray();
             Assert.AreEqual(new object[0], GetArray(writer));
         }
 

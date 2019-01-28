@@ -145,7 +145,7 @@ namespace Jayrock.Json.Conversion
                     return FindBaseExporter(baseType.BaseType, actualType);
             }
 
-            return (IExporter) Activator.CreateInstance(exporter.GetType(), new object[] { actualType });
+            return (IExporter) Activator.CreateInstance(exporter.GetType(), actualType);
         }
 
         ExporterCollection Exporters => _exporters ?? (_exporters = new ExporterCollection());

@@ -120,7 +120,7 @@ namespace Jayrock.Json.Conversion
                 var itemType = type.IsGenericType
                               ? type.GetGenericArguments()[0]
                               : typeof(object);
-                var importerType = typeof(CollectionImporter<,>).MakeGenericType(new[] { type, itemType });
+                var importerType = typeof(CollectionImporter<,>).MakeGenericType(type, itemType);
                 return (IImporter) Activator.CreateInstance(importerType, new object[] { isSequence });
             }
 
@@ -142,7 +142,7 @@ namespace Jayrock.Json.Conversion
             {
                 var typeArguments = type.GetGenericArguments();
                 var hashSetType = typeof(HashSet<>).MakeGenericType(typeArguments);
-                return (IImporter)Activator.CreateInstance(typeof(CollectionImporter<,,>).MakeGenericType(new[] { hashSetType, type, typeArguments[0] }));
+                return (IImporter)Activator.CreateInstance(typeof(CollectionImporter<,,>).MakeGenericType(hashSetType, type, typeArguments[0]));
             }
 
             if (Reflector.IsTupleFamily(type))
