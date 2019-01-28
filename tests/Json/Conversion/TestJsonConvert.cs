@@ -28,16 +28,6 @@ namespace Jayrock.Json.Conversion
     [ TestFixture ]
     public class TestJsonConvert
     {
-        bool _createImportContextCalled;
-        bool _createExportContextCalled;
-
-        [ SetUp ]
-        public void Init()
-        {
-            _createImportContextCalled = false;
-            _createExportContextCalled = false;
-        }
-
         [Test]
         public void DefaultExportContextFactory()
         {
@@ -55,11 +45,12 @@ namespace Jayrock.Json.Conversion
         {
             try
             {
-                var factory = new ExportContextFactoryHandler(CreateExportContext);
+                var called = false;
+                Func<ExportContext> factory = () => { called = true; return null; };
                 JsonConvert.CurrentExportContextFactory = factory;
                 Assert.AreSame(factory, JsonConvert.CurrentExportContextFactory);
                 JsonConvert.CreateExportContext();
-                Assert.IsTrue(_createExportContextCalled);
+                Assert.IsTrue(called);
             }
             finally
             {
@@ -79,11 +70,12 @@ namespace Jayrock.Json.Conversion
         {
             try
             {
-                var factory = new ImportContextFactoryHandler(CreateImportContext);
+                var called = false;
+                Func<ImportContext> factory = () => { called = true; return null; };
                 JsonConvert.CurrentImportContextFactory = factory;
                 Assert.AreSame(factory, JsonConvert.CurrentImportContextFactory);
                 JsonConvert.CreateImportContext();
-                Assert.IsTrue(_createImportContextCalled);
+                Assert.IsTrue(called);
             }
             finally
             {
@@ -96,18 +88,6 @@ namespace Jayrock.Json.Conversion
         public void CannotSetCurrentImportContextFactoryToNull()
         {
             JsonConvert.CurrentImportContextFactory = null;
-        }
-
-        ExportContext CreateExportContext()
-        {
-            _createExportContextCalled = true;
-            return null;
-        }
-
-        ImportContext CreateImportContext()
-        {
-            _createImportContextCalled = true;
-            return null;
         }
     }
 }

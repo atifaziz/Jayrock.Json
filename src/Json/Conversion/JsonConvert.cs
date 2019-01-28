@@ -26,9 +26,6 @@ namespace Jayrock.Json.Conversion
 
     #endregion
 
-    public delegate ExportContext ExportContextFactoryHandler();
-    public delegate ImportContext ImportContextFactoryHandler();
-
     /// <summary>
     /// Provides methods for converting between Common Language Runtime
     /// (CLR) types and JSON types.
@@ -36,13 +33,13 @@ namespace Jayrock.Json.Conversion
 
     public static class JsonConvert
     {
-        static ExportContextFactoryHandler _currentExportContextFactoryHandler;
-        static ImportContextFactoryHandler _currentImportContextFactoryHandler;
+        static Func<ExportContext> _currentExportContextFactoryHandler;
+        static Func<ImportContext> _currentImportContextFactoryHandler;
 
         static JsonConvert()
         {
-            _currentExportContextFactoryHandler = DefaultExportContextFactory = CreateDefaultExportContext;
-            _currentImportContextFactoryHandler = DefaultImportContextFactory = CreateDefaultImportContext;
+            _currentExportContextFactoryHandler = DefaultExportContextFactory = () => new ExportContext();
+            _currentImportContextFactoryHandler = DefaultImportContextFactory = () => new ImportContext();
         }
 
         public static void Export(object value, JsonWriter writer)
@@ -141,29 +138,19 @@ namespace Jayrock.Json.Conversion
             return CurrentImportContextFactory();
         }
 
-        public static ExportContextFactoryHandler CurrentExportContextFactory
+        public static Func<ExportContext> CurrentExportContextFactory
         {
             get => _currentExportContextFactoryHandler;
             set => _currentExportContextFactoryHandler = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        public static ImportContextFactoryHandler CurrentImportContextFactory
+        public static Func<ImportContext> CurrentImportContextFactory
         {
             get => _currentImportContextFactoryHandler;
             set => _currentImportContextFactoryHandler = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        public static ExportContextFactoryHandler DefaultExportContextFactory { get; }
-        public static ImportContextFactoryHandler DefaultImportContextFactory { get; }
-
-        static ExportContext CreateDefaultExportContext()
-        {
-            return new ExportContext();
-        }
-
-        static ImportContext CreateDefaultImportContext()
-        {
-            return new ImportContext();
-        }
+        public static Func<ExportContext> DefaultExportContextFactory { get; }
+        public static Func<ImportContext> DefaultImportContextFactory { get; }
     }
 }
