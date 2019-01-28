@@ -141,11 +141,11 @@ namespace Jayrock.Json.Conversion.Converters
 
         private class ImporterMock : TestImporter
         {
-            public object Boolean = null;
-            public object Number = null;
-            public object String = null;
-            public object Object = null;
-            public object Array = null;
+            public object Boolean;
+            public object Number;
+            public object String;
+            public object Object;
+            public object Array;
 
             protected override object ImportFromBoolean(ImportContext context, JsonReader reader)
             {
