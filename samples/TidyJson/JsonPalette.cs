@@ -120,7 +120,8 @@ namespace TidyJson
                 var brushName = reader.ReadMember().ToLowerInvariant();
                 var color = reader.ReadString();
 
-                var foreground = EnumHelper.TryParse<ConsoleColor>(color, true) ?? DefaultBrush.Foreground;
+                var foreground = Enum.TryParse<ConsoleColor>(color, true, out var cc) ? cc
+                               : DefaultBrush.Foreground;
 
                 switch (brushName)
                 {
