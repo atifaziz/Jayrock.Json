@@ -371,7 +371,7 @@ namespace Jayrock.Json
                     // that the value will be served next.
                     //
 
-                    var member = (NamedJsonBuffer) bufferedMembers[index];
+                    var member = bufferedMembers[index];
                     _memberValue = member.Buffer;
                     return JsonToken.Member(member.Name);
                 }

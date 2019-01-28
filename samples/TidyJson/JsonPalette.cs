@@ -65,7 +65,7 @@ namespace TidyJson
 
             try
             {
-                setting = (string) Settings.Default[defaultBrush.Background + "Palette"];
+                setting = Settings.Default[defaultBrush.Background + "Palette"];
             }
             catch (KeyNotFoundException)
             {
