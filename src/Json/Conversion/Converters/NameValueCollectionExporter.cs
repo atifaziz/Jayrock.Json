@@ -51,11 +51,11 @@ namespace Jayrock.Json.Conversion.Converters
 
             writer.WriteStartObject();
 
-            for (int i = 0; i < collection.Count; i++)
+            for (var i = 0; i < collection.Count; i++)
             {
                 writer.WriteMember(collection.GetKey(i));
 
-                string[] values = collection.GetValues(i);
+                var values = collection.GetValues(i);
 
                 if (values == null)
                     writer.WriteNull();

@@ -31,7 +31,7 @@ namespace Jayrock.Json.Conversion
             if (context == null) throw new ArgumentNullException(nameof(context));
             if (reader == null) throw new ArgumentNullException(nameof(reader));
 
-            JsonBufferWriter tailw = _tailw;
+            var tailw = _tailw;
             if (tailw == null)
             {
                 tailw = _tailw = new JsonBufferWriter();
@@ -46,12 +46,12 @@ namespace Jayrock.Json.Conversion
         {
             if (context == null) throw new ArgumentNullException(nameof(context));
 
-            JsonBufferWriter tailw = _tailw;
+            var tailw = _tailw;
             _tailw = null;
             if (tailw != null)
                 tailw.WriteEndObject();
-            JsonBuffer tail = (tailw != null ? tailw.GetBuffer() : StockJsonBuffers.EmptyObject);
-            object obj = OnCreateObject(context);
+            var tail = (tailw != null ? tailw.GetBuffer() : StockJsonBuffers.EmptyObject);
+            var obj = OnCreateObject(context);
             return new ObjectConstructionResult(obj, tail.CreateReader());
         }
 

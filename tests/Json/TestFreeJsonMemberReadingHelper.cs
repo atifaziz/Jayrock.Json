@@ -37,22 +37,22 @@ namespace Jayrock.Json
         [ Test ]
         public void BaseReaderInitialization()
         {
-            JsonReader reader = JsonText.CreateReader("[]");
-            FreeJsonMemberReadingHelper helper = new FreeJsonMemberReadingHelper(reader);
+            var reader = JsonText.CreateReader("[]");
+            var helper = new FreeJsonMemberReadingHelper(reader);
             Assert.AreSame(reader, helper.BaseReader);
         }
 
         [ Test ]
         public void StringRepresentation()
         {
-            FreeJsonMemberReadingHelper helper = CreateHelper("[]");
+            var helper = CreateHelper("[]");
             Assert.AreEqual(helper.BaseReader.ToString(), helper.ToString());
         }
 
         [ Test ]
         public void UnorderedReading()
         {
-            FreeJsonMemberReadingHelper helper = CreateHelper(@"{ y: 456, x: 123, z: 789 }");
+            var helper = CreateHelper(@"{ y: 456, x: 123, z: 789 }");
             Assert.AreEqual(123, helper.ReadMember("x").ReadNumber().ToInt32());
             Assert.AreEqual(456, helper.ReadMember("y").ReadNumber().ToInt32());
             Assert.AreEqual(789, helper.ReadMember("z").ReadNumber().ToInt32());
@@ -62,7 +62,7 @@ namespace Jayrock.Json
         [ Test ]
         public void OrderedReading()
         {
-            FreeJsonMemberReadingHelper helper = CreateHelper(@"{ x: 123, y: 456, z: 789 }");
+            var helper = CreateHelper(@"{ x: 123, y: 456, z: 789 }");
             Assert.AreEqual(123, helper.ReadMember("x").ReadNumber().ToInt32());
             Assert.AreEqual(456, helper.ReadMember("y").ReadNumber().ToInt32());
             Assert.AreEqual(789, helper.ReadMember("z").ReadNumber().ToInt32());
@@ -72,12 +72,12 @@ namespace Jayrock.Json
         [ Test ]
         public void TailMemberAfterUnorderedReader()
         {
-            FreeJsonMemberReadingHelper helper = CreateHelper(@"
+            var helper = CreateHelper(@"
                 { y: 456, x: 123, z: 789, comment: tail }");
             Assert.AreEqual(123, helper.ReadMember("x").ReadNumber().ToInt32());
             Assert.AreEqual(456, helper.ReadMember("y").ReadNumber().ToInt32());
             Assert.AreEqual(789, helper.ReadMember("z").ReadNumber().ToInt32());
-            JsonReader reader = helper.BaseReader;
+            var reader = helper.BaseReader;
             Assert.AreEqual("comment", reader.ReadMember());
             Assert.AreEqual("tail", reader.ReadString());
         }
@@ -85,7 +85,7 @@ namespace Jayrock.Json
         [ Test, ExpectedException(typeof(JsonException)) ]
         public void CannotReadNonExistingMember()
         {
-            FreeJsonMemberReadingHelper helper = CreateHelper(@"{ y: 456, x: 123, z: 789 }");
+            var helper = CreateHelper(@"{ y: 456, x: 123, z: 789 }");
             helper.ReadMember("foo");
         }
 
@@ -98,21 +98,21 @@ namespace Jayrock.Json
         [ Test ]
         public void TryReadNonExistingMember()
         {
-            FreeJsonMemberReadingHelper helper = CreateHelper(@"{ y: 456, x: 123, z: 789 }");
+            var helper = CreateHelper(@"{ y: 456, x: 123, z: 789 }");
             Assert.IsNull(helper.TryReadMember("foo"));
         }
 
         [ Test ]
         public void TryReadMemberCaseSensitivity()
         {
-            FreeJsonMemberReadingHelper helper = CreateHelper(@"{ y: 456, x: 123, z: 789 }");
+            var helper = CreateHelper(@"{ y: 456, x: 123, z: 789 }");
             Assert.IsNull(helper.TryReadMember("X"));
         }
 
         [ Test ]
         public void TailReading()
         {
-            FreeJsonMemberReadingHelper helper = CreateHelper(@"
+            var helper = CreateHelper(@"
                 { y: 456,
                   x: 123,
                   z: 789,
@@ -122,10 +122,10 @@ namespace Jayrock.Json
                   obj2: { a: 1, b: 2, }, }");
             Assert.AreEqual(123, helper.ReadMember("x").ReadNumber().ToInt32());
             helper.ReadMember("comment").ReadNull();
-            JsonReader reader = helper.BaseReader;
+            var reader = helper.BaseReader;
             Assert.AreEqual(JsonTokenClass.Member, reader.TokenClass);
             Assert.AreEqual("arr", reader.Text);
-            JsonReader tail = helper.GetTailReader();
+            var tail = helper.GetTailReader();
             Assert.AreEqual("y", tail.ReadMember());
             Assert.AreEqual(456, tail.ReadNumber().ToInt32());
             Assert.AreEqual("z", tail.ReadMember());
@@ -149,11 +149,11 @@ namespace Jayrock.Json
         [ Test ]
         public void EmptyTailReading()
         {
-            FreeJsonMemberReadingHelper helper = CreateHelper(@"{ y: 456, x: 123, z: 789 }");
+            var helper = CreateHelper(@"{ y: 456, x: 123, z: 789 }");
             Assert.AreEqual(123, helper.ReadMember("x").ReadNumber().ToInt32());
             Assert.AreEqual(456, helper.ReadMember("y").ReadNumber().ToInt32());
             Assert.AreEqual(789, helper.ReadMember("z").ReadNumber().ToInt32());
-            JsonReader tail = helper.GetTailReader();
+            var tail = helper.GetTailReader();
             tail.ReadToken(JsonTokenClass.EndObject);
             Assert.IsFalse(tail.Read());
         }
@@ -161,7 +161,7 @@ namespace Jayrock.Json
         [ Test ]
         public void TailReadingWithNoBufferedMembers()
         {
-            JsonReader tail = CreateHelper(@"{ y: 456, x: 123, z: 789 }").GetTailReader();
+            var tail = CreateHelper(@"{ y: 456, x: 123, z: 789 }").GetTailReader();
             Assert.AreEqual("y", tail.ReadMember());
             Assert.AreEqual(456, tail.ReadNumber().ToInt32());
             Assert.AreEqual("x", tail.ReadMember());
@@ -205,7 +205,7 @@ namespace Jayrock.Json
         [ Test ]
         public void ScopedToCurrentObject()
         {
-            FreeJsonMemberReadingHelper helper = CreateHelper("[{},{foo:bar}]");
+            var helper = CreateHelper("[{},{foo:bar}]");
             helper.BaseReader.ReadToken(JsonTokenClass.Array);
             Assert.IsNull(helper.TryReadMember("foo"));
             Assert.IsNull(helper.TryReadMember("foo"));
@@ -214,7 +214,7 @@ namespace Jayrock.Json
         [ Test ]
         public void ReadingSameMemberMoreThanOnce()
         {
-            FreeJsonMemberReadingHelper helper = CreateHelper("{foo:bar}");
+            var helper = CreateHelper("{foo:bar}");
             helper.ReadMember("foo").Skip();
             Assert.IsNull(helper.TryReadMember("foo"));
         }
@@ -222,7 +222,7 @@ namespace Jayrock.Json
         [ Test, ExpectedException(typeof(ArgumentException)) ]
         public void CannotInitializeWithReaderOnEnd()
         {
-            JsonReader reader = JsonText.CreateReader("42");
+            var reader = JsonText.CreateReader("42");
             reader.ReadNumber();
             new FreeJsonMemberReadingHelper(reader);
         }
@@ -230,7 +230,7 @@ namespace Jayrock.Json
         [ Test, ExpectedException(typeof(ArgumentException)) ]
         public void CannotInitializeWithReaderOnNull()
         {
-            JsonReader reader = JsonText.CreateReader("null");
+            var reader = JsonText.CreateReader("null");
             reader.MoveToContent();
             new FreeJsonMemberReadingHelper(reader);
         }
@@ -238,7 +238,7 @@ namespace Jayrock.Json
         [ Test, ExpectedException(typeof(ArgumentException)) ]
         public void CannotInitializeWithReaderOnNumber()
         {
-            JsonReader reader = JsonText.CreateReader("42");
+            var reader = JsonText.CreateReader("42");
             reader.MoveToContent();
             new FreeJsonMemberReadingHelper(reader);
         }
@@ -246,7 +246,7 @@ namespace Jayrock.Json
         [ Test, ExpectedException(typeof(ArgumentException)) ]
         public void CannotInitializeWithReaderOnBoolean()
         {
-            JsonReader reader = JsonText.CreateReader("true");
+            var reader = JsonText.CreateReader("true");
             reader.MoveToContent();
             new FreeJsonMemberReadingHelper(reader);
         }
@@ -254,7 +254,7 @@ namespace Jayrock.Json
         [ Test, ExpectedException(typeof(ArgumentException)) ]
         public void CannotInitializeWithReaderOnString()
         {
-            JsonReader reader = JsonText.CreateReader("foobar");
+            var reader = JsonText.CreateReader("foobar");
             reader.MoveToContent();
             new FreeJsonMemberReadingHelper(reader);
         }
@@ -262,7 +262,7 @@ namespace Jayrock.Json
         [ Test, ExpectedException(typeof(ArgumentException)) ]
         public void CannotInitializeWithReaderOnArray()
         {
-            JsonReader reader = JsonText.CreateReader("[]");
+            var reader = JsonText.CreateReader("[]");
             reader.MoveToContent();
             new FreeJsonMemberReadingHelper(reader);
         }
@@ -270,7 +270,7 @@ namespace Jayrock.Json
         [ Test ]
         public void InitializeWithReaderOnObjectStart()
         {
-            JsonReader reader = JsonText.CreateReader("{}");
+            var reader = JsonText.CreateReader("{}");
             reader.MoveToContent();
             new FreeJsonMemberReadingHelper(reader);
         }
@@ -278,7 +278,7 @@ namespace Jayrock.Json
         [ Test ]
         public void InitializeWithReaderOnMember()
         {
-            JsonReader reader = JsonText.CreateReader("{foo:bar}");
+            var reader = JsonText.CreateReader("{foo:bar}");
             reader.MoveToContent();
             reader.ReadToken(JsonTokenClass.Object);
             new FreeJsonMemberReadingHelper(reader);

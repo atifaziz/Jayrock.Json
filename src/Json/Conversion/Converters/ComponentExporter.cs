@@ -48,17 +48,17 @@ namespace Jayrock.Json.Conversion.Converters
 
             _properties = properties;
 
-            int count = 0;
+            var count = 0;
             IObjectMemberExporter[] exporters = null;
 
-            for (int i = 0; i < properties.Count; i++)
+            for (var i = 0; i < properties.Count; i++)
             {
-                IServiceProvider sp = properties[i] as IServiceProvider;
+                var sp = properties[i] as IServiceProvider;
 
                 if (sp == null)
                     continue;
 
-                IObjectMemberExporter exporter = (IObjectMemberExporter)sp.GetService(typeof(IObjectMemberExporter));
+                var exporter = (IObjectMemberExporter)sp.GetService(typeof(IObjectMemberExporter));
 
                 if (exporter == null)
                     continue;
@@ -92,11 +92,11 @@ namespace Jayrock.Json.Conversion.Converters
                 {
                     writer.WriteStartObject();
 
-                    int index = 0;
+                    var index = 0;
 
                     foreach (PropertyDescriptor property in _properties)
                     {
-                        IObjectMemberExporter exporter = _exporters != null && index < _exporters.Length ?
+                        var exporter = _exporters != null && index < _exporters.Length ?
                             _exporters[index++] : null;
 
                         if (exporter != null)
@@ -105,7 +105,7 @@ namespace Jayrock.Json.Conversion.Converters
                         }
                         else
                         {
-                            object propertyValue = property.GetValue(value);
+                            var propertyValue = property.GetValue(value);
 
                             if (!JsonNull.LogicallyEquals(propertyValue))
                             {
@@ -149,8 +149,8 @@ namespace Jayrock.Json.Conversion.Converters
             // it's not there, then create one.
             //
 
-            Type key = typeof(ComponentExporter);
-            ObjectReferenceTracker tracker = (ObjectReferenceTracker) context.Items[key];
+            var key = typeof(ComponentExporter);
+            var tracker = (ObjectReferenceTracker) context.Items[key];
 
             if (tracker == null)
             {
@@ -171,7 +171,7 @@ namespace Jayrock.Json.Conversion.Converters
                 Debug.Assert(value != null);
                 Debug.Assert(value.GetType().IsClass);
 
-                for (int i = _stack.Count - 1; i >= 0; i--)
+                for (var i = _stack.Count - 1; i >= 0; i--)
                 {
                     if (object.ReferenceEquals(_stack[i], value))
                         throw new JsonException(string.Format("{0} does not support export of an object graph containing circular references. A value of type {1} has already been exported.", typeof(ComponentExporter).FullName, value.GetType().FullName));
@@ -182,7 +182,7 @@ namespace Jayrock.Json.Conversion.Converters
 
             public void Pop(object value)
             {
-                int index = _stack.Count - 1;
+                var index = _stack.Count - 1;
 
                 Debug.Assert(index >= 0);
                 Debug.Assert(object.ReferenceEquals(_stack[index], value));

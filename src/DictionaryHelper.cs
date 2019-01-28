@@ -51,12 +51,12 @@ namespace Jayrock
             // of DictionaryEntry and cause a casting exception.
             //
 
-            DictionaryEntry[] entries = new DictionaryEntry[dictionary.Count];
-            IDictionaryEnumerator e = dictionary.GetEnumerator();
+            var entries = new DictionaryEntry[dictionary.Count];
+            var e = dictionary.GetEnumerator();
 
             try
             {
-                int index = 0;
+                var index = 0;
 
                 while (e.MoveNext())
                     entries[index++] = e.Entry;
@@ -65,7 +65,7 @@ namespace Jayrock
             }
             finally
             {
-                IDisposable disposable = e as IDisposable;
+                var disposable = e as IDisposable;
 
                 if (disposable != null)
                     disposable.Dispose();

@@ -112,7 +112,7 @@ namespace Jayrock.Json
 
         public string ReadToken(JsonTokenClass token)
         {
-            int depth = Depth;
+            var depth = Depth;
 
             if (!token.IsTerminator)
                 MoveToContent();
@@ -213,7 +213,7 @@ namespace Jayrock.Json
 
         public void StepOut()
         {
-            int depth = Depth;
+            var depth = Depth;
 
             if (depth == 0)
                 throw new InvalidOperationException();
@@ -293,7 +293,7 @@ namespace Jayrock.Json
 
         private void OnDisposed(EventArgs e)
         {
-            EventHandler handler = Disposed;
+            var handler = Disposed;
 
             if (handler != null)
                 handler(this, e);

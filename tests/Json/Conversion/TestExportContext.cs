@@ -91,8 +91,8 @@ namespace Jayrock.Json.Conversion
         [ Test ]
         public void Registration()
         {
-            ExportContext context = new ExportContext();
-            ThingExporter exporter = new ThingExporter();
+            var context = new ExportContext();
+            var exporter = new ThingExporter();
             context.Register(exporter);
             Assert.AreSame(exporter, context.FindExporter(typeof(Thing)));
         }
@@ -100,8 +100,8 @@ namespace Jayrock.Json.Conversion
         [ Test ]
         public void RegistrationIsPerContext()
         {
-            ExportContext context = new ExportContext();
-            ThingExporter exporter = new ThingExporter();
+            var context = new ExportContext();
+            var exporter = new ThingExporter();
             context.Register(exporter);
             context = new ExportContext();
             Assert.AreNotSame(exporter, context.FindExporter(typeof(Thing)));
@@ -110,18 +110,18 @@ namespace Jayrock.Json.Conversion
         [ Test ]
         public void ExportJsonNullValue()
         {
-            ExportContext context = new ExportContext();
-            JsonRecorder writer = new JsonRecorder();
+            var context = new ExportContext();
+            var writer = new JsonRecorder();
             context.Export(JsonNull.Value, writer);
-            JsonReader reader = writer.CreatePlayer();
+            var reader = writer.CreatePlayer();
             reader.ReadNull();
             Assert.IsTrue(reader.EOF);
         }
 
         private static void AssertInStock(Type expected, Type type)
         {
-            ExportContext context = new ExportContext();
-            IExporter exporter = context.FindExporter(type);
+            var context = new ExportContext();
+            var exporter = context.FindExporter(type);
             Assert.IsNotNull(exporter, "No exporter found for {0}", type.FullName);
             Assert.AreSame(type, exporter.InputType, "{0} reported {1} when expecting {2}.", exporter, exporter.InputType, type);
             Assert.IsInstanceOf(expected, exporter, type.FullName);

@@ -97,7 +97,7 @@ namespace Jayrock.Json
 
         private JsonToken Parse()
         {
-            char ch = NextClean();
+            var ch = NextClean();
 
             //
             // String
@@ -137,8 +137,8 @@ namespace Jayrock.Json
             // formatting character.
             //
 
-            StringBuilder sb = new StringBuilder();
-            char b = ch;
+            var sb = new StringBuilder();
+            var b = ch;
 
             while (ch >= ' ' && ",:]}/\\\"[{;=#".IndexOf(ch) < 0)
             {
@@ -148,7 +148,7 @@ namespace Jayrock.Json
 
             _reader.Back();
 
-            string s = sb.ToString().Trim();
+            var s = sb.ToString().Trim();
 
             if (s.Length == 0)
                 throw SyntaxError("Missing value.");
@@ -185,13 +185,13 @@ namespace Jayrock.Json
                 {
                     if (s.Length > 2 && (s[1] == 'x' || s[1] == 'X'))
                     {
-                        string parsed = TryParseHex(s);
+                        var parsed = TryParseHex(s);
                         if (!ReferenceEquals(parsed, s))
                             return Yield(JsonToken.Number(parsed));
                     }
                     else
                     {
-                        string parsed = TryParseOctal(s);
+                        var parsed = TryParseOctal(s);
                         if (!ReferenceEquals(parsed, s))
                             return Yield(JsonToken.Number(parsed));
                     }
@@ -318,7 +318,7 @@ namespace Jayrock.Json
 
         private JsonToken ParseObjectMember()
         {
-            char ch = NextClean();
+            var ch = NextClean();
 
             if (ch == '}')
                 return Yield(JsonToken.EndObject());
@@ -327,7 +327,7 @@ namespace Jayrock.Json
                 throw SyntaxError("An object must end with '}'.");
 
             _reader.Back();
-            string name = Parse().Text;
+            var name = Parse().Text;
             return Yield(JsonToken.Member(name), ParseObjectMemberValueMethod);
         }
 
@@ -342,7 +342,7 @@ namespace Jayrock.Json
 
         private JsonToken ParseObjectMemberValue()
         {
-            char ch = NextClean();
+            var ch = NextClean();
 
             if (ch == '=')
             {
@@ -385,7 +385,7 @@ namespace Jayrock.Json
             }
 
             _reader.Back();
-            string name = Parse().Text;
+            var name = Parse().Text;
             return Yield(JsonToken.Member(name), ParseObjectMemberValueMethod);
         }
 
@@ -439,7 +439,7 @@ namespace Jayrock.Json
 
             while (true)
             {
-                char ch = _reader.Next();
+                var ch = _reader.Next();
 
                 if (ch == '/')
                 {
@@ -549,9 +549,9 @@ namespace Jayrock.Json
 
             try
             {
-                for (int i = 1; i < s.Length; i++)
+                for (var i = 1; i < s.Length; i++)
                 {
-                    char ch = s[i];
+                    var ch = s[i];
 
                     if (ch < '0' || ch > '8')
                         return s;
@@ -574,7 +574,7 @@ namespace Jayrock.Json
 
             try
             {
-                long num = long.Parse(s.Substring(2), NumberStyles.HexNumber, CultureInfo.InvariantCulture);
+                var num = long.Parse(s.Substring(2), NumberStyles.HexNumber, CultureInfo.InvariantCulture);
                 return num.ToString(CultureInfo.InvariantCulture);
             }
             catch (OverflowException)

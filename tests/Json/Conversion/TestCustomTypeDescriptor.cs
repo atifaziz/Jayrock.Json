@@ -34,8 +34,8 @@ namespace Jayrock.Json.Conversion
         [ Test ]
         public void MembersWithIgnoreAttributeExcluded()
         {
-            CustomTypeDescriptor thingType = new CustomTypeDescriptor(typeof(Thing));
-            PropertyDescriptorCollection properties = thingType.GetProperties();
+            var thingType = new CustomTypeDescriptor(typeof(Thing));
+            var properties = thingType.GetProperties();
             Assert.AreEqual(4, properties.Count);
             Assert.IsNull(properties.Find("Field2", true));
             Assert.IsNull(properties.Find("Property2", true));
@@ -49,30 +49,30 @@ namespace Jayrock.Json.Conversion
             // http://developer.berlios.de/bugs/?func=detailbug&bug_id=11675&group_id=4638
             //
 
-            CustomTypeDescriptor thingType = new CustomTypeDescriptor(typeof(ThingWithIndexer));
+            var thingType = new CustomTypeDescriptor(typeof(ThingWithIndexer));
             Assert.AreEqual(0, thingType.GetProperties().Count);
         }
 
         [Test]
         public void TypeFieldDescriptorSupportsCustomization()
         {
-            PropertyDescriptor property = Thing.GetField1Property();
+            var property = Thing.GetField1Property();
             Assert.IsInstanceOf<IPropertyCustomization>(property);
         }
 
         [ Test ]
         public void TypePropertyDescriptorSupportsCustomization()
         {
-            PropertyDescriptor property = Thing.GetProperty1Property();
+            var property = Thing.GetProperty1Property();
             Assert.IsInstanceOf<IPropertyCustomization>(property);
         }
 
         [ Test ]
         public void PropertyNameCustomization()
         {
-            PropertyDescriptor property = Thing.GetField1Property();
+            var property = Thing.GetField1Property();
             Assert.AreEqual("Field1", property.Name);
-            IPropertyCustomization customization = (IPropertyCustomization) property;
+            var customization = (IPropertyCustomization) property;
             customization.SetName("FIELD1");
             Assert.AreEqual("FIELD1", property.Name);
         }
@@ -80,23 +80,23 @@ namespace Jayrock.Json.Conversion
         [ Test, ExpectedException(typeof(ArgumentNullException)) ]
         public void CannotCustomizePropertyWithNullName()
         {
-            PropertyDescriptor property = Thing.GetField1Property();
+            var property = Thing.GetField1Property();
             ((IPropertyCustomization) property).SetName(null);
         }
 
         [ Test, ExpectedException(typeof(ArgumentException)) ]
         public void CannotCustomizePropertyWithEmptyName()
         {
-            PropertyDescriptor property = Thing.GetField1Property();
+            var property = Thing.GetField1Property();
             ((IPropertyCustomization) property).SetName(string.Empty);
         }
 
         [ Test ]
         public void PropertyTypeCustomization()
         {
-            PropertyDescriptor property = Thing.GetField1Property();
+            var property = Thing.GetField1Property();
             Assert.AreEqual(typeof(object), property.PropertyType);
-            IPropertyCustomization customization = (IPropertyCustomization) property;
+            var customization = (IPropertyCustomization) property;
             customization.SetType(typeof(string));
             Assert.AreEqual(typeof(string), property.PropertyType);
         }
@@ -104,20 +104,20 @@ namespace Jayrock.Json.Conversion
         [ Test, ExpectedException(typeof(ArgumentNullException)) ]
         public void CannotCustomizePropertyWithNullType()
         {
-            PropertyDescriptor property = Thing.GetField1Property();
+            var property = Thing.GetField1Property();
             ((IPropertyCustomization) property).SetType(null);
         }
 
         [ Test ]
         public void PropertyGetterCustomization()
         {
-            Thing thing = new Thing();
-            PropertyDescriptor property = Thing.GetField1Property();
+            var thing = new Thing();
+            var property = Thing.GetField1Property();
             const string testValue = "test";
             thing.Field1 = testValue;
             Assert.AreEqual(testValue, thing.Field1);
-            IPropertyCustomization customization = (IPropertyCustomization) property;
-            FakePropertyImpl impl = new FakePropertyImpl();
+            var customization = (IPropertyCustomization) property;
+            var impl = new FakePropertyImpl();
             impl.BaseImpl = customization.OverrideImpl(impl);
             Assert.IsNotNull(impl.BaseImpl);
             Assert.AreEqual("<<" + testValue, property.GetValue(thing));
@@ -126,18 +126,18 @@ namespace Jayrock.Json.Conversion
         [ Test, ExpectedException(typeof(ArgumentNullException)) ]
         public void CannotCustomizePropertyWithNullImpl()
         {
-            PropertyDescriptor property = Thing.GetField1Property();
+            var property = Thing.GetField1Property();
             ((IPropertyCustomization) property).OverrideImpl(null);
         }
 
         [ Test ]
         public void PropertySetterCustomization()
         {
-            Thing thing = new Thing();
-            PropertyDescriptor property = Thing.GetField1Property();
+            var thing = new Thing();
+            var property = Thing.GetField1Property();
             Assert.IsNull(thing.Field1);
-            IPropertyCustomization customization = (IPropertyCustomization) property;
-            FakePropertyImpl impl = new FakePropertyImpl();
+            var customization = (IPropertyCustomization) property;
+            var impl = new FakePropertyImpl();
             impl.BaseImpl = customization.OverrideImpl(impl);
             property.SetValue(thing, "test");
             Assert.AreEqual(">>test", thing.Field1);
@@ -206,19 +206,19 @@ namespace Jayrock.Json.Conversion
         [ Test ]
         public void ReadOnlyPropertyWithIncludeAttributeIsIncluded()
         {
-            CustomTypeDescriptor thingType = new CustomTypeDescriptor(typeof(ThingWithSpecialReadOnlyProperty));
-            PropertyDescriptorCollection properties = thingType.GetProperties();
+            var thingType = new CustomTypeDescriptor(typeof(ThingWithSpecialReadOnlyProperty));
+            var properties = thingType.GetProperties();
             Assert.AreEqual(1, properties.Count);
         }
 
         [ Test ]
         public void AnonymousClassPropertiesExcepted()
         {
-            CustomTypeDescriptor anon = CustomTypeDescriptor.TryCreateForAnonymousClass(typeof(AnonymousThing<string>));
+            var anon = CustomTypeDescriptor.TryCreateForAnonymousClass(typeof(AnonymousThing<string>));
             Assert.IsNotNull(anon);
-            PropertyDescriptorCollection properties = anon.GetProperties();
+            var properties = anon.GetProperties();
             Assert.AreEqual(1, properties.Count);
-            PropertyDescriptor property = properties[0];
+            var property = properties[0];
             Assert.AreEqual("Value", property.Name);
             Assert.IsTrue(property.IsReadOnly);
         }
@@ -226,8 +226,8 @@ namespace Jayrock.Json.Conversion
         [ Test ]
         public void ImmutableClassPropertiesExpected()
         {
-            CustomTypeDescriptor descriptor = new CustomTypeDescriptor(typeof(ImmutableThing));
-            PropertyDescriptorCollection properties = descriptor.GetProperties();
+            var descriptor = new CustomTypeDescriptor(typeof(ImmutableThing));
+            var properties = descriptor.GetProperties();
             Assert.AreEqual(2, properties.Count);
             Assert.IsNotNull(properties["field"]);
             Assert.IsNotNull(properties["property"]);
@@ -235,8 +235,8 @@ namespace Jayrock.Json.Conversion
 
         private static void AddServiceToServiceContainer(IServiceContainer sc)
         {
-            object service = new object();
-            Type serviceType = service.GetType();
+            var service = new object();
+            var serviceType = service.GetType();
             Assert.IsNull(sc.GetService(serviceType));
             sc.AddService(serviceType, service);
             Assert.AreSame(service, sc.GetService(serviceType));
@@ -244,8 +244,8 @@ namespace Jayrock.Json.Conversion
 
         private static void CannotAddServiceTwiceToServiceContainer(IServiceContainer sc)
         {
-            object service = new object();
-            Type serviceType = service.GetType();
+            var service = new object();
+            var serviceType = service.GetType();
             Assert.IsNull(sc.GetService(serviceType));
             sc.AddService(serviceType, service);
             sc.AddService(serviceType, service);
@@ -253,8 +253,8 @@ namespace Jayrock.Json.Conversion
 
         private static void AddThenRemoveService(IServiceContainer sc)
         {
-            object service = new object();
-            Type serviceType = service.GetType();
+            var service = new object();
+            var serviceType = service.GetType();
             Assert.IsNull(sc.GetService(serviceType));
             sc.AddService(serviceType, service);
             Assert.AreSame(service, sc.GetService(serviceType));

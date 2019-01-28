@@ -161,7 +161,7 @@ namespace Jayrock.Json
         [ Test ]
         public void Chars()
         {
-            char[] chars = "\"foo\" \"bar\" \"baz\"".ToCharArray();
+            var chars = "\"foo\" \"bar\" \"baz\"".ToCharArray();
             Assert.AreEqual("\"\\\"foo\\\" \\\"bar\\\" \\\"baz\\\"\"", JsonString.Enquote(chars, 0, chars.Length));
             Assert.AreEqual("\"\\\"foo\\\"\"", JsonString.Enquote(chars, 0, 5));
             Assert.AreEqual("\"\\\"bar\\\"\"", JsonString.Enquote(chars, 6, 5));

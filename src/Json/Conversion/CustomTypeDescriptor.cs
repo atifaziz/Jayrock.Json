@@ -78,20 +78,20 @@ namespace Jayrock.Json.Conversion
             if (members == null)
             {
                 const BindingFlags bindings = BindingFlags.Instance | BindingFlags.Public;
-                FieldInfo[] fields = type.GetFields(bindings);
-                PropertyInfo[] properties = type.GetProperties(bindings);
+                var fields = type.GetFields(bindings);
+                var properties = type.GetProperties(bindings);
 
                 //
                 // Filter out members marked with JsonIgnore attribute.
                 //
 
-                ArrayList memberList = new ArrayList(fields.Length + properties.Length);
+                var memberList = new ArrayList(fields.Length + properties.Length);
                 memberList.AddRange(fields);
                 memberList.AddRange(properties);
 
-                for (int i = 0; i < memberList.Count; i++)
+                for (var i = 0; i < memberList.Count; i++)
                 {
-                    MemberInfo member = (MemberInfo) memberList[i];
+                    var member = (MemberInfo) memberList[i];
 
                     if (!member.IsDefined(typeof(JsonIgnoreAttribute), true))
                         continue;
@@ -102,14 +102,14 @@ namespace Jayrock.Json.Conversion
                 members = (MemberInfo[]) memberList.ToArray(typeof(MemberInfo));
             }
 
-            PropertyDescriptorCollection logicalProperties = new PropertyDescriptorCollection(null);
-            bool immutable = true;
-            int index = 0;
+            var logicalProperties = new PropertyDescriptorCollection(null);
+            var immutable = true;
+            var index = 0;
 
-            foreach (MemberInfo member in members)
+            foreach (var member in members)
             {
-                FieldInfo field = member as FieldInfo;
-                string name = names != null && index < names.Length ? names[index] : null;
+                var field = member as FieldInfo;
+                var name = names != null && index < names.Length ? names[index] : null;
                 TypeMemberDescriptor descriptor = null;
                 bool writable;
 
@@ -131,7 +131,7 @@ namespace Jayrock.Json.Conversion
                 }
                 else
                 {
-                    PropertyInfo property = member as PropertyInfo;
+                    var property = member as PropertyInfo;
 
                     if (property == null)
                         throw new ArgumentException(null, nameof(members));
@@ -196,7 +196,7 @@ namespace Jayrock.Json.Conversion
             if (type == null)
                 throw new ArgumentNullException(nameof(type));
 
-            bool like = LikeAnonymousClass(type);
+            var like = LikeAnonymousClass(type);
             return like ? new CustomTypeDescriptor(type, like, null, null) : null;
         }
 
@@ -331,7 +331,7 @@ namespace Jayrock.Json.Conversion
 
             public override bool Equals(object obj)
             {
-                TypeMemberDescriptor other = obj as TypeMemberDescriptor;
+                var other = obj as TypeMemberDescriptor;
                 return other != null && other.Member.Equals(Member);
             }
 
@@ -407,19 +407,19 @@ namespace Jayrock.Json.Conversion
                 if (impl == null)
                     throw new ArgumentNullException(nameof(impl));
 
-                IPropertyImpl baseImpl = _impl;
+                var baseImpl = _impl;
                 _impl = impl;
                 return baseImpl;
             }
 
             internal void ApplyCustomizations()
             {
-                IPropertyDescriptorCustomization[] customizations = (IPropertyDescriptorCustomization[]) Member.GetCustomAttributes(typeof(IPropertyDescriptorCustomization), true);
+                var customizations = (IPropertyDescriptorCustomization[]) Member.GetCustomAttributes(typeof(IPropertyDescriptorCustomization), true);
 
                 if (customizations == null)
                     return;
 
-                foreach (IPropertyDescriptorCustomization customization in customizations)
+                foreach (var customization in customizations)
                     customization.Apply(this);
             }
 

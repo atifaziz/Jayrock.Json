@@ -32,8 +32,8 @@ namespace Jayrock.Json
         [ Test ]
         public void Blank()
         {
-            JsonRecorder recorder = new JsonRecorder();
-            JsonReader reader = recorder.CreatePlayer();
+            var recorder = new JsonRecorder();
+            var reader = recorder.CreatePlayer();
             Assert.AreEqual(JsonTokenClass.BOF, reader.TokenClass);
             Assert.IsFalse(reader.Read());
             Assert.IsTrue(reader.EOF);
@@ -42,9 +42,9 @@ namespace Jayrock.Json
         [ Test ]
         public void String()
         {
-            JsonRecorder recorder = new JsonRecorder();
+            var recorder = new JsonRecorder();
             recorder.WriteString("Hello World");
-            JsonTextWriter writer = new JsonTextWriter();
+            var writer = new JsonTextWriter();
             recorder.Playback(writer);
             Assert.AreEqual("[\"Hello World\"]", writer.ToString());
         }
@@ -80,8 +80,8 @@ namespace Jayrock.Json
                 ]
             }}";
 
-            JsonTextReader reader = new JsonTextReader(new StringReader(input));
-            JsonTextWriter writer = new JsonTextWriter();
+            var reader = new JsonTextReader(new StringReader(input));
+            var writer = new JsonTextWriter();
             JsonRecorder.Record(reader).Playback(writer);
             Assert.AreEqual("{\"menu\":{\"header\":\"SVG Viewer\",\"items\":[{\"id\":\"Open\"},{\"id\":\"OpenNew\",\"label\":\"Open New\"},null,{\"id\":\"ZoomIn\",\"label\":\"Zoom In\"},{\"id\":\"ZoomOut\",\"label\":\"Zoom Out\"},{\"id\":\"OriginalView\",\"label\":\"Original View\"},null,{\"id\":\"Quality\"},{\"id\":\"Pause\"},{\"id\":\"Mute\"},null,{\"id\":\"Find\",\"label\":\"Find...\"},{\"id\":\"FindAgain\",\"label\":\"Find Again\"},{\"id\":\"Copy\"},{\"id\":\"CopyAgain\",\"label\":\"Copy Again\"},{\"id\":\"CopySVG\",\"label\":\"Copy SVG\"},{\"id\":\"ViewSVG\",\"label\":\"View SVG\"},{\"id\":\"ViewSource\",\"label\":\"View Source\"},{\"id\":\"SaveAs\",\"label\":\"Save As\"},null,{\"id\":\"Help\"},{\"id\":\"About\",\"label\":\"About Adobe CVG Viewer...\"}]}}", writer.ToString());
         }
@@ -89,7 +89,7 @@ namespace Jayrock.Json
         [ Test, ExpectedException(typeof(InvalidOperationException)) ]
         public void CannotReadPartialRecording()
         {
-            JsonRecorder recorder = new JsonRecorder();
+            var recorder = new JsonRecorder();
             recorder.WriteStartArray();
             recorder.CreatePlayer();
         }

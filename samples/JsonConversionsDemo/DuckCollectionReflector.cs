@@ -20,7 +20,7 @@ namespace JsonConversionsDemo
         {
             if (type == null) throw new ArgumentNullException(nameof(type));
 
-            MemberInfo[] indexers = type.FindMembers(MemberTypes.Property,
+            var indexers = type.FindMembers(MemberTypes.Property,
                 BindingFlags.Instance | BindingFlags.Public, IsIndexer, null);
 
             if (indexers.Length == 0)
@@ -36,7 +36,7 @@ namespace JsonConversionsDemo
 
             Debug.Assert(m is PropertyInfo);
 
-            PropertyInfo property = (PropertyInfo) m;
+            var property = (PropertyInfo) m;
             return property.CanRead && property.GetIndexParameters().Length == 1;
         }
 
@@ -63,7 +63,7 @@ namespace JsonConversionsDemo
 
         public static MethodInfo GetAddMethod(Type type, Type elementType)
         {
-            MethodInfo adder = FindAddMethod(type, elementType);
+            var adder = FindAddMethod(type, elementType);
 
             if (adder == null)
             {
@@ -77,7 +77,7 @@ namespace JsonConversionsDemo
 
         public static Action<Element> GetAdder<Element>(object collection)
         {
-            Action<Element> adder = FindAddder<Element>(collection);
+            var adder = FindAddder<Element>(collection);
 
             if (adder == null)
             {
@@ -93,7 +93,7 @@ namespace JsonConversionsDemo
         {
             if (collection == null) throw new ArgumentNullException(nameof(collection));
 
-            MethodInfo adder = FindAddMethod(collection.GetType(), typeof(Element));
+            var adder = FindAddMethod(collection.GetType(), typeof(Element));
 
             if (adder == null)
                 return null;

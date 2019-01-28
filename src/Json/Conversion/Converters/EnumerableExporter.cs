@@ -37,11 +37,11 @@ namespace Jayrock.Json.Conversion.Converters
             Debug.Assert(value != null);
             Debug.Assert(writer != null);
 
-            IEnumerable items = (IEnumerable) value;
+            var items = (IEnumerable) value;
 
             writer.WriteStartArray();
 
-            foreach (object item in items)
+            foreach (var item in items)
                 context.Export(item, writer);
 
             writer.WriteEndArray();

@@ -98,17 +98,17 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test, ExpectedException(typeof(JsonException)) ]
         public void CannotImportNull()
         {
-            ImportContext importContext = new ImportContext();
-            JsonTextReader reader = new JsonTextReader(new StringReader("null"));
+            var importContext = new ImportContext();
+            var reader = new JsonTextReader(new StringReader("null"));
             new Int32Importer().Import(importContext, reader);
         }
 
         private static void AssertImport(object expected, string input)
         {
-            JsonTextReader reader = new JsonTextReader(new StringReader(input));
-            Type expectedType = expected.GetType();
-            ImportContext context = new ImportContext();
-            object o = context.Import(expectedType, reader);
+            var reader = new JsonTextReader(new StringReader(input));
+            var expectedType = expected.GetType();
+            var context = new ImportContext();
+            var o = context.Import(expectedType, reader);
             Assert.IsTrue(reader.EOF, "Reader must be at EOF.");
             Assert.IsInstanceOf(expectedType, o);
             Assert.AreEqual(expected, o);

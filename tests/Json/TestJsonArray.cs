@@ -34,7 +34,7 @@ namespace Jayrock.Json
         [ Test ]
         public void AddNullValue()
         {
-            JsonArray a = new JsonArray();
+            var a = new JsonArray();
             a.Add(null);
             Assert.AreEqual(1, a.Count);
             Assert.IsNull(a[0]);
@@ -52,7 +52,7 @@ namespace Jayrock.Json
         [ Test ]
         public void Import()
         {
-            JsonArray a = new JsonArray();
+            var a = new JsonArray();
             a.Import(new JsonTextReader(new StringReader("[123,'Hello World',true]")));
             Assert.AreEqual(3, a.Length);
             Assert.AreEqual(123, (int) (JsonNumber) a[0]);
@@ -63,10 +63,10 @@ namespace Jayrock.Json
         [ Test ]
         public void Export()
         {
-            JsonArray a = new JsonArray(new object[] { 123, "Hello World", true });
-            JsonRecorder writer = new JsonRecorder();
+            var a = new JsonArray(new object[] { 123, "Hello World", true });
+            var writer = new JsonRecorder();
             a.Export(writer);
-            JsonReader reader = writer.CreatePlayer();
+            var reader = writer.CreatePlayer();
             reader.ReadToken(JsonTokenClass.Array);
             Assert.AreEqual(a[0], reader.ReadNumber().ToInt32());
             Assert.AreEqual(a[1], reader.ReadString());
@@ -77,7 +77,7 @@ namespace Jayrock.Json
         [ Test ]
         public void ContentsClearedBeforeImporting()
         {
-            JsonArray a = new JsonArray();
+            var a = new JsonArray();
             a.Add(new object());
             Assert.AreEqual(1, a.Length);
             a.Import(new JsonTextReader(new StringReader("[123]")));
@@ -87,8 +87,8 @@ namespace Jayrock.Json
         [ Test ]
         public void ImportIsExceptionSafe()
         {
-            JsonArray a = new JsonArray();
-            object o = new object();
+            var a = new JsonArray();
+            var o = new object();
             a.Add(o);
 
             try

@@ -33,7 +33,7 @@ namespace Jayrock.Json
         [ Test ]
         public void Blank()
         {
-            JsonTextWriter writer = new JsonTextWriter(new StringWriter());
+            var writer = new JsonTextWriter(new StringWriter());
             Assert.AreEqual(string.Empty, writer.ToString());
         }
 
@@ -49,7 +49,7 @@ namespace Jayrock.Json
 
         private static void WriteString(string expected, string value)
         {
-            JsonTextWriter writer = new JsonTextWriter(new StringWriter());
+            var writer = new JsonTextWriter(new StringWriter());
             writer.WriteString(value);
             Assert.AreEqual(expected, writer.ToString());
         }
@@ -57,7 +57,7 @@ namespace Jayrock.Json
         [ Test ]
         public void WriteNumber()
         {
-            JsonTextWriter writer = new JsonTextWriter(new StringWriter());
+            var writer = new JsonTextWriter(new StringWriter());
             writer.WriteNumber(123);
             Assert.AreEqual("[123]", writer.ToString());
         }
@@ -65,7 +65,7 @@ namespace Jayrock.Json
         [ Test ]
         public void WriteNull()
         {
-            JsonTextWriter writer = new JsonTextWriter(new StringWriter());
+            var writer = new JsonTextWriter(new StringWriter());
             writer.WriteNull();
             Assert.AreEqual("[null]", writer.ToString());
         }
@@ -73,7 +73,7 @@ namespace Jayrock.Json
         [ Test ]
         public void WriteTrueBoolean()
         {
-            JsonTextWriter writer = new JsonTextWriter(new StringWriter());
+            var writer = new JsonTextWriter(new StringWriter());
             writer.WriteBoolean(true);
             Assert.AreEqual("[true]", writer.ToString());
         }
@@ -81,7 +81,7 @@ namespace Jayrock.Json
         [ Test ]
         public void WriteFalseBoolean()
         {
-            JsonTextWriter writer = new JsonTextWriter(new StringWriter());
+            var writer = new JsonTextWriter(new StringWriter());
             writer.WriteBoolean(false);
             Assert.AreEqual("[false]", writer.ToString());
         }
@@ -89,7 +89,7 @@ namespace Jayrock.Json
         [ Test ]
         public void WriteEmptyArray()
         {
-            JsonTextWriter writer = new JsonTextWriter(new StringWriter());
+            var writer = new JsonTextWriter(new StringWriter());
             writer.WriteStringArray(new string[0]);
             Assert.AreEqual("[]", writer.ToString());
         }
@@ -97,7 +97,7 @@ namespace Jayrock.Json
         [ Test ]
         public void WriteArray()
         {
-            JsonTextWriter writer = new JsonTextWriter(new StringWriter());
+            var writer = new JsonTextWriter(new StringWriter());
             writer.WriteStringArray(new object[] { 123, "Hello \"Old\" World", true });
             Assert.AreEqual("[\"123\",\"Hello \\\"Old\\\" World\",\"True\"]", writer.ToString());
         }
@@ -105,7 +105,7 @@ namespace Jayrock.Json
         [ Test ]
         public void WriteEmptyObject()
         {
-            JsonTextWriter writer = new JsonTextWriter(new StringWriter());
+            var writer = new JsonTextWriter(new StringWriter());
             writer.WriteStartObject();
             writer.WriteEndObject();
             Assert.AreEqual("{}", writer.ToString());
@@ -114,7 +114,7 @@ namespace Jayrock.Json
         [ Test ]
         public void WriteObject()
         {
-            JsonTextWriter writer = new JsonTextWriter(new StringWriter());
+            var writer = new JsonTextWriter(new StringWriter());
             writer.WriteStartObject();
             writer.WriteMember("Name");
             writer.WriteString("John Doe");
@@ -144,7 +144,7 @@ namespace Jayrock.Json
         [ Test ]
         public void WriteObjectArray()
         {
-            JsonObject o = new JsonObject();
+            var o = new JsonObject();
             o.Put("one", 1);
             o.Put("two", 2);
             o.Put("three", 3);
@@ -154,15 +154,15 @@ namespace Jayrock.Json
         [ Test ]
         public void WriteNestedArrays()
         {
-            int[] inner = new int[] { 1, 2, 3 };
-            int[][] outer = new int[][] { inner, inner, inner };
+            var inner = new int[] { 1, 2, 3 };
+            var outer = new int[][] { inner, inner, inner };
             Assert.AreEqual("[[1,2,3],[1,2,3],[1,2,3]]", WriteValue(outer));
         }
 
         [ Test ]
         public void WriteFromReader()
         {
-            JsonTextReader reader = new JsonTextReader(new StringReader(@"
+            var reader = new JsonTextReader(new StringReader(@"
                 { 'menu': {
                     'id': 'file',
                     'value': 'File:',
@@ -176,7 +176,7 @@ namespace Jayrock.Json
                   }
                 }"));
 
-            JsonTextWriter writer = new JsonTextWriter();
+            var writer = new JsonTextWriter();
             writer.WriteFromReader(reader);
             Assert.AreEqual("{\"menu\":{\"id\":\"file\",\"value\":\"File:\",\"popup\":{\"menuitem\":[{\"value\":\"New\",\"onclick\":\"CreateNewDoc()\"},{\"value\":\"Open\",\"onclick\":\"OpenDoc()\"},{\"value\":\"Close\",\"onclick\":\"CloseDoc()\"}]}}}", writer.ToString());
         }
@@ -184,7 +184,7 @@ namespace Jayrock.Json
         [ Test ]
         public void PrettyPrinting()
         {
-            JsonTextWriter writer = new JsonTextWriter();
+            var writer = new JsonTextWriter();
             writer.PrettyPrint = true;
             writer.WriteFromReader(new JsonTextReader(new StringReader("{'menu':{'id':'file','value':'File:','popup':{'menuitem':[{'value':'New','onclick':'CreateNewDoc()'},{'value':'Open','onclick':'OpenDoc()'},{'value':'Close','onclick':'CloseDoc()'}]}}}")));
             Assert.AreEqual(RewriteLines(string.Empty
@@ -210,17 +210,17 @@ namespace Jayrock.Json
 
         private static string WriteValue(object value)
         {
-            JsonTextWriter writer = new JsonTextWriter(new StringWriter());
+            var writer = new JsonTextWriter(new StringWriter());
             JsonConvert.Export(value, writer);
             return writer.ToString();
         }
 
         private static string RewriteLines(string s)
         {
-            StringReader reader = new StringReader(s);
-            StringWriter writer = new StringWriter();
+            var reader = new StringReader(s);
+            var writer = new StringWriter();
 
-            string line = reader.ReadLine();
+            var line = reader.ReadLine();
             while (line != null)
             {
                 writer.WriteLine(line);

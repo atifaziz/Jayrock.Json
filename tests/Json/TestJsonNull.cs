@@ -39,11 +39,11 @@ namespace Jayrock.Json
         [ Test ]
         public void ReferenceEqualityPostDeserialization()
         {
-            MemoryStream stream = new MemoryStream();
-            BinaryFormatter formatter = new BinaryFormatter();
+            var stream = new MemoryStream();
+            var formatter = new BinaryFormatter();
             formatter.Serialize(stream, JsonNull.Value);
             stream.Position = 0;
-            object o = formatter.Deserialize(stream);
+            var o = formatter.Deserialize(stream);
             Assert.IsTrue(JsonNull.Value.Equals(o));
         }
 

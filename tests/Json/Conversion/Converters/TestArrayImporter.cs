@@ -44,7 +44,7 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void ImportNull()
         {
-            ArrayImporter importer = new ArrayImporter();
+            var importer = new ArrayImporter();
             Assert.IsNull(importer.Import(new ImportContext(), CreateReader("null")));
         }
 
@@ -96,10 +96,10 @@ namespace Jayrock.Json.Conversion.Converters
 
         private static void AssertImport(Array expected, string s)
         {
-            JsonReader reader = CreateReader(s);
+            var reader = CreateReader(s);
 
-            ImportContext context = new ImportContext();
-            object o = context.Import(expected.GetType(), reader);
+            var context = new ImportContext();
+            var o = context.Import(expected.GetType(), reader);
             Assert.IsTrue(reader.EOF);
 
             if (expected == null)

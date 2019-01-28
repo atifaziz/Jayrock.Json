@@ -50,7 +50,7 @@ namespace Jayrock.Json.Conversion
             if (reader == null)
                 throw new ArgumentNullException(nameof(reader));
 
-            IImporter importer = FindImporter(type);
+            var importer = FindImporter(type);
 
             if (importer == null)
                 throw new JsonException(string.Format("Don't know how to import {0} from JSON.", type.FullName));
@@ -77,7 +77,7 @@ namespace Jayrock.Json.Conversion
             if (type == null)
                 throw new ArgumentNullException(nameof(type));
 
-            IImporter importer = Importers[type];
+            var importer = Importers[type];
 
             if (importer != null)
                 return importer;
@@ -123,28 +123,28 @@ namespace Jayrock.Json.Conversion
             if (Reflector.IsConstructionOfNullable(type))
                 return new NullableImporter(type);
 
-            bool isGenericList = Reflector.IsConstructionOfGenericTypeDefinition(type, typeof(IList<>));
-            bool isGenericCollection = !isGenericList && Reflector.IsConstructionOfGenericTypeDefinition(type, typeof(ICollection<>));
-            bool isSequence = !isGenericCollection && (type == typeof(IEnumerable) || Reflector.IsConstructionOfGenericTypeDefinition(type, typeof(IEnumerable<>)));
+            var isGenericList = Reflector.IsConstructionOfGenericTypeDefinition(type, typeof(IList<>));
+            var isGenericCollection = !isGenericList && Reflector.IsConstructionOfGenericTypeDefinition(type, typeof(ICollection<>));
+            var isSequence = !isGenericCollection && (type == typeof(IEnumerable) || Reflector.IsConstructionOfGenericTypeDefinition(type, typeof(IEnumerable<>)));
 
             if (isGenericList || isGenericCollection || isSequence)
             {
-                Type itemType = type.IsGenericType
+                var itemType = type.IsGenericType
                               ? type.GetGenericArguments()[0]
                               : typeof(object);
-                Type importerType = typeof(CollectionImporter<,>).MakeGenericType(new Type[] { type, itemType });
+                var importerType = typeof(CollectionImporter<,>).MakeGenericType(new Type[] { type, itemType });
                 return (IImporter) Activator.CreateInstance(importerType, new object[] { isSequence });
             }
 
             if (Reflector.IsConstructionOfGenericTypeDefinition(type, typeof(IDictionary<,>)))
                 return (IImporter) Activator.CreateInstance(typeof(DictionaryImporter<,>).MakeGenericType(type.GetGenericArguments()));
 
-            Type genericDictionaryType = Reflector.FindConstructionOfGenericInterfaceDefinition(type, typeof(IDictionary<,>));
+            var genericDictionaryType = Reflector.FindConstructionOfGenericInterfaceDefinition(type, typeof(IDictionary<,>));
             if (genericDictionaryType != null)
             {
-                Type[] args2 = genericDictionaryType.GetGenericArguments();
+                var args2 = genericDictionaryType.GetGenericArguments();
                 Debug.Assert(args2.Length == 2);
-                Type[] args3 = new Type[3];
+                var args3 = new Type[3];
                 args3[0] = type;        // [ TDictionary, ... , ...    ]
                 args2.CopyTo(args3, 1); // [ TDictionary, TKey, TValue ]
                 return (IImporter)Activator.CreateInstance(typeof(DictionaryImporter<,,>).MakeGenericType(args3));
@@ -152,8 +152,8 @@ namespace Jayrock.Json.Conversion
 
             if (Reflector.IsConstructionOfGenericTypeDefinition(type, typeof(ISet<>)))
             {
-                Type[] typeArguments = type.GetGenericArguments();
-                Type hashSetType = typeof(HashSet<>).MakeGenericType(typeArguments);
+                var typeArguments = type.GetGenericArguments();
+                var hashSetType = typeof(HashSet<>).MakeGenericType(typeArguments);
                 return (IImporter)Activator.CreateInstance(typeof(CollectionImporter<,,>).MakeGenericType(new Type[] { hashSetType, type, typeArguments[0] }));
             }
 
@@ -167,7 +167,7 @@ namespace Jayrock.Json.Conversion
                 return new ComponentImporter(type, new ObjectConstructor(type));
             }
 
-            CustomTypeDescriptor anonymousClass = CustomTypeDescriptor.TryCreateForAnonymousClass(type);
+            var anonymousClass = CustomTypeDescriptor.TryCreateForAnonymousClass(type);
             if (anonymousClass != null)
                 return new ComponentImporter(type, anonymousClass, new ObjectConstructor(type));
 
@@ -191,7 +191,7 @@ namespace Jayrock.Json.Conversion
             {
                 if (_stockImporters == null)
                 {
-                    ImporterCollection importers = new ImporterCollection();
+                    var importers = new ImporterCollection();
 
                     importers.Add(new ByteImporter());
                     importers.Add(new Int16Importer());

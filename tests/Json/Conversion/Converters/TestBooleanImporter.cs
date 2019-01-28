@@ -84,16 +84,16 @@ namespace Jayrock.Json.Conversion.Converters
 
         private static void AssertImport(bool expected, string input)
         {
-            object o = Import(input);
+            var o = Import(input);
             Assert.IsInstanceOf<bool>(o);
             Assert.AreEqual(expected, o);
         }
 
         private static object Import(string input)
         {
-            JsonTextReader reader = new JsonTextReader(new StringReader(input));
-            BooleanImporter importer = new BooleanImporter();
-            object o = importer.Import(new ImportContext(), reader);
+            var reader = new JsonTextReader(new StringReader(input));
+            var importer = new BooleanImporter();
+            var o = importer.Import(new ImportContext(), reader);
             Assert.IsTrue(reader.EOF, "Reader must be at EOF.");
             return o;
         }

@@ -41,7 +41,7 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void OneFieldOneRow()
         {
-            DataTable table = new DataTable();
+            var table = new DataTable();
             table.Columns.Add("id", typeof(int));
             AppendRow(table, 1);
             Assert.AreEqual("[{\"id\":1}]", Format(table));
@@ -50,7 +50,7 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void TwoFieldsTwoRows()
         {
-            DataTable table = new DataTable();
+            var table = new DataTable();
             table.Columns.Add("id", typeof(int));
             table.Columns.Add("name", typeof(string));
             AppendRow(table, 1, "john");
@@ -61,7 +61,7 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void NullFieldValues()
         {
-            DataTable table = new DataTable();
+            var table = new DataTable();
             table.Columns.Add("id", typeof(int));
             AppendRow(table, 1);
             AppendRow(table, DBNull.Value);
@@ -77,7 +77,7 @@ namespace Jayrock.Json.Conversion.Converters
 
         private static string Format(DataTable table)
         {
-            JsonTextWriter writer = new JsonTextWriter();
+            var writer = new JsonTextWriter();
             JsonConvert.Export(new FakeDataTableReader(table), writer);
             return writer.ToString();
         }
@@ -161,8 +161,8 @@ namespace Jayrock.Json.Conversion.Converters
 
             public int GetValues(object[] values)
             {
-                object[] data = CurrentRow.ItemArray;
-                int length = Math.Min(values.Length, data.Length);
+                var data = CurrentRow.ItemArray;
+                var length = Math.Min(values.Length, data.Length);
                 Array.Copy(data, 0, values, 0, length);
                 return length;
             }

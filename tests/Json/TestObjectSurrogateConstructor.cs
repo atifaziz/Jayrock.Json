@@ -44,30 +44,30 @@ namespace Jayrock.Json
         [Test]
         public void SurrogateTypeInitialization()
         {
-            ObjectSurrogateConstructor ctor = new ObjectSurrogateConstructor(typeof(Surrogate));
+            var ctor = new ObjectSurrogateConstructor(typeof(Surrogate));
             Assert.AreEqual(typeof(Surrogate), ctor.SurrogateType);
         }
 
         [Test, ExpectedException(typeof(ArgumentNullException))]
         public void CannotCreateObjectWithNullImportContext()
         {
-            ObjectSurrogateConstructor ctor = new ObjectSurrogateConstructor(typeof(Surrogate));
+            var ctor = new ObjectSurrogateConstructor(typeof(Surrogate));
             ctor.CreateObject(null, StockJsonBuffers.EmptyObject.CreateReader());
         }
 
         [Test, ExpectedException(typeof(ArgumentNullException))]
         public void CannotCreateObjectWithNullJsonReader()
         {
-            ObjectSurrogateConstructor ctor = new ObjectSurrogateConstructor(typeof(Surrogate));
+            var ctor = new ObjectSurrogateConstructor(typeof(Surrogate));
             ctor.CreateObject(new ImportContext(), null);
         }
 
         [Test]
         public void CreateObject()
         {
-            ObjectSurrogateConstructor ctor = new ObjectSurrogateConstructor(typeof(Surrogate));
-            ImportContext context = new ImportContext();
-            ObjectConstructionResult result = ctor.CreateObject(context, JsonText.CreateReader("{y:2000,m:12,d:4}"));
+            var ctor = new ObjectSurrogateConstructor(typeof(Surrogate));
+            var context = new ImportContext();
+            var result = ctor.CreateObject(context, JsonText.CreateReader("{y:2000,m:12,d:4}"));
             Assert.IsNotNull(result);
             Assert.AreEqual(new DateTime(2000, 12, 4), result.Object);
         }

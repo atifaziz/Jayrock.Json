@@ -85,11 +85,11 @@ namespace Jayrock.Json
             if (!_buffer.IsStructured)
                 return _buffer;
 
-            JsonTokenClass tokenClass = TokenClass;
+            var tokenClass = TokenClass;
             if (tokenClass.IsTerminator || tokenClass == JsonTokenClass.Member)
                 Read();
 
-            int start = _index;
+            var start = _index;
             Skip();
             return _buffer.Slice(start, _index);
         }

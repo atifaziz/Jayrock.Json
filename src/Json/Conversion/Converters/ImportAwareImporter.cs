@@ -63,7 +63,7 @@ namespace Jayrock.Json.Conversion.Converters
             if (reader == null)
                 throw new ArgumentNullException(nameof(reader));
 
-            IJsonImportable o = CreateObject();
+            var o = CreateObject();
             o.Import(context, reader);
             return o;
         }

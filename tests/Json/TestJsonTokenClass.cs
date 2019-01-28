@@ -47,14 +47,14 @@ namespace Jayrock.Json
         [ Test ]
         public void ToStringReturnsName()
         {
-            foreach (JsonTokenClass tokenClass in JsonTokenClass.All)
+            foreach (var tokenClass in JsonTokenClass.All)
                 Assert.IsTrue(tokenClass.Name.Equals(tokenClass.ToString()));
         }
 
         [ Test ]
         public void HashCodeFromName()
         {
-            foreach (JsonTokenClass tokenClass in JsonTokenClass.All)
+            foreach (var tokenClass in JsonTokenClass.All)
                 Assert.IsTrue(tokenClass.GetHashCode().Equals(tokenClass.Name.GetHashCode()));
         }
 
@@ -73,9 +73,9 @@ namespace Jayrock.Json
         [ Test ]
         public void All()
         {
-            ArrayList list = new ArrayList();
+            var list = new ArrayList();
 
-            foreach (FieldInfo field in typeof(JsonTokenClass).GetFields(BindingFlags.Static | BindingFlags.Public))
+            foreach (var field in typeof(JsonTokenClass).GetFields(BindingFlags.Static | BindingFlags.Public))
             {
                 if (typeof(JsonTokenClass).IsAssignableFrom(field.FieldType))
                     list.Add(field.GetValue(null));
@@ -83,7 +83,7 @@ namespace Jayrock.Json
 
             Assert.AreEqual(list.Count, JsonTokenClass.All.Count);
 
-            foreach (JsonTokenClass tokenClass in JsonTokenClass.All)
+            foreach (var tokenClass in JsonTokenClass.All)
                 list.Remove(tokenClass);
 
             if (list.Count > 0)
@@ -99,7 +99,7 @@ namespace Jayrock.Json
         [ Test ]
         public void StringToken()
         {
-            JsonToken token = JsonToken.String("hello");
+            var token = JsonToken.String("hello");
             Assert.AreEqual(JsonTokenClass.String, token.Class);
             Assert.AreEqual("hello", token.Text);
         }
@@ -113,7 +113,7 @@ namespace Jayrock.Json
         [ Test ]
         public void NumberToken()
         {
-            JsonToken token = JsonToken.Number("123");
+            var token = JsonToken.Number("123");
             Assert.AreEqual(JsonTokenClass.Number, token.Class);
             Assert.AreEqual("123", token.Text);
         }
@@ -133,7 +133,7 @@ namespace Jayrock.Json
         [ Test ]
         public void BooleanToken()
         {
-            JsonToken token = JsonToken.Boolean(true);
+            var token = JsonToken.Boolean(true);
             Assert.AreEqual(JsonTokenClass.Boolean, token.Class);
             Assert.AreEqual("true", token.Text);
 
@@ -167,7 +167,7 @@ namespace Jayrock.Json
         public void DeserializesToFactoryInstance()
         {
             IFormatter formatter = new BinaryFormatter();
-            MemoryStream stream = new MemoryStream();
+            var stream = new MemoryStream();
             formatter.Serialize(stream, JsonTokenClass.Null);
             stream.Seek(0, SeekOrigin.Begin);
             Assert.AreSame(JsonTokenClass.Null, formatter.Deserialize(stream));
@@ -176,21 +176,21 @@ namespace Jayrock.Json
         [ Test ]
         public void EqualityByReference()
         {
-            foreach (JsonTokenClass clazz in JsonTokenClass.All)
+            foreach (var clazz in JsonTokenClass.All)
                 Assert.IsTrue(clazz.Equals(clazz), clazz.ToString());
         }
 
         [ Test ]
         public void InequalityWithNull()
         {
-            foreach (JsonTokenClass clazz in JsonTokenClass.All)
+            foreach (var clazz in JsonTokenClass.All)
                 Assert.IsFalse(clazz.Equals(null), clazz.ToString());
         }
 
         [ Test ]
         public void InequalityWithIncompatibleType()
         {
-            foreach (JsonTokenClass clazz in JsonTokenClass.All)
+            foreach (var clazz in JsonTokenClass.All)
                 Assert.IsFalse(clazz.Equals(new object()), clazz.ToString());
         }
     }

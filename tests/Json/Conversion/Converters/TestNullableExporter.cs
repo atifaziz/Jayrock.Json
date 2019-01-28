@@ -56,8 +56,8 @@ namespace Jayrock.Json.Conversion.Converters
 
         private static JsonReader Export(int? value)
         {
-            JsonRecorder writer = new JsonRecorder();
-            ExportContext context = JsonConvert.CreateExportContext();
+            var writer = new JsonRecorder();
+            var context = JsonConvert.CreateExportContext();
             new NullableExporter(typeof(int?)).Export(context, value, writer);
             return writer.CreatePlayer();
         }

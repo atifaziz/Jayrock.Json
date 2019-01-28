@@ -31,14 +31,14 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void Import()
         {
-            JsonRecorder writer = new JsonRecorder();
+            var writer = new JsonRecorder();
             writer.WriteStartObject();
             writer.WriteMember("foo");
             writer.WriteString("bar");
             writer.WriteEndObject();
-            JsonReader reader = writer.CreatePlayer();
-            ImportContext context = new ImportContext();
-            IDictionary map = (IDictionary) context.Import(typeof(IDictionary), reader);
+            var reader = writer.CreatePlayer();
+            var context = new ImportContext();
+            var map = (IDictionary) context.Import(typeof(IDictionary), reader);
             Assert.IsNotNull(map);
             Assert.AreEqual(1, map.Count);
             Assert.AreEqual("bar", map["foo"]);

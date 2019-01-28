@@ -127,7 +127,7 @@ namespace Jayrock.Json
         [ Test ]
         public void ToBigInteger()
         {
-            JsonNumber number = Number("784637716923335095224261902710254454442933591094742482943");
+            var number = Number("784637716923335095224261902710254454442933591094742482943");
             Assert.AreEqual(System.Numerics.BigInteger.Pow(long.MaxValue, 3), number.ToBigInteger());
         }
 
@@ -140,7 +140,7 @@ namespace Jayrock.Json
         [ Test ]
         public void ConvertToBigInteger()
         {
-            JsonNumber number = Number("784637716923335095224261902710254454442933591094742482943");
+            var number = Number("784637716923335095224261902710254454442933591094742482943");
             Assert.AreEqual(System.Numerics.BigInteger.Pow(long.MaxValue, 3), Convert.ChangeType(number, typeof(System.Numerics.BigInteger)));
         }
 
@@ -311,7 +311,7 @@ namespace Jayrock.Json
         [Test]
         public void CannotValidateGrammarWithNonWhiteNumberStyles()
         {
-            ArrayList list = new ArrayList(Enum.GetValues(typeof(NumberStyles)));
+            var list = new ArrayList(Enum.GetValues(typeof(NumberStyles)));
             list.Remove(NumberStyles.None);
             list.Remove(NumberStyles.AllowLeadingWhite);
             list.Remove(NumberStyles.AllowTrailingWhite);
@@ -359,7 +359,7 @@ namespace Jayrock.Json
 
         private static void TestValidity(bool expected, NumberStyles styles, params string[] inputs)
         {
-            foreach (string input in inputs)
+            foreach (var input in inputs)
                 Assert.AreEqual(expected, JsonNumber.IsValid(input, styles), input + " (" + styles + ")");
         }
 

@@ -100,7 +100,7 @@ namespace Jayrock.Json
 
         object IObjectReference.GetRealObject(StreamingContext context)
         {
-            foreach (JsonTokenClass clazz in All)
+            foreach (var clazz in All)
             {
                 if (string.CompareOrdinal(clazz.Name, Name) == 0)
                     return clazz;

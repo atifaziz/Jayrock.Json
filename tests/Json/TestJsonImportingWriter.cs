@@ -33,7 +33,7 @@ namespace Jayrock.Json
         [ Test ]
         public void Blank()
         {
-            JsonImportingWriter writer = new JsonImportingWriter();
+            var writer = new JsonImportingWriter();
             Assert.IsNull(writer.Value);
             Assert.IsFalse(writer.IsArray);
             Assert.IsFalse(writer.IsObject);
@@ -42,7 +42,7 @@ namespace Jayrock.Json
         [ Test ]
         public void WriteString()
         {
-            JsonImportingWriter writer = new JsonImportingWriter();
+            var writer = new JsonImportingWriter();
             writer.WriteString("foobar");
             Assert.AreEqual("foobar", GetSingleValue(writer));
         }
@@ -50,7 +50,7 @@ namespace Jayrock.Json
         [ Test ]
         public void WriteNumber()
         {
-            JsonImportingWriter writer = new JsonImportingWriter();
+            var writer = new JsonImportingWriter();
             writer.WriteNumber("1234");
             Assert.AreEqual(new JsonNumber("1234"), GetSingleValue(writer));
         }
@@ -58,7 +58,7 @@ namespace Jayrock.Json
         [ Test ]
         public void WriteNull()
         {
-            JsonImportingWriter writer = new JsonImportingWriter();
+            var writer = new JsonImportingWriter();
             writer.WriteNull();
             Assert.AreEqual(null, GetSingleValue(writer));
         }
@@ -66,7 +66,7 @@ namespace Jayrock.Json
         [ Test ]
         public void WriteTrueBoolean()
         {
-            JsonImportingWriter writer = new JsonImportingWriter();
+            var writer = new JsonImportingWriter();
             writer.WriteBoolean(true);
             Assert.AreEqual(true, GetSingleValue(writer));
         }
@@ -74,7 +74,7 @@ namespace Jayrock.Json
         [ Test ]
         public void WriteFalseBoolean()
         {
-            JsonImportingWriter writer = new JsonImportingWriter();
+            var writer = new JsonImportingWriter();
             writer.WriteBoolean(false);
             Assert.AreEqual(false, GetSingleValue(writer));
         }
@@ -82,7 +82,7 @@ namespace Jayrock.Json
         [ Test ]
         public void WriteEmptyArray()
         {
-            JsonImportingWriter writer = new JsonImportingWriter();
+            var writer = new JsonImportingWriter();
             writer.WriteStringArray(new string[0]);
             Assert.AreEqual(new object[0], GetArray(writer));
         }
@@ -90,7 +90,7 @@ namespace Jayrock.Json
         [ Test ]
         public void WriteArray()
         {
-            JsonImportingWriter writer = new JsonImportingWriter();
+            var writer = new JsonImportingWriter();
             writer.WriteStartArray();
             writer.WriteNumber(123);
             writer.WriteString("Hello World");
@@ -102,7 +102,7 @@ namespace Jayrock.Json
         [ Test ]
         public void WriteEmptyObject()
         {
-            JsonImportingWriter writer = new JsonImportingWriter();
+            var writer = new JsonImportingWriter();
             writer.WriteStartObject();
             writer.WriteEndObject();
             Assert.AreEqual(0, ((IDictionary) writer.Value).Count);
@@ -111,7 +111,7 @@ namespace Jayrock.Json
         [ Test ]
         public void WriteObject()
         {
-            JsonImportingWriter writer = new JsonImportingWriter();
+            var writer = new JsonImportingWriter();
             writer.WriteStartObject();
             writer.WriteMember("Name");
             writer.WriteString("John Doe");
@@ -119,7 +119,7 @@ namespace Jayrock.Json
             writer.WriteNumber(123456789);
             writer.WriteEndObject();
             Assert.IsNotNull(writer.Value);
-            IDictionary obj = (IDictionary) writer.Value;
+            var obj = (IDictionary) writer.Value;
             Assert.AreEqual(2, obj.Count);
             Assert.AreEqual("John Doe", obj["Name"]);
             Assert.AreEqual(123456789, Convert.ToInt32(obj["Salary"]));
@@ -128,7 +128,7 @@ namespace Jayrock.Json
         [ Test ]
         public void WriteFromReader()
         {
-            JsonTextReader reader = new JsonTextReader(new StringReader(@"
+            var reader = new JsonTextReader(new StringReader(@"
                 { 'menu': {
                     'id': 'file',
                     'value': 'File:',
@@ -142,18 +142,18 @@ namespace Jayrock.Json
                   }
                 }"));
 
-            JsonImportingWriter writer = new JsonImportingWriter();
+            var writer = new JsonImportingWriter();
             writer.WriteFromReader(reader);
 
-            IDictionary root = (IDictionary) writer.Value;
+            var root = (IDictionary) writer.Value;
             Assert.AreEqual(1, root.Count);
-            IDictionary menu = (IDictionary) root["menu"];
+            var menu = (IDictionary) root["menu"];
             Assert.AreEqual(3, menu.Count);
             Assert.AreEqual("file", menu["id"]);
             Assert.AreEqual("File:", menu["value"]);
-            IDictionary popup = (IDictionary) menu["popup"];
+            var popup = (IDictionary) menu["popup"];
             Assert.AreEqual(1, popup.Count);
-            IList menuitems = (IList) popup["menuitem"];
+            var menuitems = (IList) popup["menuitem"];
             Assert.AreEqual(3, menuitems.Count);
             IDictionary menuitem;
             menuitem = (IDictionary) menuitems[0];
@@ -171,9 +171,9 @@ namespace Jayrock.Json
         {
             Assert.IsTrue(writer.IsArray);
             Assert.IsFalse(writer.IsObject);
-            IEnumerator e = ((IEnumerable)writer.Value).GetEnumerator();
+            var e = ((IEnumerable)writer.Value).GetEnumerator();
             Assert.IsTrue(e.MoveNext());
-            object result = e.Current;
+            var result = e.Current;
             Assert.IsFalse(e.MoveNext());
             return result;
         }
@@ -182,8 +182,8 @@ namespace Jayrock.Json
         {
             Assert.IsTrue(writer.IsArray);
             Assert.IsFalse(writer.IsObject);
-            ICollection collection = ((ICollection) writer.Value);
-            object[] result = new object[collection.Count];
+            var collection = ((ICollection) writer.Value);
+            var result = new object[collection.Count];
             collection.CopyTo(result, 0);
             return result;
         }

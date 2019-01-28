@@ -44,14 +44,14 @@ namespace Jayrock.Json.Conversion.Converters
 
         protected override object ImportFromArray(ImportContext context, JsonReader reader)
         {
-            JsonArray items = new JsonArray();
+            var items = new JsonArray();
             ((IJsonImportable) items).Import(context, reader);
             return items;
         }
 
         protected override object ImportFromObject(ImportContext context, JsonReader reader)
         {
-            JsonObject o = new JsonObject();
+            var o = new JsonObject();
             ((IJsonImportable) o).Import(context, reader);
             return o;
         }

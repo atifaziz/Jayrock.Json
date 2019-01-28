@@ -38,15 +38,15 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void InputTypeInitialization()
         {
-            Type type = typeof(Hashtable);
-            DictionaryExporter exporter = new DictionaryExporter(type);
+            var type = typeof(Hashtable);
+            var exporter = new DictionaryExporter(type);
             Assert.AreSame(type, exporter.InputType);
         }
 
         [ Test ]
         public void ExportEmpty()
         {
-            JsonReader reader = Export(new Hashtable());
+            var reader = Export(new Hashtable());
             reader.ReadToken(JsonTokenClass.Object);
             Assert.AreEqual(JsonTokenClass.EndObject, reader.TokenClass);
         }
@@ -54,13 +54,13 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void ExportFlat()
         {
-            Hashtable h = new Hashtable();
+            var h = new Hashtable();
 
             h.Add("FirstName", "John");
             h.Add("LastName", "Doe");
             h.Add("MiddleName", null);
 
-            JsonReader reader = Export(h);
+            var reader = Export(h);
 
             //
             // We need a complex assertions loop here because the order in
@@ -71,10 +71,10 @@ namespace Jayrock.Json.Conversion.Converters
             reader.ReadToken(JsonTokenClass.Object);
             while (reader.TokenClass != JsonTokenClass.EndObject)
             {
-                string member = reader.ReadMember();
+                var member = reader.ReadMember();
                 Assert.IsTrue(h.Contains(member));
 
-                object expected = h[member];
+                var expected = h[member];
 
                 if (expected == null)
                     reader.ReadNull();
@@ -85,7 +85,7 @@ namespace Jayrock.Json.Conversion.Converters
 
         private static JsonReader Export(IDictionary value)
         {
-            JsonRecorder writer = new JsonRecorder();
+            var writer = new JsonRecorder();
             JsonConvert.Export(value, writer);
             return writer.CreatePlayer();
         }

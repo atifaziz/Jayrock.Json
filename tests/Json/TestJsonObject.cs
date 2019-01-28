@@ -50,11 +50,11 @@ namespace Jayrock.Json
         [ Test ]
         public void Names()
         {
-            JsonObject o = new JsonObject();
+            var o = new JsonObject();
             o.Put("one", 1);
             o.Put("two", 2);
-            ICollection names = o.Names;
-            IEnumerator e = names.GetEnumerator();
+            var names = o.Names;
+            var e = names.GetEnumerator();
             e.MoveNext(); Assert.AreEqual("one", e.Current);
             e.MoveNext(); Assert.AreEqual("two", e.Current);
         }
@@ -62,7 +62,7 @@ namespace Jayrock.Json
         [ Test ]
         public void InitWithKeyValuePairs()
         {
-            JsonObject o = new JsonObject(new string[] { "one", "two", }, new object[] { 1, 2 });
+            var o = new JsonObject(new string[] { "one", "two", }, new object[] { 1, 2 });
             Assert.AreEqual(2, o.Count);
             Assert.AreEqual(1, o["one"]);
             Assert.AreEqual(2, o["two"]);
@@ -71,10 +71,10 @@ namespace Jayrock.Json
         [ Test ]
         public void InitWithKeyValuePairsAccumulates()
         {
-            JsonObject o = new JsonObject(new string[] { "one", "two", "three", "two" }, new object[] { 1, 2, 3, 4 });
+            var o = new JsonObject(new string[] { "one", "two", "three", "two" }, new object[] { 1, 2, 3, 4 });
             Assert.AreEqual(3, o.Count);
             Assert.AreEqual(1, o["one"]);
-            IList two = o["two"] as IList;
+            var two = o["two"] as IList;
             Assert.IsNotNull(two, "Member 'two' should be an ordered list of accumulated values.");
             Assert.AreEqual(2, two.Count, "Count of values under 'two'.");
             Assert.AreEqual(2, two[0]);
@@ -85,7 +85,7 @@ namespace Jayrock.Json
         [ Test ]
         public void InitWithExtraKeys()
         {
-            JsonObject o = new JsonObject(new string[] { "one", "two", "three" }, new object[] { 1, 2 });
+            var o = new JsonObject(new string[] { "one", "two", "three" }, new object[] { 1, 2 });
             Assert.AreEqual(3, o.Count);
             Assert.AreEqual(1, o["one"]);
             Assert.AreEqual(2, o["two"]);
@@ -95,7 +95,7 @@ namespace Jayrock.Json
         [ Test ]
         public void InitWithNullValues()
         {
-            JsonObject o = new JsonObject(new string[] { "one", "two", "three" }, null);
+            var o = new JsonObject(new string[] { "one", "two", "three" }, null);
             Assert.AreEqual(3, o.Count);
             Assert.IsTrue(JsonNull.LogicallyEquals(o["one"]));
             Assert.IsTrue(JsonNull.LogicallyEquals(o["two"]));
@@ -105,10 +105,10 @@ namespace Jayrock.Json
         [ Test ]
         public void InitWithExtraValues()
         {
-            JsonObject o = new JsonObject(new string[] { "one", "two" }, new object[] { 1, 2, 3, 4 });
+            var o = new JsonObject(new string[] { "one", "two" }, new object[] { 1, 2, 3, 4 });
             Assert.AreEqual(2, o.Count);
             Assert.AreEqual(1, o["one"]);
-            IList two = (IList) o["two"];
+            var two = (IList) o["two"];
             Assert.AreEqual(3, two.Count, "Count of values under 'two'.");
             Assert.AreEqual(2, two[0]);
             Assert.AreEqual(3, two[1]);
@@ -118,9 +118,9 @@ namespace Jayrock.Json
         [ Test ]
         public void InitWithNullKeys()
         {
-            JsonObject o = new JsonObject(null, new object[] { 1, 2, 3, 4 });
+            var o = new JsonObject(null, new object[] { 1, 2, 3, 4 });
             Assert.AreEqual(1, o.Count);
-            IList values = (IList) o[""];
+            var values = (IList) o[""];
             Assert.AreEqual(4, values.Count, "Count of values.");
             Assert.AreEqual(1, values[0]);
             Assert.AreEqual(2, values[1]);
@@ -131,7 +131,7 @@ namespace Jayrock.Json
         [ Test ]
         public void Import()
         {
-            JsonObject article = new JsonObject();
+            var article = new JsonObject();
 
             article.Import(new JsonTextReader(new StringReader(@"
                 /* Article */ {
@@ -153,17 +153,17 @@ namespace Jayrock.Json
             Assert.AreEqual(2, (int) (JsonNumber) article["Rating"]);
             Assert.AreEqual(null, article["Abstract"]);
 
-            IDictionary author = (IDictionary) article["Author"];
+            var author = (IDictionary) article["Author"];
             Assert.IsNotNull(author);
             Assert.AreEqual(2, author.Count);
             Assert.AreEqual("John Doe", author["Name"]);
             Assert.AreEqual("john.doe@example.com", author["E-Mail Address"]);
 
-            JsonArray references = (JsonArray) article["References"];
+            var references = (JsonArray) article["References"];
             Assert.IsNotNull(references);
             Assert.AreEqual(1, references.Length);
 
-            IDictionary reference = (IDictionary) references[0];
+            var reference = (IDictionary) references[0];
             Assert.IsNotNull(reference);
             Assert.AreEqual(2, reference.Count);
             Assert.AreEqual("JSON RPC", reference["Title"]);
@@ -173,7 +173,7 @@ namespace Jayrock.Json
         [ Test ]
         public void ContentsClearedBeforeImporting()
         {
-            JsonObject o = new JsonObject();
+            var o = new JsonObject();
             o.Put("foo", "bar");
             Assert.AreEqual(1, o.Count);
             o.Import(new JsonTextReader(new StringReader("{}")));
@@ -204,15 +204,15 @@ namespace Jayrock.Json
         [ Test ]
         public void Export()
         {
-            JsonObject o = new JsonObject();
+            var o = new JsonObject();
             o.Put("Number", 123);
             o.Put("String", "Hello World");
             o.Put("Boolean", true);
-            JsonRecorder writer = new JsonRecorder();
+            var writer = new JsonRecorder();
             o.Export(writer);
-            JsonReader reader = writer.CreatePlayer();
+            var reader = writer.CreatePlayer();
             reader.ReadToken(JsonTokenClass.Object);
-            string[] members = (string[]) o.GetNamesArray().ToArray(typeof(string));
+            var members = (string[]) o.GetNamesArray().ToArray(typeof(string));
             Assert.AreEqual(members[0], reader.ReadMember());
             Assert.AreEqual(o[members[0]], reader.ReadNumber().ToInt32());
             Assert.AreEqual(members[1], reader.ReadMember());
@@ -267,7 +267,7 @@ namespace Jayrock.Json
         [ Test ]
         public void HasMemberWhenNotEmpty()
         {
-            JsonObject o = new JsonObject();
+            var o = new JsonObject();
             Assert.IsFalse(o.HasMembers);
             o.Put("foo", "bar");
             Assert.IsTrue(o.HasMembers);
@@ -276,10 +276,10 @@ namespace Jayrock.Json
         [ Test ]
         public void Add()
         {
-            JsonObject o = new JsonObject();
+            var o = new JsonObject();
             o.Add("foo", "bar");
             Assert.AreEqual("bar", o["foo"]);
-            ICollection names = o.Names;
+            var names = o.Names;
             Assert.AreEqual(1, names.Count);
             Assert.AreEqual(new string[] { "foo" }, CollectionHelper.ToArray(names, typeof(string)));
         }
@@ -288,7 +288,7 @@ namespace Jayrock.Json
         [ ExpectedException(typeof(ArgumentException)) ]
         public void CannotAddMemberNameDuplicates()
         {
-            JsonObject o = new JsonObject();
+            var o = new JsonObject();
             o.Add("foo", "bar");
             o.Add("foo", "baz");
         }
@@ -296,13 +296,13 @@ namespace Jayrock.Json
         [ Test ]
         public void Enumeration()
         {
-            JsonObject o = new JsonObject();
+            var o = new JsonObject();
             o.Add("one", 1);
             o.Add("two", 2);
             o.Add("three", 3);
             o.Add("four", 4);
 
-            JsonObject.JsonMemberEnumerator e = o.GetEnumerator();
+            var e = o.GetEnumerator();
 
             Assert.IsNotNull(e);
 
@@ -562,11 +562,11 @@ namespace Jayrock.Json
         public void CopyToViaGenericCollection()
         {
             ICollection<KeyValuePair<string, object>> obj = new JsonObject();
-            KeyValuePair<string, object> first = new KeyValuePair<string, object>("first", 123);
+            var first = new KeyValuePair<string, object>("first", 123);
             obj.Add(first);
-            KeyValuePair<string, object> second = new KeyValuePair<string, object>("second", 456);
+            var second = new KeyValuePair<string, object>("second", 456);
             obj.Add(second);
-            KeyValuePair<string, object>[] pairs = new KeyValuePair<string, object>[2];
+            var pairs = new KeyValuePair<string, object>[2];
             obj.CopyTo(pairs, 0);
             Assert.AreEqual(first, pairs[0]);
             Assert.AreEqual(second, pairs[1]);
@@ -599,13 +599,13 @@ namespace Jayrock.Json
         {
             ICollection<KeyValuePair<string, object>> obj = new JsonObject();
 
-            KeyValuePair<string, object> first = new KeyValuePair<string, object>("first", 123);
+            var first = new KeyValuePair<string, object>("first", 123);
             obj.Add(first);
 
-            KeyValuePair<string, object> second = new KeyValuePair<string, object>("second", 456);
+            var second = new KeyValuePair<string, object>("second", 456);
             obj.Add(second);
 
-            using (IEnumerator<KeyValuePair<string, object>> e = obj.GetEnumerator())
+            using (var e = obj.GetEnumerator())
             {
                 Assert.IsNotNull(e);
                 Assert.IsTrue(e.MoveNext());
@@ -619,21 +619,21 @@ namespace Jayrock.Json
         [ Test ]
         public void JsonMemberEnumeratorUsesSameEnumeratorAsGetEnumerator()
         {
-            JsonObject obj = new JsonObject();
+            var obj = new JsonObject();
             Assert.AreEqual(obj.GetEnumerator().GetType(), ((IEnumerable<JsonMember>) obj).GetEnumerator().GetType());
         }
 
         [ Test ]
         public void NonGenericEnumeratorUsesSameEnumeratorAsGetEnumerator()
         {
-            JsonObject obj = new JsonObject();
+            var obj = new JsonObject();
             Assert.AreEqual(obj.GetEnumerator().GetType(), ((IEnumerable) obj).GetEnumerator().GetType());
         }
 
         [ Test ]
         public void InitWithJsonMemberSequence()
         {
-            JsonObject obj = new JsonObject(
+            var obj = new JsonObject(
                 from i in Enumerable.Range(0, 10)
                 let ch = (char)('a' + i)
                 select new JsonMember(ch.ToString(), i));

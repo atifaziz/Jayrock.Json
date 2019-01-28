@@ -56,7 +56,7 @@ namespace Jayrock.Json
         [ Test ]
         public void AutoCompletion()
         {
-            JsonRecorder writer = new JsonRecorder();
+            var writer = new JsonRecorder();
 
             writer.WriteStartArray();
             writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Jayrock.Json
             writer.WriteMember("inner");
             writer.AutoComplete();
 
-            JsonReader reader = writer.CreatePlayer();
+            var reader = writer.CreatePlayer();
 
             reader.ReadToken(JsonTokenClass.Array);
             reader.ReadToken(JsonTokenClass.Object);

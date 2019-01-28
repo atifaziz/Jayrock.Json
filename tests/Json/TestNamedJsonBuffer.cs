@@ -55,7 +55,7 @@ namespace Jayrock.Json
         [Test]
         public void EmptyToString()
         {
-            string str = NamedJsonBuffer.Empty.ToString();
+            var str = NamedJsonBuffer.Empty.ToString();
             Assert.IsNotNull(str);
             Assert.AreEqual(0, str.Length);
         }
@@ -75,7 +75,7 @@ namespace Jayrock.Json
         [Test]
         public void Initialzation()
         {
-            NamedJsonBuffer nb = new NamedJsonBuffer("foo", JsonBuffer.From("bar"));
+            var nb = new NamedJsonBuffer("foo", JsonBuffer.From("bar"));
             Assert.AreEqual("foo", nb.Name);
             Assert.AreEqual("bar", nb.Buffer.GetString());
         }
@@ -83,24 +83,24 @@ namespace Jayrock.Json
         [Test]
         public void Equality()
         {
-            NamedJsonBuffer nb1 = new NamedJsonBuffer("foo", JsonBuffer.From("bar"));
-            NamedJsonBuffer nb2 = new NamedJsonBuffer("foo", JsonBuffer.From("bar"));
+            var nb1 = new NamedJsonBuffer("foo", JsonBuffer.From("bar"));
+            var nb2 = new NamedJsonBuffer("foo", JsonBuffer.From("bar"));
             Assert.AreEqual(nb1, nb2);
         }
 
         [Test]
         public void NameInequality()
         {
-            NamedJsonBuffer nb1 = new NamedJsonBuffer("foo", JsonBuffer.From("bar"));
-            NamedJsonBuffer nb2 = new NamedJsonBuffer("FOO", JsonBuffer.From("bar"));
+            var nb1 = new NamedJsonBuffer("foo", JsonBuffer.From("bar"));
+            var nb2 = new NamedJsonBuffer("FOO", JsonBuffer.From("bar"));
             Assert.AreNotEqual(nb1, nb2);
         }
 
         [Test]
         public void BufferInequality()
         {
-            NamedJsonBuffer nb1 = new NamedJsonBuffer("foo", JsonBuffer.From("bar"));
-            NamedJsonBuffer nb2 = new NamedJsonBuffer("foo", JsonBuffer.From("123"));
+            var nb1 = new NamedJsonBuffer("foo", JsonBuffer.From("bar"));
+            var nb2 = new NamedJsonBuffer("foo", JsonBuffer.From("123"));
             Assert.AreNotEqual(nb1, nb2);
         }
 
@@ -114,7 +114,7 @@ namespace Jayrock.Json
         [Test]
         public void ToObject()
         {
-            JsonBuffer obj = NamedJsonBuffer.ToObject(
+            var obj = NamedJsonBuffer.ToObject(
                 new NamedJsonBuffer("foo", JsonBuffer.From("bar")),
                 new NamedJsonBuffer("qux", JsonBuffer.From("quux")));
             Assert.AreEqual(6, obj.Length);

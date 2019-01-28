@@ -24,7 +24,7 @@ namespace Jayrock.Json
 
         static StockJsonBuffers()
         {
-            JsonBufferWriter writer = new JsonBufferWriter(2);
+            var writer = new JsonBufferWriter(2);
             writer.WriteStartObject();
             writer.WriteEndObject();
             EmptyObject = writer.GetBuffer();

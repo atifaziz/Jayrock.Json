@@ -31,15 +31,15 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void OutputTypeInitialization()
         {
-            TestImporter importer = new TestImporter();
+            var importer = new TestImporter();
             Assert.AreSame(typeof(object), importer.OutputType);
         }
 
         [ Test ]
         public void NullHandling()
         {
-            JsonReader reader = CreateReader("null");
-            TestImporter importer = new TestImporter();
+            var reader = CreateReader("null");
+            var importer = new TestImporter();
             Assert.IsNull(importer.Import(new ImportContext(), reader));
             Assert.IsTrue(reader.EOF);
         }
@@ -77,8 +77,8 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void NumberCallsImportNumber()
         {
-            JsonReader reader = CreateReader("42");
-            ImporterMock importer = new ImporterMock();
+            var reader = CreateReader("42");
+            var importer = new ImporterMock();
             const int result = 42;
             importer.Number = result;
             Assert.AreEqual(result, importer.Import(new ImportContext(), reader));
@@ -87,8 +87,8 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void StringCallsImportString()
         {
-            JsonReader reader = CreateReader("''");
-            ImporterMock importer = new ImporterMock();
+            var reader = CreateReader("''");
+            var importer = new ImporterMock();
             const string result = "hello";
             importer.String = result;
             Assert.AreEqual(result, importer.Import(new ImportContext(), reader));
@@ -97,8 +97,8 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void BooleanCallsImportBoolean()
         {
-            JsonReader reader = CreateReader("true");
-            ImporterMock importer = new ImporterMock();
+            var reader = CreateReader("true");
+            var importer = new ImporterMock();
             importer.Boolean = true;
             Assert.AreEqual(true, importer.Import(new ImportContext(), reader));
         }
@@ -106,9 +106,9 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void ArrayCallsImportArray()
         {
-            JsonReader reader = CreateReader("[]");
-            ImporterMock importer = new ImporterMock();
-            object result = new object();
+            var reader = CreateReader("[]");
+            var importer = new ImporterMock();
+            var result = new object();
             importer.Array = result;
             Assert.AreEqual(result, importer.Import(new ImportContext(), reader));
         }
@@ -116,9 +116,9 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void ObjectCallsImportObject()
         {
-            JsonReader reader = CreateReader("{}");
-            ImporterMock importer = new ImporterMock();
-            object result = new object();
+            var reader = CreateReader("{}");
+            var importer = new ImporterMock();
+            var result = new object();
             importer.Object = result;
             Assert.AreEqual(result, importer.Import(new ImportContext(), reader));
         }

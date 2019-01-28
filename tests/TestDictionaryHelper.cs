@@ -32,7 +32,7 @@ namespace Jayrock
         [ Test ]
         public void NullDictionaryYieldsZeroEntries()
         {
-            DictionaryEntry[] entries = DictionaryHelper.GetEntries(null);
+            var entries = DictionaryHelper.GetEntries(null);
             Assert.IsNotNull(entries);
             Assert.AreEqual(0, entries.Length);
         }
@@ -40,31 +40,31 @@ namespace Jayrock
         [ Test ]
         public void EmptyDictionaryYieldsZeroEntries()
         {
-            DictionaryEntry[] entries = DictionaryHelper.GetEntries(new Hashtable());
+            var entries = DictionaryHelper.GetEntries(new Hashtable());
             Assert.AreEqual(0, entries.Length);
         }
 
         [ Test ]
         public void NonEmptyDictionary()
         {
-            Hashtable map = new Hashtable();
+            var map = new Hashtable();
 
             map.Add(1, "one");
             map.Add(2, "two");
             map.Add(3, "three");
 
-            ArrayList entryList = new ArrayList(DictionaryHelper.GetEntries(map));
+            var entryList = new ArrayList(DictionaryHelper.GetEntries(map));
             Assert.AreEqual(3, entryList.Count);
 
-            DictionaryEntry first = Shift(entryList);
+            var first = Shift(entryList);
             Assert.AreEqual(first.Value, map[first.Key]);
             map.Remove(first.Key);
 
-            DictionaryEntry second = Shift(entryList);
+            var second = Shift(entryList);
             Assert.AreEqual(second.Value, map[second.Key]);
             map.Remove(second.Key);
 
-            DictionaryEntry third = Shift(entryList);
+            var third = Shift(entryList);
             Assert.AreEqual(third.Value, map[third.Key]);
             map.Remove(third.Key);
 
@@ -75,7 +75,7 @@ namespace Jayrock
         [ Test ]
         public void DisposableDictionaryEnumerator()
         {
-            MockDictionary dict = new MockDictionary();
+            var dict = new MockDictionary();
             dict.Add(1, "one");
             Assert.IsFalse(dict.EnumeratorDisposed);
             DictionaryHelper.GetEntries(dict);
@@ -84,7 +84,7 @@ namespace Jayrock
 
         private DictionaryEntry Shift(IList entryList)
         {
-            DictionaryEntry entry = (DictionaryEntry) entryList[0];
+            var entry = (DictionaryEntry) entryList[0];
             entryList.RemoveAt(0);
             return entry;
         }

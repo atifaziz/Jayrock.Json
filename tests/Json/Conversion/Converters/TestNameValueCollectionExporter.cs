@@ -37,7 +37,7 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void OneNameValue()
         {
-            NameValueCollection collection = new NameValueCollection();
+            var collection = new NameValueCollection();
             collection.Add("foo", "bar");
             Assert.AreEqual("{\"foo\":\"bar\"}", Export(collection));
         }
@@ -45,7 +45,7 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void EmptyName()
         {
-            NameValueCollection collection = new NameValueCollection();
+            var collection = new NameValueCollection();
             collection.Add("", "bar");
             Assert.AreEqual("{\"\":\"bar\"}", Export(collection));
         }
@@ -53,7 +53,7 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void EmptyValue()
         {
-            NameValueCollection collection = new NameValueCollection();
+            var collection = new NameValueCollection();
             collection.Add("foo", "");
             Assert.AreEqual("{\"foo\":\"\"}", Export(collection));
         }
@@ -61,7 +61,7 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void NullValue()
         {
-            NameValueCollection collection = new NameValueCollection();
+            var collection = new NameValueCollection();
             collection.Add("foo", null);
             Assert.AreEqual("{\"foo\":null}", Export(collection));
         }
@@ -69,7 +69,7 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void ValuesArray()
         {
-            NameValueCollection collection = new NameValueCollection();
+            var collection = new NameValueCollection();
             collection.Add("foo", "bar1");
             collection.Add("foo", "bar2");
             collection.Add("foo", "bar3");
@@ -79,7 +79,7 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void ManyEntries()
         {
-            NameValueCollection collection = new NameValueCollection();
+            var collection = new NameValueCollection();
             collection.Add("foo1", "bar1");
             collection.Add("foo2", "bar2");
             collection.Add("foo3", "bar3");
@@ -88,7 +88,7 @@ namespace Jayrock.Json.Conversion.Converters
 
         private static string Export(object o)
         {
-            JsonTextWriter writer = new JsonTextWriter();
+            var writer = new JsonTextWriter();
             JsonConvert.Export(o, writer);
             return writer.ToString();
         }

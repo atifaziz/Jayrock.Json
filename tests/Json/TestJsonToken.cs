@@ -37,7 +37,7 @@ namespace Jayrock.Json
         [ Test ]
         public void StringToken()
         {
-            JsonToken token = JsonToken.String("hello");
+            var token = JsonToken.String("hello");
             Assert.AreEqual(JsonTokenClass.String, token.Class);
             Assert.AreEqual("hello", token.Text);
         }
@@ -51,7 +51,7 @@ namespace Jayrock.Json
         [ Test ]
         public void NumberToken()
         {
-            JsonToken token = JsonToken.Number("123");
+            var token = JsonToken.Number("123");
             Assert.AreEqual(JsonTokenClass.Number, token.Class);
             Assert.AreEqual("123", token.Text);
         }
@@ -71,7 +71,7 @@ namespace Jayrock.Json
         [ Test ]
         public void BooleanToken()
         {
-            JsonToken token = JsonToken.Boolean(true);
+            var token = JsonToken.Boolean(true);
             Assert.AreEqual(JsonTokenClass.Boolean, token.Class);
             Assert.AreEqual("true", token.Text);
 
@@ -90,7 +90,7 @@ namespace Jayrock.Json
         [ Test ]
         public void MemberToken()
         {
-            JsonToken token = JsonToken.Member("test");
+            var token = JsonToken.Member("test");
             Assert.AreEqual(JsonTokenClass.Member, token.Class);
             Assert.AreEqual("test", token.Text);
         }

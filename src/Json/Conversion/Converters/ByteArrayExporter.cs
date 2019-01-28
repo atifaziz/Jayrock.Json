@@ -35,7 +35,7 @@ namespace Jayrock.Json.Conversion.Converters
             Debug.Assert(value != null);
             Debug.Assert(writer != null);
 
-            byte[] bytes = (byte[]) value;
+            var bytes = (byte[]) value;
             writer.WriteString(Convert.ToBase64String(bytes));
         }
     }

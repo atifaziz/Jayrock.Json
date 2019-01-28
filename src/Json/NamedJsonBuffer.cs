@@ -76,9 +76,9 @@ namespace Jayrock.Json
             if (members.Length == 0)
                 return StockJsonBuffers.EmptyObject;
 
-            JsonBufferWriter writer = new JsonBufferWriter();
+            var writer = new JsonBufferWriter();
             writer.WriteStartObject();
-            foreach (NamedJsonBuffer member in members)
+            foreach (var member in members)
             {
                 writer.WriteMember(member.Name);
                 writer.WriteFromReader(member.Buffer.CreateReader());

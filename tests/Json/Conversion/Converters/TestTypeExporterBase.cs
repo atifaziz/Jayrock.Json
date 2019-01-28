@@ -50,7 +50,7 @@ namespace Jayrock.Json.Conversion.Converters
 
         private JsonReader Export(object value)
         {
-            JsonRecorder writer = new JsonRecorder();
+            var writer = new JsonRecorder();
             _exporter.Export(new ExportContext(), value, writer);
             return writer.CreatePlayer();
         }

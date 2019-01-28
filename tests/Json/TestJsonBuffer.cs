@@ -86,15 +86,15 @@ namespace Jayrock.Json
         [Test]
         public void WritingReading()
         {
-            JsonBufferWriter writer = new JsonBufferWriter();
+            var writer = new JsonBufferWriter();
             writer.WriteStartArray();
             writer.WriteString("foo");
             writer.WriteString("bar");
             writer.WriteString("baz");
             writer.WriteEndArray();
-            JsonBuffer buffer = writer.GetBuffer();
+            var buffer = writer.GetBuffer();
             Assert.AreEqual(5, buffer.Length);
-            JsonBufferReader reader = buffer.CreateReader();
+            var reader = buffer.CreateReader();
             reader.ReadToken(JsonTokenClass.Array);
             Assert.AreEqual("foo", reader.ReadString());
             Assert.AreEqual("bar", reader.ReadString());
@@ -106,7 +106,7 @@ namespace Jayrock.Json
         [Test]
         public void ScalarValueReading()
         {
-            JsonBufferWriter writer = new JsonBufferWriter();
+            var writer = new JsonBufferWriter();
             writer.WriteString("foobar");
             AssertBufferedValueScalarOrNull(JsonToken.String("foobar"), writer);
         }
@@ -114,7 +114,7 @@ namespace Jayrock.Json
         [Test]
         public void NullValueReading()
         {
-            JsonBufferWriter writer = new JsonBufferWriter();
+            var writer = new JsonBufferWriter();
             writer.WriteNull();
             AssertBufferedValueScalarOrNull(JsonToken.Null(), writer);
         }
@@ -122,9 +122,9 @@ namespace Jayrock.Json
         [Test]
         public void BufferValueOnArrayEnd()
         {
-            JsonBufferWriter writer = new JsonBufferWriter();
+            var writer = new JsonBufferWriter();
             writer.WriteFromReader(JsonText.CreateReader("[[],foo]"));
-            JsonBufferReader reader = writer.GetBuffer().CreateReader();
+            var reader = writer.GetBuffer().CreateReader();
             reader.Read(); // outer array start
             reader.Read(); // inner array start
             reader.Read(); // inner array end
@@ -134,9 +134,9 @@ namespace Jayrock.Json
         [Test]
         public void BufferValueOnObjectEnd()
         {
-            JsonBufferWriter writer = new JsonBufferWriter();
+            var writer = new JsonBufferWriter();
             writer.WriteFromReader(JsonText.CreateReader("[{},foo]"));
-            JsonBufferReader reader = writer.GetBuffer().CreateReader();
+            var reader = writer.GetBuffer().CreateReader();
             reader.Read(); // outer object start
             reader.Read(); // inner object start
             reader.Read(); // inner object end
@@ -146,9 +146,9 @@ namespace Jayrock.Json
         [Test]
         public void BufferValueOnMember()
         {
-            JsonBufferWriter writer = new JsonBufferWriter();
+            var writer = new JsonBufferWriter();
             writer.WriteFromReader(JsonText.CreateReader("{foo:bar}"));
-            JsonBufferReader reader = writer.GetBuffer().CreateReader();
+            var reader = writer.GetBuffer().CreateReader();
             reader.Read(); // object start
             reader.Read(); // foo
             Assert.AreEqual(JsonToken.String("bar"), reader.BufferValue().CreateReader().Token);
@@ -157,9 +157,9 @@ namespace Jayrock.Json
         [Test]
         public void BufferValueOnEOF()
         {
-            JsonBufferWriter writer = new JsonBufferWriter();
+            var writer = new JsonBufferWriter();
             writer.WriteFromReader(JsonText.CreateReader("[]"));
-            JsonBufferReader reader = writer.GetBuffer().CreateReader();
+            var reader = writer.GetBuffer().CreateReader();
             reader.Read(); // array start
             reader.Read(); // array end
             Assert.IsTrue(reader.BufferValue().IsEmpty);
@@ -168,9 +168,9 @@ namespace Jayrock.Json
         [Test]
         public void BufferValueOnBOF()
         {
-            JsonBufferWriter writer = new JsonBufferWriter();
+            var writer = new JsonBufferWriter();
             writer.WriteFromReader(JsonText.CreateReader("[]"));
-            JsonBuffer buffer = writer.GetBuffer().CreateReader().BufferValue();
+            var buffer = writer.GetBuffer().CreateReader().BufferValue();
             Assert.AreEqual(2, buffer.Length);
             Assert.AreEqual(JsonToken.Array(), buffer[0]);
             Assert.AreEqual(JsonToken.EndArray(), buffer[1]);
@@ -179,10 +179,10 @@ namespace Jayrock.Json
         [Test]
         public void BufferScalarValue()
         {
-            JsonBufferWriter writer = new JsonBufferWriter();
+            var writer = new JsonBufferWriter();
             writer.WriteString("foobar");
-            JsonBuffer buffer = writer.GetBuffer();
-            JsonBufferReader reader = buffer.CreateReader();
+            var buffer = writer.GetBuffer();
+            var reader = buffer.CreateReader();
             reader.Read(); // array start
             reader.Read(); // string
             Assert.AreEqual("foobar", reader.BufferValue().CreateReader().BufferValue().CreateReader().ReadString());
@@ -197,8 +197,8 @@ namespace Jayrock.Json
         [Test]
         public void GetArray()
         {
-            JsonBuffer[] values = new JsonBuffer[3];
-            int count = JsonBuffer.From("[1,2,3]").GetArray(values);
+            var values = new JsonBuffer[3];
+            var count = JsonBuffer.From("[1,2,3]").GetArray(values);
             Assert.AreEqual(3, count);
             Assert.AreEqual(1, (int)values[0].GetNumber());
             Assert.AreEqual(2, (int)values[1].GetNumber());
@@ -208,8 +208,8 @@ namespace Jayrock.Json
         [Test]
         public void GetArrayShort()
         {
-            JsonBuffer[] values = new JsonBuffer[2];
-            int count = JsonBuffer.From("[1,2,3]").GetArray(values);
+            var values = new JsonBuffer[2];
+            var count = JsonBuffer.From("[1,2,3]").GetArray(values);
             Assert.AreEqual(~2, count);
             Assert.AreEqual(1, (int)values[0].GetNumber());
             Assert.AreEqual(2, (int)values[1].GetNumber());
@@ -218,8 +218,8 @@ namespace Jayrock.Json
         [Test]
         public void GetArrayLong()
         {
-            JsonBuffer[] values = new JsonBuffer[4];
-            int count = JsonBuffer.From("[1,2,3]").GetArray(values);
+            var values = new JsonBuffer[4];
+            var count = JsonBuffer.From("[1,2,3]").GetArray(values);
             Assert.AreEqual(3, count);
             Assert.AreEqual(1, (int)values[0].GetNumber());
             Assert.AreEqual(2, (int)values[1].GetNumber());
@@ -242,8 +242,8 @@ namespace Jayrock.Json
         [Test]
         public void GetMembersIntoArray()
         {
-            NamedJsonBuffer[] members = new NamedJsonBuffer[3];
-            int count = JsonBuffer.From("{a:1,b:2,c:3}").GetMembers(members);
+            var members = new NamedJsonBuffer[3];
+            var count = JsonBuffer.From("{a:1,b:2,c:3}").GetMembers(members);
             Assert.AreEqual(3, count);
             Assert.AreEqual("a", members[0].Name);
             Assert.AreEqual(1, (int) members[0].Buffer.GetNumber());
@@ -256,8 +256,8 @@ namespace Jayrock.Json
         [Test]
         public void GetMembersIntoShortArray()
         {
-            NamedJsonBuffer[] members = new NamedJsonBuffer[2];
-            int count = JsonBuffer.From("{a:1,b:2,c:3}").GetMembers(members);
+            var members = new NamedJsonBuffer[2];
+            var count = JsonBuffer.From("{a:1,b:2,c:3}").GetMembers(members);
             Assert.AreEqual(~2, count);
             Assert.AreEqual("a", members[0].Name);
             Assert.AreEqual(1, (int) members[0].Buffer.GetNumber());
@@ -268,8 +268,8 @@ namespace Jayrock.Json
         [Test]
         public void GetMembersIntoLongArray()
         {
-            NamedJsonBuffer[] members = new NamedJsonBuffer[4];
-            int count = JsonBuffer.From("{a:1,b:2,c:3}").GetMembers(members);
+            var members = new NamedJsonBuffer[4];
+            var count = JsonBuffer.From("{a:1,b:2,c:3}").GetMembers(members);
             Assert.AreEqual(3, count);
             Assert.AreEqual("a", members[0].Name);
             Assert.AreEqual(1, (int) members[0].Buffer.GetNumber());
@@ -289,7 +289,7 @@ namespace Jayrock.Json
         [Test]
         public void GetMembersArray()
         {
-            NamedJsonBuffer[] members = JsonBuffer.From("{a:1,b:2,c:3}").GetMembersArray();
+            var members = JsonBuffer.From("{a:1,b:2,c:3}").GetMembersArray();
             Assert.AreEqual(3, members.Length);
             Assert.AreEqual("a", members[0].Name);
             Assert.AreEqual(1, (int) members[0].Buffer.GetNumber());
@@ -350,7 +350,7 @@ namespace Jayrock.Json
         [Test]
         public void StringRepresentation()
         {
-            string str = JsonBuffer.From("[42,foobar,null,true,false,{x:123,y:456}]").ToString();
+            var str = JsonBuffer.From("[42,foobar,null,true,false,{x:123,y:456}]").ToString();
             Assert.AreEqual("[42,\"foobar\",null,true,false,{\"x\":123,\"y\":456}]", str);
         }
 
@@ -394,9 +394,9 @@ namespace Jayrock.Json
         public void Issue26()
         {
             // 1. Create JsonBuffer from array with objects
-            JsonBuffer buffer = JsonBuffer.From(@"[{},{a:{},b:{}}]");
+            var buffer = JsonBuffer.From(@"[{},{a:{},b:{}}]");
             // 2. Create reader from the buffer...
-            JsonBufferReader reader = buffer.CreateReader();
+            var reader = buffer.CreateReader();
             //    ...read in the first object
             while (reader.TokenClass != JsonTokenClass.Object)
                 reader.Read();
@@ -404,35 +404,35 @@ namespace Jayrock.Json
             reader.Read(); // Read EndObject token
 
             //    ...create a subbuffer to buffer the next object
-            JsonBuffer subBuffer = JsonBuffer.From(reader);
+            var subBuffer = JsonBuffer.From(reader);
             //    ...create reader from the subbuffer
-            JsonBufferReader reader2 = subBuffer.CreateReader();
+            var reader2 = subBuffer.CreateReader();
 
             // 3. Call reader.BufferValue() this should break
-            JsonBuffer buffer2 = reader2.BufferValue();
+            var buffer2 = reader2.BufferValue();
             Assert.IsTrue(buffer2.IsObject);
         }
 
         [Test(Description = @"http://code.google.com/p/jayrock/issues/detail?id=57")]
         public void Issue57()
         {
-            int maxDepth = new JsonBufferWriter().MaxDepth + 1;
-            string json = new string('[', maxDepth) + new string(']', maxDepth);
+            var maxDepth = new JsonBufferWriter().MaxDepth + 1;
+            var json = new string('[', maxDepth) + new string(']', maxDepth);
             JsonBuffer.From(json);
         }
 
         private static void AssertBufferedValueScalarOrNull(JsonToken expected, JsonBufferWriter writer)
         {
-            JsonBuffer buffer = writer.GetBuffer();
-            JsonBufferReader reader = buffer.CreateReader();
+            var buffer = writer.GetBuffer();
+            var reader = buffer.CreateReader();
             reader.Read();
             reader.Read();
-            JsonBuffer value = reader.BufferValue();
+            var value = reader.BufferValue();
             if (expected.Class == JsonTokenClass.Null)
                 Assert.IsTrue(value.IsNull);
             else
                 Assert.IsTrue(value.IsScalar);
-            JsonBufferReader vr = value.CreateReader();
+            var vr = value.CreateReader();
             Assert.AreEqual(1, vr.Depth);
             Assert.AreEqual(expected, vr.Token);
             vr.Read();

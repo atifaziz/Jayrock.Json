@@ -34,8 +34,8 @@ namespace Jayrock.Collections
         [ Test ]
         public void AddValue()
         {
-            NamedValueCollection values = new NamedValueCollection();
-            NamedValue value = new NamedValue("Foo", new object());
+            var values = new NamedValueCollection();
+            var value = new NamedValue("Foo", new object());
             values.Add(value);
             Assert.AreEqual(1, values.Count);
             Assert.AreSame(value, values[value.Name]);
@@ -44,16 +44,16 @@ namespace Jayrock.Collections
         [ Test, ExpectedException(typeof(ArgumentException)) ]
         public void CannotAddWithNullKey()
         {
-            NamedValueCollection values = new NamedValueCollection();
+            var values = new NamedValueCollection();
             values.Add(new NamedValue(null, new object()));
         }
 
         [ Test ]
         public void Put()
         {
-            NamedValueCollection values = new NamedValueCollection();
+            var values = new NamedValueCollection();
             values.Put(new NamedValue("Foo", new object()));
-            NamedValue value = new NamedValue("Foo", new object());
+            var value = new NamedValue("Foo", new object());
             values.Put(value);
             Assert.AreEqual(1, values.Count);
             Assert.AreSame(value, values[value.Name]);
@@ -62,8 +62,8 @@ namespace Jayrock.Collections
         [ Test ]
         public void ValueContainment()
         {
-            NamedValueCollection values = new NamedValueCollection();
-            NamedValue value = new NamedValue("Foo", new object());
+            var values = new NamedValueCollection();
+            var value = new NamedValue("Foo", new object());
             Assert.IsFalse(values.Contains(value.Name));
             values.Add(value);
             Assert.IsTrue(values.Contains(value.Name));
@@ -72,15 +72,15 @@ namespace Jayrock.Collections
         [ Test, ExpectedException(typeof(ArgumentNullException)) ]
         public void CannotUseNullKeyForContainmentTest()
         {
-            NamedValueCollection values = new NamedValueCollection();
+            var values = new NamedValueCollection();
             values.Contains(null);
         }
 
         [ Test ]
         public void RemoveValue()
         {
-            NamedValueCollection values = new NamedValueCollection();
-            NamedValue value = new NamedValue("Foo", new object());
+            var values = new NamedValueCollection();
+            var value = new NamedValue("Foo", new object());
             values.Add(value);
             Assert.AreEqual(1, values.Count);
             Assert.IsTrue(values.Remove(value.Name));
@@ -91,15 +91,15 @@ namespace Jayrock.Collections
         [ Test, ExpectedException(typeof(ArgumentNullException)) ]
         public void CannotRemoveNullKey()
         {
-            NamedValueCollection values = new NamedValueCollection();
+            var values = new NamedValueCollection();
             values.Remove(null);
         }
 
         [ Test ]
         public void RemoveByIndex()
         {
-            NamedValueCollection values = new NamedValueCollection();
-            NamedValue value = new NamedValue("Foo", new object());
+            var values = new NamedValueCollection();
+            var value = new NamedValue("Foo", new object());
             values.Add(value);
             Assert.IsTrue(values.Contains(value.Name));
             Assert.AreEqual(1, values.Count);
@@ -111,12 +111,12 @@ namespace Jayrock.Collections
         [ Test ]
         public void ResetValueByIndex()
         {
-            NamedValueCollection values = new NamedValueCollection();
-            NamedValue value = new NamedValue("Foo", new object());
+            var values = new NamedValueCollection();
+            var value = new NamedValue("Foo", new object());
             values.Add(value);
             Assert.IsTrue(values.Contains(value.Name));
             Assert.AreEqual(1, values.Count);
-            NamedValue newValue = new NamedValue("Bar", new object());
+            var newValue = new NamedValue("Bar", new object());
             ((IList) values)[0] = newValue;
             Assert.AreEqual(1, values.Count);
             Assert.IsFalse(values.Contains(value.Name));
@@ -126,8 +126,8 @@ namespace Jayrock.Collections
         [ Test ]
         public void Clear()
         {
-            NamedValueCollection values = new NamedValueCollection();
-            NamedValue value = new NamedValue("Foo", new object());
+            var values = new NamedValueCollection();
+            var value = new NamedValue("Foo", new object());
             values.Add(value);
             Assert.AreEqual(1, values.Count);
             Assert.IsTrue(values.Contains(value.Name));
@@ -139,22 +139,22 @@ namespace Jayrock.Collections
         [ Test ]
         public void GetKeys()
         {
-            NamedValueCollection values = new NamedValueCollection();
-            string[] names = new string[] { "one", "two", "three" };
-            foreach (string name in names)
+            var values = new NamedValueCollection();
+            var names = new string[] { "one", "two", "three" };
+            foreach (var name in names)
                 values.Add(new NamedValue(name, new object()));
             Assert.AreEqual(names.Length, values.Count);
-            string[] keys = values.NamesByIndex.ToArray();
+            var keys = values.NamesByIndex.ToArray();
             Assert.AreEqual(names, keys);
         }
 
         [ Test ]
         public void Enumeration()
         {
-            NamedValueCollection values = new NamedValueCollection();
-            NamedValue value1 = new NamedValue("one", new object()); values.Add(value1);
-            NamedValue value2 = new NamedValue("two", new object()); values.Add(value2);
-            NamedValue value3 = new NamedValue("three", new object()); values.Add(value3);
+            var values = new NamedValueCollection();
+            var value1 = new NamedValue("one", new object()); values.Add(value1);
+            var value2 = new NamedValue("two", new object()); values.Add(value2);
+            var value3 = new NamedValue("three", new object()); values.Add(value3);
             Assert.AreEqual(3, values.Count);
             IEnumerator e = values.GetEnumerator();
             Assert.IsTrue(e.MoveNext());
@@ -169,7 +169,7 @@ namespace Jayrock.Collections
         [ Test ]
         public void RemoveNonExistingKey()
         {
-            NamedValueCollection values = new NamedValueCollection();
+            var values = new NamedValueCollection();
             Assert.IsFalse(values.Remove("something"));
         }
 

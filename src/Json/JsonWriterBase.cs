@@ -292,7 +292,7 @@ namespace Jayrock.Json
                 }
                 else if (_count == _states.Length)
                 {
-                    WriterState[] items = new WriterState[_states.Length * 2];
+                    var items = new WriterState[_states.Length * 2];
                     _states.CopyTo(items, 0);
                     _states = items;
                 }
@@ -305,7 +305,7 @@ namespace Jayrock.Json
                 if (_count == 0)
                     throw new InvalidOperationException();
 
-                WriterState state = _states[--_count];
+                var state = _states[--_count];
 
                 if (_count == 0)
                     _states = null;

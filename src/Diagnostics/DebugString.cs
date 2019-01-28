@@ -43,9 +43,9 @@ namespace Jayrock.Diagnostics
             if (s == null)
                 return string.Empty;
 
-            StringBuilder sb = new StringBuilder(width);
+            var sb = new StringBuilder(width);
 
-            for (int i = 0; i < Math.Min(width, s.Length); i++)
+            for (var i = 0; i < Math.Min(width, s.Length); i++)
             {
                 sb.Append(!Char.IsControl(s, i) ? s[i] : ControlReplacement);
             }

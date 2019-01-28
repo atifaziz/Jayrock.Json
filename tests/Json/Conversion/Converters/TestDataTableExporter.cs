@@ -44,10 +44,10 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void TableExportedViaDataView()
         {
-            DataTable table = new DataTable();
+            var table = new DataTable();
 
-            ExportContext context = new ExportContext();
-            TestDataViewExporter exporter = new TestDataViewExporter();
+            var context = new ExportContext();
+            var exporter = new TestDataViewExporter();
             context.Register(exporter);
             context.Export(table, new JsonRecorder());
 

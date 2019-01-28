@@ -78,12 +78,12 @@ namespace Jayrock.Json.Conversion.Converters
 
         private static object Import(bool hasValue, string input)
         {
-            JsonReader reader = JsonText.CreateReader(input);
-            ImportContext context = JsonConvert.CreateImportContext();
-            ThingImporter thingImporter = new ThingImporter();
+            var reader = JsonText.CreateReader(input);
+            var context = JsonConvert.CreateImportContext();
+            var thingImporter = new ThingImporter();
             context.Register(thingImporter);
-            NullableImporter importer = new NullableImporter(typeof(Thing?));
-            object thing = importer.Import(context, reader);
+            var importer = new NullableImporter(typeof(Thing?));
+            var thing = importer.Import(context, reader);
             Assert.AreEqual(hasValue, thingImporter.ImportCalled);
             if (hasValue)
                 Assert.IsInstanceOf<Thing>(thing);

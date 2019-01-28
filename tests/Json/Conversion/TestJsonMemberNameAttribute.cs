@@ -38,7 +38,7 @@ namespace Jayrock.Json.Conversion
         [ Test ]
         public void DefaultInitializationYieldsEmptyName()
         {
-            JsonMemberNameAttribute attribute = new JsonMemberNameAttribute();
+            var attribute = new JsonMemberNameAttribute();
             Assert.IsNotNull(attribute.Name);
             Assert.AreEqual(string.Empty, attribute.Name);
         }
@@ -46,7 +46,7 @@ namespace Jayrock.Json.Conversion
         [ Test ]
         public void InitializingNullNameYieldsEmptyName()
         {
-            JsonMemberNameAttribute attribute = new JsonMemberNameAttribute(null);
+            var attribute = new JsonMemberNameAttribute(null);
             Assert.IsNotNull(attribute.Name);
             Assert.AreEqual(string.Empty, attribute.Name);
         }
@@ -54,14 +54,14 @@ namespace Jayrock.Json.Conversion
         [ Test ]
         public void InitializeName()
         {
-            JsonMemberNameAttribute attribute = new JsonMemberNameAttribute("name");
+            var attribute = new JsonMemberNameAttribute("name");
             Assert.AreEqual("name", attribute.Name);
         }
 
         [ Test ]
         public void SetName()
         {
-            JsonMemberNameAttribute attribute = new JsonMemberNameAttribute();
+            var attribute = new JsonMemberNameAttribute();
             Assert.AreEqual(string.Empty, attribute.Name);
             attribute.Name = "foo";
             Assert.AreEqual("foo", attribute.Name);
@@ -70,7 +70,7 @@ namespace Jayrock.Json.Conversion
         [ Test ]
         public void PropertyDescriptorNameCustomization()
         {
-            TestPropertyDescriptor property = CreateTestProperty("foo");
+            var property = CreateTestProperty("foo");
             IPropertyDescriptorCustomization customization = new JsonMemberNameAttribute("bar");
             customization.Apply(property);
             Assert.AreEqual("bar", property.CustomizedName);
@@ -79,7 +79,7 @@ namespace Jayrock.Json.Conversion
         [ Test ]
         public void PropertyDescriptorNameCustomizationSkippedOnEmptyName()
         {
-            TestPropertyDescriptor property = CreateTestProperty("foo");
+            var property = CreateTestProperty("foo");
             IPropertyDescriptorCustomization customization = new JsonMemberNameAttribute();
             customization.Apply(property);
             Assert.IsNull(property.CustomizedName);
@@ -95,7 +95,7 @@ namespace Jayrock.Json.Conversion
 
         private static TestPropertyDescriptor CreateTestProperty(string baseName)
         {
-            TestPropertyDescriptor property = new TestPropertyDescriptor(baseName);
+            var property = new TestPropertyDescriptor(baseName);
             Assert.AreEqual(baseName, property.Name);
             Assert.IsNull(property.CustomizedName);
             return property;

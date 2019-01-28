@@ -55,7 +55,7 @@ namespace Jayrock.Json.Conversion
         {
             try
             {
-                ExportContextFactoryHandler factory = new ExportContextFactoryHandler(CreateExportContext);
+                var factory = new ExportContextFactoryHandler(CreateExportContext);
                 JsonConvert.CurrentExportContextFactory = factory;
                 Assert.AreSame(factory, JsonConvert.CurrentExportContextFactory);
                 JsonConvert.CreateExportContext();
@@ -79,7 +79,7 @@ namespace Jayrock.Json.Conversion
         {
             try
             {
-                ImportContextFactoryHandler factory = new ImportContextFactoryHandler(CreateImportContext);
+                var factory = new ImportContextFactoryHandler(CreateImportContext);
                 JsonConvert.CurrentImportContextFactory = factory;
                 Assert.AreSame(factory, JsonConvert.CurrentImportContextFactory);
                 JsonConvert.CreateImportContext();

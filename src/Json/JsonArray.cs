@@ -47,7 +47,7 @@ namespace Jayrock.Json
 
         public JsonArray(IEnumerable collection)
         {
-            foreach (object item in collection)
+            foreach (var item in collection)
                 InnerList.Add(item);
         }
 
@@ -99,7 +99,7 @@ namespace Jayrock.Json
 
         public virtual object GetValue(int index, object defaultValue)
         {
-            object value = this[index];
+            var value = this[index];
             return value != null ? value : defaultValue;
         }
 
@@ -110,7 +110,7 @@ namespace Jayrock.Json
 
         public virtual bool GetBoolean(int index, bool defaultValue)
         {
-            object value = GetValue(index);
+            var value = GetValue(index);
             if (value == null) return defaultValue;
             return Convert.ToBoolean(value, CultureInfo.InvariantCulture);
         }
@@ -122,7 +122,7 @@ namespace Jayrock.Json
 
         public virtual double GetDouble(int index, float defaultValue)
         {
-            object value = GetValue(index);
+            var value = GetValue(index);
             if (value == null) return defaultValue;
             return Convert.ToDouble(value, CultureInfo.InvariantCulture);
         }
@@ -134,7 +134,7 @@ namespace Jayrock.Json
 
         public virtual int GetInt32(int index, int defaultValue)
         {
-            object value = GetValue(index);
+            var value = GetValue(index);
             if (value == null) return defaultValue;
             return Convert.ToInt32(value, CultureInfo.InvariantCulture);
         }
@@ -146,7 +146,7 @@ namespace Jayrock.Json
 
         public virtual string GetString(int index, string defaultValue)
         {
-            object value = GetValue(index);
+            var value = GetValue(index);
             if (value == null) return defaultValue;
             return value.ToString();
         }
@@ -171,7 +171,7 @@ namespace Jayrock.Json
 
         public override string ToString()
         {
-            StringWriter writer = new StringWriter();
+            var writer = new StringWriter();
             Export(JsonText.CreateWriter(writer));
             return writer.ToString();
         }
@@ -204,7 +204,7 @@ namespace Jayrock.Json
 
             writer.WriteStartArray();
 
-            foreach (object value in this)
+            foreach (var value in this)
                 context.Export(value, writer);
 
             writer.WriteEndArray();
@@ -235,7 +235,7 @@ namespace Jayrock.Json
             // will remain largely untouched.
             //
 
-            ArrayList list = new ArrayList();
+            var list = new ArrayList();
 
             reader.ReadToken(JsonTokenClass.Array);
 
@@ -311,7 +311,7 @@ namespace Jayrock.Json
         {
             if (values != null)
             {
-                foreach (object value in values)
+                foreach (var value in values)
                     Push(value);
             }
 
@@ -330,7 +330,7 @@ namespace Jayrock.Json
             if (Count == 0)
                 return null;
 
-            object lastValue = InnerList[Count - 1];
+            var lastValue = InnerList[Count - 1];
             RemoveAt(Count - 1);
             return lastValue;
         }
@@ -342,17 +342,17 @@ namespace Jayrock.Json
 
         public virtual JsonArray Concat(params object[] values)
         {
-            JsonArray newArray = new JsonArray(this);
+            var newArray = new JsonArray(this);
 
             if (values != null)
             {
-                foreach (object value in values)
+                foreach (var value in values)
                 {
-                    JsonArray arrayValue = value as JsonArray;
+                    var arrayValue = value as JsonArray;
 
                     if (arrayValue != null)
                     {
-                        foreach (object arrayValueValue in arrayValue)
+                        foreach (var arrayValueValue in arrayValue)
                             newArray.Push(arrayValueValue);
                     }
                     else
@@ -374,7 +374,7 @@ namespace Jayrock.Json
             if (Count == 0)
                 return null;
 
-            object firstValue = InnerList[0];
+            var firstValue = InnerList[0];
             RemoveAt(0);
             return firstValue;
         }
@@ -406,7 +406,7 @@ namespace Jayrock.Json
         {
             if (values != null)
             {
-                foreach (object value in values)
+                foreach (var value in values)
                     Unshift(value);
             }
         }
@@ -423,7 +423,7 @@ namespace Jayrock.Json
 
         public new IEnumerator<object> GetEnumerator()
         {
-            foreach (object item in InnerList)
+            foreach (var item in InnerList)
                 yield return item;
         }
 
@@ -439,7 +439,7 @@ namespace Jayrock.Json
 
         bool ICollection<object>.Remove(object item)
         {
-            int index = IndexOf(item);
+            var index = IndexOf(item);
             if (index < 0)
                 return false;
             RemoveAt(index);

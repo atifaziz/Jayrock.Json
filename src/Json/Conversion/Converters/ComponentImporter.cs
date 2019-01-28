@@ -48,18 +48,18 @@ namespace Jayrock.Json.Conversion.Converters
             if (typeDescriptor == null)
                 typeDescriptor = new CustomTypeDescriptor(type);
 
-            int count = 0;
-            PropertyDescriptorCollection properties = typeDescriptor.GetProperties();
-            IObjectMemberImporter[] importers = new IObjectMemberImporter[properties.Count];
+            var count = 0;
+            var properties = typeDescriptor.GetProperties();
+            var importers = new IObjectMemberImporter[properties.Count];
 
-            for (int i = 0; i < properties.Count; i++)
+            for (var i = 0; i < properties.Count; i++)
             {
-                IServiceProvider sp = properties[i] as IServiceProvider;
+                var sp = properties[i] as IServiceProvider;
 
                 if (sp == null)
                     continue;
 
-                IObjectMemberImporter importer = (IObjectMemberImporter) sp.GetService(typeof(IObjectMemberImporter));
+                var importer = (IObjectMemberImporter) sp.GetService(typeof(IObjectMemberImporter));
 
                 if (importer == null)
                     continue;
@@ -85,7 +85,7 @@ namespace Jayrock.Json.Conversion.Converters
 
             if (_constructor != null)
             {
-                ObjectConstructionResult result = _constructor.CreateObject(context, reader);
+                var result = _constructor.CreateObject(context, reader);
                 obj = result.Object;
                 reader = result.TailReader;
                 reader.MoveToContent();
@@ -97,13 +97,13 @@ namespace Jayrock.Json.Conversion.Converters
                 obj = Activator.CreateInstance(OutputType);
             }
 
-            INonObjectMemberImporter otherImporter = obj as INonObjectMemberImporter;
+            var otherImporter = obj as INonObjectMemberImporter;
 
             while (reader.TokenClass != JsonTokenClass.EndObject)
             {
-                string memberName = reader.ReadMember();
+                var memberName = reader.ReadMember();
 
-                PropertyDescriptor property = _properties.Find(memberName, true);
+                var property = _properties.Find(memberName, true);
 
                 //
                 // Skip over the member value and continue with reading if
@@ -126,9 +126,9 @@ namespace Jayrock.Json.Conversion.Converters
 
                 if (_importers != null)
                 {
-                    int index = _properties.IndexOf(property);
+                    var index = _properties.IndexOf(property);
 
-                    IObjectMemberImporter importer = _importers[index];
+                    var importer = _importers[index];
 
                     if (importer != null)
                     {

@@ -81,7 +81,7 @@ namespace Jayrock.Json
             if (reader == null)
                 throw new ArgumentNullException(nameof(reader));
 
-            JsonTokenClass clazz = reader.TokenClass;
+            var clazz = reader.TokenClass;
 
             if (clazz != JsonTokenClass.BOF
                 && clazz != JsonTokenClass.Object
@@ -137,7 +137,7 @@ namespace Jayrock.Json
 
         public JsonReader ReadMember(string name)
         {
-            JsonReader reader = TryReadMember(name);
+            var reader = TryReadMember(name);
 
             if (reader == null)
             {
@@ -167,7 +167,7 @@ namespace Jayrock.Json
             // on its buffered value.
             //
 
-            JsonBuffer value = TryPopBufferedMember(name);
+            var value = TryPopBufferedMember(name);
             if (!value.IsEmpty)
                 return value.CreateReader();
 
@@ -179,7 +179,7 @@ namespace Jayrock.Json
             if (_ended)
                 return null;
 
-            JsonReader reader = BaseReader;
+            var reader = BaseReader;
 
             if (!_started)
             {
@@ -191,7 +191,7 @@ namespace Jayrock.Json
                         name));
                 }
 
-                JsonTokenClass clazz = reader.TokenClass;
+                var clazz = reader.TokenClass;
                 if (clazz != JsonTokenClass.Object &&
                     clazz != JsonTokenClass.Member)
                 {
@@ -221,7 +221,7 @@ namespace Jayrock.Json
                 // should be aligned on the value.
                 //
 
-                string actualName = reader.ReadMember();
+                var actualName = reader.ReadMember();
                 if (string.CompareOrdinal(actualName, name) == 0)
                     return reader;
 
@@ -230,7 +230,7 @@ namespace Jayrock.Json
                 // later when it is sought or as part of the tail.
                 //
 
-                NamedJsonBufferList members = _members;
+                var members = _members;
                 if (members == null)
                     members = _members = new NamedJsonBufferList(4);
                 members.Add(new NamedJsonBuffer(actualName, JsonBuffer.From(reader)));
@@ -249,10 +249,10 @@ namespace Jayrock.Json
         {
             if (HasBufferedMembers)
             {
-                NamedJsonBufferList members = _members;
-                for (int i = 0; i < members.Count; i++)
+                var members = _members;
+                for (var i = 0; i < members.Count; i++)
                 {
-                    NamedJsonBuffer member = (NamedJsonBuffer) members[i];
+                    var member = (NamedJsonBuffer) members[i];
                     if (string.CompareOrdinal(member.Name, name) == 0)
                     {
                         members.RemoveAt(i);
@@ -298,9 +298,9 @@ namespace Jayrock.Json
 
             protected override JsonToken ReadTokenImpl()
             {
-                JsonReader baseReader = _reader;
+                var baseReader = _reader;
 
-                int index = _index;
+                var index = _index;
                 if (index < 0)
                 {
                     //
@@ -321,14 +321,14 @@ namespace Jayrock.Json
                 // Buffered members, if any, get served first.
                 //
 
-                NamedJsonBufferList bufferedMembers = _bufferedMembers;
+                var bufferedMembers = _bufferedMembers;
                 if (bufferedMembers != null && index < bufferedMembers.Count)
                 {
                     //
                     // Is there a value to serve?
                     //
 
-                    JsonBuffer value = _memberValue;
+                    var value = _memberValue;
                     if (!value.IsEmpty)
                     {
                         if (value.IsStructured) // JSON Array or Object
@@ -338,7 +338,7 @@ namespace Jayrock.Json
                             // object) value if not already acquired.
                             //
 
-                            JsonReader valueReader = _memberStructuredValueReader;
+                            var valueReader = _memberStructuredValueReader;
                             if (valueReader == null)
                                 valueReader = _memberStructuredValueReader = value.CreateReader();
 
@@ -381,7 +381,7 @@ namespace Jayrock.Json
                     // that the value will be served next.
                     //
 
-                    NamedJsonBuffer member = (NamedJsonBuffer) bufferedMembers[index];
+                    var member = (NamedJsonBuffer) bufferedMembers[index];
                     _memberValue = member.Buffer;
                     return JsonToken.Member(member.Name);
                 }
@@ -410,7 +410,7 @@ namespace Jayrock.Json
                 // Move through the base reader.
                 //
 
-                JsonToken token = baseReader.Token;
+                var token = baseReader.Token;
                 baseReader.Read();
                 return token;
             }

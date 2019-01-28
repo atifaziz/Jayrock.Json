@@ -37,8 +37,8 @@ namespace Jayrock.Json.Conversion.Converters
 
             reader.Read();
 
-            MemoryStream ms = new MemoryStream();
-            Type byteType = typeof(byte);
+            var ms = new MemoryStream();
+            var byteType = typeof(byte);
 
             while (reader.TokenClass != JsonTokenClass.EndArray)
                 ms.WriteByte((byte) context.Import(byteType, reader));

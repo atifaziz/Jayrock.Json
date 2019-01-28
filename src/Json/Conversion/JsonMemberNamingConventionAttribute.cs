@@ -81,8 +81,8 @@ namespace Jayrock.Json.Conversion
             if (property == null)
                 throw new ArgumentNullException(nameof(property));
 
-            NamingConvention naming = Convention;
-            UnderscoreConvention underscoring = Underscores;
+            var naming = Convention;
+            var underscoring = Underscores;
             if (naming == NamingConvention.None && underscoring == UnderscoreConvention.None)
                 return;
             SetName(property, FormatName(FormatName(property.Name, underscoring), naming));
@@ -97,9 +97,9 @@ namespace Jayrock.Json.Conversion
                          ? '_' + name : name;
                 case UnderscoreConvention.Separate:
                     StringBuilder sb = null;
-                    for (int i = 1; i < name.Length; ++i)
+                    for (var i = 1; i < name.Length; ++i)
                     {
-                        char ch = name[i];
+                        var ch = name[i];
                         if (char.IsUpper(ch))
                         {
                             if (sb == null)
@@ -140,7 +140,7 @@ namespace Jayrock.Json.Conversion
             Debug.Assert(name != null);
             Debug.Assert(name.Length > 0);
 
-            IPropertyCustomization customization = (IPropertyCustomization) property;
+            var customization = (IPropertyCustomization) property;
             customization.SetName(name);
         }
     }

@@ -86,7 +86,7 @@ namespace Jayrock.Reflection
             if (type == null) throw new ArgumentNullException(nameof(type));
             if (genericTypeDefinition == null) throw new ArgumentNullException(nameof(genericTypeDefinition));
 
-            Type[] interfaces = type.FindInterfaces(new TypeFilter(IsConstructionOfGenericInterfaceDefinition), genericTypeDefinition);
+            var interfaces = type.FindInterfaces(new TypeFilter(IsConstructionOfGenericInterfaceDefinition), genericTypeDefinition);
             return interfaces.Length == 0 ? null : interfaces[0];
         }
 

@@ -53,7 +53,7 @@ namespace Jayrock.Json.Conversion
             if (reader == null)
                 throw new ArgumentNullException(nameof(reader));
 
-            IObjectSurrogateConstructor ctor = (IObjectSurrogateConstructor) context.Import(_surrogateType, reader);
+            var ctor = (IObjectSurrogateConstructor) context.Import(_surrogateType, reader);
             return ctor.CreateObject(context);
         }
     }

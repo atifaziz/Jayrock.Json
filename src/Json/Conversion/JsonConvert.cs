@@ -77,7 +77,7 @@ namespace Jayrock.Json.Conversion
 
         public static string ExportToString(object value)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             Export(value, sb);
             return sb.ToString();
         }

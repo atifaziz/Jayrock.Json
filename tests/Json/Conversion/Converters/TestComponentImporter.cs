@@ -35,14 +35,14 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void ImportNull()
         {
-            ComponentImporter importer = new ComponentImporter(typeof(object));
+            var importer = new ComponentImporter(typeof(object));
             Assert.IsNull(importer.Import(new ImportContext(), CreateReader("null")));
         }
 
         [ Test ]
         public void ImportEmptyObject()
         {
-            Marriage m = (Marriage) Import(typeof(Marriage), "{}");
+            var m = (Marriage) Import(typeof(Marriage), "{}");
             Assert.IsNull(m.Husband, "Husband");
             Assert.IsNull(m.Wife, "Wife");
         }
@@ -50,7 +50,7 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void ImportObject()
         {
-            Person p = (Person) Import(typeof(Person), "{ Id : 42, FullName : 'Charles Dickens' }");
+            var p = (Person) Import(typeof(Person), "{ Id : 42, FullName : 'Charles Dickens' }");
             Assert.AreEqual(42, p.Id, "Id");
             Assert.AreEqual("Charles Dickens", p.FullName, "FullName");
         }
@@ -58,7 +58,7 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void ImportEmbeddedObjects()
         {
-            Marriage m = (Marriage) Import(typeof(Marriage), @"{
+            var m = (Marriage) Import(typeof(Marriage), @"{
                 Husband : {
                     Id : 42,
                     FullName : 'Bob'
@@ -77,7 +77,7 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void YahooNewsSearch()
         {
-            string text = @"
+            var text = @"
             /* Source: http://api.search.yahoo.com/NewsSearchService/V1/newsSearch?appid=YahooDemo&query=yahoo&results=3&language=en&output=json */
             {
                 'ResultSet': {
@@ -127,19 +127,19 @@ namespace Jayrock.Json.Conversion.Converters
                 }
             }";
 
-            JsonTextReader reader = new JsonTextReader(new StringReader(text));
-            ImportContext context = new ImportContext();
-            YahooResponse response = (YahooResponse) context.Import(typeof(YahooResponse), reader);
+            var reader = new JsonTextReader(new StringReader(text));
+            var context = new ImportContext();
+            var response = (YahooResponse) context.Import(typeof(YahooResponse), reader);
             Assert.IsNotNull(response);
 
-            YahooResultSet resultSet = response.ResultSet;
+            var resultSet = response.ResultSet;
             Assert.IsNotNull(resultSet);
             Assert.AreEqual(2393,  resultSet.totalResultsAvailable);
             Assert.AreEqual(3,  resultSet.totalResultsReturned);
             Assert.AreEqual(1,  resultSet.firstResultPosition);
             Assert.AreEqual(3,  resultSet.Result.Length);
 
-            YahooResult result = resultSet.Result[0];
+            var result = resultSet.Result[0];
 
             Assert.IsNotNull(result);
             Assert.AreEqual("Yahoo invites its users to shoot ads", result.Title);
@@ -184,11 +184,11 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void SkipsReadOnlyProperty()
         {
-            Type thingType = typeof(Thing);
-            JsonTextReader reader = new JsonTextReader(new StringReader("{ Id : 42 }"));
-            TestTypeDescriptor descriptor = new TestTypeDescriptor();
+            var thingType = typeof(Thing);
+            var reader = new JsonTextReader(new StringReader("{ Id : 42 }"));
+            var descriptor = new TestTypeDescriptor();
             descriptor.GetProperties().Add(new ReadOnlyPropertyDescriptor("Id"));
-            ComponentImporter importer = new ComponentImporter(thingType, descriptor);
+            var importer = new ComponentImporter(thingType, descriptor);
             importer.Import(new ImportContext(), reader);
             Assert.IsFalse(((ReadOnlyPropertyDescriptor) descriptor.GetProperties().Find("Id", false)).SetValueCalled);
         }
@@ -196,31 +196,31 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void MemberImportCustomization()
         {
-            TestTypeDescriptor logicalType = new TestTypeDescriptor();
-            PropertyDescriptorCollection properties = logicalType.GetProperties();
+            var logicalType = new TestTypeDescriptor();
+            var properties = logicalType.GetProperties();
 
             properties.Add(new TestPropertyDescriptor("prop1", typeof(object), new Hashtable()));
 
-            ArrayList calls2 = new ArrayList();
-            TestObjectMemberImporter memberImporter2 = new TestObjectMemberImporter(calls2);
-            Hashtable services2 = new Hashtable();
+            var calls2 = new ArrayList();
+            var memberImporter2 = new TestObjectMemberImporter(calls2);
+            var services2 = new Hashtable();
             services2.Add(typeof(IObjectMemberImporter), memberImporter2);
             properties.Add(new TestPropertyDescriptor("prop2", typeof(object), services2));
 
             // Third property added to exercise issue #27:
             // http://code.google.com/p/jayrock/issues/detail?id=27
 
-            ArrayList calls3 = new ArrayList();
-            TestObjectMemberImporter memberImporter3 = new TestObjectMemberImporter(calls3);
-            Hashtable services3 = new Hashtable();
+            var calls3 = new ArrayList();
+            var memberImporter3 = new TestObjectMemberImporter(calls3);
+            var services3 = new Hashtable();
             services3.Add(typeof(IObjectMemberImporter), memberImporter3);
             properties.Add(new TestPropertyDescriptor("prop3", typeof(object), services3));
 
-            ComponentImporter importer = new ComponentImporter(typeof(Thing), logicalType);
-            ImportContext context = new ImportContext();
+            var importer = new ComponentImporter(typeof(Thing), logicalType);
+            var context = new ImportContext();
             context.Register(importer);
 
-            JsonRecorder writer = new JsonRecorder();
+            var writer = new JsonRecorder();
             writer.WriteStartObject();
             writer.WriteMember("prop1");
             writer.WriteString("value1");
@@ -230,8 +230,8 @@ namespace Jayrock.Json.Conversion.Converters
             writer.WriteString("value3");
             writer.WriteEndObject();
 
-            JsonReader reader = writer.CreatePlayer();
-            Thing thing = (Thing) context.Import(typeof(Thing), reader);
+            var reader = writer.CreatePlayer();
+            var thing = (Thing) context.Import(typeof(Thing), reader);
 
             Assert.AreEqual(1, calls2.Count);
 
@@ -249,10 +249,10 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void NonMemberImport()
         {
-            ComponentImporter importer = new ComponentImporter(typeof(DynamicThing));
-            ImportContext context = new ImportContext();
+            var importer = new ComponentImporter(typeof(DynamicThing));
+            var context = new ImportContext();
             const string json = "{ str1: value1, str2: value2, num: 42 }";
-            DynamicThing thing = (DynamicThing) importer.Import(context, JsonText.CreateReader(json));
+            var thing = (DynamicThing) importer.Import(context, JsonText.CreateReader(json));
             Assert.AreEqual(2, thing.NonMembers.Count);
             Assert.AreEqual("value1", thing.NonMembers["str1"]);
             Assert.AreEqual("value2", thing.NonMembers["str2"]);
@@ -306,9 +306,9 @@ namespace Jayrock.Json.Conversion.Converters
 
         private static object Import(Type expectedType, string s)
         {
-            JsonReader reader = CreateReader(s);
-            ImportContext context = new ImportContext();
-            object o = context.Import(expectedType, reader);
+            var reader = CreateReader(s);
+            var context = new ImportContext();
+            var o = context.Import(expectedType, reader);
             Assert.IsTrue(reader.EOF, "Reader must be at EOF.");
             Assert.IsNotNull(o);
             Assert.IsInstanceOf(expectedType, o);

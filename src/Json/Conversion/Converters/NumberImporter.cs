@@ -48,7 +48,7 @@ namespace Jayrock.Json.Conversion.Converters
             if (reader == null)
                 throw new ArgumentNullException(nameof(reader));
 
-            string text = reader.Text;
+            var text = reader.Text;
 
             try
             {

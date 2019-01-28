@@ -42,7 +42,7 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void PublicProperties()
         {
-            Car car = new Car();
+            var car = new Car();
             car.Manufacturer = "BMW";
             car.Model = "350";
             car.Year = 2000;
@@ -56,9 +56,9 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void NullPropertiesSkipped()
         {
-            Car car = new Car();
+            var car = new Car();
 
-            JsonReader reader = FormatForReading(car);
+            var reader = FormatForReading(car);
             reader.ReadToken(JsonTokenClass.Object);
             Assert.AreEqual("year", reader.ReadMember());
             Assert.AreEqual(0, (int) reader.ReadNumber());
@@ -68,15 +68,15 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void EmbeddedObjects()
         {
-            Person snow = new Person();
+            var snow = new Person();
             snow.Id = 2;
             snow.FullName = "Snow White";
 
-            Person albert = new Person();
+            var albert = new Person();
             albert.Id = 1;
             albert.FullName = "Albert White";
 
-            Marriage m = new Marriage();
+            var m = new Marriage();
             m.Husband = albert;
             m.Wife = snow;
 
@@ -95,10 +95,10 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void CustomPropertiesInternally()
         {
-            Point point = new Point(123, 456);
-            JsonRecorder writer = new JsonRecorder();
+            var point = new Point(123, 456);
+            var writer = new JsonRecorder();
             JsonConvert.Export(point, writer);
-            JsonReader reader = writer.CreatePlayer();
+            var reader = writer.CreatePlayer();
             reader.ReadToken(JsonTokenClass.Object);
             Assert.AreEqual("x", reader.ReadMember());
             Assert.AreEqual(123, reader.ReadNumber().ToInt32());
@@ -111,21 +111,21 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void TypeSpecific()
         {
-            Person john = new Person();
+            var john = new Person();
             john.Id = 123;
             john.FullName = "John Doe";
 
-            Car beamer = new Car();
+            var beamer = new Car();
             beamer.Manufacturer = "BMW";
             beamer.Model = "350";
             beamer.Year = 2000;
             beamer.Color = "Silver";
 
-            OwnerCars johnCars = new OwnerCars();
+            var johnCars = new OwnerCars();
             johnCars.Owner = john;
             johnCars.Cars.Add(beamer);
 
-            JsonObject test = new JsonObject(
+            var test = new JsonObject(
                 new string[] { "owner", "cars" },
                 new object[] {
                     /* Owner */ new JsonObject(
@@ -144,10 +144,10 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test, ExpectedException(typeof(JsonException)) ]
         public void ImmediateCircularReferenceDetection()
         {
-            ExportContext context = new ExportContext();
-            ComponentExporter exporter = new ComponentExporter(typeof(Thing));
+            var context = new ExportContext();
+            var exporter = new ComponentExporter(typeof(Thing));
             context.Register(exporter);
-            Thing thing = new Thing();
+            var thing = new Thing();
             thing.Other = thing;
             exporter.Export(context, thing, new EmptyJsonWriter());
         }
@@ -155,10 +155,10 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test, ExpectedException(typeof(JsonException)) ]
         public void DeepCircularReferenceDetection()
         {
-            ExportContext context = new ExportContext();
-            ComponentExporter exporter = new ComponentExporter(typeof(Thing));
+            var context = new ExportContext();
+            var exporter = new ComponentExporter(typeof(Thing));
             context.Register(exporter);
-            Thing thing = new Thing();
+            var thing = new Thing();
             thing.Other = new Thing();
             thing.Other.Other = new Thing();
             thing.Other.Other.Other = thing;
@@ -168,11 +168,11 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test, ExpectedException(typeof(JsonException)) ]
         public void CircularReferenceDetectionAcrossTypes()
         {
-            ExportContext context = new ExportContext();
-            ComponentExporter exporter = new ComponentExporter(typeof(Parent));
+            var context = new ExportContext();
+            var exporter = new ComponentExporter(typeof(Parent));
             context.Register(exporter);
             context.Register(new ComponentExporter(typeof(ParentChild)));
-            Parent parent = new Parent();
+            var parent = new Parent();
             parent.Child = new ParentChild();
             parent.Child.Parent = parent;
             exporter.Export(context, parent, new EmptyJsonWriter());
@@ -181,29 +181,29 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void MemberExportCustomization()
         {
-            ArrayList calls = new ArrayList();
+            var calls = new ArrayList();
 
-            TestTypeDescriptor logicalType = new TestTypeDescriptor();
-            PropertyDescriptorCollection properties = logicalType.GetProperties();
+            var logicalType = new TestTypeDescriptor();
+            var properties = logicalType.GetProperties();
 
             Hashtable services;
 
-            TestObjectMemberExporter memexp1 = new TestObjectMemberExporter(calls);
+            var memexp1 = new TestObjectMemberExporter(calls);
             services = new Hashtable();
             services.Add(typeof(IObjectMemberExporter), memexp1);
             properties.Add(new TestPropertyDescriptor("prop1", services));
 
-            TestObjectMemberExporter memexp2 = new TestObjectMemberExporter(calls);
+            var memexp2 = new TestObjectMemberExporter(calls);
             services = new Hashtable();
             services.Add(typeof(IObjectMemberExporter), memexp2);
             properties.Add(new TestPropertyDescriptor("prop2", services));
 
-            ComponentExporter exporter = new ComponentExporter(typeof(Thing), logicalType);
-            ExportContext context = new ExportContext();
+            var exporter = new ComponentExporter(typeof(Thing), logicalType);
+            var context = new ExportContext();
             context.Register(exporter);
 
-            JsonRecorder writer = new JsonRecorder();
-            Thing thing = new Thing();
+            var writer = new JsonRecorder();
+            var thing = new Thing();
             context.Export(thing, writer);
 
             Assert.AreEqual(2, calls.Count);
@@ -306,7 +306,7 @@ namespace Jayrock.Json.Conversion.Converters
 
         private static string Format(object o)
         {
-            JsonTextWriter writer = new JsonTextWriter();
+            var writer = new JsonTextWriter();
             JsonConvert.Export(o, writer);
             return writer.ToString();
         }
@@ -318,7 +318,7 @@ namespace Jayrock.Json.Conversion.Converters
 
         private static void Test(JsonObject expected, object actual)
         {
-            JsonReader reader = FormatForReading(actual);
+            var reader = FormatForReading(actual);
             TestObject(expected, reader, "(root)");
             Assert.IsFalse(reader.Read(), "Expected EOF.");
         }
@@ -330,8 +330,8 @@ namespace Jayrock.Json.Conversion.Converters
 
             while (reader.TokenClass != JsonTokenClass.EndObject)
             {
-                string name = reader.ReadMember();
-                object value = expected[name];
+                var name = reader.ReadMember();
+                var value = expected[name];
                 expected.Remove(name);
                 TestValue(value, reader, path + "/" + name);
             }
@@ -345,7 +345,7 @@ namespace Jayrock.Json.Conversion.Converters
             reader.MoveToContent();
             reader.ReadToken(JsonTokenClass.Array);
 
-            for (int i = 0; i < expectations.Length; i++)
+            for (var i = 0; i < expectations.Length; i++)
                 TestValue(expectations.GetValue(i), reader, path + "/" + i);
 
             reader.ReadToken(JsonTokenClass.EndArray);
@@ -359,7 +359,7 @@ namespace Jayrock.Json.Conversion.Converters
             }
             else
             {
-                TypeCode expectedType = Type.GetTypeCode(expected.GetType());
+                var expectedType = Type.GetTypeCode(expected.GetType());
 
                 if (expectedType == TypeCode.Object)
                 {
@@ -451,9 +451,9 @@ namespace Jayrock.Json.Conversion.Converters
 
             static Point()
             {
-                Type type = typeof(Point);
-                PropertyInfo x = type.GetProperty("X");
-                PropertyInfo y = type.GetProperty("Y");
+                var type = typeof(Point);
+                var x = type.GetProperty("X");
+                var y = type.GetProperty("Y");
                 _componentType = new CustomTypeDescriptor(type, new MemberInfo[] { x, y }, new string[] { "x", "y" });
             }
 
@@ -468,7 +468,7 @@ namespace Jayrock.Json.Conversion.Converters
 
             public void Export(ExportContext context, JsonWriter writer)
             {
-                ComponentExporter exporter = new ComponentExporter(typeof(Point), _componentType);
+                var exporter = new ComponentExporter(typeof(Point), _componentType);
                 exporter.Export(new ExportContext(), this, writer);
             }
         }

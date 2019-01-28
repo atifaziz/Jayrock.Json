@@ -76,7 +76,7 @@ namespace Jayrock.Json
 
         public override string ToString()
         {
-            StringWriter stringWriter = _writer as StringWriter;
+            var stringWriter = _writer as StringWriter;
             return stringWriter != null ?
                 stringWriter.ToString() : base.ToString();
         }
@@ -205,7 +205,7 @@ namespace Jayrock.Json
             {
                 if (_indent > 0)
                 {
-                    int spaces = _indent * 4;
+                    var spaces = _indent * 4;
 
                     if (_indentBuffer == null || _indentBuffer.Length < spaces)
                         _indentBuffer = new string(' ', spaces * 4).ToCharArray();

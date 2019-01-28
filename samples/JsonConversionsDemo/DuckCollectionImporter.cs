@@ -58,7 +58,7 @@ namespace JsonConversionsDemo
             if (context == null) throw new ArgumentNullException(nameof(context));
             if (reader == null) throw new ArgumentNullException(nameof(reader));
 
-            Action<Element> adder = DuckCollectionReflector.GetAdder<Element>(collection);
+            var adder = DuckCollectionReflector.GetAdder<Element>(collection);
 
             while (reader.TokenClass != JsonTokenClass.EndArray)
                 adder((Element) context.Import(typeof(Element), reader));

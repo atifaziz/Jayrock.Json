@@ -47,7 +47,7 @@ namespace Jayrock.Json.Conversion
             }
             else
             {
-                IExporter exporter = FindExporter(value.GetType());
+                var exporter = FindExporter(value.GetType());
 
                 if (exporter != null)
                     exporter.Export(this, value, writer);
@@ -69,7 +69,7 @@ namespace Jayrock.Json.Conversion
             if (type == null)
                 throw new ArgumentNullException(nameof(type));
 
-            IExporter exporter = Exporters[type];
+            var exporter = Exporters[type];
 
             if (exporter != null)
                 return exporter;
@@ -114,7 +114,7 @@ namespace Jayrock.Json.Conversion
 
             if (type.IsClass && type != typeof(object))
             {
-                IExporter exporter = FindBaseExporter(type.BaseType, type);
+                var exporter = FindBaseExporter(type.BaseType, type);
                 if (exporter != null)
                     return exporter;
             }
@@ -132,7 +132,7 @@ namespace Jayrock.Json.Conversion
                 return new ComponentExporter(type);
             }
 
-            CustomTypeDescriptor anonymousClass = CustomTypeDescriptor.TryCreateForAnonymousClass(type);
+            var anonymousClass = CustomTypeDescriptor.TryCreateForAnonymousClass(type);
             if (anonymousClass != null)
                 return new ComponentExporter(type, anonymousClass);
 
@@ -147,7 +147,7 @@ namespace Jayrock.Json.Conversion
             if (baseType == typeof(object))
                 return null;
 
-            IExporter exporter = Exporters[baseType];
+            var exporter = Exporters[baseType];
 
             if (exporter == null)
             {
@@ -177,7 +177,7 @@ namespace Jayrock.Json.Conversion
             {
                 if (_stockExporters == null)
                 {
-                    ExporterCollection exporters = new ExporterCollection();
+                    var exporters = new ExporterCollection();
 
                     exporters.Add(new ByteExporter());
                     exporters.Add(new Int16Exporter());

@@ -93,8 +93,8 @@ namespace Jayrock.Json.Conversion
         [ Test ]
         public void Registration()
         {
-            ImportContext context = new ImportContext();
-            ThingImporter importer = new ThingImporter();
+            var context = new ImportContext();
+            var importer = new ThingImporter();
             context.Register(importer);
             Assert.AreSame(importer, context.FindImporter(typeof(Thing)));
         }
@@ -102,8 +102,8 @@ namespace Jayrock.Json.Conversion
         [ Test ]
         public void RegistrationIsPerContext()
         {
-            ImportContext context = new ImportContext();
-            ThingImporter exporter = new ThingImporter();
+            var context = new ImportContext();
+            var exporter = new ThingImporter();
             context.Register(exporter);
             context = new ImportContext();
             Assert.AreNotSame(exporter, context.FindImporter(typeof(Thing)));
@@ -111,8 +111,8 @@ namespace Jayrock.Json.Conversion
 
         private static void AssertInStock(Type expected, Type type)
         {
-            ImportContext context = new ImportContext();
-            IImporter importer = context.FindImporter(type);
+            var context = new ImportContext();
+            var importer = context.FindImporter(type);
             Assert.IsNotNull(importer, "No importer found for {0}", type.FullName);
             Assert.IsInstanceOf(expected, importer, type.FullName);
         }

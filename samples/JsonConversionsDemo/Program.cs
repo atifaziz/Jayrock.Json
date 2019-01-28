@@ -27,7 +27,7 @@ namespace JsonConversionsDemo
     {
         private static void Run()
         {
-            ImportContext impctx = new ImportContext();
+            var impctx = new ImportContext();
 
             //
             // Import a strongly-typed collection of integers...
@@ -35,7 +35,7 @@ namespace JsonConversionsDemo
 
             impctx.Register(new ListImporter<int>());
 
-            List<int> numbers = (List<int>) impctx.Import(typeof(List<int>),
+            var numbers = (List<int>) impctx.Import(typeof(List<int>),
                 JsonText.CreateReader("[ 1, 2, 3 ]"));
             numbers.ForEach(Console.WriteLine);
             Console.WriteLine();
@@ -47,7 +47,7 @@ namespace JsonConversionsDemo
 
             impctx.Register(new ListImporter<Point>());
 
-            Shape shape = (Shape) impctx.Import(typeof(Shape), JsonText.CreateReader(@"{
+            var shape = (Shape) impctx.Import(typeof(Shape), JsonText.CreateReader(@"{
                     name: 'square',
                     points: [
                         { x: 10, y: 10 },
@@ -75,7 +75,7 @@ namespace JsonConversionsDemo
                     { name: 'three', value: 3, expires: '2077-05-06' }
                 ]";
 
-            CookieCollection cookies = (CookieCollection) impctx.Import(typeof(CookieCollection), JsonText.CreateReader(cookiesText));
+            var cookies = (CookieCollection) impctx.Import(typeof(CookieCollection), JsonText.CreateReader(cookiesText));
             JsonConvert.Export(cookies, CreatePrettyWriter(Console.Out));
             Console.WriteLine();
 
@@ -100,7 +100,7 @@ namespace JsonConversionsDemo
             // Expires property so that it appears as "expiration" in JSON.
             //
 
-            ExportContext expctx = new ExportContext();
+            var expctx = new ExportContext();
 
             JsonType.
                 BuildFor(typeof(Cookie)).
@@ -128,7 +128,7 @@ namespace JsonConversionsDemo
 
         private static JsonWriter CreatePrettyWriter(TextWriter writer)
         {
-            JsonTextWriter jsonw = new JsonTextWriter(writer);
+            var jsonw = new JsonTextWriter(writer);
             jsonw.PrettyPrint = true;
             return jsonw;
         }

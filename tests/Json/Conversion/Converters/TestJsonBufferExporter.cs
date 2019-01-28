@@ -43,10 +43,10 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void Export()
         {
-            StringBuilder sb = new StringBuilder();
-            JsonWriter writer = JsonText.CreateWriter(sb);
-            JsonBuffer buffer = JsonBuffer.From("[42,{x:123,y:456},foo,true,null,false]");
-            JsonBufferExporter exporter = new JsonBufferExporter();
+            var sb = new StringBuilder();
+            var writer = JsonText.CreateWriter(sb);
+            var buffer = JsonBuffer.From("[42,{x:123,y:456},foo,true,null,false]");
+            var exporter = new JsonBufferExporter();
             exporter.Export(JsonConvert.CreateExportContext(), buffer, writer);
             Assert.AreEqual("[42,{\"x\":123,\"y\":456},\"foo\",true,null,false]", sb.ToString());
         }

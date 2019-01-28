@@ -43,22 +43,22 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void Export()
         {
-            DateTime time = new DateTime(1999, 12, 31, 23, 30, 59, 999);
+            var time = new DateTime(1999, 12, 31, 23, 30, 59, 999);
             Assert.AreEqual("1999-12-31T23:30:59.9990000" + Tzd(time), Export(time));
         }
 
         private static string Export(DateTime value)
         {
-            JsonRecorder writer = new JsonRecorder();
-            DateTimeExporter exporter = new DateTimeExporter();
+            var writer = new JsonRecorder();
+            var exporter = new DateTimeExporter();
             exporter.Export(new ExportContext(), value, writer);
             return writer.CreatePlayer().ReadString();
         }
 
         private static string Tzd(DateTime localTime)
         {
-            TimeSpan offset = TimeZoneInfo.Local.GetUtcOffset(localTime);
-            string offsetString = offset.ToString();
+            var offset = TimeZoneInfo.Local.GetUtcOffset(localTime);
+            var offsetString = offset.ToString();
             return offset.Ticks < 0 ?
                    (offsetString.Substring(0, 6)) :
                    ("+" + offsetString.Substring(0, 5));

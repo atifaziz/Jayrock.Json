@@ -36,7 +36,7 @@ namespace JsonConversionsDemo
             if (context == null) throw new ArgumentNullException(nameof(context));
             if (reader == null) throw new ArgumentNullException(nameof(reader));
 
-            object collection = CreateCollection();
+            var collection = CreateCollection();
 
             reader.ReadToken(JsonTokenClass.Array);
 

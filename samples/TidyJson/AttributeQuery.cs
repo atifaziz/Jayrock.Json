@@ -49,7 +49,7 @@ namespace TidyJson
         public static T Get<P>(P provider, bool inherit)
             where P : ICustomAttributeProvider
         {
-            T attribute = Find(provider, inherit);
+            var attribute = Find(provider, inherit);
 
             if (attribute == null)
                 throw new ObjectNotFoundException(string.Format("The attribute {0} was not found.", typeof(T).FullName));
@@ -66,7 +66,7 @@ namespace TidyJson
         public static T Find<P>(P provider, bool inherit)
             where P : ICustomAttributeProvider
         {
-            T[] attributes = FindAll(provider, inherit);
+            var attributes = FindAll(provider, inherit);
             return attributes.Length > 0 ? attributes[0] : null;
         }
 

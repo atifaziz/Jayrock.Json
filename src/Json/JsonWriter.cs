@@ -245,7 +245,7 @@ namespace Jayrock.Json
             {
                 WriteStartArray();
 
-                foreach (object value in values)
+                foreach (var value in values)
                 {
                     if (JsonNull.LogicallyEquals(value))
                         WriteNull();
@@ -272,7 +272,7 @@ namespace Jayrock.Json
             {
                 WriteStartArray();
 
-                foreach (string value in values)
+                foreach (var value in values)
                 {
                     if (JsonNull.LogicallyEquals(value))
                         WriteNull();
@@ -384,7 +384,7 @@ namespace Jayrock.Json
 
         private void OnDisposed(EventArgs e)
         {
-            EventHandler handler = Disposed;
+            var handler = Disposed;
 
             if (handler != null)
                 handler(this, e);

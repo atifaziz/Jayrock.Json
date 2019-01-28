@@ -25,7 +25,7 @@ namespace JsonOutputDemo
 
         private static void Main()
         {
-            Demo[] demos = new Demo[]
+            var demos = new Demo[]
             {
                 WriteContinents,
                 WriteContact,
@@ -33,10 +33,10 @@ namespace JsonOutputDemo
                 ExportRssToJson,
             };
 
-            foreach (Demo demo in demos)
+            foreach (var demo in demos)
             {
-                string title = demo.Method.Name;
-                int length = title.Length + 20;
+                var title = demo.Method.Name;
+                var length = title.Length + 20;
                 Console.WriteLine(new string('=', length));
                 Console.WriteLine("Demo: " + title);
                 Console.WriteLine(new string('-', length));
@@ -48,7 +48,7 @@ namespace JsonOutputDemo
 
         private static void WriteContinents()
         {
-            using (JsonWriter writer = CreateJsonWriter(Console.Out))
+            using (var writer = CreateJsonWriter(Console.Out))
             {
                 string[] continents = {
                     "Europe", "Asia", "Australia", "Antarctica", "North America", "South America", "Africa"
@@ -62,7 +62,7 @@ namespace JsonOutputDemo
 
         private static void WriteContact()
         {
-            using (JsonWriter writer = CreateJsonWriter(Console.Out))
+            using (var writer = CreateJsonWriter(Console.Out))
             {
                 writer.WriteStartObject();              //  {
                 writer.WriteMember("Name");             //      "Name" :
@@ -92,7 +92,7 @@ namespace JsonOutputDemo
 
         private static void WriteRssToJson()
         {
-            using (JsonWriter writer = CreateJsonWriter(Console.Out))
+            using (var writer = CreateJsonWriter(Console.Out))
                 WriteRssToJson(GetNews(), writer);
         }
 
@@ -120,7 +120,7 @@ namespace JsonOutputDemo
             writer.WriteString(channel.link);
             writer.WriteMember("items");
             writer.WriteStartArray();
-            foreach (Item item in channel.item)
+            foreach (var item in channel.item)
                 WriteRssToJson(item, writer);
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -140,7 +140,7 @@ namespace JsonOutputDemo
 
         private static void ExportRssToJson()
         {
-            using (JsonWriter writer = CreateJsonWriter(Console.Out))
+            using (var writer = CreateJsonWriter(Console.Out))
                 JsonConvert.Export(GetNews(), writer);
         }
 
@@ -150,9 +150,9 @@ namespace JsonOutputDemo
         {
             if (news == null)
             {
-                XmlSerializer serializer = new XmlSerializer(typeof(RichSiteSummary));
+                var serializer = new XmlSerializer(typeof(RichSiteSummary));
 
-                using (XmlReader reader = XmlReader.Create(newsSourceUrl))
+                using (var reader = XmlReader.Create(newsSourceUrl))
                     news = (RichSiteSummary) serializer.Deserialize(reader);
             }
 
@@ -161,7 +161,7 @@ namespace JsonOutputDemo
 
         private static JsonWriter CreateJsonWriter(TextWriter writer)
         {
-            JsonTextWriter jsonWriter = new JsonTextWriter(writer);
+            var jsonWriter = new JsonTextWriter(writer);
             jsonWriter.PrettyPrint = true;
             return jsonWriter;
         }

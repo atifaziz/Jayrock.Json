@@ -79,13 +79,13 @@ namespace Jayrock.Json
             sb.Append('"');
 
             char last;
-            char ch = '\0';
+            var ch = '\0';
 
-            int end = offset + length;
+            var end = offset + length;
             if (chars != null && end > chars.Length)
                 throw new ArgumentOutOfRangeException();
 
-            for (int index = offset; index < end; index++)
+            for (var index = offset; index < end; index++)
             {
                 last = ch;
                 ch = chars != null ? chars[index] : str[index];
@@ -165,7 +165,7 @@ namespace Jayrock.Json
 
             while (true)
             {
-                char ch = input.Next();
+                var ch = input.Next();
 
                 if ((ch == BufferedCharReader.EOF) || (ch == '\n') || (ch == '\r'))
                     throw new FormatException("Unterminated string.");

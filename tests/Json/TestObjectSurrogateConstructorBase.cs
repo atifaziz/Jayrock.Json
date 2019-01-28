@@ -44,10 +44,10 @@ namespace Jayrock.Json
         [Test]
         public void ImportNonObjectMember()
         {
-            Surrogate surrogate = new Surrogate(new object());
-            ImportContext context = new ImportContext();
+            var surrogate = new Surrogate(new object());
+            var context = new ImportContext();
             surrogate.Import(context, "foo", JsonText.CreateReader("bar"));
-            JsonReader tail = surrogate.CreateObject(context).TailReader;
+            var tail = surrogate.CreateObject(context).TailReader;
             tail.ReadToken(JsonTokenClass.Object);
             Assert.AreEqual("foo", tail.ReadMember());
             Assert.AreEqual("bar", tail.ReadString());
@@ -57,12 +57,12 @@ namespace Jayrock.Json
         [Test]
         public void CreateObject()
         {
-            object obj = new object();
-            Surrogate surrogate = new Surrogate(obj);
-            ImportContext context = new ImportContext();
-            ObjectConstructionResult result = surrogate.CreateObject(context);
+            var obj = new object();
+            var surrogate = new Surrogate(obj);
+            var context = new ImportContext();
+            var result = surrogate.CreateObject(context);
             Assert.AreSame(obj, result.Object);
-            JsonReader tail = result.TailReader;
+            var tail = result.TailReader;
             tail.ReadToken(JsonTokenClass.Object);
             tail.ReadToken(JsonTokenClass.EndObject);
         }
@@ -70,14 +70,14 @@ namespace Jayrock.Json
         [Test, ExpectedException(typeof(ArgumentNullException))]
         public void CannotImportNonObjectMemberWithNullContext()
         {
-            Surrogate surrogate = new Surrogate(new object());
+            var surrogate = new Surrogate(new object());
             surrogate.Import(null, "foo", StockJsonBuffers.EmptyObject.CreateReader());
         }
 
         [Test, ExpectedException(typeof(ArgumentNullException))]
         public void CannotImportNonObjectMemberWithNullReader()
         {
-            Surrogate surrogate = new Surrogate(new object());
+            var surrogate = new Surrogate(new object());
             surrogate.Import(new ImportContext(), "foo", null);
         }
 

@@ -31,14 +31,14 @@ namespace Jayrock.Json
         [ Test ]
         public void InitialCounters()
         {
-            BufferedCharReader reader = new BufferedCharReader(TextReader.Null);
+            var reader = new BufferedCharReader(TextReader.Null);
             AssertCounters(reader, 0, 0, 0);
         }
 
         [Test]
         public void CountersOnReadingFirstChar()
         {
-            BufferedCharReader reader = new BufferedCharReader(new StringReader("a"));
+            var reader = new BufferedCharReader(new StringReader("a"));
             reader.Next();
             AssertCounters(reader, 1, 1, 1);
         }
@@ -46,7 +46,7 @@ namespace Jayrock.Json
         [Test]
         public void CountersOnReadingSecondChar()
         {
-            BufferedCharReader reader = new BufferedCharReader(new StringReader("ab"));
+            var reader = new BufferedCharReader(new StringReader("ab"));
             reader.Next();
             reader.Next();
             AssertCounters(reader, 2, 1, 2);
@@ -55,7 +55,7 @@ namespace Jayrock.Json
         [Test]
         public void CountersUnaffectedWhenReadingPastEOF()
         {
-            BufferedCharReader reader = new BufferedCharReader(new StringReader("abc"));
+            var reader = new BufferedCharReader(new StringReader("abc"));
             Assert.AreEqual('a', reader.Next());
             Assert.AreEqual('b', reader.Next());
             Assert.AreEqual('c', reader.Next());
@@ -69,7 +69,7 @@ namespace Jayrock.Json
         [Test]
         public void LineNumberBumpsAndPositionResetsWithEachLF()
         {
-            BufferedCharReader reader = new BufferedCharReader(new StringReader("\n1\n23\n456\n"));
+            var reader = new BufferedCharReader(new StringReader("\n1\n23\n456\n"));
             AssertReadLineNumPos(reader, '\n',  1, 1);
             AssertReadLineNumPos(reader, '1',   2, 1);
             AssertReadLineNumPos(reader, '\n',  2, 2);
@@ -86,7 +86,7 @@ namespace Jayrock.Json
         [Test]
         public void BackRewindsCounters()
         {
-            BufferedCharReader reader = new BufferedCharReader(new StringReader("a"));
+            var reader = new BufferedCharReader(new StringReader("a"));
             reader.Next();
             reader.Back();
             AssertCounters(reader, 0, 0, 0);
@@ -95,7 +95,7 @@ namespace Jayrock.Json
         [Test]
         public void NextAfterBackRestoresCounters()
         {
-            BufferedCharReader reader = new BufferedCharReader(new StringReader("a"));
+            var reader = new BufferedCharReader(new StringReader("a"));
             reader.Next();
             reader.Back();
             reader.Next();
@@ -105,7 +105,7 @@ namespace Jayrock.Json
         [Test]
         public void CountersWhenBackNextAroundLine()
         {
-            BufferedCharReader reader = new BufferedCharReader(new StringReader("12\n34"));
+            var reader = new BufferedCharReader(new StringReader("12\n34"));
             reader.Next(); AssertCounters(reader, 1, 1, 1);
             reader.Next(); AssertCounters(reader, 2, 1, 2);
             reader.Next(); AssertCounters(reader, 3, 1, 3);
@@ -117,7 +117,7 @@ namespace Jayrock.Json
         [Test]
         public void BacktrackAfterEnding()
         {
-            BufferedCharReader reader = new BufferedCharReader(new StringReader(";"));
+            var reader = new BufferedCharReader(new StringReader(";"));
             Assert.IsTrue(reader.More());
             Assert.AreEqual(';', reader.Next());
             Assert.IsFalse(reader.More());

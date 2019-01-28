@@ -38,15 +38,15 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void InputTypeInitialization()
         {
-            Type type = typeof(Array);
-            EnumerableExporter exporter = new EnumerableExporter(type);
+            var type = typeof(Array);
+            var exporter = new EnumerableExporter(type);
             Assert.AreSame(type, exporter.InputType);
         }
 
         [ Test ]
         public void ExportEmpty()
         {
-            JsonReader reader = Export(new object[] {});
+            var reader = Export(new object[] {});
             reader.ReadToken(JsonTokenClass.Array);
             reader.ReadToken(JsonTokenClass.EndArray);
         }
@@ -54,7 +54,7 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void ExportFlatArray()
         {
-            JsonReader reader = Export(new int[] { 11, 22, 33 });
+            var reader = Export(new int[] { 11, 22, 33 });
             reader.ReadToken(JsonTokenClass.Array);
             Assert.AreEqual(11, reader.ReadNumber().ToInt32());
             Assert.AreEqual(22, reader.ReadNumber().ToInt32());
@@ -65,7 +65,7 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void ExportList()
         {
-            JsonReader reader = Export(new ArrayList(new int[] { 11, 22, 33 }));
+            var reader = Export(new ArrayList(new int[] { 11, 22, 33 }));
             reader.ReadToken(JsonTokenClass.Array);
             Assert.AreEqual(11, reader.ReadNumber().ToInt32());
             Assert.AreEqual(22, reader.ReadNumber().ToInt32());
@@ -76,7 +76,7 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void ExportNestedArrays()
         {
-            JsonReader reader = Export(new ArrayList(new object[] { 11, 22, new object[] { 33, 44 }, 55 }));
+            var reader = Export(new ArrayList(new object[] { 11, 22, new object[] { 33, 44 }, 55 }));
             reader.ReadToken(JsonTokenClass.Array);
             Assert.AreEqual(11, reader.ReadNumber().ToInt32());
             Assert.AreEqual(22, reader.ReadNumber().ToInt32());
@@ -90,7 +90,7 @@ namespace Jayrock.Json.Conversion.Converters
 
         private static JsonReader Export(IEnumerable values)
         {
-            JsonRecorder writer = new JsonRecorder();
+            var writer = new JsonRecorder();
             JsonConvert.Export(values, writer);
             return writer.CreatePlayer();
         }

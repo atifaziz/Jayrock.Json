@@ -41,11 +41,11 @@ namespace Jayrock.Tests.Json.Conversion
         [Test, ExpectedException(typeof(ArgumentException))]
         public void CannotInitializeWithConstructorsFromDifferentTypes()
         {
-            ConstructorInfo[] fc = typeof(FooBase).GetConstructors();
+            var fc = typeof(FooBase).GetConstructors();
             Assert.AreEqual(1, fc.Length);
-            ConstructorInfo[] fdc = typeof(FooDerived).GetConstructors();
+            var fdc = typeof(FooDerived).GetConstructors();
             Assert.AreEqual(1, fdc.Length);
-            ConstructorInfo[] ctors = new ConstructorInfo[fc.Length + fdc.Length];
+            var ctors = new ConstructorInfo[fc.Length + fdc.Length];
             Array.Copy(fc, 0, ctors, 0, fc.Length);
             Array.Copy(fdc, 0, ctors, fc.Length, fdc.Length);
             new ObjectConstructor(typeof(FooDerived), ctors);
@@ -71,11 +71,11 @@ namespace Jayrock.Tests.Json.Conversion
         [Test]
         public void Construction()
         {
-            ObjectConstructor ctor = new ObjectConstructor(typeof(Point));
-            ImportContext context = JsonConvert.CreateImportContext();
+            var ctor = new ObjectConstructor(typeof(Point));
+            var context = JsonConvert.CreateImportContext();
             const string json = "{ y: 456, x: 123 }";
-            ObjectConstructionResult result = ctor.CreateObject(context, JsonText.CreateReader(json));
-            Point point = (Point)result.Object;
+            var result = ctor.CreateObject(context, JsonText.CreateReader(json));
+            var point = (Point)result.Object;
             Assert.AreEqual(123, point.X);
             Assert.AreEqual(456, point.Y);
             Assert.AreEqual(0, JsonBuffer.From(result.TailReader).GetMemberCount());
@@ -84,16 +84,16 @@ namespace Jayrock.Tests.Json.Conversion
         [Test]
         public void ConstructionWithTail()
         {
-            ObjectConstructor ctor = new ObjectConstructor(typeof(Point));
-            ImportContext context = JsonConvert.CreateImportContext();
+            var ctor = new ObjectConstructor(typeof(Point));
+            var context = JsonConvert.CreateImportContext();
             const string json = "{ y: 456, z: 789, x: 123 }";
-            ObjectConstructionResult result = ctor.CreateObject(context, JsonText.CreateReader(json));
-            Point point = (Point) result.Object;
+            var result = ctor.CreateObject(context, JsonText.CreateReader(json));
+            var point = (Point) result.Object;
             Assert.AreEqual(123, point.X);
             Assert.AreEqual(456, point.Y);
-            NamedJsonBuffer[] tail = JsonBuffer.From(result.TailReader).GetMembersArray();
+            var tail = JsonBuffer.From(result.TailReader).GetMembersArray();
             Assert.AreEqual(1, tail.Length);
-            NamedJsonBuffer z = tail[0];
+            var z = tail[0];
             Assert.AreEqual("z", z.Name);
             Assert.AreEqual(789, z.Buffer.GetNumber().ToInt32());
         }
@@ -101,8 +101,8 @@ namespace Jayrock.Tests.Json.Conversion
         [Test, ExpectedException(typeof(JsonException))]
         public void CannotCreateIfNoneConstructorsMatch()
         {
-            ObjectConstructor ctor = new ObjectConstructor(typeof(Point));
-            ImportContext context = JsonConvert.CreateImportContext();
+            var ctor = new ObjectConstructor(typeof(Point));
+            var context = JsonConvert.CreateImportContext();
             ctor.CreateObject(context, JsonText.CreateReader("{ z: x: 123 }"));
         }
 
@@ -124,7 +124,7 @@ namespace Jayrock.Tests.Json.Conversion
         [Test]
         public void ConstructorSpecificity()
         {
-            Thing thing = CreateThing("{ num: 42 }");
+            var thing = CreateThing("{ num: 42 }");
             Assert.AreEqual(42, thing.Number);
             Assert.AreEqual(GetThingConstructor(typeof(int)), thing.Constructor);
 
@@ -156,9 +156,9 @@ namespace Jayrock.Tests.Json.Conversion
 
         private Thing CreateThing(string json)
         {
-            ObjectConstructor ctor = new ObjectConstructor(typeof(Thing));
-            ImportContext context = JsonConvert.CreateImportContext();
-            ObjectConstructionResult result = ctor.CreateObject(context, JsonText.CreateReader(json));
+            var ctor = new ObjectConstructor(typeof(Thing));
+            var context = JsonConvert.CreateImportContext();
+            var result = ctor.CreateObject(context, JsonText.CreateReader(json));
             return (Thing) result.Object;
         }
 
@@ -203,10 +203,10 @@ namespace Jayrock.Tests.Json.Conversion
         [Test]
         public void ValueTypeWithDefaultConstructorConstruction()
         {
-            ObjectConstructor constructor = new ObjectConstructor(typeof(ValueThing));
-            ObjectConstructionResult result = constructor.CreateObject(new ImportContext(), JsonText.CreateReader("{foo:bar}"));
+            var constructor = new ObjectConstructor(typeof(ValueThing));
+            var result = constructor.CreateObject(new ImportContext(), JsonText.CreateReader("{foo:bar}"));
             Assert.IsInstanceOf<ValueThing>(result.Object);
-            JsonReader tail = result.TailReader;
+            var tail = result.TailReader;
             tail.ReadToken(JsonTokenClass.Object);
             Assert.AreEqual("foo", tail.ReadMember());
             Assert.AreEqual("bar", tail.ReadString());

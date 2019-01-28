@@ -38,7 +38,7 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void ImportString()
         {
-            DateTime time = new DateTime(1999, 12, 31, 23, 30, 59, 999);
+            var time = new DateTime(1999, 12, 31, 23, 30, 59, 999);
             AssertImport(time, "\"1999-12-31T23:30:59.9990000" + Tzd(time) + "\"");
         }
 
@@ -131,7 +131,7 @@ namespace Jayrock.Json.Conversion.Converters
         [Test(Description = @"http://code.google.com/p/jayrock/issues/detail?id=54")]
         public void ImportZulu()
         {
-            DateTime time = JsonConvert.Import<DateTime>("'2013-10-29T11:04:09.144Z'").ToUniversalTime();
+            var time = JsonConvert.Import<DateTime>("'2013-10-29T11:04:09.144Z'").ToUniversalTime();
             Assert.AreEqual(new DateTime(2013, 10, 29, 11, 04, 09, 144), time);
         }
 
@@ -142,7 +142,7 @@ namespace Jayrock.Json.Conversion.Converters
 
         private static void AssertImport(DateTime expected, string input, bool expectingUTC)
         {
-            object o = Import(input);
+            var o = Import(input);
             Assert.IsInstanceOf<DateTime>(o);
             if (expectingUTC)
                 Assert.AreEqual(expected, ((DateTime) o).ToUniversalTime());
@@ -152,9 +152,9 @@ namespace Jayrock.Json.Conversion.Converters
 
         private static object Import(string input)
         {
-            JsonTextReader reader = new JsonTextReader(new StringReader(input));
-            ImportContext context = new ImportContext();
-            object value = context.Import(typeof(DateTime), reader);
+            var reader = new JsonTextReader(new StringReader(input));
+            var context = new ImportContext();
+            var value = context.Import(typeof(DateTime), reader);
             Assert.IsTrue(reader.EOF, "Reader must be at EOF.");
             if (value != null)
                 Assert.IsInstanceOf<DateTime>(value);
@@ -163,8 +163,8 @@ namespace Jayrock.Json.Conversion.Converters
 
         private static string Tzd(DateTime localTime)
         {
-            TimeSpan offset = TimeZoneInfo.Local.GetUtcOffset(localTime);
-            string offsetString = offset.ToString();
+            var offset = TimeZoneInfo.Local.GetUtcOffset(localTime);
+            var offsetString = offset.ToString();
             return offset.Ticks < 0 ?
                    (offsetString.Substring(0, 6)) :
                    ("+" + offsetString.Substring(0, 5));

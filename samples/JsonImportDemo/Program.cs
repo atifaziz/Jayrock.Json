@@ -17,7 +17,7 @@ namespace JsonImportDemo
     {
         private static void Main()
         {
-            string text = @"
+            var text = @"
                 {
                     ""header"": ""SVG Viewer"",
                     ""items"": [
@@ -60,14 +60,14 @@ namespace JsonImportDemo
 
         private static void ImportByTypeDemo(string text)
         {
-            Menu menu = (Menu) JsonConvert.Import(typeof(Menu), text);
+            var menu = (Menu) JsonConvert.Import(typeof(Menu), text);
 
-            string separator = new string('-', 40);
+            var separator = new string('-', 40);
 
             Console.WriteLine(menu.Header);
             Console.WriteLine(separator);
 
-            foreach (MenuItem item in menu.Items)
+            foreach (var item in menu.Items)
             {
                 Console.Write('\t');
 
@@ -107,14 +107,14 @@ namespace JsonImportDemo
             // local null reference.
             //
 
-            JsonObject menu = (JsonObject) JsonConvert.Import(text);
+            var menu = (JsonObject) JsonConvert.Import(text);
 
-            string separator = new string('-', 40);
+            var separator = new string('-', 40);
 
             Console.WriteLine(menu["header"]);
             Console.WriteLine(separator);
 
-            JsonArray items = (JsonArray) menu["items"];
+            var items = (JsonArray) menu["items"];
 
             foreach (JsonObject item in items)
             {
@@ -122,8 +122,8 @@ namespace JsonImportDemo
 
                 if (item != null)
                 {
-                    string id = (string) item["id"];
-                    string label = (string) item["label"];
+                    var id = (string) item["id"];
+                    var label = (string) item["label"];
                     Console.WriteLine("{0} ({1})", label ?? id, id);
                 }
                 else

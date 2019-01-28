@@ -54,7 +54,7 @@ namespace Jayrock.Json.Conversion.Converters
         {
             // http://stackoverflow.com/questions/1176276/how-do-i-improve-the-performance-of-code-using-datetime-tostring/1176350#1176350
 
-            char[] chars = new char["yyyy-MM-ddTHH:mm:ss.fffffffzzzzzz".Length];
+            var chars = new char["yyyy-MM-ddTHH:mm:ss.fffffffzzzzzz".Length];
 
             // Separators
 
@@ -78,7 +78,7 @@ namespace Jayrock.Json.Conversion.Converters
 
             // UTC offset
 
-            TimeSpan offset = TimeZoneInfo.Local.GetUtcOffset(when);
+            var offset = TimeZoneInfo.Local.GetUtcOffset(when);
             chars[27] = offset.Ticks >= 0 ? '+' : '-';
             Digits2(chars, Math.Abs(offset.Hours),   28);
             Digits2(chars, offset.Minutes, 31);

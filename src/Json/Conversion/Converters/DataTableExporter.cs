@@ -49,7 +49,7 @@ namespace Jayrock.Json.Conversion.Converters
             Debug.Assert(table != null);
             Debug.Assert(writer != null);
 
-            DataView view = table.DefaultView;
+            var view = table.DefaultView;
 
             //
             // If there is an exporter (perhaps an override) for the
@@ -57,7 +57,7 @@ namespace Jayrock.Json.Conversion.Converters
             // DataViewExporter.
             //
 
-            IExporter exporter = context.FindExporter(view.GetType());
+            var exporter = context.FindExporter(view.GetType());
 
             if (exporter != null)
                 exporter.Export(context, view, writer);

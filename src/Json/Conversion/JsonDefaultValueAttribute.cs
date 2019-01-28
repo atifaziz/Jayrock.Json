@@ -72,7 +72,7 @@ namespace Jayrock.Json.Conversion
             if (Value == null)
                 return;
 
-            IServiceContainer container = (IServiceContainer) property;
+            var container = (IServiceContainer) property;
             container.AddService(typeof(IObjectMemberExporter), new PropertyExporter(property, Value));
         }
 
@@ -95,7 +95,7 @@ namespace Jayrock.Json.Conversion
                 if (writer == null) throw new ArgumentNullException(nameof(writer));
                 if (source == null) throw new ArgumentNullException(nameof(source));
 
-                object value = _property.GetValue(source);
+                var value = _property.GetValue(source);
 
                 if (JsonNull.LogicallyEquals(value) || value.Equals(_defaultValue))
                     return;

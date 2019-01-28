@@ -39,9 +39,9 @@ namespace Jayrock.Json.Conversion.Converters
 
             writer.WriteStartObject();
 
-            IDictionary dictionary = (IDictionary) value;
+            var dictionary = (IDictionary) value;
 
-            foreach (DictionaryEntry entry in DictionaryHelper.GetEntries(dictionary))
+            foreach (var entry in DictionaryHelper.GetEntries(dictionary))
             {
                 writer.WriteMember(entry.Key.ToString());
                 context.Export(entry.Value, writer);

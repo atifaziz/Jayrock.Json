@@ -34,7 +34,7 @@ namespace Jayrock
             if (collection == null)
                 return _zeroObjects;
 
-            object[] values = new object[collection.Count];
+            var values = new object[collection.Count];
             collection.CopyTo(values, 0);
             return values;
         }

@@ -37,9 +37,9 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void Import()
         {
-            JsonReader reader = JsonText.CreateReader("[42,{x:123,y:456},foo,true,null,false]");
-            JsonBufferImporter importer = new JsonBufferImporter();
-            JsonBuffer buffer = (JsonBuffer) importer.Import(JsonConvert.CreateImportContext(), reader);
+            var reader = JsonText.CreateReader("[42,{x:123,y:456},foo,true,null,false]");
+            var importer = new JsonBufferImporter();
+            var buffer = (JsonBuffer) importer.Import(JsonConvert.CreateImportContext(), reader);
             Assert.AreEqual("[42,{\"x\":123,\"y\":456},\"foo\",true,null,false]", buffer.ToString());
         }
 

@@ -61,7 +61,7 @@ namespace Jayrock.Json.Conversion.Converters
                 // DataTableExporter.
                 //
 
-                IExporter tableExporter = context.FindExporter(table.GetType());
+                var tableExporter = context.FindExporter(table.GetType());
 
                 if (tableExporter != null)
                     tableExporter.Export(context, table, writer);

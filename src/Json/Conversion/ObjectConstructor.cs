@@ -50,7 +50,7 @@ namespace Jayrock.Json.Conversion
             }
             else
             {
-                foreach (ConstructorInfo ctor in ctors)
+                foreach (var ctor in ctors)
                 {
                     if (ctor.DeclaringType != type)
                         throw new ArgumentException(null, nameof(ctors));
@@ -90,9 +90,9 @@ namespace Jayrock.Json.Conversion
 
             if (_ctors.Length > 0)
             {
-                foreach (ConstructorInfo ctor in _ctors)
+                foreach (var ctor in _ctors)
                 {
-                    ObjectConstructionResult result = TryCreateObject(context, ctor, members);
+                    var result = TryCreateObject(context, ctor, members);
                     if (result != null)
                         return result;
                 }
@@ -106,7 +106,7 @@ namespace Jayrock.Json.Conversion
                 // constructors matched then just use the default one.
                 //
 
-                object obj = Activator.CreateInstance(_type);
+                var obj = Activator.CreateInstance(_type);
                 JsonReader tail = NamedJsonBuffer.ToObject(members).CreateReader();
                 return new ObjectConstructionResult(obj, tail);
             }
@@ -120,28 +120,28 @@ namespace Jayrock.Json.Conversion
             Debug.Assert(ctor != null);
             Debug.Assert(members != null);
 
-            ParameterInfo[] parameters = ctor.GetParameters();
+            var parameters = ctor.GetParameters();
 
             if (parameters.Length > members.Length)
                 return null;
 
-            int[] bindings = Bind(context, parameters, members);
+            var bindings = Bind(context, parameters, members);
 
-            int argc = 0;
+            var argc = 0;
             object[] args = null;
             JsonBufferWriter tailw = null;
 
-            for (int i = 0; i < bindings.Length; i++)
+            for (var i = 0; i < bindings.Length; i++)
             {
-                int binding = bindings[i] - 1;
+                var binding = bindings[i] - 1;
 
                 if (binding >= 0)
                 {
                     if (args == null)
                         args = new object[parameters.Length];
 
-                    Type type = parameters[binding].ParameterType;
-                    JsonBuffer arg = members[i].Buffer;
+                    var type = parameters[binding].ParameterType;
+                    var arg = members[i].Buffer;
                     args[binding] = context.Import(type, arg.CreateReader());
                     argc++;
                 }
@@ -153,7 +153,7 @@ namespace Jayrock.Json.Conversion
                         tailw.WriteStartObject();
                     }
 
-                    NamedJsonBuffer member = members[i];
+                    var member = members[i];
                     tailw.WriteMember(member.Name);
                     tailw.WriteFromReader(member.Buffer.CreateReader());
                 }
@@ -165,9 +165,9 @@ namespace Jayrock.Json.Conversion
             if (argc != parameters.Length)
                 return null;
 
-            object obj = ctor.Invoke(args);
+            var obj = ctor.Invoke(args);
 
-            JsonBuffer tail = tailw != null
+            var tail = tailw != null
                             ? tailw.GetBuffer()
                             : StockJsonBuffers.EmptyObject;
 
@@ -185,16 +185,16 @@ namespace Jayrock.Json.Conversion
             if (parameters == null) throw new ArgumentNullException(nameof(parameters));
             if (members == null) throw new ArgumentNullException(nameof(members));
 
-            int[] bindings = new int[members.Length];
+            var bindings = new int[members.Length];
 
-            for (int i = 0; i < parameters.Length; i++)
+            for (var i = 0; i < parameters.Length; i++)
             {
-                ParameterInfo parameter = parameters[i];
+                var parameter = parameters[i];
 
                 if (parameter == null)
                     throw new ArgumentException(null, nameof(parameters));
 
-                int mi = FindMember(members, parameter.Name);
+                var mi = FindMember(members, parameter.Name);
 
                 if (mi >= 0)
                     bindings[mi] = i + 1;
@@ -205,9 +205,9 @@ namespace Jayrock.Json.Conversion
 
         private static int FindMember(NamedJsonBuffer[] members, string name)
         {
-            for (int i = 0; i < members.Length; i++)
+            for (var i = 0; i < members.Length; i++)
             {
-                NamedJsonBuffer member = members[i];
+                var member = members[i];
 
                 if (member.IsEmpty)
                     throw new ArgumentException(null, nameof(members));

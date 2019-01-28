@@ -32,20 +32,20 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void ImportTellsObjectToImportSelf()
         {
-            ImportAwareImporter importer = new ImportAwareImporter(typeof(Thing));
-            JsonRecorder writer = new JsonRecorder();
+            var importer = new ImportAwareImporter(typeof(Thing));
+            var writer = new JsonRecorder();
             writer.WriteString(string.Empty);
-            Thing thing = (Thing) importer.Import(new ImportContext(), writer.CreatePlayer());
+            var thing = (Thing) importer.Import(new ImportContext(), writer.CreatePlayer());
             Assert.IsTrue(thing.ImportCalled);
         }
 
         [ Test ]
         public void ImportNull()
         {
-            ImportAwareImporter importer = new ImportAwareImporter(typeof(Thing));
-            JsonRecorder writer = new JsonRecorder();
+            var importer = new ImportAwareImporter(typeof(Thing));
+            var writer = new JsonRecorder();
             writer.WriteNull();
-            JsonReader reader = writer.CreatePlayer();
+            var reader = writer.CreatePlayer();
             reader.ReadToken(JsonTokenClass.Array);
             Assert.IsNull(importer.Import(new ImportContext(), reader));
         }
@@ -59,7 +59,7 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test, ExpectedException(typeof(ArgumentNullException)) ]
         public void CannotSendNullReaderToImport()
         {
-            ImportAwareImporter importer = new ImportAwareImporter(typeof(Thing));
+            var importer = new ImportAwareImporter(typeof(Thing));
             importer.Import(null, null);
         }
 

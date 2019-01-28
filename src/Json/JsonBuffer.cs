@@ -46,7 +46,7 @@ namespace Jayrock.Json
 
         static JsonBuffer()
         {
-            JsonBuffer buffer = new JsonBufferStorage(5) // [null,true,false]
+            var buffer = new JsonBufferStorage(5) // [null,true,false]
                 .Write(JsonToken.Array())
                     .Write(JsonToken.Null(), JsonToken.True(), JsonToken.False())
                 .Write(JsonToken.EndArray())
@@ -75,7 +75,7 @@ namespace Jayrock.Json
 
         public static JsonBuffer From(JsonToken token)
         {
-            JsonTokenClass clazz = token.Class;
+            var clazz = token.Class;
 
             if (clazz == JsonTokenClass.Null)
                 return _null;
@@ -86,7 +86,7 @@ namespace Jayrock.Json
             if (clazz == JsonTokenClass.Boolean)
                 return token.Equals(JsonToken.True()) ? _true : _false;
 
-            JsonBufferStorage storage = new JsonBufferStorage(1);
+            var storage = new JsonBufferStorage(1);
             storage.Write(token);
             return storage.ToBuffer();
         }
@@ -96,7 +96,7 @@ namespace Jayrock.Json
             if (reader == null)
                 throw new ArgumentNullException(nameof(reader));
 
-            JsonBufferReader bufferReader = reader as JsonBufferReader;
+            var bufferReader = reader as JsonBufferReader;
             if (bufferReader != null)
                 return bufferReader.BufferValue();
 
@@ -106,13 +106,13 @@ namespace Jayrock.Json
             if (reader.TokenClass == JsonTokenClass.Member)
                 reader.Read();
 
-            bool structured = reader.TokenClass == JsonTokenClass.Array
+            var structured = reader.TokenClass == JsonTokenClass.Array
                               || reader.TokenClass == JsonTokenClass.Object;
 
-            JsonBufferWriter writer = new JsonBufferWriter();
+            var writer = new JsonBufferWriter();
             writer.MaxDepth = reader.MaxDepth;
             writer.WriteFromReader(reader);
-            JsonBuffer buffer = writer.GetBuffer();
+            var buffer = writer.GetBuffer();
 
             if (!structured)
             {
@@ -221,7 +221,7 @@ namespace Jayrock.Json
         {
             if (IsEmpty)
                 throw new InvalidOperationException();
-            JsonBufferReader reader = new JsonBufferReader(this);
+            var reader = new JsonBufferReader(this);
             if (!IsStructured)
                 reader.ReadToken(JsonTokenClass.Array);
             return reader;
@@ -249,7 +249,7 @@ namespace Jayrock.Json
 
         public JsonBuffer[] GetArray()
         {
-            JsonBuffer[] values = new JsonBuffer[GetArrayLength()];
+            var values = new JsonBuffer[GetArrayLength()];
             GetArray(values);
             return values;
         }
@@ -264,7 +264,7 @@ namespace Jayrock.Json
             if (index < 0)
                 throw new ArgumentOutOfRangeException(nameof(index), index, null);
 
-            JsonBufferReader reader = CreateReader();
+            var reader = CreateReader();
 
             if (!reader.MoveToContent())
                 throw new JsonException("Unexpected EOF.");
@@ -273,7 +273,7 @@ namespace Jayrock.Json
                 return 0;
 
             reader.ReadToken(JsonTokenClass.Array);
-            int readCount = 0;
+            var readCount = 0;
 
             while (reader.TokenClass != JsonTokenClass.EndArray)
             {
@@ -306,7 +306,7 @@ namespace Jayrock.Json
             if (index < 0)
                 throw new ArgumentOutOfRangeException(nameof(index), index, null);
 
-            JsonBufferReader reader = CreateReader();
+            var reader = CreateReader();
 
             if (!reader.MoveToContent())
                 throw new JsonException("Unexpected EOF.");
@@ -315,7 +315,7 @@ namespace Jayrock.Json
                 return 0;
 
             reader.ReadToken(JsonTokenClass.Object);
-            int readCount = 0;
+            var readCount = 0;
 
             while (reader.TokenClass == JsonTokenClass.Member)
             {
@@ -335,15 +335,15 @@ namespace Jayrock.Json
 
         public NamedJsonBuffer[] GetMembersArray()
         {
-            NamedJsonBuffer[] members = new NamedJsonBuffer[GetMemberCount()];
+            var members = new NamedJsonBuffer[GetMemberCount()];
             GetMembers(members);
             return members;
         }
 
         public override int GetHashCode()
         {
-            int result = 0;
-            for (int i = 0; i < Length; i++)
+            var result = 0;
+            for (var i = 0; i < Length; i++)
                 result ^= this[i].GetHashCode();
             return result;
         }
@@ -358,7 +358,7 @@ namespace Jayrock.Json
             if (Length != other.Length)
                 return false;
 
-            for (int i = 0; i < Length; i++)
+            for (var i = 0; i < Length; i++)
             {
                 if (!this[i].Equals(other[i]))
                     return false;
@@ -369,7 +369,7 @@ namespace Jayrock.Json
 
         public IEnumerable<NamedJsonBuffer> GetMembers()
         {
-            JsonBufferReader reader = CreateReader();
+            var reader = CreateReader();
             reader.ReadToken(JsonTokenClass.Object);
             while (reader.TokenClass == JsonTokenClass.Member)
                 yield return new NamedJsonBuffer(reader.Text, reader.BufferValue());
@@ -389,7 +389,7 @@ namespace Jayrock.Json
                 return JsonString.Enquote(FirstToken.Text);
             if (IsScalar)
                 return FirstToken.Text;
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             JsonText.CreateWriter(sb).WriteFromReader(CreateReader());
             return sb.ToString();
         }

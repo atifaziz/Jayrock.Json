@@ -39,7 +39,7 @@ namespace Jayrock.Json
             }
             else if (_count == _tokens.Length)
             {
-                JsonToken[] tokens = new JsonToken[_tokens.Length * 2];
+                var tokens = new JsonToken[_tokens.Length * 2];
                 _tokens.CopyTo(tokens, 0);
                 _tokens = tokens;
             }
@@ -100,7 +100,7 @@ namespace Jayrock.Json
                 throw new InvalidOperationException("JSON data cannot be read before it is complete.");
             }
 
-            JsonToken[] tokens = new JsonToken[_count + 2];
+            var tokens = new JsonToken[_count + 2];
 
             if (_count > 0)
                 Array.Copy(_tokens, 0, tokens, 1, _count);
@@ -124,7 +124,7 @@ namespace Jayrock.Json
             if (reader == null)
                 throw new ArgumentNullException(nameof(reader));
 
-            JsonRecorder recorder = new JsonRecorder();
+            var recorder = new JsonRecorder();
             recorder.WriteFromReader(reader);
             return recorder;
         }

@@ -57,7 +57,7 @@ namespace Jayrock.Json.Conversion
             if (Name.Length == 0)
                 return;
 
-            IPropertyCustomization customization = (IPropertyCustomization)property;
+            var customization = (IPropertyCustomization)property;
             customization.SetName(Name);
         }
     }

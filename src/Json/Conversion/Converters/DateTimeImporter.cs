@@ -65,7 +65,7 @@ namespace Jayrock.Json.Conversion.Converters
                 // TODO: MS Ajax format requires the slashes to be escaped, but we have no information here whether
                 //       any characters were escaped.  So we have to assume they were.  Given that we wouldn't be in
                 //       this importer unless we expected a DateTime, it's probably safe enough.
-                Match match = Regex.Match(reader.Text, @"\A / Date \( (-?[0-9]+) \) / \z",
+                var match = Regex.Match(reader.Text, @"\A / Date \( (-?[0-9]+) \) / \z",
                                   RegexOptions.IgnorePatternWhitespace
                                   | RegexOptions.IgnoreCase
                                   | RegexOptions.CultureInvariant);
@@ -76,9 +76,9 @@ namespace Jayrock.Json.Conversion.Converters
 
                     try
                     {
-                        GroupCollection groups = match.Groups;
+                        var groups = match.Groups;
 
-                        long ms = long.Parse(groups[1].Value, NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture);
+                        var ms = long.Parse(groups[1].Value, NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture);
                         time = UnixTime.ToDateTime(ms / 1000.0);
                     }
                     catch (OverflowException e)
@@ -107,7 +107,7 @@ namespace Jayrock.Json.Conversion.Converters
             Debug.Assert(context != null);
             Debug.Assert(reader != null);
 
-            string text = reader.Text;
+            var text = reader.Text;
 
             double time;
 

@@ -53,15 +53,15 @@ namespace Jayrock.Diagnostics
         {
             int[] ranges = { 0, 0x1f, 0x7f, 0x7f, 0x80, 0x9f };
 
-            int count = 0;
-            for (int i = 0; i < ranges.Length; i += 2)
+            var count = 0;
+            for (var i = 0; i < ranges.Length; i += 2)
                 count += (ranges[i + 1] - ranges[i]) + 1;
 
-            char[] controls = new char[count];
+            var controls = new char[count];
 
-            int running = 0;
-            for (int i = 0; i < ranges.Length; i += 2)
-                for (int j = ranges[i]; j <= ranges[i + 1]; j++)
+            var running = 0;
+            for (var i = 0; i < ranges.Length; i += 2)
+                for (var j = ranges[i]; j <= ranges[i + 1]; j++)
                     controls[running++] = (char) j;
 
             Assert.AreEqual(new string(DebugString.ControlReplacement, count), DebugString.Format(new string(controls), count));

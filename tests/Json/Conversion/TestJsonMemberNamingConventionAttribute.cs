@@ -38,28 +38,28 @@ namespace Jayrock.Json.Conversion
         [ Test ]
         public void DefaultInitializationYieldsNoneConvention()
         {
-            JsonMemberNamingConventionAttribute attribute = new JsonMemberNamingConventionAttribute();
+            var attribute = new JsonMemberNamingConventionAttribute();
             Assert.AreEqual(NamingConvention.None, attribute.Convention);
         }
 
         [ Test ]
         public void InitializeConvention()
         {
-            JsonMemberNamingConventionAttribute attribute = new JsonMemberNamingConventionAttribute(NamingConvention.Pascal);
+            var attribute = new JsonMemberNamingConventionAttribute(NamingConvention.Pascal);
             Assert.AreEqual(NamingConvention.Pascal, attribute.Convention);
         }
 
         [ Test ]
         public void InitializeUnderscores()
         {
-            JsonMemberNamingConventionAttribute attribute = new JsonMemberNamingConventionAttribute(NamingConvention.Pascal, UnderscoreConvention.Separate);
+            var attribute = new JsonMemberNamingConventionAttribute(NamingConvention.Pascal, UnderscoreConvention.Separate);
             Assert.AreEqual(UnderscoreConvention.Separate, attribute.Underscores);
         }
 
         [Test]
         public void SetConvention()
         {
-            JsonMemberNamingConventionAttribute attribute = new JsonMemberNamingConventionAttribute();
+            var attribute = new JsonMemberNamingConventionAttribute();
             Assert.AreEqual(NamingConvention.None, attribute.Convention);
             attribute.Convention = NamingConvention.Pascal;
             Assert.AreEqual(NamingConvention.Pascal, attribute.Convention);
@@ -68,7 +68,7 @@ namespace Jayrock.Json.Conversion
         [Test]
         public void SetUnderscores()
         {
-            JsonMemberNamingConventionAttribute attribute = new JsonMemberNamingConventionAttribute();
+            var attribute = new JsonMemberNamingConventionAttribute();
             Assert.AreEqual(UnderscoreConvention.None, attribute.Underscores);
             attribute.Underscores = UnderscoreConvention.Separate;
             Assert.AreEqual(UnderscoreConvention.Separate, attribute.Underscores);
@@ -77,7 +77,7 @@ namespace Jayrock.Json.Conversion
         [Test]
         public void CustomizationSkippedWhenNoneConvention()
         {
-            TestPropertyDescriptor property = CreateTestProperty("foo");
+            var property = CreateTestProperty("foo");
             IPropertyDescriptorCustomization customization = new JsonMemberNamingConventionAttribute();
             customization.Apply(property);
             Assert.IsNull(property.CustomizedName);
@@ -162,8 +162,8 @@ namespace Jayrock.Json.Conversion
 
         private static void TestNamingCase(string baseName, NamingConvention testCase, UnderscoreConvention testUnder, string expected)
         {
-            JsonMemberNamingConventionAttribute attribute = new JsonMemberNamingConventionAttribute(testCase, testUnder);
-            TestPropertyDescriptor property = CreateTestProperty(baseName);
+            var attribute = new JsonMemberNamingConventionAttribute(testCase, testUnder);
+            var property = CreateTestProperty(baseName);
             IPropertyDescriptorCustomization customization = attribute;
 
             customization.Apply(property);
@@ -173,7 +173,7 @@ namespace Jayrock.Json.Conversion
 
         private static TestPropertyDescriptor CreateTestProperty(string baseName)
         {
-            TestPropertyDescriptor property = new TestPropertyDescriptor(baseName);
+            var property = new TestPropertyDescriptor(baseName);
             Assert.AreEqual(baseName, property.Name);
             Assert.IsNull(property.CustomizedName);
             return property;

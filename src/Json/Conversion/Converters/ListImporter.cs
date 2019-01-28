@@ -61,12 +61,12 @@ namespace Jayrock.Json.Conversion.Converters
             if (reader == null) throw new ArgumentNullException(nameof(reader));
 
             reader.Read();
-            TCollection collection = new TCollection();
+            var collection = new TCollection();
 
             while (reader.TokenClass != JsonTokenClass.EndArray)
                 collection.Add(context.Import<TItem>(reader));
 
-            object result = IsOutputReadOnly
+            var result = IsOutputReadOnly
                           ? (object) new ReadOnlyCollection<TItem>((IList<TItem>) collection)
                           : collection;
 

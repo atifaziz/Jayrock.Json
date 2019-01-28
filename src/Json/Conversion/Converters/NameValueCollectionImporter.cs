@@ -54,7 +54,7 @@ namespace Jayrock.Json.Conversion.Converters
             // return a subtype of NameValueCollection.
             //
 
-            NameValueCollection collection = CreateCollection();
+            var collection = CreateCollection();
 
             //
             // Loop through all members of the object.
@@ -62,7 +62,7 @@ namespace Jayrock.Json.Conversion.Converters
 
             while (reader.TokenClass != JsonTokenClass.EndObject)
             {
-                string name = reader.ReadMember();
+                var name = reader.ReadMember();
 
                 //
                 // If the value is an array, then it's a multi-value

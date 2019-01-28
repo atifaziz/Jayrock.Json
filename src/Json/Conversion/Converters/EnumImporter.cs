@@ -44,11 +44,11 @@ namespace Jayrock.Json.Conversion.Converters
             Debug.Assert(context != null);
             Debug.Assert(reader != null);
 
-            string s = reader.Text.Trim();
+            var s = reader.Text.Trim();
 
             if (s.Length > 0)
             {
-                char ch = s[0];
+                var ch = s[0];
 
                 if (Char.IsDigit(ch) || ch == '+' || ch == '-')
                     throw Error(s, null);

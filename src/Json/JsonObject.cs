@@ -74,7 +74,7 @@ namespace Jayrock.Json
 
         public JsonObject(IDictionary members)
         {
-            foreach (DictionaryEntry entry in DictionaryHelper.GetEntries(members))
+            foreach (var entry in DictionaryHelper.GetEntries(members))
             {
                 if (entry.Key == null)
                     throw new InvalidMemberException();
@@ -87,13 +87,13 @@ namespace Jayrock.Json
 
         public JsonObject(string[] keys, object[] values)
         {
-            int keyCount = keys == null ? 0 : keys.Length;
-            int valueCount = values == null ? 0 : values.Length;
-            int count = Math.Max(keyCount, valueCount);
+            var keyCount = keys == null ? 0 : keys.Length;
+            var valueCount = values == null ? 0 : values.Length;
+            var count = Math.Max(keyCount, valueCount);
 
-            string key = string.Empty;
+            var key = string.Empty;
 
-            for (int i = 0; i < count; i++)
+            for (var i = 0; i < count; i++)
             {
                 if (i < keyCount)
                     key = Mask.NullString(keys[i]);
@@ -117,7 +117,7 @@ namespace Jayrock.Json
             if (members == null)
                 return;
 
-            foreach (JsonMember member in members)
+            foreach (var member in members)
                 Accumulate(member.Name, member.Value);
         }
 
@@ -170,7 +170,7 @@ namespace Jayrock.Json
                     EnsureNotDisposed();
                     if (!_memberInitialized)
                     {
-                        string name = (string) _enumerator.Current;
+                        var name = (string) _enumerator.Current;
                         _member = new JsonMember(name, _obj[name]);
                         _memberInitialized = true;
                     }
@@ -234,7 +234,7 @@ namespace Jayrock.Json
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
 
-            object current = InnerHashtable[name];
+            var current = InnerHashtable[name];
 
             if (current == null)
             {
@@ -242,7 +242,7 @@ namespace Jayrock.Json
             }
             else
             {
-                IList values = current as IList;
+                var values = current as IList;
 
                 if (values != null)
                 {
@@ -318,7 +318,7 @@ namespace Jayrock.Json
 
         public virtual JsonArray GetNamesArray()
         {
-            JsonArray names = new JsonArray();
+            var names = new JsonArray();
             ListNames(names);
             return names;
         }
@@ -338,7 +338,7 @@ namespace Jayrock.Json
 
         public override string ToString()
         {
-            StringWriter writer = new StringWriter();
+            var writer = new StringWriter();
             Export(JsonText.CreateWriter(writer));
             return writer.ToString();
         }
@@ -485,9 +485,9 @@ namespace Jayrock.Json
 
         private T[] GetMembers<T>(Converter<JsonMember, T> selector)
         {
-            T[] arr = new T[Count];
-            int i = 0;
-            foreach (JsonMember member in this)
+            var arr = new T[Count];
+            var i = 0;
+            foreach (var member in this)
                 arr[i++] = selector(member);
             return arr;
         }
@@ -512,7 +512,7 @@ namespace Jayrock.Json
 
         IEnumerator<KeyValuePair<string, object>> IEnumerable<KeyValuePair<string, object>>.GetEnumerator()
         {
-            foreach (JsonMember member in this)
+            foreach (var member in this)
                 yield return new KeyValuePair<string, object>(member.Name, member.Value);
         }
 
@@ -542,8 +542,8 @@ namespace Jayrock.Json
             if (Count > array.Length - arrayIndex)
                 throw new ArgumentException(null, nameof(arrayIndex));
 
-            int i = arrayIndex;
-            foreach (JsonMember member in this)
+            var i = arrayIndex;
+            foreach (var member in this)
                 array[i++] = new KeyValuePair<string, object>(member.Name, member.Value);
         }
 

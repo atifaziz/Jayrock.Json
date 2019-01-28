@@ -124,7 +124,7 @@ namespace Jayrock.Json.Conversion.Converters
 
         private static object Import(Type type, string s)
         {
-            EnumImporter importer = new EnumImporter(type);
+            var importer = new EnumImporter(type);
             return importer.Import(new ImportContext(), CreateReader(s));
         }
 

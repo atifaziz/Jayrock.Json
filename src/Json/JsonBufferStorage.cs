@@ -52,7 +52,7 @@ namespace Jayrock.Json
             }
             else if (_count == _tokens.Length)
             {
-                JsonToken[] tokens = new JsonToken[_tokens.Length * 2];
+                var tokens = new JsonToken[_tokens.Length * 2];
                 _tokens.CopyTo(tokens, 0);
                 _tokens = tokens;
             }
@@ -63,7 +63,7 @@ namespace Jayrock.Json
 
         public JsonBufferStorage Write(params JsonToken[] tokens)
         {
-            foreach (JsonToken token in tokens)
+            foreach (var token in tokens)
                 Write(token);
             return this;
         }

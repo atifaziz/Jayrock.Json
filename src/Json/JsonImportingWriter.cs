@@ -45,8 +45,8 @@ namespace Jayrock.Json
 
         private void Pop()
         {
-            object current = _value;
-            object popped = _valueStack.Pop();
+            var current = _value;
+            var popped = _valueStack.Pop();
             _member = _memberStack.Pop();
             if (popped == null) // Final result?
                 return;

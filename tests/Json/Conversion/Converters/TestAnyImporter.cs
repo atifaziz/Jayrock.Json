@@ -61,7 +61,7 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void ParseEmptyArray()
         {
-            JsonArray values = (JsonArray) Parse("[]");
+            var values = (JsonArray) Parse("[]");
             Assert.IsNotNull(values);
             Assert.AreEqual(0, values.Length);
         }
@@ -69,7 +69,7 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void ParseArray()
         {
-            JsonArray values = (JsonArray) Parse("[123,'Hello World',true]");
+            var values = (JsonArray) Parse("[123,'Hello World',true]");
             Assert.IsNotNull(values);
             Assert.AreEqual(3, values.Length);
             Assert.AreEqual(123, (int) (JsonNumber) values[0]);
@@ -80,7 +80,7 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void ParseEmptyObject()
         {
-            JsonObject o = (JsonObject) Parse("{}");
+            var o = (JsonObject) Parse("{}");
             Assert.IsNotNull(o);
             Assert.AreEqual(0, o.Count);
         }
@@ -88,7 +88,7 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void ParseObject()
         {
-            JsonObject article = (JsonObject) Parse(@"
+            var article = (JsonObject) Parse(@"
                 /* Article */ {
                     Title : 'Introduction to JSON',
                     Rating : 2,
@@ -109,17 +109,17 @@ namespace Jayrock.Json.Conversion.Converters
             Assert.IsTrue(article.Contains("Abstract"));
             Assert.IsNull(article["Abstract"]);
 
-            JsonObject author = (JsonObject) article["Author"];
+            var author = (JsonObject) article["Author"];
             Assert.IsNotNull(author);
             Assert.AreEqual(2, author.Count);
             Assert.AreEqual("John Doe", author["Name"]);
             Assert.AreEqual("john.doe@example.com", author["E-Mail Address"]);
 
-            JsonArray references = (JsonArray) article["References"];
+            var references = (JsonArray) article["References"];
             Assert.IsNotNull(references);
             Assert.AreEqual(1, references.Length);
 
-            JsonObject reference = (JsonObject) references[0];
+            var reference = (JsonObject) references[0];
             Assert.IsNotNull(reference);
             Assert.AreEqual(2, reference.Count);
             Assert.AreEqual("JSON RPC", reference["Title"]);
@@ -128,8 +128,8 @@ namespace Jayrock.Json.Conversion.Converters
 
         private object Parse(string s)
         {
-            JsonTextReader reader = new JsonTextReader(new StringReader(s));
-            object value = JsonConvert.Import(reader);
+            var reader = new JsonTextReader(new StringReader(s));
+            var value = JsonConvert.Import(reader);
             Assert.IsTrue(reader.EOF);
             return value;
         }

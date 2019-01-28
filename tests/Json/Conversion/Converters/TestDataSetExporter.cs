@@ -45,20 +45,20 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void EmptyDataSetYieldsEmptyJsonObject()
         {
-            DataSet ds = new DataSet();
+            var ds = new DataSet();
             Assert.AreEqual("{}", JsonConvert.ExportToString(ds));
         }
 
         [ Test ]
         public void TableNamesBecomeJsonObjectMemberNames()
         {
-            DataSet ds = new DataSet();
+            var ds = new DataSet();
             ds.Tables.Add(new DataTable("Table1"));
             ds.Tables.Add(new DataTable("Table2"));
 
-            JsonRecorder writer = new JsonRecorder();
+            var writer = new JsonRecorder();
             JsonConvert.Export(ds, writer);
-            JsonReader reader = writer.CreatePlayer();
+            var reader = writer.CreatePlayer();
 
             reader.ReadToken(JsonTokenClass.Object);
             Assert.AreEqual("Table1", reader.ReadMember());
@@ -72,11 +72,11 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void TableExportedViaItsExporter()
         {
-            DataSet ds = new DataSet();
+            var ds = new DataSet();
             ds.Tables.Add(new DataTable("Table1"));
 
-            ExportContext context = new ExportContext();
-            TestDataTableExporter exporter = new TestDataTableExporter();
+            var context = new ExportContext();
+            var exporter = new TestDataTableExporter();
             context.Register(exporter);
             context.Export(ds, new JsonRecorder());
 
@@ -86,14 +86,14 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void TablesExportedEvenWithoutExporterInContext()
         {
-            DataSet ds = new DataSet();
+            var ds = new DataSet();
             ds.Tables.Add(new DataTable("Table1"));
 
-            TestExportContext context = new TestExportContext();
+            var context = new TestExportContext();
             context.Register(new DataSetExporter());
-            JsonRecorder writer = new JsonRecorder();
+            var writer = new JsonRecorder();
             context.Export(ds, writer);
-            JsonReader reader = writer.CreatePlayer();
+            var reader = writer.CreatePlayer();
 
             reader.ReadToken(JsonTokenClass.Object);
             Assert.AreEqual("Table1", reader.ReadMember());

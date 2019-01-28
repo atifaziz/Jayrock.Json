@@ -39,14 +39,14 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void ImportEmpty()
         {
-            NameValueCollection collection = Import("{}");
+            var collection = Import("{}");
             Assert.AreEqual(0, collection.Count);
         }
 
         [ Test ]
         public void ImportOneNameValue()
         {
-            NameValueCollection collection = Import("{\"foo\":\"bar\"}");
+            var collection = Import("{\"foo\":\"bar\"}");
             Assert.AreEqual(1, collection.Count);
             Assert.AreEqual("bar", collection["foo"]);
         }
@@ -54,7 +54,7 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void ImportEmptyName()
         {
-            NameValueCollection collection = Import("{\"\":\"bar\"}");
+            var collection = Import("{\"\":\"bar\"}");
             Assert.AreEqual(1, collection.Count);
             Assert.AreEqual("bar", collection[""]);
         }
@@ -62,7 +62,7 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void ImportEmptyValue()
         {
-            NameValueCollection collection = Import("{\"foo\":\"\"}");
+            var collection = Import("{\"foo\":\"\"}");
             Assert.AreEqual(1, collection.Count);
             Assert.AreEqual("", collection["foo"]);
         }
@@ -70,7 +70,7 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void ImportNullValue()
         {
-            NameValueCollection collection = Import("{\"foo\":null}");
+            var collection = Import("{\"foo\":null}");
             Assert.AreEqual(1, collection.Count);
             Assert.AreEqual("foo", collection.Keys[0]);
             Assert.AreEqual(null, collection.Get(0));
@@ -79,7 +79,7 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void ImportValuesArray()
         {
-            NameValueCollection collection = Import("{\"foo\":[\"bar1\",\"bar2\",\"bar3\"]}");
+            var collection = Import("{\"foo\":[\"bar1\",\"bar2\",\"bar3\"]}");
             Assert.AreEqual(1, collection.Count);
             Assert.AreEqual(new string[] { "bar1", "bar2", "bar3" }, collection.GetValues("foo"));
         }
@@ -105,7 +105,7 @@ namespace Jayrock.Json.Conversion.Converters
         {
             JsonReader reader = new JsonTextReader(new StringReader(s));
             IImporter importer = new NameValueCollectionImporter();
-            NameValueCollection import = (NameValueCollection) importer.Import(new ImportContext(), reader);
+            var import = (NameValueCollection) importer.Import(new ImportContext(), reader);
             Assert.IsTrue(reader.EOF, "Reader must be at EOF.");
             return import;
         }

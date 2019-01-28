@@ -53,14 +53,14 @@ namespace Jayrock.Json.Conversion.Converters
             if (reader == null)
                 throw new ArgumentNullException(nameof(reader));
 
-            IDictionary<TKey, TValue> dictionary = CreateDictionary();
-            bool isKeyOfString = IsKeyOfString;
+            var dictionary = CreateDictionary();
+            var isKeyOfString = IsKeyOfString;
 
             reader.ReadToken(JsonTokenClass.Object);
 
             while (reader.TokenClass != JsonTokenClass.EndObject)
             {
-                string name = reader.ReadMember();
+                var name = reader.ReadMember();
                 TKey key;
 
                 if (isKeyOfString)
@@ -69,7 +69,7 @@ namespace Jayrock.Json.Conversion.Converters
                 }
                 else
                 {
-                    JsonBuffer buffer = JsonBuffer.From(JsonToken.String(name));
+                    var buffer = JsonBuffer.From(JsonToken.String(name));
                     key = context.Import<TKey>(buffer.CreateReader());
                 }
 
@@ -81,7 +81,7 @@ namespace Jayrock.Json.Conversion.Converters
 
         protected virtual IDictionary<TKey, TValue> CreateDictionary()
         {
-            IEqualityComparer<TKey> comparer = IsKeyOfString
+            var comparer = IsKeyOfString
                 ? (IEqualityComparer<TKey>) StringComparer.Ordinal
                 : null;
 

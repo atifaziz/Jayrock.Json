@@ -37,7 +37,7 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void ExportNull()
         {
-            JsonRecorder writer = new JsonRecorder();
+            var writer = new JsonRecorder();
             CreateExporter().Export(new ExportContext(), null, writer);
             writer.CreatePlayer().ReadNull();
         }
@@ -45,10 +45,10 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void ExportNumber()
         {
-            JsonRecorder writer = new JsonRecorder();
-            object sample = SampleValue;
+            var writer = new JsonRecorder();
+            var sample = SampleValue;
             CreateExporter().Export(new ExportContext(), sample, writer);
-            object actual = Convert.ChangeType(writer.CreatePlayer().ReadNumber(), sample.GetType());
+            var actual = Convert.ChangeType(writer.CreatePlayer().ReadNumber(), sample.GetType());
             Assert.IsInstanceOf(sample.GetType(), actual);
             Assert.AreEqual(sample, actual);
         }

@@ -27,7 +27,7 @@ namespace Jayrock.Json
         [ Test ]
         public void Default()
         {
-            JsonMember member = new JsonMember();
+            var member = new JsonMember();
             Assert.AreEqual(string.Empty, member.Name);
             Assert.IsNull(member.Value);
             Assert.AreEqual(string.Empty, member.ToString());
@@ -36,7 +36,7 @@ namespace Jayrock.Json
         [ Test ]
         public void NameWithNullValue()
         {
-            JsonMember member = new JsonMember("foo", null);
+            var member = new JsonMember("foo", null);
             Assert.AreEqual("foo", member.Name);
             Assert.IsNull(member.Value);
             Assert.AreEqual("foo: ", member.ToString());
@@ -45,7 +45,7 @@ namespace Jayrock.Json
         [ Test ]
         public void NameWithNonNullValue()
         {
-            JsonMember member = new JsonMember("foo", "bar");
+            var member = new JsonMember("foo", "bar");
             Assert.AreEqual("foo", member.Name);
             Assert.AreEqual("bar", member.Value);
             Assert.AreEqual("foo: bar", member.ToString());

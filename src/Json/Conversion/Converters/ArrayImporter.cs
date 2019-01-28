@@ -55,8 +55,8 @@ namespace Jayrock.Json.Conversion.Converters
 
             reader.Read();
 
-            ArrayList list = new ArrayList();
-            Type elementType = OutputType.GetElementType();
+            var list = new ArrayList();
+            var elementType = OutputType.GetElementType();
 
             while (reader.TokenClass != JsonTokenClass.EndArray)
                 list.Add(context.Import(elementType, reader));
@@ -84,8 +84,8 @@ namespace Jayrock.Json.Conversion.Converters
             Debug.Assert(context != null);
             Debug.Assert(reader != null);
 
-            Type elementType = OutputType.GetElementType();
-            Array array = Array.CreateInstance(elementType, 1);
+            var elementType = OutputType.GetElementType();
+            var array = Array.CreateInstance(elementType, 1);
             array.SetValue(context.Import(elementType, reader), 0);
             return array;
         }
