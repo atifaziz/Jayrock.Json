@@ -145,6 +145,9 @@ namespace Jayrock.Json.Conversion
                 return (IImporter)Activator.CreateInstance(typeof(CollectionImporter<,,>).MakeGenericType(hashSetType, type, typeArguments[0]));
             }
 
+            if (Reflector.IsValueTupleFamily(type))
+                return new ValueTupleImporter(type);
+
             if (Reflector.IsTupleFamily(type))
                 return new TupleImporter(type);
 

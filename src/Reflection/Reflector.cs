@@ -128,5 +128,47 @@ namespace Jayrock.Reflection
                 && i == someTupleType.FullName.IndexOf(tick)
                 && 0 == string.CompareOrdinal(someTupleType.FullName, 0, type.FullName, 0, i);
         }
+
+        static readonly Type[] CommonValueTupleTypes =
+        {
+            // Tuple of 1 not expected to be common so excluded from here
+            typeof(ValueTuple<,>),
+            typeof(ValueTuple<,,>),
+            typeof(ValueTuple<,,,>),
+            typeof(ValueTuple<,,,,>)
+        };
+
+        /// <summary>
+        /// Determines if a type is one of the generic <see cref="System.Tuple"/> family
+        /// of types.
+        /// </summary>
+
+        public static bool IsValueTupleFamily(Type type)
+        {
+            if (type == null)
+                throw new ArgumentNullException(nameof(type));
+
+            if (!type.IsGenericType || type.IsGenericTypeDefinition)
+                return false;
+
+            //
+            // Quick check against common generic type definitions
+            //
+
+            if (Array.IndexOf(CommonValueTupleTypes, type.GetGenericTypeDefinition()) >= 0)
+                return true;
+
+            //
+            // Slower check for less common cases like tuple of 1 or
+            // just way too many items.
+            //
+
+            var someTupleType = CommonValueTupleTypes[0];
+            const char tick = '`';
+            var i = type.FullName.IndexOf(tick);
+            return type.Assembly == someTupleType.Assembly
+                && i == someTupleType.FullName.IndexOf(tick)
+                && 0 == string.CompareOrdinal(someTupleType.FullName, 0, type.FullName, 0, i);
+        }
     }
 }

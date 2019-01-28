@@ -29,18 +29,15 @@ namespace Jayrock.Json.Conversion.Converters
 
     #endregion
 
-    public class TupleImporter : ImporterBase
+    public abstract class TupleImporterBase : ImporterBase
     {
         readonly Func<ImportContext, JsonReader, object> _importer;
         readonly bool _single;
-        static readonly MethodInfo ImportMethod = ((MethodCallExpression)((Expression<Func<ImportContext, object>>)(context => context.Import(null, null))).Body).Method;
 
-        public TupleImporter(Type outputType) :
+        protected internal TupleImporterBase(Type outputType, Func<ImportContext, JsonReader, object> importer) :
             base(outputType)
         {
-            if (!Reflector.IsTupleFamily(outputType))
-                throw new ArgumentException(null, nameof(outputType));
-            _importer = CompileItemsImporter(outputType);
+            _importer = importer ?? throw new ArgumentNullException(nameof(importer));
             _single = outputType.GetGenericArguments().Length == 1;
         }
 
@@ -82,24 +79,44 @@ namespace Jayrock.Json.Conversion.Converters
                  ? _importer(context, reader)
                  : base.ImportFromObject(context, reader);
         }
+    }
 
-        static Func<ImportContext, JsonReader, object> CompileItemsImporter(Type tupleType)
+    public class TupleImporter : TupleImporterBase
+    {
+        public TupleImporter(Type outputType) :
+            base(Reflector.IsTupleFamily(outputType) ? outputType : throw new ArgumentException(null, nameof(outputType)),
+                 TupleImporterCompiler.Compile(outputType, typeof(Tuple))) {}
+    }
+
+    public class ValueTupleImporter : TupleImporterBase
+    {
+        public ValueTupleImporter(Type outputType) :
+            base(Reflector.IsValueTupleFamily(outputType) ? outputType : throw new ArgumentException(null, nameof(outputType)),
+                 TupleImporterCompiler.Compile(outputType, typeof(ValueTuple))) {}
+    }
+
+    static class TupleImporterCompiler
+    {
+        static readonly MethodInfo ImportMethod = ((MethodCallExpression)((Expression<Func<ImportContext, object>>)(context => context.Import(null, null))).Body).Method;
+
+        public static Func<ImportContext, JsonReader, object> Compile(Type tupleType, Type factoryType)
         {
             Debug.Assert(tupleType != null);
+            Debug.Assert(factoryType != null);
 
             var context = Expression.Parameter(typeof(ImportContext), "context");
             var reader = Expression.Parameter(typeof(JsonReader), "reader");
 
             var argTypes = tupleType.GetGenericArguments();
-            var createMethod = typeof(Tuple).GetMethods(BindingFlags.Public | BindingFlags.Static)
-                                            .Single(method => method.IsGenericMethodDefinition
-                                                              && "Create".Equals(method.Name, StringComparison.Ordinal)
-                                                              && argTypes.Length == method.GetGenericArguments().Length)
-                                            .MakeGenericMethod(argTypes);
+            var createMethod = factoryType.GetMethods(BindingFlags.Public | BindingFlags.Static)
+                                          .Single(method => method.IsGenericMethodDefinition
+                                                            && "Create".Equals(method.Name, StringComparison.Ordinal)
+                                                            && argTypes.Length == method.GetGenericArguments().Length)
+                                          .MakeGenericMethod(argTypes);
 
             //
-            // Suppose tupleType is Tuple<int, string, DateTime>, emit a
-            // call expression like this:
+            // Suppose tupleType is Tuple<int, string, DateTime> and
+            // factoryType is Tuple, emit a call expression like this:
             //
             //  Tuple.Create((int)      context.Import(typeof(int), reader),
             //               (string)   context.Import(typeof(string), reader),
@@ -109,7 +126,8 @@ namespace Jayrock.Json.Conversion.Converters
 
             var args = from argType in argTypes
                        select Expression.Convert(Expression.Call(context, ImportMethod, Expression.Constant(argType), reader), argType);
-            var body = Expression.Call(createMethod, args);
+            var body =
+                Expression.Convert(Expression.Call(createMethod, args), typeof(object));
             var lambda = Expression.Lambda<Func<ImportContext, JsonReader, object>>(body, context, reader);
             return lambda.Compile();
         }

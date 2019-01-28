@@ -97,6 +97,9 @@ namespace Jayrock.Json.Conversion
             if (Reflector.IsConstructionOfNullable(type))
                 return new NullableExporter(type);
 
+            if (Reflector.IsValueTupleFamily(type))
+                return new ValueTupleExporter(type);
+
             if (Reflector.IsTupleFamily(type))
                 return new TupleExporter(type);
 

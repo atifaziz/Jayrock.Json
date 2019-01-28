@@ -30,18 +30,14 @@ namespace Jayrock.Json.Conversion.Converters
 
     #endregion
 
-    public class TupleExporter : ExporterBase
+    public abstract class TupleExporterBase : ExporterBase
     {
         readonly Action<ExportContext, object, JsonWriter> _exporter;
-        static readonly MethodInfo ExportMethod = ((MethodCallExpression) ((Expression<Action<ExportContext>>) (context => context.Export(null, null))).Body).Method;
 
-        public TupleExporter(Type inputType)
+        protected internal TupleExporterBase(Type inputType, Action<ExportContext, object, JsonWriter> exporter)
             : base(inputType)
         {
-            if (!Reflector.IsTupleFamily(inputType))
-                throw new ArgumentException(null, nameof(inputType));
-
-            _exporter = CompileExporter(inputType);
+            _exporter = exporter ?? throw new ArgumentNullException(nameof(exporter));
         }
 
         protected override void ExportValue(ExportContext context, object value, JsonWriter writer)
@@ -53,8 +49,28 @@ namespace Jayrock.Json.Conversion.Converters
             _exporter(context, value, writer);
             writer.WriteEndArray();
         }
+    }
 
-        static Action<ExportContext, object, JsonWriter> CompileExporter(Type tupleType)
+    public class TupleExporter : TupleExporterBase
+    {
+        public TupleExporter(Type inputType)
+            : base(Reflector.IsTupleFamily(inputType) ? inputType : throw new ArgumentException(null, nameof(inputType)),
+                   TupleExporterCompiler.Compile(inputType, inputType.GetProperties())) {}
+    }
+
+    public class ValueTupleExporter : TupleExporterBase
+    {
+        public ValueTupleExporter(Type inputType)
+            : base(Reflector.IsValueTupleFamily(inputType) ? inputType : throw new ArgumentException(null, nameof(inputType)),
+                   TupleExporterCompiler.Compile(inputType, inputType.GetFields())) {}
+    }
+
+    static class TupleExporterCompiler
+    {
+        static readonly MethodInfo ExportMethod = ((MethodCallExpression) ((Expression<Action<ExportContext>>) (context => context.Export(null, null))).Body).Method;
+
+        public static Action<ExportContext, object, JsonWriter> Compile<T>(Type tupleType, IEnumerable<T> members)
+            where T : MemberInfo
         {
             Debug.Assert(tupleType != null);
 
@@ -67,36 +83,35 @@ namespace Jayrock.Json.Conversion.Converters
                           (
                               new[] { tuple },
                               new[] { Expression.Assign(tuple, Expression.Convert(obj, tupleType)) } /* ...
-                              ... */ .Concat(CreateItemExportCallExpressions(context, tuple, writer))
+                              ... */ .Concat(CreateItemExportCallExpressions())
                           );
 
             var lambda  = Expression.Lambda<Action<ExportContext, object, JsonWriter>>(body, context, obj, writer);
             return lambda.Compile();
-        }
 
-        static IEnumerable<Expression> CreateItemExportCallExpressions(ParameterExpression context, ParameterExpression tuple, ParameterExpression writer)
-        {
-            Debug.Assert(context != null);
-            Debug.Assert(tuple != null);
-            Debug.Assert(writer != null);
+            IEnumerable<Expression> CreateItemExportCallExpressions()
+            {
+                Debug.Assert(context != null);
+                Debug.Assert(tuple != null);
+                Debug.Assert(writer != null);
 
-            //
-            // Suppose type of tuple is Tuple<int, string, DateTime>, return
-            // call expressions like this:
-            //
-            //  context.Export((object) tuple.Item1, writer);
-            //  context.Export((object) tuple.Item2, writer);
-            //  context.Export((object) tuple.Item3, writer);
-            //
+                //
+                // Suppose type of tuple is Tuple<int, string, DateTime>, return
+                // call expressions like this:
+                //
+                //  context.Export((object) tuple.Item1, writer);
+                //  context.Export((object) tuple.Item2, writer);
+                //  context.Export((object) tuple.Item3, writer);
+                //
 
-            var properties = tuple.Type.GetProperties();
-            return from property in properties
-                   select Expression.Call
-                   (
-                       context, ExportMethod,
-                           Expression.Convert(Expression.MakeMemberAccess(tuple, property), typeof(object)),
-                           writer
-                   );
+                return from property in members
+                       select Expression.Call
+                       (
+                           context, ExportMethod,
+                               Expression.Convert(Expression.MakeMemberAccess(tuple, property), typeof(object)),
+                               writer
+                       );
+            }
         }
     }
 }
