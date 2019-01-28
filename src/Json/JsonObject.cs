@@ -481,7 +481,7 @@ namespace Jayrock.Json
             get { return _keys ?? (_keys = GetMembers(m => m.Name)); }
         }
 
-        T[] GetMembers<T>(Converter<JsonMember, T> selector)
+        T[] GetMembers<T>(Func<JsonMember, T> selector)
         {
             var arr = new T[Count];
             var i = 0;
