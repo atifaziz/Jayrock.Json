@@ -27,7 +27,7 @@ namespace Jayrock
 
     static class DictionaryHelper
     {
-        private static readonly DictionaryEntry[] _zeroEntries = new DictionaryEntry[0];
+        static readonly DictionaryEntry[] _zeroEntries = new DictionaryEntry[0];
 
         public static DictionaryEntry[] GetEntries(IDictionary dictionary)
         {

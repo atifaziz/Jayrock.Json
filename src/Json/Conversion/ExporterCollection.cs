@@ -26,7 +26,7 @@ namespace Jayrock.Json.Conversion
     #endregion
 
     [ Serializable ]
-    internal sealed class ExporterCollection : KeyedCollection<Type, IExporter>
+    sealed class ExporterCollection : KeyedCollection<Type, IExporter>
     {
         protected override Type GetKeyForItem(IExporter item)
         {

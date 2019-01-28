@@ -352,18 +352,18 @@ namespace Jayrock.Json
             Number(" 1.79769313486232e+308 ");
         }
 
-        private static void TestValidity(bool expected, params string[] inputs)
+        static void TestValidity(bool expected, params string[] inputs)
         {
             TestValidity(expected, NumberStyles.None, inputs);
         }
 
-        private static void TestValidity(bool expected, NumberStyles styles, params string[] inputs)
+        static void TestValidity(bool expected, NumberStyles styles, params string[] inputs)
         {
             foreach (var input in inputs)
                 Assert.AreEqual(expected, JsonNumber.IsValid(input, styles), input + " (" + styles + ")");
         }
 
-        private static JsonNumber Number(string s)
+        static JsonNumber Number(string s)
         {
             return new JsonNumber(s);
         }

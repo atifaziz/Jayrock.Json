@@ -32,10 +32,10 @@ namespace TidyJson
     #endregion
 
     [ Serializable ]
-    internal struct ConsoleBrush
+    struct ConsoleBrush
     {
-        private readonly ConsoleColor foreground;
-        private readonly ConsoleColor background;
+        readonly ConsoleColor foreground;
+        readonly ConsoleColor background;
 
         public ConsoleBrush(ConsoleColor color) :
             this(color, color) {}

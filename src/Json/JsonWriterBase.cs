@@ -32,9 +32,9 @@ namespace Jayrock.Json
 
     public abstract class JsonWriterBase : JsonWriter
     {
-        private WriterStateStack _stateStack;
-        private WriterState _state;
-        private int _maxDepth = 30;
+        WriterStateStack _stateStack;
+        WriterState _state;
+        int _maxDepth = 30;
 
         protected JsonWriterBase()
         {
@@ -114,7 +114,7 @@ namespace Jayrock.Json
             WriteStringOrChars(value, null, 0, 0);
         }
 
-        private void WriteStringOrChars(string value, char[] chars, int offset, int length)
+        void WriteStringOrChars(string value, char[] chars, int offset, int length)
         {
             if (Depth == 0)
             {
@@ -195,12 +195,12 @@ namespace Jayrock.Json
         protected abstract void WriteBooleanImpl(bool value);
         protected abstract void WriteNullImpl();
 
-        private bool HasStates
+        bool HasStates
         {
             get { return _stateStack != null && _stateStack.Count > 0; }
         }
 
-        private WriterStateStack States
+        WriterStateStack States
         {
             get
             {
@@ -211,7 +211,7 @@ namespace Jayrock.Json
             }
         }
 
-        private void EnteringBracket()
+        void EnteringBracket()
         {
             EnsureNotEnded();
 
@@ -222,7 +222,7 @@ namespace Jayrock.Json
                 throw new Exception("Maximum allowed depth has been exceeded.");
         }
 
-        private void EnterBracket(JsonWriterBracket newBracket)
+        void EnterBracket(JsonWriterBracket newBracket)
         {
             Debug.Assert(newBracket == JsonWriterBracket.Array || newBracket == JsonWriterBracket.Object);
 
@@ -230,7 +230,7 @@ namespace Jayrock.Json
             _state = new WriterState(newBracket);
         }
 
-        private void ExitBracket()
+        void ExitBracket()
         {
             _state = States.Pop();
 
@@ -240,7 +240,7 @@ namespace Jayrock.Json
                 OnValueWritten();
         }
 
-        private void OnValueWritten()
+        void OnValueWritten()
         {
             if (_state.Bracket == JsonWriterBracket.Member)
                 _state.Bracket = JsonWriterBracket.Object;
@@ -248,20 +248,20 @@ namespace Jayrock.Json
             _state.Index++;
         }
 
-        private void EnsureMemberOnObjectBracket()
+        void EnsureMemberOnObjectBracket()
         {
             if (_state.Bracket == JsonWriterBracket.Object)
                 throw new JsonException("A JSON member value inside a JSON object must be preceded by its member name.");
         }
 
-        private void EnsureNotEnded()
+        void EnsureNotEnded()
         {
             if (_state.Bracket == JsonWriterBracket.Closed)
                 throw new JsonException("JSON data has already been ended.");
         }
 
         [ Serializable ]
-        private struct WriterState
+        struct WriterState
         {
             public JsonWriterBracket Bracket;
             public int Index;
@@ -274,10 +274,10 @@ namespace Jayrock.Json
         }
 
         [ Serializable ]
-        private sealed class WriterStateStack
+        sealed class WriterStateStack
         {
-            private WriterState[] _states;
-            private int _count;
+            WriterState[] _states;
+            int _count;
 
             public int Count
             {

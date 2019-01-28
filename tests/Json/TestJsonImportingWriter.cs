@@ -167,7 +167,7 @@ namespace Jayrock.Json
             Assert.AreEqual("CloseDoc()", menuitem["onclick"]);
         }
 
-        private static object GetSingleValue(JsonImportingWriter writer)
+        static object GetSingleValue(JsonImportingWriter writer)
         {
             Assert.IsTrue(writer.IsArray);
             Assert.IsFalse(writer.IsObject);
@@ -178,7 +178,7 @@ namespace Jayrock.Json
             return result;
         }
 
-        private static object[] GetArray(JsonImportingWriter writer)
+        static object[] GetArray(JsonImportingWriter writer)
         {
             Assert.IsTrue(writer.IsArray);
             Assert.IsFalse(writer.IsObject);

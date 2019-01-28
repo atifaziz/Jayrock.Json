@@ -43,7 +43,7 @@ namespace Jayrock.Json.Conversion.Converters
             ExportRowView(context, (DataRowView) value, writer);
         }
 
-        private static void ExportRowView(ExportContext context, DataRowView rowView, JsonWriter writer)
+        static void ExportRowView(ExportContext context, DataRowView rowView, JsonWriter writer)
         {
             Debug.Assert(context != null);
             Debug.Assert(rowView != null);

@@ -32,10 +32,10 @@ namespace Jayrock.Json.Conversion
     [ Serializable ]
     public class ImportContext
     {
-        private ImporterCollection _importers;
-        private IDictionary _items;
+        ImporterCollection _importers;
+        IDictionary _items;
 
-        private static ImporterCollection _stockImporters;
+        static ImporterCollection _stockImporters;
 
         public virtual object Import(JsonReader reader)
         {
@@ -107,7 +107,7 @@ namespace Jayrock.Json.Conversion
             }
         }
 
-        private static IImporter FindCompatibleImporter(Type type)
+        static IImporter FindCompatibleImporter(Type type)
         {
             Debug.Assert(type != null);
 
@@ -174,7 +174,7 @@ namespace Jayrock.Json.Conversion
             return null;
         }
 
-        private ImporterCollection Importers
+        ImporterCollection Importers
         {
             get
             {
@@ -185,7 +185,7 @@ namespace Jayrock.Json.Conversion
             }
         }
 
-        private static ImporterCollection StockImporters
+        static ImporterCollection StockImporters
         {
             get
             {

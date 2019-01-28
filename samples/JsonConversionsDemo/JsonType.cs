@@ -28,10 +28,10 @@ namespace JsonConversionsDemo
         [ Serializable ]
         public sealed class Builder
         {
-            private readonly Type _type;
-            private readonly List<MemberInfo> _members;
-            private readonly List<string> _names;
-            private CustomTypeDescriptor _customType;
+            readonly Type _type;
+            readonly List<MemberInfo> _members;
+            readonly List<string> _names;
+            CustomTypeDescriptor _customType;
 
             public Builder(Type type)
             {
@@ -102,7 +102,7 @@ namespace JsonConversionsDemo
                 return this;
             }
 
-            private void OnChanging()
+            void OnChanging()
             {
                 _customType = null;
             }

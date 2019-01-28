@@ -28,10 +28,10 @@ namespace Jayrock.Json
     [ Serializable ]
     public sealed class JsonRecorder : JsonWriterBase
     {
-        private int _count;
-        private JsonToken[] _tokens;
+        int _count;
+        JsonToken[] _tokens;
 
-        private void Write(JsonToken token)
+        void Write(JsonToken token)
         {
             if (_tokens == null)
             {
@@ -130,10 +130,10 @@ namespace Jayrock.Json
         }
 
         [ Serializable ]
-        private sealed class JsonPlayer : JsonReaderBase
+        sealed class JsonPlayer : JsonReaderBase
         {
-            private int _index;
-            private readonly JsonToken[] _tokens;
+            int _index;
+            readonly JsonToken[] _tokens;
 
             public JsonPlayer(JsonToken[] tokens)
             {

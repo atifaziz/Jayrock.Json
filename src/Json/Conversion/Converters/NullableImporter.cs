@@ -28,7 +28,7 @@ namespace Jayrock.Json.Conversion.Converters
 
     public class NullableImporter : ImporterBase
     {
-        private readonly Type _underlyingType;
+        readonly Type _underlyingType;
 
         public NullableImporter(Type outputType) :
             base(outputType)
@@ -40,7 +40,7 @@ namespace Jayrock.Json.Conversion.Converters
                 // MONO: outputType.GetGenericArguments()[0];
         }
 
-        private object ImportUnderlyingType(ImportContext context, JsonReader reader)
+        object ImportUnderlyingType(ImportContext context, JsonReader reader)
         {
             Debug.Assert(context != null);
             Debug.Assert(reader != null);

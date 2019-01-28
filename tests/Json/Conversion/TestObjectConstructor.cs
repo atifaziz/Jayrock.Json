@@ -60,7 +60,8 @@ namespace Jayrock.Tests.Json.Conversion
             new ObjectConstructor(typeof(PrivateThing));
         }
 
-        class PrivateThing { private PrivateThing() {} }
+        class PrivateThing {
+            PrivateThing() {} }
 
         [Test, ExpectedException(typeof(ArgumentException))]
         public void CannotInitializeWithZeroConstructors()
@@ -108,8 +109,8 @@ namespace Jayrock.Tests.Json.Conversion
 
         class Point
         {
-            private readonly int _x;
-            private readonly int _y;
+            readonly int _x;
+            readonly int _y;
 
             public Point(int x, int y)
             {
@@ -149,12 +150,12 @@ namespace Jayrock.Tests.Json.Conversion
             Assert.AreEqual(GetThingConstructor(typeof(int), typeof(bool), typeof(string), typeof(IDictionary)), thing.Constructor);
         }
 
-        private static ConstructorInfo GetThingConstructor(params Type[] types)
+        static ConstructorInfo GetThingConstructor(params Type[] types)
         {
             return typeof(Thing).GetConstructor(BindingFlags.Instance | BindingFlags.Public, null, types, null);
         }
 
-        private Thing CreateThing(string json)
+        Thing CreateThing(string json)
         {
             var ctor = new ObjectConstructor(typeof(Thing));
             var context = JsonConvert.CreateImportContext();
@@ -164,11 +165,11 @@ namespace Jayrock.Tests.Json.Conversion
 
         class Thing
         {
-            private readonly int _num;
-            private readonly bool _flag;
-            private readonly string _str;
-            private readonly IDictionary _obj;
-            private readonly ConstructorInfo _ctor;
+            readonly int _num;
+            readonly bool _flag;
+            readonly string _str;
+            readonly IDictionary _obj;
+            readonly ConstructorInfo _ctor;
 
             // ReSharper disable UnusedMember.Local
             public Thing(int num)
@@ -183,7 +184,7 @@ namespace Jayrock.Tests.Json.Conversion
             public Thing(int num, bool flag, string str, IDictionary obj) :
                 this(num, flag, str, obj, (ConstructorInfo) MethodBase.GetCurrentMethod()) {}
 
-            private Thing(int num, bool flag, string str, IDictionary obj, ConstructorInfo ctor)
+            Thing(int num, bool flag, string str, IDictionary obj, ConstructorInfo ctor)
             {
                 _num = num;
                 _flag = flag;

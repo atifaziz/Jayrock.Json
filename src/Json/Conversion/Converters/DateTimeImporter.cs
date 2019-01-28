@@ -29,7 +29,7 @@ namespace Jayrock.Json.Conversion.Converters
 
     public class DateTimeImporter : ImporterBase
     {
-        private static readonly string[] _formats = new string[]
+        static readonly string[] _formats = new string[]
         {
             "yyyy-MM-dd'T'HH:mm:ss.fffffffK",
             "yyyy-MM-dd'T'HH:mm:ss.ffffK",
@@ -97,7 +97,7 @@ namespace Jayrock.Json.Conversion.Converters
             }
         }
 
-        private static JsonException StringError(Exception e)
+        static JsonException StringError(Exception e)
         {
             return new JsonException("Error importing JSON String as System.DateTime.", e);
         }
@@ -134,7 +134,7 @@ namespace Jayrock.Json.Conversion.Converters
             }
         }
 
-        private static JsonException NumberError(Exception e, string text)
+        static JsonException NumberError(Exception e, string text)
         {
             return new JsonException(string.Format("Error importing JSON Number {0} as System.DateTime.", text), e);
         }

@@ -50,7 +50,7 @@ namespace Jayrock.Json.Conversion
 
     public sealed class CustomTypeDescriptor : ICustomTypeDescriptor
     {
-        private readonly PropertyDescriptorCollection _properties;
+        readonly PropertyDescriptorCollection _properties;
 
         public CustomTypeDescriptor(Type type) :
             this(type, null) {}
@@ -61,7 +61,7 @@ namespace Jayrock.Json.Conversion
         public CustomTypeDescriptor(Type type, MemberInfo[] members, string[] names) :
             this(type, LikeAnonymousClass(type), members, names) {}
 
-        private CustomTypeDescriptor(Type type, bool isAnonymousClass, MemberInfo[] members, string[] names)
+        CustomTypeDescriptor(Type type, bool isAnonymousClass, MemberInfo[] members, string[] names)
         {
             if (type == null)
                 throw new ArgumentNullException(nameof(type));
@@ -309,14 +309,13 @@ namespace Jayrock.Json.Conversion
         /// A base <see cref="PropertyDescriptor"/> implementation for
         /// a type member (<see cref="MemberInfo"/>).
         /// </summary>
-
-        private abstract class TypeMemberDescriptor : PropertyDescriptor, IPropertyImpl, IPropertyCustomization, IServiceContainer
+        abstract class TypeMemberDescriptor : PropertyDescriptor, IPropertyImpl, IPropertyCustomization, IServiceContainer
         {
-            private string _customName;
-            private int _customNameHashCode;
-            private Type _propertyType;
-            private IPropertyImpl _impl;
-            private ServiceContainer _services;
+            string _customName;
+            int _customNameHashCode;
+            Type _propertyType;
+            IPropertyImpl _impl;
+            ServiceContainer _services;
 
             protected TypeMemberDescriptor(MemberInfo member, string name , Type propertyType) :
                 base(ChooseName(name, member.Name), null)
@@ -423,7 +422,7 @@ namespace Jayrock.Json.Conversion
                     customization.Apply(this);
             }
 
-            private static string ChooseName(string propsedName, string baseName)
+            static string ChooseName(string propsedName, string baseName)
             {
                 if (Mask.NullString(propsedName).Length > 0)
                     return propsedName;
@@ -431,7 +430,7 @@ namespace Jayrock.Json.Conversion
                 return ToCamelCase(baseName);
             }
 
-            private static string ToCamelCase(string s)
+            static string ToCamelCase(string s)
             {
                 if (s == null || s.Length == 0)
                     return s;
@@ -439,7 +438,7 @@ namespace Jayrock.Json.Conversion
                 return char.ToLower(s[0], CultureInfo.InvariantCulture) + s.Substring(1);
             }
 
-            private ServiceContainer Services
+            ServiceContainer Services
             {
                 get
                 {
@@ -496,10 +495,9 @@ namespace Jayrock.Json.Conversion
         /// A <see cref="PropertyDescriptor"/> implementation around
         /// <see cref="FieldInfo"/>.
         /// </summary>
-
-        private sealed class TypeFieldDescriptor : TypeMemberDescriptor
+        sealed class TypeFieldDescriptor : TypeMemberDescriptor
         {
-            private readonly FieldInfo _field;
+            readonly FieldInfo _field;
 
             public TypeFieldDescriptor(FieldInfo field, string name) :
                 base(field, name, field.FieldType)
@@ -533,10 +531,9 @@ namespace Jayrock.Json.Conversion
         /// A <see cref="PropertyDescriptor"/> implementation around
         /// <see cref="PropertyInfo"/>.
         /// </summary>
-
-        private sealed class TypePropertyDescriptor : TypeMemberDescriptor
+        sealed class TypePropertyDescriptor : TypeMemberDescriptor
         {
-            private readonly PropertyInfo _property;
+            readonly PropertyInfo _property;
 
             public TypePropertyDescriptor(PropertyInfo property, string name) :
                 base(property, name, property.PropertyType)

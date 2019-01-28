@@ -382,7 +382,7 @@ namespace Jayrock.Json
                 OnDisposed(EventArgs.Empty);
         }
 
-        private void OnDisposed(EventArgs e)
+        void OnDisposed(EventArgs e)
         {
             var handler = Disposed;
 

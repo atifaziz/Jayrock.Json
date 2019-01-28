@@ -38,7 +38,7 @@ namespace Jayrock.Json.Conversion
     [ AttributeUsage(AttributeTargets.Field | AttributeTargets.Property) ]
     public sealed class JsonDefaultValueAttribute : Attribute, IPropertyDescriptorCustomization
     {
-        private object _value;
+        object _value;
 
         public JsonDefaultValueAttribute(object value)
         {
@@ -76,10 +76,10 @@ namespace Jayrock.Json.Conversion
             container.AddService(typeof(IObjectMemberExporter), new PropertyExporter(property, Value));
         }
 
-        private sealed class PropertyExporter : IObjectMemberExporter
+        sealed class PropertyExporter : IObjectMemberExporter
         {
-            private readonly PropertyDescriptor _property;
-            private readonly object _defaultValue;
+            readonly PropertyDescriptor _property;
+            readonly object _defaultValue;
 
             public PropertyExporter(PropertyDescriptor property, object defaultValue)
             {

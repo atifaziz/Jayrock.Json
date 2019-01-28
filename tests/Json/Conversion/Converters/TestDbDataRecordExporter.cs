@@ -70,12 +70,12 @@ namespace Jayrock.Json.Conversion.Converters
             Assert.AreEqual("[{\"id\":1},{\"id\":null},{\"id\":3},{\"id\":null}]", Format(table));
         }
 
-        private static void AppendRow(DataTable table, params object[] values)
+        static void AppendRow(DataTable table, params object[] values)
         {
             table.Rows.Add(values);
         }
 
-        private static string Format(DataTable table)
+        static string Format(DataTable table)
         {
             var writer = new JsonTextWriter();
             JsonConvert.Export(new FakeDataTableReader(table), writer);
@@ -87,11 +87,11 @@ namespace Jayrock.Json.Conversion.Converters
         // The following is a stub implementation for testing under 1.x.
         //
 
-        private sealed class FakeDataTableReader : IDataReader, IEnumerable
+        sealed class FakeDataTableReader : IDataReader, IEnumerable
         {
-            private readonly DataTable _table;
-            private int _index = -1;
-            private bool _closed;
+            readonly DataTable _table;
+            int _index = -1;
+            bool _closed;
 
             public FakeDataTableReader(DataTable table)
             {
@@ -100,7 +100,7 @@ namespace Jayrock.Json.Conversion.Converters
                 _table = table;
             }
 
-            private DataRow CurrentRow
+            DataRow CurrentRow
             {
                 get { return _table.Rows[_index]; }
             }

@@ -27,7 +27,7 @@ namespace TidyJson.Properties
 {
     using System.Collections.Generic;
 
-    internal sealed partial class Settings
+    sealed partial class Settings
     {
         public static readonly Settings Default = new Settings();
 

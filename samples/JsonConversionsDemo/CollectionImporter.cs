@@ -34,7 +34,7 @@ namespace JsonConversionsDemo
             ImportElements((ICollection<Element>) collection, context, reader);
         }
 
-        private static void ImportElements(ICollection<Element> collection, ImportContext context, JsonReader reader)
+        static void ImportElements(ICollection<Element> collection, ImportContext context, JsonReader reader)
         {
             Debug.Assert(collection != null);
             Debug.Assert(context != null);

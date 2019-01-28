@@ -284,7 +284,7 @@ namespace Jayrock.Json
             new FreeJsonMemberReadingHelper(reader);
         }
 
-        private static FreeJsonMemberReadingHelper CreateHelper(string json)
+        static FreeJsonMemberReadingHelper CreateHelper(string json)
         {
             return new FreeJsonMemberReadingHelper(JsonText.CreateReader(json));
         }

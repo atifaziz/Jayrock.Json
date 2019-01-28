@@ -37,7 +37,7 @@ namespace TidyJson
 
     #endregion
 
-    internal static class EnumHelper
+    static class EnumHelper
     {
         public static T? TryParse<T>(string value, bool ignoreCase) where T : struct
         {

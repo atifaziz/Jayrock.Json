@@ -34,7 +34,7 @@ namespace Jayrock.Json.Conversion.Converters
         public ArrayImporter(Type arrayType) :
             base(AssertArrayType(arrayType)) {}
 
-        private static Type AssertArrayType(Type type)
+        static Type AssertArrayType(Type type)
         {
             if (type == null)
                 return typeof(object[]);
@@ -79,7 +79,7 @@ namespace Jayrock.Json.Conversion.Converters
             return ImportScalarAsArray(context, reader);
         }
 
-        private object ImportScalarAsArray(ImportContext context, JsonReader reader)
+        object ImportScalarAsArray(ImportContext context, JsonReader reader)
         {
             Debug.Assert(context != null);
             Debug.Assert(reader != null);

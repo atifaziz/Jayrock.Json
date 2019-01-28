@@ -32,8 +32,8 @@ namespace Jayrock.Json.Conversion.Converters
 
     public class TupleExporter : ExporterBase
     {
-        private readonly Action<ExportContext, object, JsonWriter> _exporter;
-        private static readonly MethodInfo _exportMethod = ((MethodCallExpression) ((Expression<Action<ExportContext>>) (context => context.Export(null, null))).Body).Method;
+        readonly Action<ExportContext, object, JsonWriter> _exporter;
+        static readonly MethodInfo _exportMethod = ((MethodCallExpression) ((Expression<Action<ExportContext>>) (context => context.Export(null, null))).Body).Method;
 
         public TupleExporter(Type inputType)
             : base(inputType)
@@ -54,7 +54,7 @@ namespace Jayrock.Json.Conversion.Converters
             writer.WriteEndArray();
         }
 
-        private static Action<ExportContext, object, JsonWriter> CompileExporter(Type tupleType)
+        static Action<ExportContext, object, JsonWriter> CompileExporter(Type tupleType)
         {
             Debug.Assert(tupleType != null);
 
@@ -74,7 +74,7 @@ namespace Jayrock.Json.Conversion.Converters
             return lambda.Compile();
         }
 
-        private static IEnumerable<Expression> CreateItemExportCallExpressions(ParameterExpression context, ParameterExpression tuple, ParameterExpression writer)
+        static IEnumerable<Expression> CreateItemExportCallExpressions(ParameterExpression context, ParameterExpression tuple, ParameterExpression writer)
         {
             Debug.Assert(context != null);
             Debug.Assert(tuple != null);

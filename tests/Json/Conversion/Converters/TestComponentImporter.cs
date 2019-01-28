@@ -258,7 +258,7 @@ namespace Jayrock.Json.Conversion.Converters
             Assert.AreEqual("value2", thing.NonMembers["str2"]);
         }
 
-        private sealed class DynamicThing : INonObjectMemberImporter
+        sealed class DynamicThing : INonObjectMemberImporter
         {
             public Hashtable NonMembers = new Hashtable();
 
@@ -271,11 +271,11 @@ namespace Jayrock.Json.Conversion.Converters
             }
         }
 
-        private sealed class Thing
+        sealed class Thing
         {
         }
 
-        private sealed class ReadOnlyPropertyDescriptor : PropertyDescriptor
+        sealed class ReadOnlyPropertyDescriptor : PropertyDescriptor
         {
             public bool SetValueCalled;
 
@@ -304,7 +304,7 @@ namespace Jayrock.Json.Conversion.Converters
             #endregion
         }
 
-        private static object Import(Type expectedType, string s)
+        static object Import(Type expectedType, string s)
         {
             var reader = CreateReader(s);
             var context = new ImportContext();
@@ -315,15 +315,15 @@ namespace Jayrock.Json.Conversion.Converters
             return o;
         }
 
-        private static JsonReader CreateReader(string s)
+        static JsonReader CreateReader(string s)
         {
             return new JsonTextReader(new StringReader(s));
         }
 
         public sealed class Marriage
         {
-            private Person _husband;
-            private Person _wife;
+            Person _husband;
+            Person _wife;
 
             public Person Husband
             {
@@ -340,8 +340,8 @@ namespace Jayrock.Json.Conversion.Converters
 
         public sealed class Person
         {
-            private int _id;
-            private string _fullName;
+            int _id;
+            string _fullName;
 
             public int Id
             {
@@ -403,12 +403,12 @@ namespace Jayrock.Json.Conversion.Converters
             public int Width = 0;
         }
 
-        private sealed class TestObjectMemberImporter : IObjectMemberImporter
+        sealed class TestObjectMemberImporter : IObjectMemberImporter
         {
             public object[] ImportArgs;
             public object ImportedValue;
 
-            private readonly IList _sequence;
+            readonly IList _sequence;
 
             public TestObjectMemberImporter(IList recorder)
             {
@@ -423,10 +423,10 @@ namespace Jayrock.Json.Conversion.Converters
             }
         }
 
-        private sealed class TestPropertyDescriptor : PropertyDescriptor, IServiceProvider
+        sealed class TestPropertyDescriptor : PropertyDescriptor, IServiceProvider
         {
-            private readonly IDictionary _services;
-            private readonly Type _propertyType;
+            readonly IDictionary _services;
+            readonly Type _propertyType;
 
             public TestPropertyDescriptor(string name, Type type, IDictionary services) : base(name, null)
             {
@@ -455,9 +455,9 @@ namespace Jayrock.Json.Conversion.Converters
             #endregion
         }
 
-        private sealed class TestTypeDescriptor : ICustomTypeDescriptor
+        sealed class TestTypeDescriptor : ICustomTypeDescriptor
         {
-            private readonly PropertyDescriptorCollection _properties = new PropertyDescriptorCollection(null);
+            readonly PropertyDescriptorCollection _properties = new PropertyDescriptorCollection(null);
 
             public PropertyDescriptorCollection GetProperties()
             {

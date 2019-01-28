@@ -71,10 +71,10 @@ namespace Jayrock.Json
 
     public sealed class FreeJsonMemberReadingHelper
     {
-        private readonly JsonReader _reader;
-        private bool _started;
-        private bool _ended;
-        private NamedJsonBufferList _members; // buffered ones
+        readonly JsonReader _reader;
+        bool _started;
+        bool _ended;
+        NamedJsonBufferList _members; // buffered ones
 
         public FreeJsonMemberReadingHelper(JsonReader reader)
         {
@@ -103,7 +103,7 @@ namespace Jayrock.Json
             get { return _reader; }
         }
 
-        private bool HasBufferedMembers
+        bool HasBufferedMembers
         {
             get { return _members != null && _members.Count > 0; }
         }
@@ -245,7 +245,7 @@ namespace Jayrock.Json
             return null;
         }
 
-        private JsonBuffer TryPopBufferedMember(string name)
+        JsonBuffer TryPopBufferedMember(string name)
         {
             if (HasBufferedMembers)
             {
@@ -277,14 +277,14 @@ namespace Jayrock.Json
             return _reader.ToString();
         }
 
-        private sealed class TailReader : JsonReaderBase
+        sealed class TailReader : JsonReaderBase
         {
-            private JsonReader _reader;
-            private int _innerDepth;
-            private readonly NamedJsonBufferList _bufferedMembers;
-            private JsonBuffer _memberValue;
-            private JsonReader _memberStructuredValueReader;
-            private int _index; // -1 = BOF; 0...(N-1) = buffered members; N = streamed members
+            JsonReader _reader;
+            int _innerDepth;
+            readonly NamedJsonBufferList _bufferedMembers;
+            JsonBuffer _memberValue;
+            JsonReader _memberStructuredValueReader;
+            int _index; // -1 = BOF; 0...(N-1) = buffered members; N = streamed members
 
             public TailReader(JsonReader reader, NamedJsonBufferList bufferedMembers)
             {

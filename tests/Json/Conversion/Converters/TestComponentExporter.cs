@@ -217,11 +217,11 @@ namespace Jayrock.Json.Conversion.Converters
             Assert.AreEqual(args, ((TestObjectMemberExporter) calls[1]).ExportArgs);
         }
 
-        private sealed class TestObjectMemberExporter : IObjectMemberExporter
+        sealed class TestObjectMemberExporter : IObjectMemberExporter
         {
             public object[] ExportArgs;
 
-            private readonly IList _sequence;
+            readonly IList _sequence;
 
             public TestObjectMemberExporter(IList recorder)
             {
@@ -235,9 +235,9 @@ namespace Jayrock.Json.Conversion.Converters
             }
         }
 
-        private sealed class TestPropertyDescriptor : PropertyDescriptor, IServiceProvider
+        sealed class TestPropertyDescriptor : PropertyDescriptor, IServiceProvider
         {
-            private readonly IDictionary _services;
+            readonly IDictionary _services;
 
             public TestPropertyDescriptor(string name, IDictionary services) : base(name, null)
             {
@@ -263,9 +263,9 @@ namespace Jayrock.Json.Conversion.Converters
             #endregion
         }
 
-        private sealed class TestTypeDescriptor : ICustomTypeDescriptor
+        sealed class TestTypeDescriptor : ICustomTypeDescriptor
         {
-            private readonly PropertyDescriptorCollection _properties = new PropertyDescriptorCollection(null);
+            readonly PropertyDescriptorCollection _properties = new PropertyDescriptorCollection(null);
 
             public PropertyDescriptorCollection GetProperties()
             {
@@ -289,41 +289,41 @@ namespace Jayrock.Json.Conversion.Converters
             #endregion
         }
 
-        private sealed class Thing
+        sealed class Thing
         {
             public Thing Other;
         }
 
-        private sealed class Parent
+        sealed class Parent
         {
             public ParentChild Child;
         }
 
-        private sealed class ParentChild
+        sealed class ParentChild
         {
             public Parent Parent;
         }
 
-        private static string Format(object o)
+        static string Format(object o)
         {
             var writer = new JsonTextWriter();
             JsonConvert.Export(o, writer);
             return writer.ToString();
         }
 
-        private static JsonReader FormatForReading(object o)
+        static JsonReader FormatForReading(object o)
         {
             return new JsonTextReader(new StringReader(Format(o)));
         }
 
-        private static void Test(JsonObject expected, object actual)
+        static void Test(JsonObject expected, object actual)
         {
             var reader = FormatForReading(actual);
             TestObject(expected, reader, "(root)");
             Assert.IsFalse(reader.Read(), "Expected EOF.");
         }
 
-        private static void TestObject(JsonObject expected, JsonReader reader, string path)
+        static void TestObject(JsonObject expected, JsonReader reader, string path)
         {
             reader.MoveToContent();
             reader.ReadToken(JsonTokenClass.Object);
@@ -340,7 +340,7 @@ namespace Jayrock.Json.Conversion.Converters
             reader.Read();
         }
 
-        private static void TestArray(Array expectations, JsonReader reader, string path)
+        static void TestArray(Array expectations, JsonReader reader, string path)
         {
             reader.MoveToContent();
             reader.ReadToken(JsonTokenClass.Array);
@@ -351,7 +351,7 @@ namespace Jayrock.Json.Conversion.Converters
             reader.ReadToken(JsonTokenClass.EndArray);
         }
 
-        private static void TestValue(object expected, JsonReader reader, string path)
+        static void TestValue(object expected, JsonReader reader, string path)
         {
             if (JsonNull.LogicallyEquals(expected))
             {
@@ -382,10 +382,10 @@ namespace Jayrock.Json.Conversion.Converters
 
         public sealed class Car
         {
-            private string _manufacturer;
-            private string _model;
-            private int _year;
-            private string _color;
+            string _manufacturer;
+            string _model;
+            int _year;
+            string _color;
 
             public string Manufacturer
             {
@@ -414,8 +414,8 @@ namespace Jayrock.Json.Conversion.Converters
 
         public sealed class Person
         {
-            private int _id;
-            private string _fullName;
+            int _id;
+            string _fullName;
 
             public int Id
             {
@@ -444,10 +444,10 @@ namespace Jayrock.Json.Conversion.Converters
 
         public class Point : IJsonExportable
         {
-            private int _x;
-            private int _y;
+            int _x;
+            int _y;
 
-            private static readonly ICustomTypeDescriptor _componentType;
+            static readonly ICustomTypeDescriptor _componentType;
 
             static Point()
             {

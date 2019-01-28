@@ -49,8 +49,8 @@ namespace Jayrock.Json.Conversion
     [ AttributeUsage(AttributeTargets.Property | AttributeTargets.Field) ]
     public sealed class JsonMemberNamingConventionAttribute : Attribute, IPropertyDescriptorCustomization
     {
-        private NamingConvention _convention;
-        private UnderscoreConvention _underscores;
+        NamingConvention _convention;
+        UnderscoreConvention _underscores;
 
         public JsonMemberNamingConventionAttribute() :
             this(NamingConvention.None) {}
@@ -88,7 +88,7 @@ namespace Jayrock.Json.Conversion
             SetName(property, FormatName(FormatName(property.Name, underscoring), naming));
         }
 
-        private static string FormatName(string name, UnderscoreConvention underscoring)
+        static string FormatName(string name, UnderscoreConvention underscoring)
         {
             switch (underscoring)
             {
@@ -117,7 +117,7 @@ namespace Jayrock.Json.Conversion
             }
         }
 
-        private static string FormatName(string name, NamingConvention naming)
+        static string FormatName(string name, NamingConvention naming)
         {
             switch (naming)
             {
@@ -134,7 +134,7 @@ namespace Jayrock.Json.Conversion
             }
         }
 
-        private static void SetName(PropertyDescriptor property, string name)
+        static void SetName(PropertyDescriptor property, string name)
         {
             Debug.Assert(property != null);
             Debug.Assert(name != null);

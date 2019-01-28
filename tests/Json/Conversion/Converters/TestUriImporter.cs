@@ -53,7 +53,7 @@ namespace Jayrock.Json.Conversion.Converters
             AssertImport(null, "{}");
         }
 
-        private static void AssertImport(Uri expected, string input)
+        static void AssertImport(Uri expected, string input)
         {
             var reader = new JsonTextReader(new StringReader(input));
             var importer = new UriImporter();

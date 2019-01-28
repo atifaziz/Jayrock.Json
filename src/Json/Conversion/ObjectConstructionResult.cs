@@ -31,8 +31,8 @@ namespace Jayrock.Json.Conversion
 
     public sealed class ObjectConstructionResult
     {
-        private readonly object _obj;
-        private readonly JsonReader _tail;
+        readonly object _obj;
+        readonly JsonReader _tail;
 
         public ObjectConstructionResult(object obj, JsonReader tail)
         {

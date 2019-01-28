@@ -54,7 +54,7 @@ namespace Jayrock.Json.Conversion.Converters
             Assert.AreSame(table.DefaultView, exporter.LastExported);
         }
 
-        private sealed class TestDataViewExporter : IExporter
+        sealed class TestDataViewExporter : IExporter
         {
             public DataView LastExported;
 

@@ -51,7 +51,7 @@ namespace Jayrock.Json.Conversion.Converters
             Assert.AreEqual("Lorem ipsum dolor sit amet, consectetuer adipiscing elit.", Export("Lorem ipsum dolor sit amet, consectetuer adipiscing elit.").ReadString());
         }
 
-        private static JsonReader Export(string value)
+        static JsonReader Export(string value)
         {
             var writer = new JsonRecorder();
             JsonConvert.Export(value, writer);

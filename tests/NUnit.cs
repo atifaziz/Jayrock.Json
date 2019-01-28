@@ -11,7 +11,7 @@ namespace NUnit.Framework
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
     public class ExpectedExceptionAttribute : NUnitAttribute, IWrapTestMethod
     {
-        private readonly Type _expectedExceptionType;
+        readonly Type _expectedExceptionType;
 
         public ExpectedExceptionAttribute(Type type)
         {
@@ -23,9 +23,9 @@ namespace NUnit.Framework
             return new ExpectedExceptionCommand(command, _expectedExceptionType);
         }
 
-        private class ExpectedExceptionCommand : DelegatingTestCommand
+        class ExpectedExceptionCommand : DelegatingTestCommand
         {
-            private readonly Type _expectedType;
+            readonly Type _expectedType;
 
             public ExpectedExceptionCommand(TestCommand innerCommand, Type expectedType)
                 : base(innerCommand)

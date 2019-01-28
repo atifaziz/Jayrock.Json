@@ -26,7 +26,7 @@ namespace Jayrock.Dynamic
 
     #endregion
 
-    internal static class Option
+    static class Option
     {
         public static Option<T> Value<T>(T value)
         {
@@ -39,14 +39,14 @@ namespace Jayrock.Dynamic
     /// <a href="http://msdn.microsoft.com/en-us/library/dd233245.aspx">the option type in F#</a>.
     /// </summary>
     [Serializable]
-    internal struct Option<T> : IEquatable<Option<T>>
+    struct Option<T> : IEquatable<Option<T>>
     {
         // warning CS0649: Field 'Jayrock.Dynamic.Option<T>.None' is never assigned to, and will always have its default value
         // ReSharper disable RedundantDefaultFieldInitializer
         public static readonly Option<T> None = new Option<T>();
         // ReSharper restore RedundantDefaultFieldInitializer
 
-        private readonly T _value;
+        readonly T _value;
 
         internal Option(bool hasValue, T value)
             : this()
@@ -101,7 +101,7 @@ namespace Jayrock.Dynamic
         }
     }
 
-    internal sealed class DynamicObjectRuntime<T>
+    sealed class DynamicObjectRuntime<T>
     {
         public Func<T, GetMemberBinder, Option<object>> TryGetMember { get; set; }
         public Func<T, SetMemberBinder, object, bool> TrySetMember { get; set; }
@@ -153,11 +153,10 @@ namespace Jayrock.Dynamic
     /// and therefore licensed under the terms and conditions of
     /// <a href="http://www.opensource.org/licenses/ms-pl.html">Ms-PL</a>.
     /// </remarks>
-
-    internal sealed class DynamicMetaObject<T> : DynamicMetaObject
+    sealed class DynamicMetaObject<T> : DynamicMetaObject
     {
-        private readonly DynamicObjectRuntime<T> _runtime;
-        private readonly bool _dontFallbackFirst;
+        readonly DynamicObjectRuntime<T> _runtime;
+        readonly bool _dontFallbackFirst;
 
         internal DynamicMetaObject(Expression expression, T value, DynamicObjectRuntime<T> runtime, bool dontFallbackFirst = false)
             : base(expression, BindingRestrictions.Empty, value)
@@ -172,7 +171,7 @@ namespace Jayrock.Dynamic
             return _runtime.GetDynamicMemberNames(Value);
         }
 
-        private new T Value { get { return (T) base.Value; } }
+        new T Value { get { return (T) base.Value; } }
 
         public override DynamicMetaObject BindGetMember(GetMemberBinder binder)
         {
@@ -308,21 +307,21 @@ namespace Jayrock.Dynamic
                  : base.BindDeleteIndex(binder, indexes);
         }
 
-        private delegate DynamicMetaObject Fallback(DynamicMetaObject errorSuggestion);
+        delegate DynamicMetaObject Fallback(DynamicMetaObject errorSuggestion);
 
-        private readonly static Expression[] NoArgs = new Expression[0];
+        readonly static Expression[] NoArgs = new Expression[0];
 
-        private static Expression[] GetArgs(params DynamicMetaObject[] args)
+        static Expression[] GetArgs(params DynamicMetaObject[] args)
         {
             return args.Select(arg => Expression.Convert(arg.Expression, typeof(object))).ToArray();
         }
 
-        private static Expression[] GetArgArray(DynamicMetaObject[] args)
+        static Expression[] GetArgArray(DynamicMetaObject[] args)
         {
             return new[] { Expression.NewArrayInit(typeof(object), GetArgs(args)) };
         }
 
-        private static Expression[] GetArgArray(DynamicMetaObject[] args, DynamicMetaObject value)
+        static Expression[] GetArgArray(DynamicMetaObject[] args, DynamicMetaObject value)
         {
             return new Expression[]
             {
@@ -331,7 +330,7 @@ namespace Jayrock.Dynamic
             };
         }
 
-        private static ConstantExpression Constant(DynamicMetaObjectBinder binder)
+        static ConstantExpression Constant(DynamicMetaObjectBinder binder)
         {
             var t = binder.GetType();
             while (!t.IsVisible)
@@ -343,7 +342,7 @@ namespace Jayrock.Dynamic
         /// Helper method for generating a MetaObject which calls a
         /// specific method on Dynamic that returns a result
         /// </summary>
-        private DynamicMetaObject CallMethodWithResult(string methodName, DynamicMetaObjectBinder binder, Expression[] args, Fallback fallback, Fallback fallbackInvoke = null)
+        DynamicMetaObject CallMethodWithResult(string methodName, DynamicMetaObjectBinder binder, Expression[] args, Fallback fallback, Fallback fallbackInvoke = null)
         {
             //
             // First, call fallback to do default binding
@@ -379,7 +378,7 @@ namespace Jayrock.Dynamic
             // (ir):1: undefined method `foo' for {"foo":123}:Jayrock::Json::JsonObject (NoMethodError)
         }
 
-        private DynamicMetaObject BuildCallMethodWithResult(string methodName, DynamicMetaObjectBinder binder, Expression[] args, DynamicMetaObject fallbackResult, Fallback fallbackInvoke)
+        DynamicMetaObject BuildCallMethodWithResult(string methodName, DynamicMetaObjectBinder binder, Expression[] args, DynamicMetaObject fallbackResult, Fallback fallbackInvoke)
         {
             //
             // Build a new expression like:
@@ -447,7 +446,7 @@ namespace Jayrock.Dynamic
         /// specific method on Dynamic, but uses one of the arguments for
         /// the result.
         /// </summary>
-        private DynamicMetaObject CallMethodReturnLast(string methodName, DynamicMetaObjectBinder binder, Expression[] args, Fallback fallback)
+        DynamicMetaObject CallMethodReturnLast(string methodName, DynamicMetaObjectBinder binder, Expression[] args, Fallback fallback)
         {
             //
             // First, call fallback to do default binding
@@ -500,7 +499,7 @@ namespace Jayrock.Dynamic
         /// specific method on Dynamic, but uses one of the arguments for
         /// the result.
         /// </summary>
-        private DynamicMetaObject CallMethodNoResult(string methodName, DynamicMetaObjectBinder binder, Expression[] args, Fallback fallback)
+        DynamicMetaObject CallMethodNoResult(string methodName, DynamicMetaObjectBinder binder, Expression[] args, Fallback fallback)
         {
             //
             // First, call fallback to do default binding
@@ -542,7 +541,7 @@ namespace Jayrock.Dynamic
         /// Returns a Restrictions object which includes our current restrictions merged
         /// with a restriction limiting our type
         /// </summary>
-        private BindingRestrictions GetRestrictions()
+        BindingRestrictions GetRestrictions()
         {
             Debug.Assert(Restrictions == BindingRestrictions.Empty, "We don't merge, restrictions are always empty");
 
@@ -556,7 +555,7 @@ namespace Jayrock.Dynamic
         // is only used by DynamicObject.GetMember--it is not expected to
         // (and cannot) implement binding semantics. It is just so the DO
         // can use the Name and IgnoreCase properties.
-        private sealed class GetBinderAdapter : GetMemberBinder
+        sealed class GetBinderAdapter : GetMemberBinder
         {
             internal GetBinderAdapter(InvokeMemberBinder binder) :
                 base(binder.Name, binder.IgnoreCase) {}

@@ -127,19 +127,19 @@ namespace Jayrock.Json
             Assert.IsFalse(reader.More());
         }
 
-        private static void AssertReadLineNumPos(BufferedCharReader reader, char expected, int line, int pos)
+        static void AssertReadLineNumPos(BufferedCharReader reader, char expected, int line, int pos)
         {
             Assert.AreEqual(expected, reader.Next(), "Read");
             AssertLineCounters(reader, line, pos);
         }
 
-        private static void AssertCounters(BufferedCharReader reader, int chars, int line, int pos)
+        static void AssertCounters(BufferedCharReader reader, int chars, int line, int pos)
         {
             Assert.AreEqual(chars, reader.CharCount, "CharCount");
             AssertLineCounters(reader, line, pos);
         }
 
-        private static void AssertLineCounters(BufferedCharReader reader, int line, int pos)
+        static void AssertLineCounters(BufferedCharReader reader, int line, int pos)
         {
             Assert.AreEqual(line, reader.LineNumber, "LineNumber");
             Assert.AreEqual(pos, reader.LinePosition, "LinePosition");

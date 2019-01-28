@@ -233,7 +233,7 @@ namespace Jayrock.Json.Conversion
             Assert.IsNotNull(properties["property"]);
         }
 
-        private static void AddServiceToServiceContainer(IServiceContainer sc)
+        static void AddServiceToServiceContainer(IServiceContainer sc)
         {
             var service = new object();
             var serviceType = service.GetType();
@@ -242,7 +242,7 @@ namespace Jayrock.Json.Conversion
             Assert.AreSame(service, sc.GetService(serviceType));
         }
 
-        private static void CannotAddServiceTwiceToServiceContainer(IServiceContainer sc)
+        static void CannotAddServiceTwiceToServiceContainer(IServiceContainer sc)
         {
             var service = new object();
             var serviceType = service.GetType();
@@ -251,7 +251,7 @@ namespace Jayrock.Json.Conversion
             sc.AddService(serviceType, service);
         }
 
-        private static void AddThenRemoveService(IServiceContainer sc)
+        static void AddThenRemoveService(IServiceContainer sc)
         {
             var service = new object();
             var serviceType = service.GetType();
@@ -266,7 +266,7 @@ namespace Jayrock.Json.Conversion
         {
             public readonly object Field;
 
-            private object _property;
+            object _property;
             public object Property { get { return _property; } }
 
             public ImmutableThing(object field, object property)
@@ -318,13 +318,13 @@ namespace Jayrock.Json.Conversion
             }
         }
 
-        private sealed class ThingWithSpecialReadOnlyProperty
+        sealed class ThingWithSpecialReadOnlyProperty
         {
             [JsonExport]
             public object SpecialReadOnlyProperty { get { return null; } }
         }
 
-        private sealed class FakePropertyImpl : IPropertyImpl
+        sealed class FakePropertyImpl : IPropertyImpl
         {
             public IPropertyImpl BaseImpl;
 
@@ -341,9 +341,9 @@ namespace Jayrock.Json.Conversion
     }
 
     [CompilerGenerated]
-    internal sealed class AnonymousThing<T>
+    sealed class AnonymousThing<T>
     {
-        private readonly T _value;
+        readonly T _value;
 
         AnonymousThing(T value)
         {

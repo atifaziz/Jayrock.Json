@@ -28,7 +28,7 @@ namespace Jayrock.Json.Conversion.Converters
 
     public abstract class ImporterBase : IImporter
     {
-        private readonly Type _outputType;
+        readonly Type _outputType;
 
         protected ImporterBase(Type outputType)
         {
@@ -108,7 +108,7 @@ namespace Jayrock.Json.Conversion.Converters
             return new JsonException(string.Format("Cannot import {0} from a JSON {1} value.", OutputType, jsonValueType));
         }
 
-        private object ThrowNotSupported(JsonTokenClass clazz)
+        object ThrowNotSupported(JsonTokenClass clazz)
         {
             Debug.Assert(clazz != null);
             throw GetImportException(clazz.Name);

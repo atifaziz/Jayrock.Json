@@ -31,9 +31,9 @@ namespace Jayrock.Json.Conversion.Converters
 
     public class TupleImporter : ImporterBase
     {
-        private readonly Func<ImportContext, JsonReader, object> _importer;
-        private readonly bool _single;
-        private static readonly MethodInfo _importMethod = ((MethodCallExpression)((Expression<Func<ImportContext, object>>)(context => context.Import(null, null))).Body).Method;
+        readonly Func<ImportContext, JsonReader, object> _importer;
+        readonly bool _single;
+        static readonly MethodInfo _importMethod = ((MethodCallExpression)((Expression<Func<ImportContext, object>>)(context => context.Import(null, null))).Body).Method;
 
         public TupleImporter(Type outputType) :
             base(outputType)
@@ -83,7 +83,7 @@ namespace Jayrock.Json.Conversion.Converters
                  : base.ImportFromObject(context, reader);
         }
 
-        private static Func<ImportContext, JsonReader, object> CompileItemsImporter(Type tupleType)
+        static Func<ImportContext, JsonReader, object> CompileItemsImporter(Type tupleType)
         {
             Debug.Assert(tupleType != null);
 

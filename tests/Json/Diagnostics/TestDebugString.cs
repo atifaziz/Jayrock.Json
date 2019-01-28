@@ -27,7 +27,7 @@ namespace Jayrock.Diagnostics
     [ TestFixture ]
     public class TestDebugString
     {
-        private const string _sample = "The quick brown fox jumps over the lazy dog.";
+        const string _sample = "The quick brown fox jumps over the lazy dog.";
 
         [ Test ]
         public void FormatNullYieldsEmptyString()

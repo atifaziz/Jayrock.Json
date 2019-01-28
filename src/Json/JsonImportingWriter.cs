@@ -22,18 +22,18 @@ namespace Jayrock.Json
 
     public class JsonImportingWriter : JsonWriterBase
     {
-        private readonly Stack<object> _valueStack = new Stack<object>();
-        private readonly Stack<string> _memberStack = new Stack<string>();
-        private JsonObject _object;
-        private JsonArray _array;
-        private object _value;
-        private string _member;
+        readonly Stack<object> _valueStack = new Stack<object>();
+        readonly Stack<string> _memberStack = new Stack<string>();
+        JsonObject _object;
+        JsonArray _array;
+        object _value;
+        string _member;
 
         public object Value { get { return _value; } }
         public bool IsObject { get { return _object != null; } }
         public bool IsArray { get { return _array != null; } }
 
-        private void Push()
+        void Push()
         {
             _valueStack.Push(_value);
             _memberStack.Push(_member);
@@ -43,7 +43,7 @@ namespace Jayrock.Json
             _member = null;
         }
 
-        private void Pop()
+        void Pop()
         {
             var current = _value;
             var popped = _valueStack.Pop();
@@ -83,7 +83,7 @@ namespace Jayrock.Json
             Pop();
         }
 
-        private void WriteValue(object value)
+        void WriteValue(object value)
         {
             if (IsObject)
             {

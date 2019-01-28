@@ -31,10 +31,10 @@ namespace Jayrock.Json.Conversion
     [ Serializable ]
     public class ExportContext
     {
-        private ExporterCollection _exporters;
-        private IDictionary _items;
+        ExporterCollection _exporters;
+        IDictionary _items;
 
-        private static ExporterCollection _stockExporters;
+        static ExporterCollection _stockExporters;
 
         public virtual void Export(object value, JsonWriter writer)
         {
@@ -99,7 +99,7 @@ namespace Jayrock.Json.Conversion
             }
         }
 
-        private IExporter FindCompatibleExporter(Type type)
+        IExporter FindCompatibleExporter(Type type)
         {
             Debug.Assert(type != null);
 
@@ -139,7 +139,7 @@ namespace Jayrock.Json.Conversion
             return new StringExporter(type);
         }
 
-        private IExporter FindBaseExporter(Type baseType, Type actualType)
+        IExporter FindBaseExporter(Type baseType, Type actualType)
         {
             Debug.Assert(baseType != null);
             Debug.Assert(actualType != null);
@@ -160,7 +160,7 @@ namespace Jayrock.Json.Conversion
             return (IExporter) Activator.CreateInstance(exporter.GetType(), new object[] { actualType });
         }
 
-        private ExporterCollection Exporters
+        ExporterCollection Exporters
         {
             get
             {
@@ -171,7 +171,7 @@ namespace Jayrock.Json.Conversion
             }
         }
 
-        private static ExporterCollection StockExporters
+        static ExporterCollection StockExporters
         {
             get
             {

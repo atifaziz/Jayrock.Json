@@ -29,9 +29,9 @@ namespace Jayrock.Json.Conversion.Converters
 
     public sealed class ComponentImporter : ImporterBase
     {
-        private readonly PropertyDescriptorCollection _properties; // TODO: Review thread-safety of PropertyDescriptorCollection
-        private readonly IObjectMemberImporter[] _importers;
-        private readonly IObjectConstructor _constructor;
+        readonly PropertyDescriptorCollection _properties; // TODO: Review thread-safety of PropertyDescriptorCollection
+        readonly IObjectMemberImporter[] _importers;
+        readonly IObjectConstructor _constructor;
 
         public ComponentImporter(Type type) :
             this(type, null, null) {}

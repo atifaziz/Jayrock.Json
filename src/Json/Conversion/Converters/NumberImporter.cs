@@ -71,7 +71,7 @@ namespace Jayrock.Json.Conversion.Converters
 
         protected abstract object ConvertFromString(string s);
 
-        private Exception NumberError(Exception e, string text)
+        Exception NumberError(Exception e, string text)
         {
             return new JsonException(string.Format("Error importing JSON Number {0} as {1}.", text, OutputType.FullName), e);
         }

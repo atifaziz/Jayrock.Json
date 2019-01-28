@@ -70,7 +70,7 @@ namespace Jayrock.Json.Conversion.Converters
             }
         }
 
-        private JsonException Error(string s, Exception e)
+        JsonException Error(string s, Exception e)
         {
             return new JsonException(string.Format("The value '{0}' cannot be imported as {1}.", DebugString.Format(s), OutputType.FullName), e);
         }

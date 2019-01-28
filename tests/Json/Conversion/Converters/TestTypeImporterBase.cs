@@ -123,23 +123,23 @@ namespace Jayrock.Json.Conversion.Converters
             Assert.AreEqual(result, importer.Import(new ImportContext(), reader));
         }
 
-        private static void Import(string s)
+        static void Import(string s)
         {
             (new TestImporter()).Import(new ImportContext(), CreateReader(s));
         }
 
-        private static JsonReader CreateReader(string s)
+        static JsonReader CreateReader(string s)
         {
             return new JsonTextReader(new StringReader(s));
         }
 
-        private class TestImporter : ImporterBase
+        class TestImporter : ImporterBase
         {
             public TestImporter() :
                 base(typeof(object)) {}
         }
 
-        private class ImporterMock : TestImporter
+        class ImporterMock : TestImporter
         {
             public object Boolean;
             public object Number;

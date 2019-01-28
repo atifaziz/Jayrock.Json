@@ -71,7 +71,7 @@ namespace Jayrock.Json.Conversion.Converters
             AssertImport(null, "{}");
         }
 
-        private static void AssertImport(object expected, string input)
+        static void AssertImport(object expected, string input)
         {
             var reader = new JsonTextReader(new StringReader(input));
             var importer = new GuidImporter();

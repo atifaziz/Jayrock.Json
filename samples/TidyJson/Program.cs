@@ -35,9 +35,9 @@ namespace TidyJson
 
     #endregion
 
-    internal static class Program
+    static class Program
     {
-        private static int Main(string[] args)
+        static int Main(string[] args)
         {
             try
             {
@@ -97,7 +97,7 @@ namespace TidyJson
             }
         }
 
-        private static void PrettyColorPrint(string path, TextWriter output, JsonPalette palette)
+        static void PrettyColorPrint(string path, TextWriter output, JsonPalette palette)
         {
             Debug.Assert(output != null);
 
@@ -114,7 +114,7 @@ namespace TidyJson
 
         #region Help (Logo, Usage and Disclaimer)
 
-        private static void Help()
+        static void Help()
         {
             WriteLogo();
             ProgramOptions.ShowUsage();
@@ -129,7 +129,7 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.");
         }
 
-        private static void WriteLogo()
+        static void WriteLogo()
         {
             var assembly = typeof(Program).Assembly;
 

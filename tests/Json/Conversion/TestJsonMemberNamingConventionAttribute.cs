@@ -160,7 +160,7 @@ namespace Jayrock.Json.Conversion
             TestNamingCase("foobarbaz", NamingConvention.None, UnderscoreConvention.Separate, "foobarbaz");
         }
 
-        private static void TestNamingCase(string baseName, NamingConvention testCase, UnderscoreConvention testUnder, string expected)
+        static void TestNamingCase(string baseName, NamingConvention testCase, UnderscoreConvention testUnder, string expected)
         {
             var attribute = new JsonMemberNamingConventionAttribute(testCase, testUnder);
             var property = CreateTestProperty(baseName);
@@ -171,7 +171,7 @@ namespace Jayrock.Json.Conversion
             Assert.AreEqual(expected, property.CustomizedName);
         }
 
-        private static TestPropertyDescriptor CreateTestProperty(string baseName)
+        static TestPropertyDescriptor CreateTestProperty(string baseName)
         {
             var property = new TestPropertyDescriptor(baseName);
             Assert.AreEqual(baseName, property.Name);
@@ -179,7 +179,7 @@ namespace Jayrock.Json.Conversion
             return property;
         }
 
-        private sealed class TestPropertyDescriptor : PropertyDescriptor, IPropertyCustomization
+        sealed class TestPropertyDescriptor : PropertyDescriptor, IPropertyCustomization
         {
             public string CustomizedName;
 

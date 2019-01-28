@@ -109,7 +109,7 @@ namespace Jayrock.Json.Conversion
             Assert.AreNotSame(exporter, context.FindImporter(typeof(Thing)));
         }
 
-        private static void AssertInStock(Type expected, Type type)
+        static void AssertInStock(Type expected, Type type)
         {
             var context = new ImportContext();
             var importer = context.FindImporter(type);
@@ -117,7 +117,7 @@ namespace Jayrock.Json.Conversion
             Assert.IsInstanceOf(expected, importer, type.FullName);
         }
 
-        private sealed class ImportableThing : IJsonImportable
+        sealed class ImportableThing : IJsonImportable
         {
             public void Import(ImportContext context, JsonReader reader)
             {
@@ -125,9 +125,9 @@ namespace Jayrock.Json.Conversion
             }
         }
 
-        private sealed class Thing {}
+        sealed class Thing {}
 
-        private sealed class ThingImporter : IImporter
+        sealed class ThingImporter : IImporter
         {
             public Type OutputType
             {
@@ -146,7 +146,7 @@ namespace Jayrock.Json.Conversion
             public int Field2;
         }
 
-        internal class DictionaryThing : System.Collections.Generic.IDictionary<Guid, string>
+        class DictionaryThing : System.Collections.Generic.IDictionary<Guid, string>
         {
             #region Implementation of IEnumerable
 
@@ -242,7 +242,7 @@ namespace Jayrock.Json.Conversion
             #endregion
         }
 
-        private sealed class SubDictionaryThing : DictionaryThing
+        sealed class SubDictionaryThing : DictionaryThing
         {
         }
     }

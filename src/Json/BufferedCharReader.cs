@@ -28,18 +28,18 @@ namespace Jayrock.Json
 
     sealed class BufferedCharReader
     {
-        private readonly TextReader _reader;
-        private readonly int _bufferSize;
-        private char[] _buffer;
-        private int _index;
-        private int _end;
-        private bool _backed;
-        private char _backup;
-        private int _charCount;
-        private int _lineNumber;
-        private int _linePosition;
-        private int _lastLinePosition;
-        private bool _sawLineFeed = true;
+        readonly TextReader _reader;
+        readonly int _bufferSize;
+        char[] _buffer;
+        int _index;
+        int _end;
+        bool _backed;
+        char _backup;
+        int _charCount;
+        int _lineNumber;
+        int _linePosition;
+        int _lastLinePosition;
+        bool _sawLineFeed = true;
 
         public const char EOF = (char) 0;
 
@@ -137,7 +137,7 @@ namespace Jayrock.Json
             return UpdateCounters(ch);
         }
 
-        private char UpdateCounters(char ch)
+        char UpdateCounters(char ch)
         {
             _charCount++;
 

@@ -28,8 +28,8 @@ namespace Jayrock.Json.Conversion
     [ TestFixture ]
     public class TestJsonConvert
     {
-        private bool _createImportContextCalled;
-        private bool _createExportContextCalled;
+        bool _createImportContextCalled;
+        bool _createExportContextCalled;
 
         [ SetUp ]
         public void Init()
@@ -98,13 +98,13 @@ namespace Jayrock.Json.Conversion
             JsonConvert.CurrentImportContextFactory = null;
         }
 
-        private ExportContext CreateExportContext()
+        ExportContext CreateExportContext()
         {
             _createExportContextCalled = true;
             return null;
         }
 
-        private ImportContext CreateImportContext()
+        ImportContext CreateImportContext()
         {
             _createImportContextCalled = true;
             return null;

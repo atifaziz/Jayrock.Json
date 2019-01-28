@@ -187,7 +187,7 @@ namespace Jayrock.Collections
         }
 
         [ Serializable ]
-        private sealed class NamedValue
+        sealed class NamedValue
         {
             public string Name;
             public object Value;
@@ -200,7 +200,7 @@ namespace Jayrock.Collections
         }
 
         [ Serializable ]
-        private sealed class NamedValueCollection : KeyedCollection<string, NamedValue>
+        sealed class NamedValueCollection : KeyedCollection<string, NamedValue>
         {
             protected override string GetKeyForItem(NamedValue item) =>
                 item.Name;

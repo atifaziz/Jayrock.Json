@@ -101,7 +101,7 @@ namespace Jayrock.Json.Conversion.Converters
             Assert.AreEqual("end", reader.ReadString());
         }
 
-        private static NameValueCollection UncheckedImport(string s)
+        static NameValueCollection UncheckedImport(string s)
         {
             JsonReader reader = new JsonTextReader(new StringReader(s));
             IImporter importer = new NameValueCollectionImporter();
@@ -110,7 +110,7 @@ namespace Jayrock.Json.Conversion.Converters
             return import;
         }
 
-        private static NameValueCollection Import(string s)
+        static NameValueCollection Import(string s)
         {
             object o = UncheckedImport(s);
             Assert.IsNotNull(o);

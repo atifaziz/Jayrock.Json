@@ -82,14 +82,14 @@ namespace Jayrock.Json.Conversion.Converters
             Import("{}");
         }
 
-        private static void AssertImport(bool expected, string input)
+        static void AssertImport(bool expected, string input)
         {
             var o = Import(input);
             Assert.IsInstanceOf<bool>(o);
             Assert.AreEqual(expected, o);
         }
 
-        private static object Import(string input)
+        static object Import(string input)
         {
             var reader = new JsonTextReader(new StringReader(input));
             var importer = new BooleanImporter();

@@ -29,8 +29,8 @@ namespace Jayrock.Json
     {
         public static readonly NamedJsonBuffer Empty = new NamedJsonBuffer();
 
-        private readonly string _name;
-        private readonly JsonBuffer _buffer;
+        readonly string _name;
+        readonly JsonBuffer _buffer;
 
         public NamedJsonBuffer(string name, JsonBuffer buffer)
         {

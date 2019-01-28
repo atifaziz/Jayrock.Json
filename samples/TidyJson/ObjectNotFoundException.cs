@@ -33,7 +33,7 @@ namespace TidyJson
     #endregion
 
     [ Serializable ]
-    internal sealed class ObjectNotFoundException : Exception
+    sealed class ObjectNotFoundException : Exception
     {
         public ObjectNotFoundException() :
             this(null) {}
@@ -44,7 +44,7 @@ namespace TidyJson
         public ObjectNotFoundException(string message, Exception innerException) :
             base(message ?? "Object not found.", innerException) {}
 
-        private ObjectNotFoundException(SerializationInfo info, StreamingContext context) :
+        ObjectNotFoundException(SerializationInfo info, StreamingContext context) :
             base(info, context) {}
     }
 }

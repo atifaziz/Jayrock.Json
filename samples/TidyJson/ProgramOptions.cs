@@ -34,7 +34,7 @@ namespace TidyJson
 
     #endregion
 
-    internal sealed class ProgramOptions
+    sealed class ProgramOptions
     {
         public EventHandler Help;
         public JsonPalette Palette;
@@ -151,7 +151,7 @@ and COLOR may be:
                     Enum.GetNames(typeof(ConsoleColor))));
         }
 
-        private static T DequeueSafely<T>(Queue<T> queue)
+        static T DequeueSafely<T>(Queue<T> queue)
         {
             return queue.Count > 0 ? queue.Dequeue() : default(T);
         }

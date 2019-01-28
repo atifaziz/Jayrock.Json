@@ -90,12 +90,12 @@ namespace Jayrock.Reflection
             return interfaces.Length == 0 ? null : interfaces[0];
         }
 
-        private static bool IsConstructionOfGenericInterfaceDefinition(Type type, object criteria)
+        static bool IsConstructionOfGenericInterfaceDefinition(Type type, object criteria)
         {
             return IsConstructionOfGenericTypeDefinition(type, (Type) criteria);
         }
 
-        private static readonly Type[] _commonTupleTypes = new[]
+        static readonly Type[] _commonTupleTypes = new[]
         {
             // Tuple of 1 not expected to be common so excluded from here
             typeof(Tuple<,>), typeof(Tuple<,,>), typeof(Tuple<,,,>), typeof(Tuple<,,,,>)

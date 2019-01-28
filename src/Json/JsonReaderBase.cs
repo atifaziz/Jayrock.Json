@@ -31,9 +31,9 @@ namespace Jayrock.Json
 
     public abstract class JsonReaderBase : JsonReader
     {
-        private JsonToken _token;
-        private int _depth;
-        private int _maxDepth = 100;
+        JsonToken _token;
+        int _depth;
+        int _maxDepth = 100;
 
         protected JsonReaderBase()
         {

@@ -37,7 +37,7 @@ namespace TidyJson
     #endregion
 
     [ Serializable ]
-    internal sealed class JsonPalette : IJsonImportable
+    sealed class JsonPalette : IJsonImportable
     {
         public JsonPalette() :
             this(ConsoleBrush.Current) {}

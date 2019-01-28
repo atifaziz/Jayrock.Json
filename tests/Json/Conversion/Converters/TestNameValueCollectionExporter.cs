@@ -86,7 +86,7 @@ namespace Jayrock.Json.Conversion.Converters
             Assert.AreEqual("{\"foo1\":\"bar1\",\"foo2\":\"bar2\",\"foo3\":\"bar3\"}", Export(collection));
         }
 
-        private static string Export(object o)
+        static string Export(object o)
         {
             var writer = new JsonTextWriter();
             JsonConvert.Export(o, writer);

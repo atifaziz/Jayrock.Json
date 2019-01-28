@@ -43,7 +43,7 @@ namespace Jayrock.Json.Conversion.Converters
             ExportDataSet(context, (DataSet) value, writer);
         }
 
-        private static void ExportDataSet(ExportContext context, DataSet dataSet, JsonWriter writer)
+        static void ExportDataSet(ExportContext context, DataSet dataSet, JsonWriter writer)
         {
             Debug.Assert(context != null);
             Debug.Assert(dataSet != null);

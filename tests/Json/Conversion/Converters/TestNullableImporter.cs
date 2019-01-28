@@ -76,7 +76,7 @@ namespace Jayrock.Json.Conversion.Converters
             Import(true, "{}");
         }
 
-        private static object Import(bool hasValue, string input)
+        static object Import(bool hasValue, string input)
         {
             var reader = JsonText.CreateReader(input);
             var context = JsonConvert.CreateImportContext();
@@ -93,9 +93,9 @@ namespace Jayrock.Json.Conversion.Converters
             return thing;
         }
 
-        private struct Thing {}
+        struct Thing {}
 
-        private sealed class ThingImporter : IImporter
+        sealed class ThingImporter : IImporter
         {
             public bool ImportCalled;
 

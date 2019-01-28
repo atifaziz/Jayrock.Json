@@ -327,16 +327,16 @@ namespace Jayrock.Json
             reader.Read();
         }
 
-        private sealed class MockedJsonReader : JsonReaderBase
+        sealed class MockedJsonReader : JsonReaderBase
         {
-            private Queue _queue = new Queue();
+            Queue _queue = new Queue();
 
             protected override JsonToken ReadTokenImpl()
             {
                 return (JsonToken) _queue.Dequeue();
             }
 
-            private MockedJsonReader Append(JsonToken token)
+            MockedJsonReader Append(JsonToken token)
             {
                 _queue.Enqueue(token);
                 return this;

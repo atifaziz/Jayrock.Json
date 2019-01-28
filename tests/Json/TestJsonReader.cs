@@ -28,7 +28,7 @@ namespace Jayrock.Json
     [ TestFixture ]
     public class TestJsonReader
     {
-        private bool _disposed;
+        bool _disposed;
 
         [ SetUp ]
         public void Init()
@@ -53,12 +53,12 @@ namespace Jayrock.Json
             reader.Close();
         }
 
-        private void Reader_Disposed(object sender, EventArgs e)
+        void Reader_Disposed(object sender, EventArgs e)
         {
             _disposed = true;
         }
 
-        private sealed class StubJsonReader : JsonReader
+        sealed class StubJsonReader : JsonReader
         {
             public override bool Read()
             {

@@ -41,7 +41,7 @@ namespace Jayrock.Json
     [ Serializable ]
     public struct JsonNumber : IConvertible
     {
-        private readonly string _value;
+        readonly string _value;
 
         public JsonNumber(string value)
         {
@@ -51,7 +51,7 @@ namespace Jayrock.Json
             _value = value;
         }
 
-        private string Value
+        string Value
         {
             get { return Mask.EmptyString(_value, "0"); }
         }
@@ -140,7 +140,7 @@ namespace Jayrock.Json
             return ToBigInteger(CultureInfo.InvariantCulture);
         }
 
-        private System.Numerics.BigInteger ToBigInteger(IFormatProvider provider)
+        System.Numerics.BigInteger ToBigInteger(IFormatProvider provider)
         {
             return System.Numerics.BigInteger.Parse(Value, NumberStyles.Integer, provider);
         }
@@ -329,7 +329,7 @@ namespace Jayrock.Json
         // We assume that MS will never change the values assigned to
         // the members of NumberStyles, at least not the following ones.
 
-        private static readonly Regex[] _grammars = new Regex[]
+        static readonly Regex[] _grammars = new Regex[]
         {
             Regex(false, false), // 0 = None
             Regex(true,  false), // 1 = AllowLeadingWhite
@@ -337,7 +337,7 @@ namespace Jayrock.Json
             Regex(true,  true),  // 3 = AllowLeadingWhite | AllowTrailingWhite
         };
 
-        private static Regex Regex(bool lws, bool rws)
+        static Regex Regex(bool lws, bool rws)
         {
             return new Regex(
                 "^"

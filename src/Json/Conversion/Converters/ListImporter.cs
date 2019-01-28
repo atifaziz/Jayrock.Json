@@ -38,11 +38,11 @@ namespace Jayrock.Json.Conversion.Converters
         }
     }
 
-    internal class CollectionImporter<TCollection, TOutput, TItem> : ImporterBase
+    class CollectionImporter<TCollection, TOutput, TItem> : ImporterBase
         where TCollection : ICollection<TItem>, new()
         where TOutput : IEnumerable
     {
-        private readonly bool _isOutputReadOnly;
+        readonly bool _isOutputReadOnly;
 
         public CollectionImporter() :
             this(false) {}
@@ -74,7 +74,7 @@ namespace Jayrock.Json.Conversion.Converters
         }
     }
 
-    internal class CollectionImporter<TOutput, TItem> :
+    class CollectionImporter<TOutput, TItem> :
         CollectionImporter<List<TItem>, TOutput, TItem>
         where TOutput : IEnumerable
     {

@@ -65,7 +65,7 @@ namespace Jayrock.Json
             return EnquoteStringOrChars(null, chars, offset, length, sb);
         }
 
-        private static StringBuilder EnquoteStringOrChars(string str, char[] chars, int offset, int length, StringBuilder sb)
+        static StringBuilder EnquoteStringOrChars(string str, char[] chars, int offset, int length, StringBuilder sb)
         {
             if (chars != null)
             {
@@ -95,7 +95,7 @@ namespace Jayrock.Json
             return sb.Append('"');
         }
 
-        private static void Enquote(StringBuilder sb, char last, char ch)
+        static void Enquote(StringBuilder sb, char last, char ch)
         {
             switch (ch)
             {
@@ -211,8 +211,7 @@ namespace Jayrock.Json
         /// into the represented character value.
         /// </summary>
         /// <returns>The parsed character.</returns>
-
-        private static char ParseHex(BufferedCharReader input, char[] hexDigits)
+        static char ParseHex(BufferedCharReader input, char[] hexDigits)
         {
             Debug.Assert(input != null);
             Debug.Assert(hexDigits != null);

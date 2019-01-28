@@ -29,11 +29,10 @@ namespace Jayrock.Json
     /// objects. A <see cref="JsonBuffer" /> object is merely a
     /// constrained view on an object of this type.
     /// </summary>
-
-    internal sealed class JsonBufferStorage
+    sealed class JsonBufferStorage
     {
-        private JsonToken[] _tokens;
-        private int _count;
+        JsonToken[] _tokens;
+        int _count;
 
         internal JsonBufferStorage(int initialCapacity)
         {

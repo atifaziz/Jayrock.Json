@@ -82,14 +82,14 @@ namespace Jayrock
             Assert.IsTrue(dict.EnumeratorDisposed);
         }
 
-        private DictionaryEntry Shift(IList entryList)
+        DictionaryEntry Shift(IList entryList)
         {
             var entry = (DictionaryEntry) entryList[0];
             entryList.RemoveAt(0);
             return entry;
         }
 
-        private sealed class MockDictionary : DictionaryBase, IDictionary
+        sealed class MockDictionary : DictionaryBase, IDictionary
         {
             public bool EnumeratorDisposed;
 
@@ -103,10 +103,10 @@ namespace Jayrock
                 return new DictionaryEnumerator(this, InnerHashtable.GetEnumerator());
             }
 
-            private sealed class DictionaryEnumerator : IDictionaryEnumerator, IDisposable
+            sealed class DictionaryEnumerator : IDictionaryEnumerator, IDisposable
             {
-                private readonly MockDictionary _dictionary;
-                private readonly IDictionaryEnumerator _inner;
+                readonly MockDictionary _dictionary;
+                readonly IDictionaryEnumerator _inner;
 
                 public DictionaryEnumerator(MockDictionary dictionary, IDictionaryEnumerator inner)
                 {

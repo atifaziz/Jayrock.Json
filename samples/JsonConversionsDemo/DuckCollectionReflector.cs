@@ -29,7 +29,7 @@ namespace JsonConversionsDemo
             return ((PropertyInfo) indexers[0]).PropertyType;
         }
 
-        private static bool IsIndexer(MemberInfo m, object filterCriteria)
+        static bool IsIndexer(MemberInfo m, object filterCriteria)
         {
             if (m.Name != "Item")
                 return false;

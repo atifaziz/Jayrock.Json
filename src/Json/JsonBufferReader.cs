@@ -32,13 +32,13 @@ namespace Jayrock.Json
 
     public sealed class JsonBufferReader : JsonReaderBase
     {
-        private readonly JsonBuffer _buffer;
-        private int _index;
+        readonly JsonBuffer _buffer;
+        int _index;
 
         public JsonBufferReader(JsonBuffer buffer) :
             this(buffer, -1) {}
 
-        private JsonBufferReader(JsonBuffer buffer, int index)
+        JsonBufferReader(JsonBuffer buffer, int index)
         {
             if (buffer.IsEmpty)
                 throw new ArgumentException("buffer");

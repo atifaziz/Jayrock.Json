@@ -32,9 +32,9 @@ namespace TidyJson
 
     #endregion
 
-    internal sealed class JsonColorWriter : JsonWriter
+    sealed class JsonColorWriter : JsonWriter
     {
-        private readonly JsonWriter inner;
+        readonly JsonWriter inner;
 
         public JsonColorWriter(JsonWriter inner) :
             this(inner, null) {}

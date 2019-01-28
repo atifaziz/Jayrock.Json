@@ -42,7 +42,7 @@ namespace Jayrock.Json.Conversion.Converters
             writer.WriteEndObject();
         }
 
-        private static void ExportMembers(ExportContext context, IEnumerable<KeyValuePair<string, object>> members, JsonWriter writer)
+        static void ExportMembers(ExportContext context, IEnumerable<KeyValuePair<string, object>> members, JsonWriter writer)
         {
             Debug.Assert(context != null);
             Debug.Assert(members != null);

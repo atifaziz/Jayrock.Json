@@ -28,7 +28,7 @@ namespace Jayrock.Json
     [ TestFixture ]
     public class TestJsonWriter
     {
-        private bool _disposed;
+        bool _disposed;
 
         [ SetUp ]
         public void Init()
@@ -79,12 +79,12 @@ namespace Jayrock.Json
             Assert.IsTrue(reader.EOF);
         }
 
-        private void Writer_Disposed(object sender, EventArgs e)
+        void Writer_Disposed(object sender, EventArgs e)
         {
             _disposed = true;
         }
 
-        private sealed class StubJsonWriter : JsonWriter
+        sealed class StubJsonWriter : JsonWriter
         {
             public override int Depth
             {

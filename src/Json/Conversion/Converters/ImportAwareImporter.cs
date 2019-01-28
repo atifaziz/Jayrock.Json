@@ -55,7 +55,7 @@ namespace Jayrock.Json.Conversion.Converters
             return ReflectImport(context, reader);
         }
 
-        private object ReflectImport(ImportContext context, JsonReader reader)
+        object ReflectImport(ImportContext context, JsonReader reader)
         {
             if (context == null)
                 throw new ArgumentNullException(nameof(context));

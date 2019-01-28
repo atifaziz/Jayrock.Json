@@ -421,7 +421,7 @@ namespace Jayrock.Json
             JsonBuffer.From(json);
         }
 
-        private static void AssertBufferedValueScalarOrNull(JsonToken expected, JsonBufferWriter writer)
+        static void AssertBufferedValueScalarOrNull(JsonToken expected, JsonBufferWriter writer)
         {
             var buffer = writer.GetBuffer();
             var reader = buffer.CreateReader();

@@ -102,9 +102,9 @@ namespace Jayrock.Json.Conversion.Converters
             Assert.IsTrue(reader.EOF);
         }
 
-        private sealed class TestExportContext : ExportContext
+        sealed class TestExportContext : ExportContext
         {
-            private readonly Hashtable _exporters = new Hashtable();
+            readonly Hashtable _exporters = new Hashtable();
 
             public override void Register(IExporter exporter)
             {
@@ -117,7 +117,7 @@ namespace Jayrock.Json.Conversion.Converters
             }
         }
 
-        private sealed class TestDataTableExporter : IExporter
+        sealed class TestDataTableExporter : IExporter
         {
             public DataTable LastExported;
 

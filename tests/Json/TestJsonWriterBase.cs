@@ -28,7 +28,7 @@ namespace Jayrock.Json
     [ TestFixture ]
     public class TestJsonWriterBase
     {
-        private JsonWriter _writer;
+        JsonWriter _writer;
 
         [ SetUp ]
         public void Init()

@@ -325,7 +325,7 @@ namespace Jayrock.Json
             Assert.IsFalse(e.MoveNext());
         }
 
-        private sealed class SubJsonObject : JsonObject
+        sealed class SubJsonObject : JsonObject
         {
             public void SubExport(ExportContext context, JsonWriter writer)
             {
@@ -349,7 +349,7 @@ namespace Jayrock.Json
             Assert.AreEqual("bar", s0.Target(s0, dmo));
         }
 
-        private class FakeGetMemberBinder : GetMemberBinder
+        class FakeGetMemberBinder : GetMemberBinder
         {
             public FakeGetMemberBinder(string name, bool ignoreCase) :
                 base(name, ignoreCase) {}

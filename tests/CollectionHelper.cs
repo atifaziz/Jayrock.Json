@@ -27,7 +27,7 @@ namespace Jayrock
 
     static class CollectionHelper
     {
-        private static readonly object[] _zeroObjects = new object[0];
+        static readonly object[] _zeroObjects = new object[0];
 
         public static object[] ToArray(ICollection collection)
         {

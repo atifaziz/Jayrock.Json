@@ -29,7 +29,7 @@ namespace Jayrock.Json
     [ TestFixture ]
     public class TestJsonTextReader
     {
-        private JsonTextReader _reader;
+        JsonTextReader _reader;
 
         [ TearDown ]
         public void Dispose()
@@ -436,7 +436,7 @@ namespace Jayrock.Json
             Assert.AreEqual(new string[] { "cofaxCDS", "cofaxEmail", "cofaxAdmin", "fileServlet", "cofaxTools" }, items.ToArray(typeof(string)));
         }
 
-        private void AssertToken(JsonTokenClass token)
+        void AssertToken(JsonTokenClass token)
         {
             AssertTokenText(token, null);
         }
@@ -790,7 +790,7 @@ namespace Jayrock.Json
             AssertEOF();
         }
 
-        private void AssertTokenText(JsonTokenClass token, string text)
+        void AssertTokenText(JsonTokenClass token, string text)
         {
             Assert.IsTrue(_reader.Read());
             Assert.AreEqual(token, _reader.TokenClass, "Found {0} (with text \x201c{1}\x201d) when expecting {2} (with text \x201c{3}\x201d).", _reader.TokenClass, _reader.Text, token, text);
@@ -798,34 +798,34 @@ namespace Jayrock.Json
                 Assert.AreEqual(text, _reader.Text);
         }
 
-        private void AssertMember(string name, JsonTokenClass valueToken)
+        void AssertMember(string name, JsonTokenClass valueToken)
         {
             AssertMember(name, valueToken, null);
         }
 
-        private void AssertMember(string name, string value)
+        void AssertMember(string name, string value)
         {
             AssertMember(name, JsonTokenClass.String, value);
         }
 
-        private void AssertMember(string name, JsonTokenClass valueToken, string valueText)
+        void AssertMember(string name, JsonTokenClass valueToken, string valueText)
         {
             AssertTokenText(JsonTokenClass.Member, name);
             AssertTokenText(valueToken, valueText);
         }
 
-        private void AssertEOF()
+        void AssertEOF()
         {
             Assert.IsFalse(_reader.Read(), "Expected EOF.");
             Assert.AreEqual(JsonTokenClass.EOF, _reader.TokenClass);
         }
 
-        private void Read(string s)
+        void Read(string s)
         {
             CreateReader(s).Read();
         }
 
-        private JsonReader CreateReader(string s)
+        JsonReader CreateReader(string s)
         {
             _reader = new JsonTextReader(new StringReader(s));
             return _reader;

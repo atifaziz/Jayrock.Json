@@ -28,13 +28,13 @@ namespace Jayrock.Json
     [ Serializable ]
     public struct JsonToken
     {
-        private readonly JsonTokenClass _class;
-        private readonly string _text;
+        readonly JsonTokenClass _class;
+        readonly string _text;
 
-        private JsonToken(JsonTokenClass clazz) :
+        JsonToken(JsonTokenClass clazz) :
             this(clazz, null) {}
 
-        private JsonToken(JsonTokenClass clazz, string text)
+        JsonToken(JsonTokenClass clazz, string text)
         {
             _class = clazz;
             _text = text;

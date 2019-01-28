@@ -26,7 +26,7 @@ namespace Jayrock.Json.Conversion.Converters
 
     public abstract class ExporterBase : IExporter
     {
-        private readonly Type _inputType;
+        readonly Type _inputType;
 
         protected ExporterBase(Type inputType)
         {

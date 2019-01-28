@@ -29,7 +29,7 @@ namespace Jayrock.Json.Conversion
     [ AttributeUsage(AttributeTargets.Property | AttributeTargets.Field) ]
     public class JsonMemberNameAttribute : Attribute, IPropertyDescriptorCustomization
     {
-        private string _name;
+        string _name;
 
         public JsonMemberNameAttribute() {}
 

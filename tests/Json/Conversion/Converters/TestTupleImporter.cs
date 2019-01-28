@@ -149,7 +149,7 @@ namespace Jayrock.Json.Conversion.Converters
             exporter.Export(context, tuple, writer);
         }
 
-        private static void AssertImport(object expected, string input)
+        static void AssertImport(object expected, string input)
         {
             var importer = new TupleImporter(expected.GetType());
             var reader = JsonText.CreateReader(input);

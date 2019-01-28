@@ -135,12 +135,12 @@ namespace Jayrock.Json.Conversion.Converters
             Assert.AreEqual(new DateTime(2013, 10, 29, 11, 04, 09, 144), time);
         }
 
-        private static void AssertImport(DateTime expected, string input)
+        static void AssertImport(DateTime expected, string input)
         {
             AssertImport(expected, input, false);
         }
 
-        private static void AssertImport(DateTime expected, string input, bool expectingUTC)
+        static void AssertImport(DateTime expected, string input, bool expectingUTC)
         {
             var o = Import(input);
             Assert.IsInstanceOf<DateTime>(o);
@@ -150,7 +150,7 @@ namespace Jayrock.Json.Conversion.Converters
                 Assert.AreEqual(expected, o);
         }
 
-        private static object Import(string input)
+        static object Import(string input)
         {
             var reader = new JsonTextReader(new StringReader(input));
             var context = new ImportContext();
@@ -161,7 +161,7 @@ namespace Jayrock.Json.Conversion.Converters
             return value;
         }
 
-        private static string Tzd(DateTime localTime)
+        static string Tzd(DateTime localTime)
         {
             var offset = TimeZoneInfo.Local.GetUtcOffset(localTime);
             var offsetString = offset.ToString();

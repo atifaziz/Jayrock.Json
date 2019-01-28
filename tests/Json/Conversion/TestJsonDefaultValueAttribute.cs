@@ -185,7 +185,7 @@ namespace Jayrock.Json.Conversion
             Assert.AreEqual("foobar", attribute.Value);
         }
 
-        private static IObjectMemberExporter CreatePropertyExporter(string name, int value, int defaultValue)
+        static IObjectMemberExporter CreatePropertyExporter(string name, int value, int defaultValue)
         {
             var property = new TestPropertyDescriptor(name, value);
             var attribute = new JsonDefaultValueAttribute(defaultValue);
@@ -194,7 +194,7 @@ namespace Jayrock.Json.Conversion
             return (IObjectMemberExporter) sp.GetService(typeof(IObjectMemberExporter));
         }
 
-        private static void AssertInitialization(object value)
+        static void AssertInitialization(object value)
         {
             var attribute = new JsonDefaultValueAttribute(value);
             Assert.IsNotNull(attribute.Value);
@@ -202,10 +202,10 @@ namespace Jayrock.Json.Conversion
             Assert.AreEqual(value, attribute.Value);
         }
 
-        private sealed class TestPropertyDescriptor : PropertyDescriptor, IServiceContainer
+        sealed class TestPropertyDescriptor : PropertyDescriptor, IServiceContainer
         {
-            private readonly object _value;
-            private readonly ServiceContainer _sc = new ServiceContainer();
+            readonly object _value;
+            readonly ServiceContainer _sc = new ServiceContainer();
 
             public TestPropertyDescriptor(string name, object value)
                 : base(name, null)

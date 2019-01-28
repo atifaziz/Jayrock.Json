@@ -36,22 +36,22 @@ namespace Jayrock.Json
 
     public sealed class JsonTextReader : JsonReaderBase
     {
-        private static readonly char[] _numNonDigitChars = new char[] { '.', 'e', 'E', '+', '-'};
+        static readonly char[] _numNonDigitChars = new char[] { '.', 'e', 'E', '+', '-'};
 
-        private BufferedCharReader _reader;
-        private Stack<Continuation> _stack;
-        private int _endLineNumber;
-        private int _endLinePosition;
-        private int _endCharCount;
+        BufferedCharReader _reader;
+        Stack<Continuation> _stack;
+        int _endLineNumber;
+        int _endLinePosition;
+        int _endCharCount;
 
-        private delegate JsonToken Continuation();
+        delegate JsonToken Continuation();
 
-        private Continuation _methodParse;
-        private Continuation _methodParseArrayFirst;
-        private Continuation _methodParseArrayNext;
-        private Continuation _methodParseObjectMember;
-        private Continuation _methodParseObjectMemberValue;
-        private Continuation _methodParseNextMember;
+        Continuation _methodParse;
+        Continuation _methodParseArrayFirst;
+        Continuation _methodParseArrayNext;
+        Continuation _methodParseObjectMember;
+        Continuation _methodParseObjectMemberValue;
+        Continuation _methodParseNextMember;
 
         public JsonTextReader(TextReader reader)
         {
@@ -94,8 +94,7 @@ namespace Jayrock.Json
         /// <summary>
         /// Parses the next token from the input and returns it.
         /// </summary>
-
-        private JsonToken Parse()
+        JsonToken Parse()
         {
             var ch = NextClean();
 
@@ -212,7 +211,7 @@ namespace Jayrock.Json
             return Yield(JsonToken.String(s));
         }
 
-        private Continuation ParseMethod
+        Continuation ParseMethod
         {
             get
             {
@@ -224,8 +223,7 @@ namespace Jayrock.Json
         /// <summary>
         /// Parses expecting an array in the source.
         /// </summary>
-
-        private JsonToken ParseArray()
+        JsonToken ParseArray()
         {
             if (NextClean() != '[')
                 throw SyntaxError("An array must start with '['.");
@@ -237,8 +235,7 @@ namespace Jayrock.Json
         /// Parses the first element of an array or the end of the array if
         /// it is empty.
         /// </summary>
-
-        private JsonToken ParseArrayFirst()
+        JsonToken ParseArrayFirst()
         {
             if (NextClean() == ']')
                 return Yield(JsonToken.EndArray());
@@ -249,7 +246,7 @@ namespace Jayrock.Json
             return Parse();
         }
 
-        private Continuation ParseArrayFirstMethod
+        Continuation ParseArrayFirstMethod
         {
             get
             {
@@ -261,8 +258,7 @@ namespace Jayrock.Json
         /// <summary>
         /// Parses the next element in the array.
         /// </summary>
-
-        private JsonToken ParseArrayNext()
+        JsonToken ParseArrayNext()
         {
             switch (NextClean())
             {
@@ -290,7 +286,7 @@ namespace Jayrock.Json
             return Parse();
         }
 
-        private Continuation ParseArrayNextMethod
+        Continuation ParseArrayNextMethod
         {
             get
             {
@@ -302,8 +298,7 @@ namespace Jayrock.Json
         /// <summary>
         /// Parses expecting an object in the source.
         /// </summary>
-
-        private JsonToken ParseObject()
+        JsonToken ParseObject()
         {
             if (NextClean() != '{')
                 throw SyntaxError("An object must begin with '{'.");
@@ -315,8 +310,7 @@ namespace Jayrock.Json
         /// Parses the first member name of the object or the end of the array
         /// in case of an empty object.
         /// </summary>
-
-        private JsonToken ParseObjectMember()
+        JsonToken ParseObjectMember()
         {
             var ch = NextClean();
 
@@ -331,7 +325,7 @@ namespace Jayrock.Json
             return Yield(JsonToken.Member(name), ParseObjectMemberValueMethod);
         }
 
-        private Continuation ParseObjectMemberMethod
+        Continuation ParseObjectMemberMethod
         {
             get
             {
@@ -340,7 +334,7 @@ namespace Jayrock.Json
             }
         }
 
-        private JsonToken ParseObjectMemberValue()
+        JsonToken ParseObjectMemberValue()
         {
             var ch = NextClean();
 
@@ -356,7 +350,7 @@ namespace Jayrock.Json
             return Parse();
         }
 
-        private Continuation ParseObjectMemberValueMethod
+        Continuation ParseObjectMemberValueMethod
         {
             get
             {
@@ -365,7 +359,7 @@ namespace Jayrock.Json
             }
         }
 
-        private JsonToken ParseNextMember()
+        JsonToken ParseNextMember()
         {
             switch (NextClean())
             {
@@ -389,7 +383,7 @@ namespace Jayrock.Json
             return Yield(JsonToken.Member(name), ParseObjectMemberValueMethod);
         }
 
-        private Continuation ParseNextMemberMethod
+        Continuation ParseNextMemberMethod
         {
             get
             {
@@ -402,8 +396,7 @@ namespace Jayrock.Json
         /// Yields control back to the reader's user while updating the
         /// reader with the new found token and its text.
         /// </summary>
-
-        private JsonToken Yield(JsonToken token)
+        JsonToken Yield(JsonToken token)
         {
             return Yield(token, null);
         }
@@ -418,8 +411,7 @@ namespace Jayrock.Json
         /// is returned back to the reader's user. This must be done by
         /// Yield's caller by way of explicit return.
         /// </remarks>
-
-        private JsonToken Yield(JsonToken token, Continuation continuation)
+        JsonToken Yield(JsonToken token, Continuation continuation)
         {
             if (continuation != null)
                 Push(continuation);
@@ -432,8 +424,7 @@ namespace Jayrock.Json
         /// and comments (slashslash and slashstar).
         /// </summary>
         /// <returns>A character, or 0 if there are no more characters.</returns>
-
-        private char NextClean()
+        char NextClean()
         {
             Debug.Assert(_reader != null);
 
@@ -494,7 +485,7 @@ namespace Jayrock.Json
             }
         }
 
-        private string NextString(char quote)
+        string NextString(char quote)
         {
             try
             {
@@ -506,7 +497,7 @@ namespace Jayrock.Json
             }
         }
 
-        private void Push(Continuation continuation)
+        void Push(Continuation continuation)
         {
             Debug.Assert(continuation != null);
 
@@ -516,18 +507,18 @@ namespace Jayrock.Json
             _stack.Push(continuation);
         }
 
-        private Continuation Pop()
+        Continuation Pop()
         {
             Debug.Assert(_stack != null);
             return _stack.Pop();
         }
 
-        private JsonException SyntaxError(string message)
+        JsonException SyntaxError(string message)
         {
             return SyntaxError(message, null);
         }
 
-        private JsonException SyntaxError(string message, Exception inner)
+        JsonException SyntaxError(string message, Exception inner)
         {
             if (LineNumber > 0)
             {
@@ -539,7 +530,7 @@ namespace Jayrock.Json
             return new JsonException(message, inner);
         }
 
-        private static string TryParseOctal(string s)
+        static string TryParseOctal(string s)
         {
             Debug.Assert(s != null);
             Debug.Assert(s[0] == '0');
@@ -567,7 +558,7 @@ namespace Jayrock.Json
             return num.ToString(CultureInfo.InvariantCulture);
         }
 
-        private static string TryParseHex(string s)
+        static string TryParseHex(string s)
         {
             Debug.Assert(s != null);
             Debug.Assert(s.Length > 1);

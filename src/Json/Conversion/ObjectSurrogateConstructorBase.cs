@@ -24,7 +24,7 @@ namespace Jayrock.Json.Conversion
         IObjectSurrogateConstructor,
         INonObjectMemberImporter
     {
-        private JsonBufferWriter _tailw;
+        JsonBufferWriter _tailw;
 
         public virtual bool Import(ImportContext context, string name, JsonReader reader)
         {

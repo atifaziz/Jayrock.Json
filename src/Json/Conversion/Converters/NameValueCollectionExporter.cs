@@ -43,7 +43,7 @@ namespace Jayrock.Json.Conversion.Converters
             ExportCollection(context, (NameValueCollection) value, writer);
         }
 
-        private static void ExportCollection(ExportContext context, NameValueCollection collection, JsonWriter writer)
+        static void ExportCollection(ExportContext context, NameValueCollection collection, JsonWriter writer)
         {
             Debug.Assert(context != null);
             Debug.Assert(collection != null);

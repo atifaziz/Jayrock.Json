@@ -37,7 +37,7 @@ namespace TidyJson
 
     #endregion
 
-    internal static class AttributeQuery<T>
+    static class AttributeQuery<T>
         where T : Attribute
     {
         public static T Get<P>(P provider)

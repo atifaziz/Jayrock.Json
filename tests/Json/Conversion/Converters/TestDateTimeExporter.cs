@@ -47,7 +47,7 @@ namespace Jayrock.Json.Conversion.Converters
             Assert.AreEqual("1999-12-31T23:30:59.9990000" + Tzd(time), Export(time));
         }
 
-        private static string Export(DateTime value)
+        static string Export(DateTime value)
         {
             var writer = new JsonRecorder();
             var exporter = new DateTimeExporter();
@@ -55,7 +55,7 @@ namespace Jayrock.Json.Conversion.Converters
             return writer.CreatePlayer().ReadString();
         }
 
-        private static string Tzd(DateTime localTime)
+        static string Tzd(DateTime localTime)
         {
             var offset = TimeZoneInfo.Local.GetUtcOffset(localTime);
             var offsetString = offset.ToString();

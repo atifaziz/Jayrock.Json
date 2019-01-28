@@ -30,8 +30,8 @@ namespace Jayrock.Json.Conversion.Converters
 
     public sealed class ComponentExporter : ExporterBase
     {
-        private readonly PropertyDescriptorCollection _properties; // TODO: Review thread-safety of PropertyDescriptorCollection
-        private readonly IObjectMemberExporter[] _exporters;
+        readonly PropertyDescriptorCollection _properties; // TODO: Review thread-safety of PropertyDescriptorCollection
+        readonly IObjectMemberExporter[] _exporters;
 
         public ComponentExporter(Type inputType) :
             this(inputType, (ICustomTypeDescriptor) null) {}
@@ -41,7 +41,7 @@ namespace Jayrock.Json.Conversion.Converters
                             ? typeDescriptor.GetProperties()
                             : (new CustomTypeDescriptor(inputType)).GetProperties()) {}
 
-        private ComponentExporter(Type inputType, PropertyDescriptorCollection properties) :
+        ComponentExporter(Type inputType, PropertyDescriptorCollection properties) :
             base(inputType)
         {
             Debug.Assert(properties != null);
@@ -139,7 +139,7 @@ namespace Jayrock.Json.Conversion.Converters
             }
         }
 
-        private static ObjectReferenceTracker TrackObject(ExportContext context, object value)
+        static ObjectReferenceTracker TrackObject(ExportContext context, object value)
         {
             Debug.Assert(context != null);
             Debug.Assert(value != null);
@@ -162,9 +162,9 @@ namespace Jayrock.Json.Conversion.Converters
             return tracker;
         }
 
-        private sealed class ObjectReferenceTracker
+        sealed class ObjectReferenceTracker
         {
-            private readonly ArrayList _stack = new ArrayList(6);
+            readonly ArrayList _stack = new ArrayList(6);
 
             public void PushNew(object value)
             {

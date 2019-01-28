@@ -57,7 +57,7 @@ namespace Jayrock.Collections
         protected override void InsertItem(int index, TValue item) =>
             base.InsertItem(index, ValidateItem(item));
 
-        private TValue ValidateItem(TValue item)
+        TValue ValidateItem(TValue item)
             => GetKeyForItem(item) == null
              ? throw new ArgumentException(null, nameof(item))
              : item;

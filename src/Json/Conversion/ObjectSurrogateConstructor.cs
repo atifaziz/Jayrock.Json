@@ -26,7 +26,7 @@ namespace Jayrock.Json.Conversion
 
     public class ObjectSurrogateConstructor : IObjectConstructor
     {
-        private readonly Type _surrogateType;
+        readonly Type _surrogateType;
 
         public ObjectSurrogateConstructor(Type surrogateType)
         {

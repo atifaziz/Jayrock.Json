@@ -16,14 +16,13 @@ namespace JsonOutputDemo
     /// a forward-only, stream-oriented fashion. It also demonstrates
     /// using JsonConvert to format CLR types into JSON text.
     /// </summary>
-
-    internal static class Program
+    static class Program
     {
-        private const string newsSourceUrl = "http://feeds.bbci.co.uk/news/rss.xml";
+        const string newsSourceUrl = "http://feeds.bbci.co.uk/news/rss.xml";
 
-        private delegate void Demo();
+        delegate void Demo();
 
-        private static void Main()
+        static void Main()
         {
             var demos = new Demo[]
             {
@@ -46,7 +45,7 @@ namespace JsonOutputDemo
             }
         }
 
-        private static void WriteContinents()
+        static void WriteContinents()
         {
             using (var writer = CreateJsonWriter(Console.Out))
             {
@@ -60,7 +59,7 @@ namespace JsonOutputDemo
             }
         }
 
-        private static void WriteContact()
+        static void WriteContact()
         {
             using (var writer = CreateJsonWriter(Console.Out))
             {
@@ -80,7 +79,7 @@ namespace JsonOutputDemo
             }
         }
 
-        private static void WritePhoneNumber(JsonWriter writer, string location, string number)
+        static void WritePhoneNumber(JsonWriter writer, string location, string number)
         {
             writer.WriteStartObject();      //  {
             writer.WriteMember("Location"); //      "Location" :
@@ -90,7 +89,7 @@ namespace JsonOutputDemo
             writer.WriteEndObject();        //  }
         }
 
-        private static void WriteRssToJson()
+        static void WriteRssToJson()
         {
             using (var writer = CreateJsonWriter(Console.Out))
                 WriteRssToJson(GetNews(), writer);
@@ -101,7 +100,7 @@ namespace JsonOutputDemo
         // write out all the members of the RichSiteSummary and related types.
         //
 
-        private static void WriteRssToJson(RichSiteSummary rss, JsonWriter writer)
+        static void WriteRssToJson(RichSiteSummary rss, JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteMember("version");
@@ -111,7 +110,7 @@ namespace JsonOutputDemo
             writer.WriteEndObject();
         }
 
-        private static void WriteRssToJson(Channel channel, JsonWriter writer)
+        static void WriteRssToJson(Channel channel, JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteMember("title");
@@ -126,7 +125,7 @@ namespace JsonOutputDemo
             writer.WriteEndObject();
         }
 
-        private static void WriteRssToJson(Item item, JsonWriter writer)
+        static void WriteRssToJson(Item item, JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteMember("title");
@@ -138,15 +137,15 @@ namespace JsonOutputDemo
             writer.WriteEndObject();
         }
 
-        private static void ExportRssToJson()
+        static void ExportRssToJson()
         {
             using (var writer = CreateJsonWriter(Console.Out))
                 JsonConvert.Export(GetNews(), writer);
         }
 
-        private static RichSiteSummary news;
+        static RichSiteSummary news;
 
-        private static RichSiteSummary GetNews()
+        static RichSiteSummary GetNews()
         {
             if (news == null)
             {
@@ -159,7 +158,7 @@ namespace JsonOutputDemo
             return news;
         }
 
-        private static JsonWriter CreateJsonWriter(TextWriter writer)
+        static JsonWriter CreateJsonWriter(TextWriter writer)
         {
             var jsonWriter = new JsonTextWriter(writer);
             jsonWriter.PrettyPrint = true;

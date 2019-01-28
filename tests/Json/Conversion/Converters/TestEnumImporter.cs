@@ -122,18 +122,18 @@ namespace Jayrock.Json.Conversion.Converters
             new EnumImporter(typeof(AttributeTargets));
         }
 
-        private static object Import(Type type, string s)
+        static object Import(Type type, string s)
         {
             var importer = new EnumImporter(type);
             return importer.Import(new ImportContext(), CreateReader(s));
         }
 
-        private static JsonReader CreateReader(string s)
+        static JsonReader CreateReader(string s)
         {
             return new JsonTextReader(new StringReader(s));
         }
 
-        private enum Days
+        enum Days
         {
             Sunday,
             Monday,

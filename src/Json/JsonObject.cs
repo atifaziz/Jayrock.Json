@@ -54,13 +54,13 @@ namespace Jayrock.Json
         IDictionary<string, object>,
         IDynamicMetaObjectProvider
     {
-        private ArrayList _nameIndexList;
-        [ NonSerialized ] private IList _readOnlyNameIndexList;
+        ArrayList _nameIndexList;
+        [ NonSerialized ] IList _readOnlyNameIndexList;
 
         [ NonSerialized ] string[] _keys;
         [ NonSerialized ] object[] _values;
 
-        private void OnUpdating()
+        void OnUpdating()
         {
             _keys = null;
             _values = null;
@@ -129,10 +129,10 @@ namespace Jayrock.Json
         [Serializable]
         public sealed class JsonMemberEnumerator : IEnumerator<JsonMember>
         {
-            private JsonObject _obj;
-            private IEnumerator _enumerator;
-            private JsonMember _member;
-            private bool _memberInitialized;
+            JsonObject _obj;
+            IEnumerator _enumerator;
+            JsonMember _member;
+            bool _memberInitialized;
 
             public JsonMemberEnumerator(JsonObject obj, IEnumerator enumerator)
             {
@@ -157,7 +157,7 @@ namespace Jayrock.Json
                 _enumerator.Reset();
             }
 
-            private void ResetMember()
+            void ResetMember()
             {
                 _member = new JsonMember();
                 _memberInitialized = false;
@@ -180,13 +180,13 @@ namespace Jayrock.Json
 
             object IEnumerator.Current { get { return Current; } }
 
-            private void EnsureNotDisposed()
+            void EnsureNotDisposed()
             {
                 if (IsDisposed)
                     throw new ObjectDisposedException(GetType().FullName);
             }
 
-            private bool IsDisposed { get { return _enumerator == null; } }
+            bool IsDisposed { get { return _enumerator == null; } }
 
             public void Dispose()
             {
@@ -210,7 +210,7 @@ namespace Jayrock.Json
             get { return Count > 0; }
         }
 
-        private ArrayList NameIndexList
+        ArrayList NameIndexList
         {
             get
             {
@@ -483,7 +483,7 @@ namespace Jayrock.Json
             get { return _keys ?? (_keys = GetMembers<string>(delegate(JsonMember m) { return m.Name; })); }
         }
 
-        private T[] GetMembers<T>(Converter<JsonMember, T> selector)
+        T[] GetMembers<T>(Converter<JsonMember, T> selector)
         {
             var arr = new T[Count];
             var i = 0;
@@ -526,7 +526,7 @@ namespace Jayrock.Json
             return Contains(item);
         }
 
-        private bool Contains(KeyValuePair<string, object> item)
+        bool Contains(KeyValuePair<string, object> item)
         {
             object value;
             return ((IDictionary<string, object>) this).TryGetValue(item.Key, out value)
@@ -565,7 +565,7 @@ namespace Jayrock.Json
             return new DynamicMetaObject<JsonObject>(parameter, this, _runtime, /* dontFallbackFirst */ true);
         }
 
-        private readonly DynamicObjectRuntime<JsonObject> _runtime = new DynamicObjectRuntime<JsonObject>
+        readonly DynamicObjectRuntime<JsonObject> _runtime = new DynamicObjectRuntime<JsonObject>
         {
             TryGetMember = TryGetMember,
             TrySetMember = TrySetMember,
@@ -574,12 +574,12 @@ namespace Jayrock.Json
             GetDynamicMemberNames = o => o.Names.Cast<string>()
         };
 
-        private static Option<object> TryInvokeMember(JsonObject obj, InvokeMemberBinder arg2, object[] arg3)
+        static Option<object> TryInvokeMember(JsonObject obj, InvokeMemberBinder arg2, object[] arg3)
         {
             return Option<object>.None; // TryGetMember(arg1, arg2)
         }
 
-        private static bool TryDeleteMember(JsonObject obj, DeleteMemberBinder binder)
+        static bool TryDeleteMember(JsonObject obj, DeleteMemberBinder binder)
         {
             if (!obj.Contains(binder.Name))
                 return false;
@@ -587,13 +587,13 @@ namespace Jayrock.Json
             return true;
         }
 
-        private static bool TrySetMember(JsonObject obj, SetMemberBinder binder, object value)
+        static bool TrySetMember(JsonObject obj, SetMemberBinder binder, object value)
         {
             obj[binder.Name] = value;
             return true;
         }
 
-        private static Option<object> TryGetMember(JsonObject obj, GetMemberBinder binder)
+        static Option<object> TryGetMember(JsonObject obj, GetMemberBinder binder)
         {
             if (!obj.HasMembers)
                 return Option<object>.None;

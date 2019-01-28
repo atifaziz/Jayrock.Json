@@ -24,8 +24,8 @@ namespace Jayrock.Json
     [Serializable]
     public struct JsonMember
     {
-        private readonly string _name;
-        private readonly object _value;
+        readonly string _name;
+        readonly object _value;
 
         public JsonMember(string name, object value)
         {

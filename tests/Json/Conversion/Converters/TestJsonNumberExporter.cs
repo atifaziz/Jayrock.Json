@@ -51,7 +51,7 @@ namespace Jayrock.Json.Conversion.Converters
             Assert.AreEqual(42, (int) Export(new JsonNumber("42")).ReadNumber());
         }
 
-        private static JsonReader Export(JsonNumber value)
+        static JsonReader Export(JsonNumber value)
         {
             var writer = new JsonRecorder();
             JsonConvert.Export(value, writer);

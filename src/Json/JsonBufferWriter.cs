@@ -31,7 +31,7 @@ namespace Jayrock.Json
 
     public sealed class JsonBufferWriter : JsonTokenWriterBase
     {
-        private readonly JsonBufferStorage _storage;
+        readonly JsonBufferStorage _storage;
 
         public JsonBufferWriter() :
             this(16) {}

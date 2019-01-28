@@ -126,7 +126,7 @@ namespace Jayrock.Json.Conversion.Converters
             Assert.AreEqual("http://www.json-rpc.org/", reference["Link"]);
         }
 
-        private object Parse(string s)
+        object Parse(string s)
         {
             var reader = new JsonTextReader(new StringReader(s));
             var value = JsonConvert.Import(reader);

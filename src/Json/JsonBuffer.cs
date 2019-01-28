@@ -36,13 +36,13 @@ namespace Jayrock.Json
     {
         public static readonly JsonBuffer Empty = new JsonBuffer();
 
-        private readonly JsonBufferStorage _storage;
-        private readonly int _start;
-        private readonly int _end;
+        readonly JsonBufferStorage _storage;
+        readonly int _start;
+        readonly int _end;
 
-        private static readonly JsonBuffer _null;
-        private static readonly JsonBuffer _true;
-        private static readonly JsonBuffer _false;
+        static readonly JsonBuffer _null;
+        static readonly JsonBuffer _true;
+        static readonly JsonBuffer _false;
 
         static JsonBuffer()
         {
@@ -146,7 +146,7 @@ namespace Jayrock.Json
 
         public int Length { get { return _end - _start; } }
 
-        private JsonToken FirstToken
+        JsonToken FirstToken
         {
             get
             {
@@ -411,7 +411,7 @@ namespace Jayrock.Json
                  : SliceImpl(start, end);
         }
 
-        private JsonBuffer SliceImpl(int start, int end)
+        JsonBuffer SliceImpl(int start, int end)
         {
             Debug.Assert(start >= _start);
             Debug.Assert(end <= _end);

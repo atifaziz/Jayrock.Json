@@ -32,8 +32,7 @@ namespace TidyJson
     /// <summary>
     /// Provides masking services where one value masks another given a test.
     /// </summary>
-
-    internal static class Mask
+    static class Mask
     {
         public static string NullString(string actual)
         {

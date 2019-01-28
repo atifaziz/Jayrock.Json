@@ -16,7 +16,7 @@ namespace JsonConversionsDemo
 
     public abstract class CollectionImporterBase : ImporterBase
     {
-        private readonly Type _elementType;
+        readonly Type _elementType;
 
         public CollectionImporterBase(Type outputType, Type elementType) :
             base(outputType)

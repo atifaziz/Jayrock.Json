@@ -28,7 +28,7 @@ namespace Jayrock.Json.Conversion.Converters
     [ TestFixture ]
     public class TestTypeExporterBase
     {
-        private readonly ThingExporter _exporter = new ThingExporter();
+        readonly ThingExporter _exporter = new ThingExporter();
 
         [ Test ]
         public void ExportNull()
@@ -48,18 +48,18 @@ namespace Jayrock.Json.Conversion.Converters
             _exporter.Export(null, null, null);
         }
 
-        private JsonReader Export(object value)
+        JsonReader Export(object value)
         {
             var writer = new JsonRecorder();
             _exporter.Export(new ExportContext(), value, writer);
             return writer.CreatePlayer();
         }
 
-        private class Thing
+        class Thing
         {
         }
 
-        private class ThingExporter : ExporterBase
+        class ThingExporter : ExporterBase
         {
             public ThingExporter() : base(typeof(Thing)) {}
 

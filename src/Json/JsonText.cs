@@ -36,11 +36,11 @@ namespace Jayrock.Json
 
     public static class JsonText
     {
-        private static readonly JsonTextReaderFactoryHandler _defaultReaderFactory;
-        private static readonly JsonTextWriterFactoryHandler _defaultWriterFactory;
+        static readonly JsonTextReaderFactoryHandler _defaultReaderFactory;
+        static readonly JsonTextWriterFactoryHandler _defaultWriterFactory;
 
-        private static JsonTextReaderFactoryHandler _currentReaderFactory;
-        private static JsonTextWriterFactoryHandler _currentWriterFactory;
+        static JsonTextReaderFactoryHandler _currentReaderFactory;
+        static JsonTextWriterFactoryHandler _currentWriterFactory;
 
         static JsonText()
         {
@@ -48,12 +48,12 @@ namespace Jayrock.Json
             _currentWriterFactory = _defaultWriterFactory = new JsonTextWriterFactoryHandler(DefaultWriterFactoryImpl);
         }
 
-        private static JsonReader DefaultReaderFactoryImpl(TextReader reader, object options)
+        static JsonReader DefaultReaderFactoryImpl(TextReader reader, object options)
         {
             return new JsonTextReader(reader);
         }
 
-        private static JsonWriter DefaultWriterFactoryImpl(TextWriter writer, object options)
+        static JsonWriter DefaultWriterFactoryImpl(TextWriter writer, object options)
         {
             return new JsonTextWriter(writer);
         }

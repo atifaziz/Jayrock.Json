@@ -35,7 +35,7 @@ namespace Jayrock.Json
         public const string Text = "null";
         public static readonly JsonNull Value = new JsonNull();
 
-        private JsonNull() {}
+        JsonNull() {}
 
         public override string ToString()
         {

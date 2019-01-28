@@ -47,7 +47,7 @@ namespace Jayrock.Json
             WriteString("[\"Hello\\u0000World\"]", "Hello" + ((char) 0) + "World");
         }
 
-        private static void WriteString(string expected, string value)
+        static void WriteString(string expected, string value)
         {
             var writer = new JsonTextWriter(new StringWriter());
             writer.WriteString(value);
@@ -208,14 +208,14 @@ namespace Jayrock.Json
                 + "}\n"), writer.ToString() + Environment.NewLine);
         }
 
-        private static string WriteValue(object value)
+        static string WriteValue(object value)
         {
             var writer = new JsonTextWriter(new StringWriter());
             JsonConvert.Export(value, writer);
             return writer.ToString();
         }
 
-        private static string RewriteLines(string s)
+        static string RewriteLines(string s)
         {
             var reader = new StringReader(s);
             var writer = new StringWriter();

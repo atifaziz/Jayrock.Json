@@ -94,7 +94,7 @@ namespace Jayrock.Json.Conversion.Converters
             AssertImport(new bool[] { false }, "0");
         }
 
-        private static void AssertImport(Array expected, string s)
+        static void AssertImport(Array expected, string s)
         {
             var reader = CreateReader(s);
 
@@ -108,7 +108,7 @@ namespace Jayrock.Json.Conversion.Converters
             Assert.AreEqual(expected, o);
         }
 
-        private static JsonReader CreateReader(string s)
+        static JsonReader CreateReader(string s)
         {
             return new JsonTextReader(new StringReader(s));
         }

@@ -118,7 +118,7 @@ namespace Jayrock.Json.Conversion
             Assert.IsTrue(reader.EOF);
         }
 
-        private static void AssertInStock(Type expected, Type type)
+        static void AssertInStock(Type expected, Type type)
         {
             var context = new ExportContext();
             var exporter = context.FindExporter(type);
@@ -127,7 +127,7 @@ namespace Jayrock.Json.Conversion
             Assert.IsInstanceOf(expected, exporter, type.FullName);
         }
 
-        private sealed class ExportableThing : IJsonExportable
+        sealed class ExportableThing : IJsonExportable
         {
             public void Export(ExportContext context, JsonWriter writer)
             {
@@ -135,23 +135,23 @@ namespace Jayrock.Json.Conversion
             }
         }
 
-        private sealed class MyDataSet : DataSet
+        sealed class MyDataSet : DataSet
         {
         }
 
-        private sealed class MyDataTable : DataTable
+        sealed class MyDataTable : DataTable
         {
         }
 
-        private sealed class MyDataRow : DataRow
+        sealed class MyDataRow : DataRow
         {
             public MyDataRow(DataRowBuilder builder) :
                 base(builder) {}
         }
 
-        private sealed class Thing {}
+        sealed class Thing {}
 
-        private sealed class ThingExporter : IExporter
+        sealed class ThingExporter : IExporter
         {
             public Type InputType
             {

@@ -93,7 +93,7 @@ namespace Jayrock.Json.Conversion
             customization.Apply(null);
         }
 
-        private static TestPropertyDescriptor CreateTestProperty(string baseName)
+        static TestPropertyDescriptor CreateTestProperty(string baseName)
         {
             var property = new TestPropertyDescriptor(baseName);
             Assert.AreEqual(baseName, property.Name);
@@ -101,7 +101,7 @@ namespace Jayrock.Json.Conversion
             return property;
         }
 
-        private sealed class TestPropertyDescriptor : PropertyDescriptor, IPropertyCustomization
+        sealed class TestPropertyDescriptor : PropertyDescriptor, IPropertyCustomization
         {
             public string CustomizedName;
 

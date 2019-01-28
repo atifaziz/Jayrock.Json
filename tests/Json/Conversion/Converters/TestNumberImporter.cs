@@ -103,7 +103,7 @@ namespace Jayrock.Json.Conversion.Converters
             new Int32Importer().Import(importContext, reader);
         }
 
-        private static void AssertImport(object expected, string input)
+        static void AssertImport(object expected, string input)
         {
             var reader = new JsonTextReader(new StringReader(input));
             var expectedType = expected.GetType();

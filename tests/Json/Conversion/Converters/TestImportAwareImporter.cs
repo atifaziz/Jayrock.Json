@@ -63,7 +63,7 @@ namespace Jayrock.Json.Conversion.Converters
             importer.Import(null, null);
         }
 
-        private sealed class Thing : IJsonImportable
+        sealed class Thing : IJsonImportable
         {
             public bool ImportCalled;
 

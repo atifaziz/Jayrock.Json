@@ -51,20 +51,20 @@ namespace Jayrock.Json
                 Object, EndObject, Member
             });
 
-        private readonly string _name;
-        [ NonSerialized ] private readonly Superclass _superclass;
+        readonly string _name;
+        [ NonSerialized ] readonly Superclass _superclass;
 
-        private enum Superclass
+        enum Superclass
         {
             Unspecified,
             Scalar,
             Terminator
         }
 
-        private JsonTokenClass(string name) :
+        JsonTokenClass(string name) :
             this(name, Superclass.Unspecified) {}
 
-        private JsonTokenClass(string name, Superclass superclass)
+        JsonTokenClass(string name, Superclass superclass)
         {
             Debug.Assert(name != null);
             Debug.Assert(name.Length > 0);

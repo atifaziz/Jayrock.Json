@@ -21,7 +21,7 @@ namespace JsonConversionsDemo
 
     public class DuckCollectionImporter : DuckCollectionImporterBase
     {
-        private readonly MethodInfo _adder;
+        readonly MethodInfo _adder;
 
         public DuckCollectionImporter(Type outputType) :
             base(outputType, DuckCollectionReflector.InferElementType(outputType))

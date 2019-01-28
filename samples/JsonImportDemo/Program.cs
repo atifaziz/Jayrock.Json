@@ -12,10 +12,9 @@ namespace JsonImportDemo
     /// This project demonstrates using JsonConvert to unpack JSON text into
     /// a given set of application and general types.
     /// </summary>
-
-    internal static class Program
+    static class Program
     {
-        private static void Main()
+        static void Main()
         {
             var text = @"
                 {
@@ -58,7 +57,7 @@ namespace JsonImportDemo
             AutoImportDemo(text);
         }
 
-        private static void ImportByTypeDemo(string text)
+        static void ImportByTypeDemo(string text)
         {
             var menu = (Menu) JsonConvert.Import(typeof(Menu), text);
 
@@ -97,7 +96,7 @@ namespace JsonImportDemo
             public string Label;
         }
 
-        private static void AutoImportDemo(string text)
+        static void AutoImportDemo(string text)
         {
             //
             // Without any type specification, Import will unpack

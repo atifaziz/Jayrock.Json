@@ -46,7 +46,7 @@ namespace Jayrock.Json.Conversion.Converters
             return expando;
         }
 
-        private object ImportValue(ImportContext context, JsonReader reader)
+        object ImportValue(ImportContext context, JsonReader reader)
         {
             Debug.Assert(context != null);
             Debug.Assert(reader != null);
@@ -58,7 +58,7 @@ namespace Jayrock.Json.Conversion.Converters
                  : context.Import(AnyType.Value, reader);
         }
 
-        private object ImportArray(ImportContext context, JsonReader reader)
+        object ImportArray(ImportContext context, JsonReader reader)
         {
             Debug.Assert(context != null);
             Debug.Assert(reader != null);

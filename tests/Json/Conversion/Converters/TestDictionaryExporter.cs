@@ -83,7 +83,7 @@ namespace Jayrock.Json.Conversion.Converters
             }
         }
 
-        private static JsonReader Export(IDictionary value)
+        static JsonReader Export(IDictionary value)
         {
             var writer = new JsonRecorder();
             JsonConvert.Export(value, writer);

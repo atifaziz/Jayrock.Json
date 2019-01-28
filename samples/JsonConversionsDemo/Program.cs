@@ -23,9 +23,9 @@ namespace JsonConversionsDemo
         public List<Point> Points;
     }
 
-    internal static class Program
+    static class Program
     {
-        private static void Run()
+        static void Run()
         {
             var impctx = new ImportContext();
 
@@ -113,7 +113,7 @@ namespace JsonConversionsDemo
             Console.WriteLine();
         }
 
-        private static void Main()
+        static void Main()
         {
             try
             {
@@ -126,7 +126,7 @@ namespace JsonConversionsDemo
             }
         }
 
-        private static JsonWriter CreatePrettyWriter(TextWriter writer)
+        static JsonWriter CreatePrettyWriter(TextWriter writer)
         {
             var jsonw = new JsonTextWriter(writer);
             jsonw.PrettyPrint = true;

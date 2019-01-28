@@ -30,7 +30,7 @@ namespace Jayrock.Json
     [ Serializable ]
     public class InvalidMemberException : Exception
     {
-        private const string _defaultMessage = "No element exists at the specified index.";
+        const string _defaultMessage = "No element exists at the specified index.";
 
         public InvalidMemberException() : this(null) {}
 

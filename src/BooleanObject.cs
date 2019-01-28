@@ -22,7 +22,7 @@ namespace Jayrock
 
     #endregion
 
-    internal static class BooleanObject
+    static class BooleanObject
     {
         //
         // The following two statics are only used as an optimization so that we

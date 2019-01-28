@@ -31,7 +31,7 @@ namespace Jayrock.Json
 
     public class JsonTextWriter : JsonWriterBase
     {
-        private readonly TextWriter _writer;
+        readonly TextWriter _writer;
 
         //
         // Pretty printing as per:
@@ -45,10 +45,10 @@ namespace Jayrock.Json
         // </quote>
         //
 
-        private bool _prettyPrint;
-        private bool _newLine;
-        private int _indent;
-        private char[] _indentBuffer;
+        bool _prettyPrint;
+        bool _newLine;
+        int _indent;
+        char[] _indentBuffer;
 
         public JsonTextWriter() :
             this(null) {}
@@ -152,14 +152,14 @@ namespace Jayrock.Json
             WriteDelimiter(']');
         }
 
-        private void WriteScalar(string text)
+        void WriteScalar(string text)
         {
             OnWritingValue();
             PrettyIndent();
             _writer.Write(text);
         }
 
-        private bool IsNonEmptyArray()
+        bool IsNonEmptyArray()
         {
             return Bracket == JsonWriterBracket.Array && Index > 0;
         }
@@ -168,7 +168,7 @@ namespace Jayrock.Json
         // Methods below are mostly related to pretty-printing of JSON text.
         //
 
-        private void OnWritingValue()
+        void OnWritingValue()
         {
             if (IsNonEmptyArray())
             {
@@ -177,26 +177,26 @@ namespace Jayrock.Json
             }
         }
 
-        private void WriteDelimiter(char ch)
+        void WriteDelimiter(char ch)
         {
             PrettyIndent();
             _writer.Write(ch);
         }
 
-        private void PrettySpace()
+        void PrettySpace()
         {
             if (!_prettyPrint) return;
             WriteDelimiter(' ');
         }
 
-        private void PrettyLine()
+        void PrettyLine()
         {
             if (!_prettyPrint) return;
             _writer.WriteLine();
             _newLine = true;
         }
 
-        private void PrettyIndent()
+        void PrettyIndent()
         {
             if (!_prettyPrint)
                 return;

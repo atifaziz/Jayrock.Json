@@ -88,7 +88,7 @@ namespace Jayrock.Json.Conversion.Converters
             reader.ReadToken(JsonTokenClass.EndArray);
         }
 
-        private static JsonReader Export(IEnumerable values)
+        static JsonReader Export(IEnumerable values)
         {
             var writer = new JsonRecorder();
             JsonConvert.Export(values, writer);

@@ -30,10 +30,10 @@ namespace Jayrock.Json.Conversion
 
     public sealed class ObjectConstructor : IObjectConstructor
     {
-        private readonly Type _type;
-        private readonly ConstructorInfo[] _ctors;
+        readonly Type _type;
+        readonly ConstructorInfo[] _ctors;
 
-        private static readonly IComparer<ConstructorInfo>
+        static readonly IComparer<ConstructorInfo>
             _arrayLengthComparer =
                 Comparer<ConstructorInfo>.Create((a, b) =>
                     -1 * a.GetParameters().Length.CompareTo(b.GetParameters().Length));
@@ -114,7 +114,7 @@ namespace Jayrock.Json.Conversion
             throw new JsonException(string.Format("None constructor could be used to create {0} object from JSON.", _ctors[0].DeclaringType));
         }
 
-        private static ObjectConstructionResult TryCreateObject(ImportContext context, ConstructorInfo ctor, NamedJsonBuffer[] members)
+        static ObjectConstructionResult TryCreateObject(ImportContext context, ConstructorInfo ctor, NamedJsonBuffer[] members)
         {
             Debug.Assert(context != null);
             Debug.Assert(ctor != null);
@@ -178,8 +178,7 @@ namespace Jayrock.Json.Conversion
         /// Bound indicies returned in the resulting array are one-based
         /// therefore zero means unbound.
         /// </remarks>
-
-        private static int[] Bind(ImportContext context, ParameterInfo[] parameters, NamedJsonBuffer[] members)
+        static int[] Bind(ImportContext context, ParameterInfo[] parameters, NamedJsonBuffer[] members)
         {
             if (context == null) throw new ArgumentNullException(nameof(context));
             if (parameters == null) throw new ArgumentNullException(nameof(parameters));
@@ -203,7 +202,7 @@ namespace Jayrock.Json.Conversion
             return bindings;
         }
 
-        private static int FindMember(NamedJsonBuffer[] members, string name)
+        static int FindMember(NamedJsonBuffer[] members, string name)
         {
             for (var i = 0; i < members.Length; i++)
             {

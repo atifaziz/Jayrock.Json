@@ -39,11 +39,11 @@ namespace Jayrock.Json.Conversion
 
     public static class JsonConvert
     {
-        private static readonly ExportContextFactoryHandler _defaultExportContextFactoryHandler;
-        private static readonly ImportContextFactoryHandler _defaultImportContextFactoryHandler;
+        static readonly ExportContextFactoryHandler _defaultExportContextFactoryHandler;
+        static readonly ImportContextFactoryHandler _defaultImportContextFactoryHandler;
 
-        private static ExportContextFactoryHandler _currentExportContextFactoryHandler;
-        private static ImportContextFactoryHandler _currentImportContextFactoryHandler;
+        static ExportContextFactoryHandler _currentExportContextFactoryHandler;
+        static ImportContextFactoryHandler _currentImportContextFactoryHandler;
 
         static JsonConvert()
         {
@@ -183,12 +183,12 @@ namespace Jayrock.Json.Conversion
             get { return _defaultImportContextFactoryHandler; }
         }
 
-        private static ExportContext CreateDefaultExportContext()
+        static ExportContext CreateDefaultExportContext()
         {
             return new ExportContext();
         }
 
-        private static ImportContext CreateDefaultImportContext()
+        static ImportContext CreateDefaultImportContext()
         {
             return new ImportContext();
         }
