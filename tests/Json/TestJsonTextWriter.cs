@@ -154,8 +154,8 @@ namespace Jayrock.Json
         [ Test ]
         public void WriteNestedArrays()
         {
-            var inner = new int[] { 1, 2, 3 };
-            var outer = new int[][] { inner, inner, inner };
+            var inner = new[] { 1, 2, 3 };
+            var outer = new[] { inner, inner, inner };
             Assert.AreEqual("[[1,2,3],[1,2,3],[1,2,3]]", WriteValue(outer));
         }
 

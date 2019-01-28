@@ -433,7 +433,7 @@ namespace Jayrock.Json
                 }
             }
 
-            Assert.AreEqual(new string[] { "cofaxCDS", "cofaxEmail", "cofaxAdmin", "fileServlet", "cofaxTools" }, items.ToArray(typeof(string)));
+            Assert.AreEqual(new[] { "cofaxCDS", "cofaxEmail", "cofaxAdmin", "fileServlet", "cofaxTools" }, items.ToArray(typeof(string)));
         }
 
         void AssertToken(JsonTokenClass token)

@@ -95,7 +95,7 @@ namespace Jayrock.Reflection
             return IsConstructionOfGenericTypeDefinition(type, (Type) criteria);
         }
 
-        static readonly Type[] _commonTupleTypes = new[]
+        static readonly Type[] _commonTupleTypes =
         {
             // Tuple of 1 not expected to be common so excluded from here
             typeof(Tuple<,>), typeof(Tuple<,,>), typeof(Tuple<,,,>), typeof(Tuple<,,,,>)

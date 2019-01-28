@@ -36,7 +36,7 @@ namespace Jayrock.Json
 
     public sealed class JsonTextReader : JsonReaderBase
     {
-        static readonly char[] _numNonDigitChars = new char[] { '.', 'e', 'E', '+', '-'};
+        static readonly char[] _numNonDigitChars = { '.', 'e', 'E', '+', '-'};
 
         BufferedCharReader _reader;
         Stack<Continuation> _stack;

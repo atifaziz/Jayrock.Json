@@ -48,12 +48,12 @@ namespace Jayrock.Json.Conversion.Converters
 
         protected override object ImportFromBoolean(ImportContext context, JsonReader reader)
         {
-            return new byte[] { (byte) (reader.ReadBoolean() ? 1 : 0) };
+            return new[] { (byte) (reader.ReadBoolean() ? 1 : 0) };
         }
 
         protected override object ImportFromNumber(ImportContext context, JsonReader reader)
         {
-            return new byte[] { reader.ReadNumber().ToByte() };
+            return new[] { reader.ReadNumber().ToByte() };
         }
 
         protected override object ImportFromString(ImportContext context, JsonReader reader)

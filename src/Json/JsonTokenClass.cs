@@ -43,7 +43,7 @@ namespace Jayrock.Json
         public static readonly JsonTokenClass EOF = new JsonTokenClass("EOF", Superclass.Terminator);
 
         public static readonly IReadOnlyCollection<JsonTokenClass>
-            All = System.Array.AsReadOnly(new JsonTokenClass[]
+            All = System.Array.AsReadOnly(new[]
             {
                 BOF, EOF,
                 Null, Boolean, Number, String,

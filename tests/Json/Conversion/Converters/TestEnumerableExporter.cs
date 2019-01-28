@@ -54,7 +54,7 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void ExportFlatArray()
         {
-            var reader = Export(new int[] { 11, 22, 33 });
+            var reader = Export(new[] { 11, 22, 33 });
             reader.ReadToken(JsonTokenClass.Array);
             Assert.AreEqual(11, reader.ReadNumber().ToInt32());
             Assert.AreEqual(22, reader.ReadNumber().ToInt32());
@@ -65,7 +65,7 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void ExportList()
         {
-            var reader = Export(new ArrayList(new int[] { 11, 22, 33 }));
+            var reader = Export(new ArrayList(new[] { 11, 22, 33 }));
             reader.ReadToken(JsonTokenClass.Array);
             Assert.AreEqual(11, reader.ReadNumber().ToInt32());
             Assert.AreEqual(22, reader.ReadNumber().ToInt32());

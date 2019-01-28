@@ -62,7 +62,7 @@ namespace Jayrock.Json
         [ Test ]
         public void InitWithKeyValuePairs()
         {
-            var o = new JsonObject(new string[] { "one", "two", }, new object[] { 1, 2 });
+            var o = new JsonObject(new[] { "one", "two", }, new object[] { 1, 2 });
             Assert.AreEqual(2, o.Count);
             Assert.AreEqual(1, o["one"]);
             Assert.AreEqual(2, o["two"]);
@@ -71,7 +71,7 @@ namespace Jayrock.Json
         [ Test ]
         public void InitWithKeyValuePairsAccumulates()
         {
-            var o = new JsonObject(new string[] { "one", "two", "three", "two" }, new object[] { 1, 2, 3, 4 });
+            var o = new JsonObject(new[] { "one", "two", "three", "two" }, new object[] { 1, 2, 3, 4 });
             Assert.AreEqual(3, o.Count);
             Assert.AreEqual(1, o["one"]);
             var two = o["two"] as IList;
@@ -85,7 +85,7 @@ namespace Jayrock.Json
         [ Test ]
         public void InitWithExtraKeys()
         {
-            var o = new JsonObject(new string[] { "one", "two", "three" }, new object[] { 1, 2 });
+            var o = new JsonObject(new[] { "one", "two", "three" }, new object[] { 1, 2 });
             Assert.AreEqual(3, o.Count);
             Assert.AreEqual(1, o["one"]);
             Assert.AreEqual(2, o["two"]);
@@ -95,7 +95,7 @@ namespace Jayrock.Json
         [ Test ]
         public void InitWithNullValues()
         {
-            var o = new JsonObject(new string[] { "one", "two", "three" }, null);
+            var o = new JsonObject(new[] { "one", "two", "three" }, null);
             Assert.AreEqual(3, o.Count);
             Assert.IsTrue(JsonNull.LogicallyEquals(o["one"]));
             Assert.IsTrue(JsonNull.LogicallyEquals(o["two"]));
@@ -105,7 +105,7 @@ namespace Jayrock.Json
         [ Test ]
         public void InitWithExtraValues()
         {
-            var o = new JsonObject(new string[] { "one", "two" }, new object[] { 1, 2, 3, 4 });
+            var o = new JsonObject(new[] { "one", "two" }, new object[] { 1, 2, 3, 4 });
             Assert.AreEqual(2, o.Count);
             Assert.AreEqual(1, o["one"]);
             var two = (IList) o["two"];
@@ -281,7 +281,7 @@ namespace Jayrock.Json
             Assert.AreEqual("bar", o["foo"]);
             var names = o.Names;
             Assert.AreEqual(1, names.Count);
-            Assert.AreEqual(new string[] { "foo" }, CollectionHelper.ToArray(names, typeof(string)));
+            Assert.AreEqual(new[] { "foo" }, CollectionHelper.ToArray(names, typeof(string)));
         }
 
         [ Test ]
@@ -444,9 +444,9 @@ namespace Jayrock.Json
         {
             IDictionary<string, object> obj = new JsonObject();
             obj.Add("first", 123);
-            Assert.AreEqual(new string[] { "first" }, obj.Keys);
+            Assert.AreEqual(new[] { "first" }, obj.Keys);
             obj.Add("second", 456);
-            Assert.AreEqual(new string[] { "first", "second" }, obj.Keys);
+            Assert.AreEqual(new[] { "first", "second" }, obj.Keys);
         }
 
         [ Test ]

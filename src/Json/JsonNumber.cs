@@ -329,7 +329,7 @@ namespace Jayrock.Json
         // We assume that MS will never change the values assigned to
         // the members of NumberStyles, at least not the following ones.
 
-        static readonly Regex[] _grammars = new Regex[]
+        static readonly Regex[] _grammars =
         {
             Regex(false, false), // 0 = None
             Regex(true,  false), // 1 = AllowLeadingWhite

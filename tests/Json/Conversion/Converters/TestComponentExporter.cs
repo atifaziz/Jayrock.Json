@@ -49,7 +49,7 @@ namespace Jayrock.Json.Conversion.Converters
             car.Color = "Silver";
 
             Test(new JsonObject(
-                new string[] { "manufacturer", "model", "year", "color" },
+                new[] { "manufacturer", "model", "year", "color" },
                 new object[] { car.Manufacturer, car.Model, car.Year, car.Color }), car);
         }
 
@@ -81,13 +81,13 @@ namespace Jayrock.Json.Conversion.Converters
             m.Wife = snow;
 
             Test(new JsonObject(
-                new string[] { "husband", "wife" },
+                new[] { "husband", "wife" },
                 new object[] {
                     /* Husband */ new JsonObject(
-                        new string[] { "id", "fullName" },
+                        new[] { "id", "fullName" },
                         new object[] { albert.Id, albert.FullName }),
                     /* Wife */ new JsonObject(
-                        new string[] { "id", "fullName" },
+                        new[] { "id", "fullName" },
                         new object[] { snow.Id, snow.FullName })
                 }), m);
         }
@@ -126,14 +126,14 @@ namespace Jayrock.Json.Conversion.Converters
             johnCars.Cars.Add(beamer);
 
             var test = new JsonObject(
-                new string[] { "owner", "cars" },
+                new[] { "owner", "cars" },
                 new object[] {
                     /* Owner */ new JsonObject(
-                        new string[] { "id", "fullName" },
+                        new[] { "id", "fullName" },
                         new object[] { john.Id,  john.FullName }),
                     /* Cars */ new object[] {
                         new JsonObject(
-                            new string[] { "manufacturer", "model", "year", "color" },
+                            new[] { "manufacturer", "model", "year", "color" },
                             new object[] { beamer.Manufacturer, beamer.Model, beamer.Year, beamer.Color })
                     }
                 });
@@ -230,7 +230,7 @@ namespace Jayrock.Json.Conversion.Converters
 
             void IObjectMemberExporter.Export(ExportContext context, JsonWriter writer, object source)
             {
-                ExportArgs = new object[] { context, writer, source };
+                ExportArgs = new[] { context, writer, source };
                 _sequence.Add(this);
             }
         }
@@ -454,7 +454,7 @@ namespace Jayrock.Json.Conversion.Converters
                 var type = typeof(Point);
                 var x = type.GetProperty("X");
                 var y = type.GetProperty("Y");
-                _componentType = new CustomTypeDescriptor(type, new MemberInfo[] { x, y }, new string[] { "x", "y" });
+                _componentType = new CustomTypeDescriptor(type, new MemberInfo[] { x, y }, new[] { "x", "y" });
             }
 
             public Point(int x, int y)

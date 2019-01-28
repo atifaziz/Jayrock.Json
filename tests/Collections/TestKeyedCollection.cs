@@ -140,7 +140,7 @@ namespace Jayrock.Collections
         public void GetKeys()
         {
             var values = new NamedValueCollection();
-            var names = new string[] { "one", "two", "three" };
+            var names = new[] { "one", "two", "three" };
             foreach (var name in names)
                 values.Add(new NamedValue(name, new object()));
             Assert.AreEqual(names.Length, values.Count);

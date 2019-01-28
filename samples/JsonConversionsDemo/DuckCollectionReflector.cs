@@ -53,7 +53,7 @@ namespace JsonConversionsDemo
                 elementType = InferElementType(type);
 
             return type.GetMethod("Add", BindingFlags.Public | BindingFlags.Instance,
-                /* binder */ null, new Type[] { elementType }, /* modifiers */ null);
+                /* binder */ null, new[] { elementType }, /* modifiers */ null);
         }
 
         public static MethodInfo GetAddMethod(Type type)

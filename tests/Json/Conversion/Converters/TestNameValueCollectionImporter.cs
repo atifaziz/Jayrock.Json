@@ -81,7 +81,7 @@ namespace Jayrock.Json.Conversion.Converters
         {
             var collection = Import("{\"foo\":[\"bar1\",\"bar2\",\"bar3\"]}");
             Assert.AreEqual(1, collection.Count);
-            Assert.AreEqual(new string[] { "bar1", "bar2", "bar3" }, collection.GetValues("foo"));
+            Assert.AreEqual(new[] { "bar1", "bar2", "bar3" }, collection.GetValues("foo"));
         }
 
         [ Test, ExpectedException(typeof(JsonException)) ]

@@ -417,7 +417,7 @@ namespace Jayrock.Json.Conversion.Converters
 
             void IObjectMemberImporter.Import(ImportContext context, JsonReader reader, object target)
             {
-                ImportArgs = new object[] { context, reader, target };
+                ImportArgs = new[] { context, reader, target };
                 ImportedValue = context.Import(typeof(object), reader);
                 _sequence.Add(this);
             }

@@ -57,41 +57,41 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void ImportInt32Array()
         {
-            AssertImport(new int[] { 123, 789, 456 }, "[ 123, 789, 456 ]");
+            AssertImport(new[] { 123, 789, 456 }, "[ 123, 789, 456 ]");
         }
 
         [ Test ]
         public void ImportStringArray()
         {
-            AssertImport(new string[] { "see no evil", "hear no evil", "speak no evil" },
+            AssertImport(new[] { "see no evil", "hear no evil", "speak no evil" },
                 "[ 'see no evil', 'hear no evil', 'speak no evil' ]");
         }
 
         [ Test ]
         public void ImportDateArray()
         {
-            AssertImport(new DateTime[] { new DateTime(1999, 12, 31), new DateTime(2000, 1, 1),  }, "[ '1999-12-31', '2000-01-01' ]");
+            AssertImport(new[] { new DateTime(1999, 12, 31), new DateTime(2000, 1, 1),  }, "[ '1999-12-31', '2000-01-01' ]");
         }
 
         [ Test ]
         public void ImportStringAsArray()
         {
-            AssertImport(new string[] { "foobar" }, "'foobar'");
+            AssertImport(new[] { "foobar" }, "'foobar'");
         }
 
         [ Test ]
         public void ImportNumberAsArray()
         {
-            AssertImport(new int[] { 123 }, "123");
+            AssertImport(new[] { 123 }, "123");
         }
 
         [ Test ]
         public void ImportBooleanAsArray()
         {
-            AssertImport(new bool[] { true }, "true");
-            AssertImport(new bool[] { true }, "123");
-            AssertImport(new bool[] { false }, "false");
-            AssertImport(new bool[] { false }, "0");
+            AssertImport(new[] { true }, "true");
+            AssertImport(new[] { true }, "123");
+            AssertImport(new[] { false }, "false");
+            AssertImport(new[] { false }, "0");
         }
 
         static void AssertImport(Array expected, string s)
