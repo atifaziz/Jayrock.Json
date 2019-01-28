@@ -18,7 +18,7 @@ namespace JsonConversionsDemo
     {
         readonly Type _elementType;
 
-        public CollectionImporterBase(Type outputType, Type elementType) :
+        protected CollectionImporterBase(Type outputType, Type elementType) :
             base(outputType)
         {
             if (elementType == null) throw new ArgumentNullException(nameof(elementType));
