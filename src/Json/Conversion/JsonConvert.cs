@@ -26,9 +26,6 @@ namespace Jayrock.Json.Conversion
 
     #endregion
 
-    public delegate object JsonImportHandler(Type type, JsonReader reader);
-    public delegate void JsonExportHandler(object value, JsonWriter writer);
-
     public delegate ExportContext ExportContextFactoryHandler();
     public delegate ImportContext ImportContextFactoryHandler();
 
