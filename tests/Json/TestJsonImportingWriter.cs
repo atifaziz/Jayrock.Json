@@ -155,8 +155,7 @@ namespace Jayrock.Json
             Assert.AreEqual(1, popup.Count);
             var menuitems = (IList) popup["menuitem"];
             Assert.AreEqual(3, menuitems.Count);
-            IDictionary menuitem;
-            menuitem = (IDictionary) menuitems[0];
+            var menuitem = (IDictionary) menuitems[0];
             Assert.AreEqual("New", menuitem["value"]);
             Assert.AreEqual("CreateNewDoc()", menuitem["onclick"]);
             menuitem = (IDictionary) menuitems[1];

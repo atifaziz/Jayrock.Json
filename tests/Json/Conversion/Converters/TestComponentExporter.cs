@@ -190,10 +190,8 @@ namespace Jayrock.Json.Conversion.Converters
             var logicalType = new TestTypeDescriptor();
             var properties = logicalType.GetProperties();
 
-            Hashtable services;
-
             var memexp1 = new TestObjectMemberExporter(calls);
-            services = new Hashtable
+            var services = new Hashtable
             {
                 [typeof(IObjectMemberExporter)] =  memexp1
             };
