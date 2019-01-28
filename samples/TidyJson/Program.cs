@@ -134,12 +134,16 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.");
             var assembly = typeof(Program).Assembly;
 
             Console.WriteLine("{0}, v{1}",
-                AttributeQuery<AssemblyTitleAttribute>.Get(assembly).Title,
+                GetCustomAttribute<AssemblyTitleAttribute>().Title,
                 assembly.GetName().Version);
-            Console.WriteLine(AttributeQuery<AssemblyDescriptionAttribute>.Get(assembly).Description);
+            Console.WriteLine(GetCustomAttribute<AssemblyDescriptionAttribute>().Description);
             Console.WriteLine("Written by Atif Aziz -- http://www.raboof.com/");
-            Console.WriteLine(AttributeQuery<AssemblyCopyrightAttribute>.Get(assembly).Copyright);
+            Console.WriteLine(GetCustomAttribute<AssemblyCopyrightAttribute>().Copyright);
             Console.WriteLine();
+
+            T GetCustomAttribute<T>() where T : Attribute =>
+                assembly.GetCustomAttribute<T>()
+                ?? throw new ObjectNotFoundException(string.Format("The attribute {0} was not found.", typeof(T).FullName));
         }
 
         #endregion
