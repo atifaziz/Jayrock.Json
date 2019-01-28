@@ -47,11 +47,12 @@ namespace Jayrock
         [ Test ]
         public void NonEmptyDictionary()
         {
-            var map = new Hashtable();
-
-            map.Add(1, "one");
-            map.Add(2, "two");
-            map.Add(3, "three");
+            var map = new Hashtable
+            {
+                [1] = "one",
+                [2] = "two",
+                [3] = "three"
+            };
 
             var entryList = new ArrayList(DictionaryHelper.GetEntries(map));
             Assert.AreEqual(3, entryList.Count);
@@ -75,8 +76,7 @@ namespace Jayrock
         [ Test ]
         public void DisposableDictionaryEnumerator()
         {
-            var dict = new MockDictionary();
-            dict.Add(1, "one");
+            var dict = new MockDictionary { { 1, "one" } };
             Assert.IsFalse(dict.EnumeratorDisposed);
             DictionaryHelper.GetEntries(dict);
             Assert.IsTrue(dict.EnumeratorDisposed);

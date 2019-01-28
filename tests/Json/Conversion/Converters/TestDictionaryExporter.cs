@@ -54,11 +54,12 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void ExportFlat()
         {
-            var h = new Hashtable();
-
-            h.Add("FirstName", "John");
-            h.Add("LastName", "Doe");
-            h.Add("MiddleName", null);
+            var h = new Hashtable
+            {
+                ["FirstName" ] = "John",
+                ["LastName"  ] = "Doe",
+                ["MiddleName"] = null
+            };
 
             var reader = Export(h);
 

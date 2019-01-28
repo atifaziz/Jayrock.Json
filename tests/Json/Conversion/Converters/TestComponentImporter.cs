@@ -203,8 +203,10 @@ namespace Jayrock.Json.Conversion.Converters
 
             var calls2 = new ArrayList();
             var memberImporter2 = new TestObjectMemberImporter(calls2);
-            var services2 = new Hashtable();
-            services2.Add(typeof(IObjectMemberImporter), memberImporter2);
+            var services2 = new Hashtable
+            {
+                [typeof(IObjectMemberImporter)] = memberImporter2
+            };
             properties.Add(new TestPropertyDescriptor("prop2", typeof(object), services2));
 
             // Third property added to exercise issue #27:
@@ -212,8 +214,10 @@ namespace Jayrock.Json.Conversion.Converters
 
             var calls3 = new ArrayList();
             var memberImporter3 = new TestObjectMemberImporter(calls3);
-            var services3 = new Hashtable();
-            services3.Add(typeof(IObjectMemberImporter), memberImporter3);
+            var services3 = new Hashtable
+            {
+                [typeof(IObjectMemberImporter)] = memberImporter3
+            };
             properties.Add(new TestPropertyDescriptor("prop3", typeof(object), services3));
 
             var importer = new ComponentImporter(typeof(Thing), logicalType);

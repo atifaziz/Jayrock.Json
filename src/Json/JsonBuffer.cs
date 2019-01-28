@@ -109,8 +109,7 @@ namespace Jayrock.Json
             var structured = reader.TokenClass == JsonTokenClass.Array
                               || reader.TokenClass == JsonTokenClass.Object;
 
-            var writer = new JsonBufferWriter();
-            writer.MaxDepth = reader.MaxDepth;
+            var writer = new JsonBufferWriter { MaxDepth = reader.MaxDepth };
             writer.WriteFromReader(reader);
             var buffer = writer.GetBuffer();
 

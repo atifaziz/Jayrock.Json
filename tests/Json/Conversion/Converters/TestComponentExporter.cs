@@ -42,11 +42,13 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void PublicProperties()
         {
-            var car = new Car();
-            car.Manufacturer = "BMW";
-            car.Model = "350";
-            car.Year = 2000;
-            car.Color = "Silver";
+            var car = new Car
+            {
+                Manufacturer = "BMW",
+                Model        = "350",
+                Year         = 2000,
+                Color        = "Silver"
+            };
 
             Test(new JsonObject(
                 new[] { "manufacturer", "model", "year", "color" },
@@ -68,17 +70,9 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void EmbeddedObjects()
         {
-            var snow = new Person();
-            snow.Id = 2;
-            snow.FullName = "Snow White";
-
-            var albert = new Person();
-            albert.Id = 1;
-            albert.FullName = "Albert White";
-
-            var m = new Marriage();
-            m.Husband = albert;
-            m.Wife = snow;
+            var snow   = new Person { Id = 2, FullName = "Snow White" };
+            var albert = new Person { Id = 1, FullName = "Albert White" };
+            var m      = new Marriage { Husband = albert, Wife = snow };
 
             Test(new JsonObject(
                 new[] { "husband", "wife" },
@@ -111,18 +105,25 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void TypeSpecific()
         {
-            var john = new Person();
-            john.Id = 123;
-            john.FullName = "John Doe";
+            var john = new Person
+            {
+                Id = 123,
+                FullName = "John Doe"
+            };
 
-            var beamer = new Car();
-            beamer.Manufacturer = "BMW";
-            beamer.Model = "350";
-            beamer.Year = 2000;
-            beamer.Color = "Silver";
+            var beamer = new Car
+            {
+                Manufacturer = "BMW",
+                Model        = "350",
+                Year         = 2000,
+                Color        = "Silver"
+            };
 
-            var johnCars = new OwnerCars();
-            johnCars.Owner = john;
+            var johnCars = new OwnerCars
+            {
+                Owner = john
+            };
+
             johnCars.Cars.Add(beamer);
 
             var test = new JsonObject(
@@ -159,9 +160,13 @@ namespace Jayrock.Json.Conversion.Converters
             var exporter = new ComponentExporter(typeof(Thing));
             context.Register(exporter);
             var thing = new Thing();
-            thing.Other = new Thing();
-            thing.Other.Other = new Thing();
-            thing.Other.Other.Other = thing;
+            thing.Other = new Thing
+            {
+                Other = new Thing
+                {
+                    Other = thing
+                }
+            };
             exporter.Export(context, thing, new EmptyJsonWriter());
         }
 
@@ -173,8 +178,7 @@ namespace Jayrock.Json.Conversion.Converters
             context.Register(exporter);
             context.Register(new ComponentExporter(typeof(ParentChild)));
             var parent = new Parent();
-            parent.Child = new ParentChild();
-            parent.Child.Parent = parent;
+            parent.Child = new ParentChild { Parent = parent };
             exporter.Export(context, parent, new EmptyJsonWriter());
         }
 
@@ -189,13 +193,17 @@ namespace Jayrock.Json.Conversion.Converters
             Hashtable services;
 
             var memexp1 = new TestObjectMemberExporter(calls);
-            services = new Hashtable();
-            services.Add(typeof(IObjectMemberExporter), memexp1);
+            services = new Hashtable
+            {
+                [typeof(IObjectMemberExporter)] =  memexp1
+            };
             properties.Add(new TestPropertyDescriptor("prop1", services));
 
             var memexp2 = new TestObjectMemberExporter(calls);
-            services = new Hashtable();
-            services.Add(typeof(IObjectMemberExporter), memexp2);
+            services = new Hashtable
+            {
+                [typeof(IObjectMemberExporter)] = memexp2
+            };
             properties.Add(new TestPropertyDescriptor("prop2", services));
 
             var exporter = new ComponentExporter(typeof(Thing), logicalType);

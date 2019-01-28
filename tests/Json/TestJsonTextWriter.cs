@@ -184,8 +184,7 @@ namespace Jayrock.Json
         [ Test ]
         public void PrettyPrinting()
         {
-            var writer = new JsonTextWriter();
-            writer.PrettyPrint = true;
+            var writer = new JsonTextWriter() { PrettyPrint = true };
             writer.WriteFromReader(new JsonTextReader(new StringReader("{'menu':{'id':'file','value':'File:','popup':{'menuitem':[{'value':'New','onclick':'CreateNewDoc()'},{'value':'Open','onclick':'OpenDoc()'},{'value':'Close','onclick':'CloseDoc()'}]}}}")));
             Assert.AreEqual(RewriteLines(string.Empty
                 + "{ \n"

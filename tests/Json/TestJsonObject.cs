@@ -276,8 +276,7 @@ namespace Jayrock.Json
         [ Test ]
         public void Add()
         {
-            var o = new JsonObject();
-            o.Add("foo", "bar");
+            var o = new JsonObject { ["foo"] = "bar" };
             Assert.AreEqual("bar", o["foo"]);
             var names = o.Names;
             Assert.AreEqual(1, names.Count);
@@ -288,19 +287,23 @@ namespace Jayrock.Json
         [ ExpectedException(typeof(ArgumentException)) ]
         public void CannotAddMemberNameDuplicates()
         {
-            var o = new JsonObject();
-            o.Add("foo", "bar");
-            o.Add("foo", "baz");
+            var _ = new JsonObject
+            {
+                { "foo", "bar" },
+                { "foo", "baz" },
+            };
         }
 
         [ Test ]
         public void Enumeration()
         {
-            var o = new JsonObject();
-            o.Add("one", 1);
-            o.Add("two", 2);
-            o.Add("three", 3);
-            o.Add("four", 4);
+            var o = new JsonObject
+            {
+                ["one"  ] = 1,
+                ["two"  ] = 2,
+                ["three"] = 3,
+                ["four" ] = 4
+            };
 
             var e = o.GetEnumerator();
 

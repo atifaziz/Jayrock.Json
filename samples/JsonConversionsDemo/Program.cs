@@ -128,9 +128,7 @@ namespace JsonConversionsDemo
 
         static JsonWriter CreatePrettyWriter(TextWriter writer)
         {
-            var jsonw = new JsonTextWriter(writer);
-            jsonw.PrettyPrint = true;
-            return jsonw;
+            return new JsonTextWriter(writer) { PrettyPrint = true };
         }
     }
 }

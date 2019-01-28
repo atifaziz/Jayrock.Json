@@ -191,28 +191,29 @@ namespace Jayrock.Json.Conversion
             {
                 if (_stockImporters == null)
                 {
-                    var importers = new ImporterCollection();
-
-                    importers.Add(new ByteImporter());
-                    importers.Add(new Int16Importer());
-                    importers.Add(new Int32Importer());
-                    importers.Add(new Int64Importer());
-                    importers.Add(new SingleImporter());
-                    importers.Add(new DoubleImporter());
-                    importers.Add(new DecimalImporter());
-                    importers.Add(new StringImporter());
-                    importers.Add(new BooleanImporter());
-                    importers.Add(new DateTimeImporter());
-                    importers.Add(new GuidImporter());
-                    importers.Add(new UriImporter());
-                    importers.Add(new ByteArrayImporter());
-                    importers.Add(new AnyImporter());
-                    importers.Add(new DictionaryImporter());
-                    importers.Add(new ListImporter());
-                    importers.Add(new NameValueCollectionImporter());
-                    importers.Add(new JsonBufferImporter());
-                    importers.Add(new BigIntegerImporter());
-                    importers.Add(new ExpandoObjectImporter());
+                    var importers = new ImporterCollection
+                    {
+                        new ByteImporter(),
+                        new Int16Importer(),
+                        new Int32Importer(),
+                        new Int64Importer(),
+                        new SingleImporter(),
+                        new DoubleImporter(),
+                        new DecimalImporter(),
+                        new StringImporter(),
+                        new BooleanImporter(),
+                        new DateTimeImporter(),
+                        new GuidImporter(),
+                        new UriImporter(),
+                        new ByteArrayImporter(),
+                        new AnyImporter(),
+                        new DictionaryImporter(),
+                        new ListImporter(),
+                        new NameValueCollectionImporter(),
+                        new JsonBufferImporter(),
+                        new BigIntegerImporter(),
+                        new ExpandoObjectImporter()
+                    };
 
                     IList typeList = null; // TODO (IList) ConfigurationSettings.GetConfig("jayrock/json.conversion.importers");
 

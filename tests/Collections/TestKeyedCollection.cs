@@ -44,8 +44,10 @@ namespace Jayrock.Collections
         [ Test, ExpectedException(typeof(ArgumentException)) ]
         public void CannotAddWithNullKey()
         {
-            var values = new NamedValueCollection();
-            values.Add(new NamedValue(null, new object()));
+            var _ = new NamedValueCollection
+            {
+                new NamedValue(null, new object())
+            };
         }
 
         [ Test ]

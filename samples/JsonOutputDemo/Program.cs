@@ -160,9 +160,7 @@ namespace JsonOutputDemo
 
         static JsonWriter CreateJsonWriter(TextWriter writer)
         {
-            var jsonWriter = new JsonTextWriter(writer);
-            jsonWriter.PrettyPrint = true;
-            return jsonWriter;
+            return new JsonTextWriter(writer) { PrettyPrint = true };
         }
     }
 }

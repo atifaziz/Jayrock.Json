@@ -177,31 +177,32 @@ namespace Jayrock.Json.Conversion
             {
                 if (_stockExporters == null)
                 {
-                    var exporters = new ExporterCollection();
-
-                    exporters.Add(new ByteExporter());
-                    exporters.Add(new Int16Exporter());
-                    exporters.Add(new Int32Exporter());
-                    exporters.Add(new Int64Exporter());
-                    exporters.Add(new SingleExporter());
-                    exporters.Add(new DoubleExporter());
-                    exporters.Add(new DecimalExporter());
-                    exporters.Add(new StringExporter());
-                    exporters.Add(new BooleanExporter());
-                    exporters.Add(new DateTimeExporter());
-                    exporters.Add(new JsonNumberExporter());
-                    exporters.Add(new JsonBufferExporter());
-                    exporters.Add(new ByteArrayExporter());
-                    exporters.Add(new DataRowViewExporter());
-                    exporters.Add(new NameValueCollectionExporter());
-                    exporters.Add(new DataSetExporter());
-                    exporters.Add(new DataTableExporter());
-                    exporters.Add(new DataRowExporter());
-                    exporters.Add(new DbDataRecordExporter());
-                    exporters.Add(new StringExporter(typeof(Uri)));
-                    exporters.Add(new StringExporter(typeof(Guid)));
-                    exporters.Add(new BigIntegerExporter());
-                    exporters.Add(new ExpandoObjectExporter());
+                    var exporters = new ExporterCollection
+                    {
+                        new ByteExporter(),
+                        new Int16Exporter(),
+                        new Int32Exporter(),
+                        new Int64Exporter(),
+                        new SingleExporter(),
+                        new DoubleExporter(),
+                        new DecimalExporter(),
+                        new StringExporter(),
+                        new BooleanExporter(),
+                        new DateTimeExporter(),
+                        new JsonNumberExporter(),
+                        new JsonBufferExporter(),
+                        new ByteArrayExporter(),
+                        new DataRowViewExporter(),
+                        new NameValueCollectionExporter(),
+                        new DataSetExporter(),
+                        new DataTableExporter(),
+                        new DataRowExporter(),
+                        new DbDataRecordExporter(),
+                        new StringExporter(typeof(Uri)),
+                        new StringExporter(typeof(Guid)),
+                        new BigIntegerExporter(),
+                        new ExpandoObjectExporter()
+                    };
 
                     IList typeList = null; // TODO (IList)ConfigurationSettings.GetConfig("jayrock/json.conversion.exporters");
 

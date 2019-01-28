@@ -180,8 +180,7 @@ namespace Jayrock.Json.Conversion
         [ Test ]
         public void ResetValue()
         {
-            var attribute = new JsonDefaultValueAttribute(42);
-            attribute.Value = "foobar";
+            var attribute = new JsonDefaultValueAttribute(42) { Value = "foobar" };
             Assert.AreEqual("foobar", attribute.Value);
         }
 

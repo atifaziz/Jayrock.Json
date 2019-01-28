@@ -34,8 +34,7 @@ namespace Jayrock.Json
         [ Test ]
         public void AddNullValue()
         {
-            var a = new JsonArray();
-            a.Add(null);
+            var a = new JsonArray { null };
             Assert.AreEqual(1, a.Count);
             Assert.IsNull(a[0]);
         }
@@ -77,8 +76,7 @@ namespace Jayrock.Json
         [ Test ]
         public void ContentsClearedBeforeImporting()
         {
-            var a = new JsonArray();
-            a.Add(new object());
+            var a = new JsonArray { new object() };
             Assert.AreEqual(1, a.Length);
             a.Import(new JsonTextReader(new StringReader("[123]")));
             Assert.AreEqual(1, a.Length);

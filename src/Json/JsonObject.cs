@@ -250,9 +250,7 @@ namespace Jayrock.Json
                 }
                 else
                 {
-                    values = new JsonArray();
-                    values.Add(current);
-                    values.Add(value);
+                    values = new JsonArray { current, value };
                     Put(name, values);
                 }
             }

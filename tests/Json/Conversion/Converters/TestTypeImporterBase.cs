@@ -98,8 +98,7 @@ namespace Jayrock.Json.Conversion.Converters
         public void BooleanCallsImportBoolean()
         {
             var reader = CreateReader("true");
-            var importer = new ImporterMock();
-            importer.Boolean = true;
+            var importer = new ImporterMock { Boolean = true };
             Assert.AreEqual(true, importer.Import(new ImportContext(), reader));
         }
 

@@ -37,52 +37,52 @@ namespace Jayrock.Json.Conversion.Converters
         [ Test ]
         public void OneNameValue()
         {
-            var collection = new NameValueCollection();
-            collection.Add("foo", "bar");
+            var collection = new NameValueCollection { ["foo"] = "bar" };
             Assert.AreEqual("{\"foo\":\"bar\"}", Export(collection));
         }
 
         [ Test ]
         public void EmptyName()
         {
-            var collection = new NameValueCollection();
-            collection.Add("", "bar");
+            var collection = new NameValueCollection { [string.Empty] = "bar" };
             Assert.AreEqual("{\"\":\"bar\"}", Export(collection));
         }
 
         [ Test ]
         public void EmptyValue()
         {
-            var collection = new NameValueCollection();
-            collection.Add("foo", "");
+            var collection = new NameValueCollection { ["foo"] = string.Empty };
             Assert.AreEqual("{\"foo\":\"\"}", Export(collection));
         }
 
         [ Test ]
         public void NullValue()
         {
-            var collection = new NameValueCollection();
-            collection.Add("foo", null);
+            var collection = new NameValueCollection { ["foo"] = null };
             Assert.AreEqual("{\"foo\":null}", Export(collection));
         }
 
         [ Test ]
         public void ValuesArray()
         {
-            var collection = new NameValueCollection();
-            collection.Add("foo", "bar1");
-            collection.Add("foo", "bar2");
-            collection.Add("foo", "bar3");
+            var collection = new NameValueCollection
+            {
+                { "foo", "bar1" },
+                { "foo", "bar2" },
+                { "foo", "bar3" }
+            };
             Assert.AreEqual("{\"foo\":[\"bar1\",\"bar2\",\"bar3\"]}", Export(collection));
         }
 
         [ Test ]
         public void ManyEntries()
         {
-            var collection = new NameValueCollection();
-            collection.Add("foo1", "bar1");
-            collection.Add("foo2", "bar2");
-            collection.Add("foo3", "bar3");
+            var collection = new NameValueCollection
+            {
+                ["foo1"] = "bar1",
+                ["foo2"] = "bar2",
+                ["foo3"] = "bar3"
+            };
             Assert.AreEqual("{\"foo1\":\"bar1\",\"foo2\":\"bar2\",\"foo3\":\"bar3\"}", Export(collection));
         }
 

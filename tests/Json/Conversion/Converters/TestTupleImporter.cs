@@ -131,8 +131,7 @@ namespace Jayrock.Json.Conversion.Converters
         public void SubClassCannotExportValueWithNullContext()
         {
             var tuple = Tuple.Create(42);
-            var exporter = new ExportValueTestExporter(tuple.GetType());
-            exporter.ForceNullContext = true;
+            var exporter = new ExportValueTestExporter(tuple.GetType()) { ForceNullContext = true };
             var context = JsonConvert.CreateExportContext();
             var writer = new JsonBufferWriter();
             exporter.Export(context, tuple, writer);
@@ -142,8 +141,7 @@ namespace Jayrock.Json.Conversion.Converters
         public void SubClassCannotExportValueWithNullWriter()
         {
             var tuple = Tuple.Create(42);
-            var exporter = new ExportValueTestExporter(tuple.GetType());
-            exporter.ForceNullWriter = true;
+            var exporter = new ExportValueTestExporter(tuple.GetType()) { ForceNullWriter = true };
             var context = JsonConvert.CreateExportContext();
             var writer = new JsonBufferWriter();
             exporter.Export(context, tuple, writer);

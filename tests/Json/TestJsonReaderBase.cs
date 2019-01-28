@@ -314,8 +314,7 @@ namespace Jayrock.Json
         [ExpectedException(typeof(Exception))]
         public void CannotExceedMaxDepth()
         {
-            var reader = new MockedJsonReader();
-            reader.MaxDepth = 2;
+            var reader = new MockedJsonReader { MaxDepth = 2 };
             reader.Array().Array().Array();
             reader.Read();
             reader.Read();
