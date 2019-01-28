@@ -53,14 +53,11 @@ namespace Jayrock.Json
 
         public virtual object this[int index]
         {
-            get { return InnerList[index]; }
-            set { InnerList[index] = value; }
+            get => InnerList[index];
+            set => InnerList[index] = value;
         }
 
-        public int Length
-        {
-            get { return Count; }
-        }
+        public int Length => Count;
 
         public void Put(object value)
         {
@@ -446,10 +443,7 @@ namespace Jayrock.Json
             return true;
         }
 
-        bool ICollection<object>.IsReadOnly
-        {
-            get { return InnerList.IsReadOnly; }
-        }
+        bool ICollection<object>.IsReadOnly => InnerList.IsReadOnly;
 
         void IList<object>.Insert(int index, object item)
         {

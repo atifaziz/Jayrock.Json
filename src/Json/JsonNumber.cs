@@ -51,10 +51,7 @@ namespace Jayrock.Json
             _value = value;
         }
 
-        string Value
-        {
-            get { return Mask.EmptyString(_value, "0"); }
-        }
+        string Value => Mask.EmptyString(_value, "0");
 
         public override int GetHashCode()
         {

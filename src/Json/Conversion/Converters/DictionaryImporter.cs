@@ -88,10 +88,7 @@ namespace Jayrock.Json.Conversion.Converters
             return new Dictionary<TKey, TValue>(comparer);
         }
 
-        static bool IsKeyOfString
-        {
-            get { return Type.GetTypeCode(typeof(TKey)) == TypeCode.String; }
-        }
+        static bool IsKeyOfString => Type.GetTypeCode(typeof(TKey)) == TypeCode.String;
     }
 
     sealed class DictionaryImporter<TDictionary, TKey, TValue> :

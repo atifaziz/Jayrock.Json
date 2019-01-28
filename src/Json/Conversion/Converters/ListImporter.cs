@@ -42,18 +42,16 @@ namespace Jayrock.Json.Conversion.Converters
         where TCollection : ICollection<TItem>, new()
         where TOutput : IEnumerable
     {
-        readonly bool _isOutputReadOnly;
-
         public CollectionImporter() :
             this(false) {}
 
         public CollectionImporter(bool isOutputReadOnly) :
             base(typeof(TOutput))
         {
-            _isOutputReadOnly = isOutputReadOnly;
+            IsOutputReadOnly = isOutputReadOnly;
         }
 
-        public bool IsOutputReadOnly { get { return _isOutputReadOnly; } }
+        public bool IsOutputReadOnly { get; }
 
         protected override object ImportFromArray(ImportContext context, JsonReader reader)
         {
@@ -67,8 +65,8 @@ namespace Jayrock.Json.Conversion.Converters
                 collection.Add(context.Import<TItem>(reader));
 
             var result = IsOutputReadOnly
-                          ? (object) new ReadOnlyCollection<TItem>((IList<TItem>) collection)
-                          : collection;
+                       ? (object) new ReadOnlyCollection<TItem>((IList<TItem>) collection)
+                       : collection;
 
             return ReadReturning(reader, result);
         }

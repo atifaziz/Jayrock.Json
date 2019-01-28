@@ -36,16 +36,13 @@ namespace Jayrock.Json
 
     public static class JsonText
     {
-        static readonly JsonTextReaderFactoryHandler _defaultReaderFactory;
-        static readonly JsonTextWriterFactoryHandler _defaultWriterFactory;
-
         static JsonTextReaderFactoryHandler _currentReaderFactory;
         static JsonTextWriterFactoryHandler _currentWriterFactory;
 
         static JsonText()
         {
-            _currentReaderFactory = _defaultReaderFactory = DefaultReaderFactoryImpl;
-            _currentWriterFactory = _defaultWriterFactory = DefaultWriterFactoryImpl;
+            _currentReaderFactory = DefaultReaderFactory = DefaultReaderFactoryImpl;
+            _currentWriterFactory = DefaultWriterFactory = DefaultWriterFactoryImpl;
         }
 
         static JsonReader DefaultReaderFactoryImpl(TextReader reader, object options)
@@ -58,33 +55,19 @@ namespace Jayrock.Json
             return new JsonTextWriter(writer);
         }
 
-        public static JsonTextReaderFactoryHandler DefaultReaderFactory { get { return _defaultReaderFactory; } }
-        public static JsonTextWriterFactoryHandler DefaultWriterFactory { get { return _defaultWriterFactory; } }
+        public static JsonTextReaderFactoryHandler DefaultReaderFactory { get; }
+        public static JsonTextWriterFactoryHandler DefaultWriterFactory { get; }
 
         public static JsonTextReaderFactoryHandler CurrentReaderFactory
         {
-            get { return _currentReaderFactory; }
-
-            set
-            {
-                if (value == null)
-                    throw new ArgumentNullException(nameof(value));
-
-                _currentReaderFactory = value;
-            }
+            get => _currentReaderFactory;
+            set => _currentReaderFactory = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         public static JsonTextWriterFactoryHandler CurrentWriterFactory
         {
-            get { return _currentWriterFactory; }
-
-            set
-            {
-                if (value == null)
-                    throw new ArgumentNullException(nameof(value));
-
-                _currentWriterFactory = value;
-            }
+            get => _currentWriterFactory;
+            set => _currentWriterFactory = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         public static JsonReader CreateReader(TextReader reader)

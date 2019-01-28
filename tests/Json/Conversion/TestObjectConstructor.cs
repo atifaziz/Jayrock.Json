@@ -109,17 +109,14 @@ namespace Jayrock.Tests.Json.Conversion
 
         class Point
         {
-            readonly int _x;
-            readonly int _y;
-
             public Point(int x, int y)
             {
-                _x = x;
-                _y = y;
+                X = x;
+                Y = y;
             }
 
-            public int X { get { return _x; } }
-            public int Y { get { return _y; } }
+            public int X { get; }
+            public int Y { get; }
         }
 
         [Test]
@@ -165,12 +162,6 @@ namespace Jayrock.Tests.Json.Conversion
 
         class Thing
         {
-            readonly int _num;
-            readonly bool _flag;
-            readonly string _str;
-            readonly IDictionary _obj;
-            readonly ConstructorInfo _ctor;
-
             // ReSharper disable UnusedMember.Local
             public Thing(int num)
                 : this(num, false, null, null, (ConstructorInfo)MethodBase.GetCurrentMethod()) {}
@@ -186,19 +177,19 @@ namespace Jayrock.Tests.Json.Conversion
 
             Thing(int num, bool flag, string str, IDictionary obj, ConstructorInfo ctor)
             {
-                _num = num;
-                _flag = flag;
-                _str = str;
-                _obj = obj;
-                _ctor = ctor;
+                Number = num;
+                Flag = flag;
+                String = str;
+                Object = obj;
+                Constructor = ctor;
             }
             // ReSharper restore UnusedMember.Local
 
-            public int Number { get { return _num; } }
-            public bool Flag { get { return _flag; } }
-            public string String { get { return _str; } }
-            public IDictionary Object { get { return _obj; } }
-            public ConstructorInfo Constructor { get { return _ctor; } }
+            public int Number { get; }
+            public bool Flag { get; }
+            public string String { get; }
+            public IDictionary Object { get; }
+            public ConstructorInfo Constructor { get; }
         }
 
         [Test]

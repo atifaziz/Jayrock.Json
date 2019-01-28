@@ -34,27 +34,18 @@ namespace TidyJson
     [ Serializable ]
     struct ConsoleBrush
     {
-        readonly ConsoleColor foreground;
-        readonly ConsoleColor background;
-
         public ConsoleBrush(ConsoleColor color) :
             this(color, color) {}
 
         public ConsoleBrush(ConsoleColor foreground, ConsoleColor background)
         {
-            this.foreground = foreground;
-            this.background = background;
+            Foreground = foreground;
+            Background = background;
         }
 
-        public ConsoleColor Foreground
-        {
-            get { return foreground; }
-        }
+        public ConsoleColor Foreground { get; }
 
-        public ConsoleColor Background
-        {
-            get { return background; }
-        }
+        public ConsoleColor Background { get; }
 
         public ConsoleBrush ResetForeground(ConsoleColor value)
         {
@@ -72,10 +63,7 @@ namespace TidyJson
             Console.ForegroundColor = Foreground;
         }
 
-        public static ConsoleBrush Current
-        {
-            get { return new ConsoleBrush(Console.ForegroundColor, Console.BackgroundColor); }
-        }
+        public static ConsoleBrush Current => new ConsoleBrush(Console.ForegroundColor, Console.BackgroundColor);
 
         public override string ToString()
         {

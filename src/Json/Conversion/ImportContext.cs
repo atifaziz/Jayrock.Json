@@ -96,16 +96,7 @@ namespace Jayrock.Json.Conversion
             return null;
         }
 
-        public IDictionary Items
-        {
-            get
-            {
-                if (_items == null)
-                    _items = new Hashtable();
-
-                return _items;
-            }
-        }
+        public IDictionary Items => _items ?? (_items = new Hashtable());
 
         static IImporter FindCompatibleImporter(Type type)
         {
@@ -174,16 +165,7 @@ namespace Jayrock.Json.Conversion
             return null;
         }
 
-        ImporterCollection Importers
-        {
-            get
-            {
-                if (_importers == null)
-                    _importers = new ImporterCollection();
-
-                return _importers;
-            }
-        }
+        ImporterCollection Importers => _importers ?? (_importers = new ImporterCollection());
 
         static ImporterCollection StockImporters
         {

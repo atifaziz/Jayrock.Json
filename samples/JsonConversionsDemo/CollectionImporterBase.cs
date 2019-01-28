@@ -16,20 +16,13 @@ namespace JsonConversionsDemo
 
     public abstract class CollectionImporterBase : ImporterBase
     {
-        readonly Type _elementType;
-
         protected CollectionImporterBase(Type outputType, Type elementType) :
             base(outputType)
         {
-            if (elementType == null) throw new ArgumentNullException(nameof(elementType));
-
-            _elementType = elementType;
+            ElementType = elementType ?? throw new ArgumentNullException(nameof(elementType));
         }
 
-        public Type ElementType
-        {
-            get { return _elementType; }
-        }
+        public Type ElementType { get; }
 
         protected override object ImportFromArray(ImportContext context, JsonReader reader)
         {

@@ -66,14 +66,14 @@ namespace Jayrock.Json.Conversion
 
         public NamingConvention Convention
         {
-            get { return _convention; }
-            set { _convention = value; }
+            get => _convention;
+            set => _convention = value;
         }
 
         public UnderscoreConvention Underscores
         {
-            get { return _underscores; }
-            set { _underscores = value; }
+            get => _underscores;
+            set => _underscores = value;
         }
 
         void IPropertyDescriptorCustomization.Apply(PropertyDescriptor property)

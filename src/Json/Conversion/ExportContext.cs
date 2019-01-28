@@ -88,16 +88,7 @@ namespace Jayrock.Json.Conversion
             return null;
         }
 
-        public IDictionary Items
-        {
-            get
-            {
-                if (_items == null)
-                    _items = new Hashtable();
-
-                return _items;
-            }
-        }
+        public IDictionary Items => _items ?? (_items = new Hashtable());
 
         IExporter FindCompatibleExporter(Type type)
         {
@@ -160,16 +151,7 @@ namespace Jayrock.Json.Conversion
             return (IExporter) Activator.CreateInstance(exporter.GetType(), new object[] { actualType });
         }
 
-        ExporterCollection Exporters
-        {
-            get
-            {
-                if (_exporters == null)
-                    _exporters = new ExporterCollection();
-
-                return _exporters;
-            }
-        }
+        ExporterCollection Exporters => _exporters ?? (_exporters = new ExporterCollection());
 
         static ExporterCollection StockExporters
         {

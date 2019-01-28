@@ -60,8 +60,8 @@ namespace Jayrock.Json.Conversion
 
         public object Value
         {
-            get { return _value; }
-            set { _value = value; }
+            get => _value;
+            set => _value = value;
         }
 
         void IPropertyDescriptorCustomization.Apply(PropertyDescriptor property)

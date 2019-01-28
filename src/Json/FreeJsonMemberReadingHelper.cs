@@ -71,7 +71,6 @@ namespace Jayrock.Json
 
     public sealed class FreeJsonMemberReadingHelper
     {
-        readonly JsonReader _reader;
         bool _started;
         bool _ended;
         NamedJsonBufferList _members; // buffered ones
@@ -90,7 +89,7 @@ namespace Jayrock.Json
                 throw new ArgumentException(null, nameof(reader));
             }
 
-            _reader = reader;
+            BaseReader = reader;
         }
 
         /// <summary>
@@ -98,15 +97,9 @@ namespace Jayrock.Json
         /// initialized.
         /// </summary>
 
-        public JsonReader BaseReader
-        {
-            get { return _reader; }
-        }
+        public JsonReader BaseReader { get; }
 
-        bool HasBufferedMembers
-        {
-            get { return _members != null && _members.Count > 0; }
-        }
+        bool HasBufferedMembers => _members?.Count > 0;
 
         /// <summary>
         /// Gets a reader than can be used to read remaining members,
@@ -115,7 +108,7 @@ namespace Jayrock.Json
 
         public JsonReader GetTailReader()
         {
-            JsonReader reader = new TailReader(_reader, _members);
+            JsonReader reader = new TailReader(BaseReader, _members);
             reader.ReadToken(JsonTokenClass.Object);
             return reader;
         }
@@ -274,7 +267,7 @@ namespace Jayrock.Json
 
         public override string ToString()
         {
-            return _reader.ToString();
+            return BaseReader.ToString();
         }
 
         sealed class TailReader : JsonReaderBase

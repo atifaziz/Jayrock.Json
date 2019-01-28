@@ -291,10 +291,7 @@ namespace Jayrock.Json.Conversion.Converters
                 SetValueCalled = true;
             }
 
-            public override bool IsReadOnly
-            {
-                get { return true; }
-            }
+            public override bool IsReadOnly => true;
 
             #region Unimplemented members of PropertyDescriptor
 
@@ -302,8 +299,8 @@ namespace Jayrock.Json.Conversion.Converters
             public override object GetValue(object component) { throw new NotImplementedException(); }
             public override void ResetValue(object component) { throw new NotImplementedException(); }
             public override bool ShouldSerializeValue(object component) { throw new NotImplementedException(); }
-            public override Type ComponentType { get { throw new NotImplementedException(); } }
-            public override Type PropertyType { get { throw new NotImplementedException(); } }
+            public override Type ComponentType => throw new NotImplementedException();
+            public override Type PropertyType => throw new NotImplementedException();
 
             #endregion
         }
@@ -326,38 +323,14 @@ namespace Jayrock.Json.Conversion.Converters
 
         public sealed class Marriage
         {
-            Person _husband;
-            Person _wife;
-
-            public Person Husband
-            {
-                get { return _husband; }
-                set { _husband = value; }
-            }
-
-            public Person Wife
-            {
-                get { return _wife; }
-                set { _wife = value; }
-            }
+            public Person Husband { get; set; }
+            public Person Wife    { get; set; }
         }
 
         public sealed class Person
         {
-            int _id;
-            string _fullName;
-
-            public int Id
-            {
-                get { return _id; }
-                set { _id = value; }
-            }
-
-            public string FullName
-            {
-                get { return _fullName; }
-                set { _fullName = value; }
-            }
+            public int Id          { get; set; }
+            public string FullName { get; set; }
         }
 
         //
@@ -430,15 +403,14 @@ namespace Jayrock.Json.Conversion.Converters
         sealed class TestPropertyDescriptor : PropertyDescriptor, IServiceProvider
         {
             readonly IDictionary _services;
-            readonly Type _propertyType;
 
             public TestPropertyDescriptor(string name, Type type, IDictionary services) : base(name, null)
             {
                 _services = services;
-                _propertyType = type;
+                PropertyType = type;
             }
 
-            public override bool IsReadOnly { get { return false; } }
+            public override bool IsReadOnly => false;
             public override void SetValue(object component, object value) { }
 
             object IServiceProvider.GetService(Type serviceType)
@@ -446,7 +418,7 @@ namespace Jayrock.Json.Conversion.Converters
                 return _services[serviceType];
             }
 
-            public override Type PropertyType { get { return _propertyType; } }
+            public override Type PropertyType { get; }
 
             #region Unimplemented members of PropertyDescriptor
 
@@ -454,7 +426,7 @@ namespace Jayrock.Json.Conversion.Converters
             public override object GetValue(object component) { throw new NotImplementedException(); }
             public override void ResetValue(object component) { throw new NotImplementedException(); }
             public override bool ShouldSerializeValue(object component) { throw new NotImplementedException(); }
-            public override Type ComponentType { get { throw new NotImplementedException(); } }
+            public override Type ComponentType => throw new NotImplementedException();
 
             #endregion
         }

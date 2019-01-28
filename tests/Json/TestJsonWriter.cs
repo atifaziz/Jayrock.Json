@@ -86,26 +86,17 @@ namespace Jayrock.Json
 
         sealed class StubJsonWriter : JsonWriter
         {
-            public override int Depth
-            {
-                get { throw new NotImplementedException(); }
-            }
+            public override int Depth => throw new NotImplementedException();
 
             public override int MaxDepth
             {
-                get { throw new NotImplementedException(); }
-                set { throw new NotImplementedException(); }
+                get => throw new NotImplementedException();
+                set => throw new NotImplementedException();
             }
 
-            public override JsonWriterBracket Bracket
-            {
-                get { throw new NotImplementedException(); }
-            }
+            public override JsonWriterBracket Bracket => throw new NotImplementedException();
 
-            public override int Index
-            {
-                get { throw new NotImplementedException(); }
-            }
+            public override int Index => throw new NotImplementedException();
 
             public override void WriteStartObject()
             {

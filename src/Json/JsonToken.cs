@@ -28,35 +28,26 @@ namespace Jayrock.Json
     [ Serializable ]
     public struct JsonToken : IEquatable<JsonToken>
     {
-        readonly JsonTokenClass _class;
-        readonly string _text;
-
         JsonToken(JsonTokenClass clazz) :
             this(clazz, null) {}
 
         JsonToken(JsonTokenClass clazz, string text)
         {
-            _class = clazz;
-            _text = text;
+            Class = clazz;
+            Text = text;
         }
 
         /// <summary>
         /// Gets the class/type/category of the token.
         /// </summary>
 
-        public JsonTokenClass Class
-        {
-            get { return _class; }
-        }
+        public JsonTokenClass Class { get; }
 
         /// <summary>
         /// Gets the current token text, if applicable, otherwise null.
         /// </summary>
 
-        public string Text
-        {
-            get { return _text; }
-        }
+        public string Text { get; }
 
         public override string ToString()
         {

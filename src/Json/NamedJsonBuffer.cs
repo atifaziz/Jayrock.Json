@@ -29,9 +29,6 @@ namespace Jayrock.Json
     {
         public static readonly NamedJsonBuffer Empty = new NamedJsonBuffer();
 
-        readonly string _name;
-        readonly JsonBuffer _buffer;
-
         public NamedJsonBuffer(string name, JsonBuffer buffer)
         {
             if (name == null)
@@ -40,13 +37,13 @@ namespace Jayrock.Json
             if (buffer.IsEmpty)
                 throw new ArgumentException(null, nameof(buffer));
 
-            _name = Mask.NullString(name);
-            _buffer = buffer;
+            Name = Mask.NullString(name);
+            Buffer = buffer;
         }
 
-        public string Name { get { return _name; } }
-        public JsonBuffer Buffer { get { return _buffer; } }
-        public bool IsEmpty { get { return _name == null && _buffer.IsEmpty; } }
+        public string Name { get; }
+        public JsonBuffer Buffer { get; }
+        public bool IsEmpty => Name == null && Buffer.IsEmpty;
 
         public bool Equals(NamedJsonBuffer other)
         {

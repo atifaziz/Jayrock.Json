@@ -153,10 +153,7 @@ namespace Jayrock.Json.Conversion
 
         sealed class ThingExporter : IExporter
         {
-            public Type InputType
-            {
-                get { return typeof(Thing); }
-            }
+            public Type InputType => typeof(Thing);
 
             public void Export(ExportContext context, object value, JsonWriter writer)
             {

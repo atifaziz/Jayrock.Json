@@ -26,8 +26,6 @@ namespace Jayrock.Json.Conversion
 
     public class ObjectSurrogateConstructor : IObjectConstructor
     {
-        readonly Type _surrogateType;
-
         public ObjectSurrogateConstructor(Type surrogateType)
         {
             if (surrogateType == null)
@@ -41,10 +39,10 @@ namespace Jayrock.Json.Conversion
                     nameof(surrogateType));
             }
 
-            _surrogateType = surrogateType;
+            SurrogateType = surrogateType;
         }
 
-        public Type SurrogateType { get { return _surrogateType; } }
+        public Type SurrogateType { get; }
 
         public virtual ObjectConstructionResult CreateObject(ImportContext context, JsonReader reader)
         {
@@ -53,7 +51,7 @@ namespace Jayrock.Json.Conversion
             if (reader == null)
                 throw new ArgumentNullException(nameof(reader));
 
-            var ctor = (IObjectSurrogateConstructor) context.Import(_surrogateType, reader);
+            var ctor = (IObjectSurrogateConstructor) context.Import(SurrogateType, reader);
             return ctor.CreateObject(context);
         }
     }

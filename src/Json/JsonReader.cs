@@ -47,19 +47,13 @@ namespace Jayrock.Json
         /// Gets the class of the current token.
         /// </summary>
 
-        public JsonTokenClass TokenClass
-        {
-            get { return Token.Class; }
-        }
+        public JsonTokenClass TokenClass => Token.Class;
 
         /// <summary>
         /// Gets the text of the current token.
         /// </summary>
 
-        public string Text
-        {
-            get { return Token.Text; }
-        }
+        public string Text => Token.Text;
 
         /// <summary>
         /// Return the current level of nesting as the reader encounters
@@ -100,10 +94,7 @@ namespace Jayrock.Json
         /// Indicates whether the reader has reached the end of input source.
         /// </summary>
 
-        public bool EOF
-        {
-            get { return TokenClass == JsonTokenClass.EOF; }
-        }
+        public bool EOF => TokenClass == JsonTokenClass.EOF;
 
         /// <summary>
         /// Reads the next token ensuring that it matches the specified

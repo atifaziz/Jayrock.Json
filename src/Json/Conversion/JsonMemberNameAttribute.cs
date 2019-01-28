@@ -40,8 +40,8 @@ namespace Jayrock.Json.Conversion
 
         public string Name
         {
-            get { return Mask.NullString(_name); }
-            set { _name = value; }
+            get => Mask.NullString(_name);
+            set => _name = value;
         }
 
         void IPropertyDescriptorCustomization.Apply(PropertyDescriptor property)

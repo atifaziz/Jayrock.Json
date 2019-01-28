@@ -31,8 +31,6 @@ namespace Jayrock.Json
 
     public class JsonTextWriter : JsonWriterBase
     {
-        readonly TextWriter _writer;
-
         //
         // Pretty printing as per:
         // http://developer.mozilla.org/es4/proposals/json_encoding_and_decoding.html
@@ -45,7 +43,6 @@ namespace Jayrock.Json
         // </quote>
         //
 
-        bool _prettyPrint;
         bool _newLine;
         int _indent;
         char[] _indentBuffer;
@@ -55,28 +52,21 @@ namespace Jayrock.Json
 
         public JsonTextWriter(TextWriter writer)
         {
-            _writer = writer != null ? writer : new StringWriter();
+            InnerWriter = writer ?? new StringWriter();
         }
 
-        public bool PrettyPrint
-        {
-            get { return _prettyPrint; }
-            set { _prettyPrint = value; }
-        }
+        public bool PrettyPrint { get; set; }
 
-        protected TextWriter InnerWriter
-        {
-            get { return _writer; }
-        }
+        protected TextWriter InnerWriter { get; }
 
         public override void Flush()
         {
-            _writer.Flush();
+            InnerWriter.Flush();
         }
 
         public override string ToString()
         {
-            var stringWriter = _writer as StringWriter;
+            var stringWriter = InnerWriter as StringWriter;
             return stringWriter != null ?
                 stringWriter.ToString() : base.ToString();
         }
@@ -156,7 +146,7 @@ namespace Jayrock.Json
         {
             OnWritingValue();
             PrettyIndent();
-            _writer.Write(text);
+            InnerWriter.Write(text);
         }
 
         bool IsNonEmptyArray()
@@ -180,25 +170,25 @@ namespace Jayrock.Json
         void WriteDelimiter(char ch)
         {
             PrettyIndent();
-            _writer.Write(ch);
+            InnerWriter.Write(ch);
         }
 
         void PrettySpace()
         {
-            if (!_prettyPrint) return;
+            if (!PrettyPrint) return;
             WriteDelimiter(' ');
         }
 
         void PrettyLine()
         {
-            if (!_prettyPrint) return;
-            _writer.WriteLine();
+            if (!PrettyPrint) return;
+            InnerWriter.WriteLine();
             _newLine = true;
         }
 
         void PrettyIndent()
         {
-            if (!_prettyPrint)
+            if (!PrettyPrint)
                 return;
 
             if (_newLine)
@@ -210,7 +200,7 @@ namespace Jayrock.Json
                     if (_indentBuffer == null || _indentBuffer.Length < spaces)
                         _indentBuffer = new string(' ', spaces * 4).ToCharArray();
 
-                    _writer.Write(_indentBuffer, 0, spaces);
+                    InnerWriter.Write(_indentBuffer, 0, spaces);
                 }
 
                 _newLine = false;

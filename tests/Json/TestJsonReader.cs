@@ -65,20 +65,14 @@ namespace Jayrock.Json
                 throw new NotImplementedException();
             }
 
-            public override JsonToken Token
-            {
-                get { throw new NotImplementedException(); }
-            }
+            public override JsonToken Token => throw new NotImplementedException();
 
-            public override int Depth
-            {
-                get { throw new NotImplementedException(); }
-            }
+            public override int Depth => throw new NotImplementedException();
 
             public override int MaxDepth
             {
-                get { throw new NotImplementedException(); }
-                set { throw new NotImplementedException(); }
+                get => throw new NotImplementedException();
+                set => throw new NotImplementedException();
             }
         }
     }

@@ -58,10 +58,7 @@ namespace Jayrock.Json.Conversion.Converters
         {
             public DataView LastExported;
 
-            public Type InputType
-            {
-                get { return typeof(DataView); }
-            }
+            public Type InputType => typeof(DataView);
 
             public void Export(ExportContext context, object value, JsonWriter writer)
             {

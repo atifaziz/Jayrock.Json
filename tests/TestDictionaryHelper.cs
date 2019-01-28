@@ -114,20 +114,11 @@ namespace Jayrock
                     _inner = inner;
                 }
 
-                public object Key
-                {
-                    get { return _inner.Key; }
-                }
+                public object Key => _inner.Key;
 
-                public object Value
-                {
-                    get { return _inner.Value; }
-                }
+                public object Value => _inner.Value;
 
-                public DictionaryEntry Entry
-                {
-                    get { return _inner.Entry; }
-                }
+                public DictionaryEntry Entry => _inner.Entry;
 
                 public bool MoveNext()
                 {
@@ -139,10 +130,7 @@ namespace Jayrock
                     _inner.Reset();
                 }
 
-                public object Current
-                {
-                    get { return _inner.Current; }
-                }
+                public object Current => _inner.Current;
 
                 public void Dispose()
                 {

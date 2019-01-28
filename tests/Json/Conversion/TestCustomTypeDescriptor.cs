@@ -266,13 +266,12 @@ namespace Jayrock.Json.Conversion
         {
             public readonly object Field;
 
-            object _property;
-            public object Property { get { return _property; } }
+            public object Property { get; }
 
             public ImmutableThing(object field, object property)
             {
                 Field = field;
-                _property = property;
+                Property = property;
             }
         }
 
@@ -283,10 +282,10 @@ namespace Jayrock.Json.Conversion
             [ JsonIgnore ] public object Field2;
             public object Field3;
 
-            public object Property1 { get { return null; } set { } }
-            [ JsonIgnore ] public object Property2 { get { return null; } set { } }
-            public object Property3 { get { return null; } set { } }
-            public object ReadOnlyProperty { get { return null; } }
+            public object Property1 { get => null; set { } }
+            [ JsonIgnore ] public object Property2 { get => null; set { } }
+            public object Property3 { get => null; set { } }
+            public object ReadOnlyProperty => null;
 
             public static PropertyDescriptor GetField1Property()
             {
@@ -313,15 +312,15 @@ namespace Jayrock.Json.Conversion
         {
             public object this[int index]
             {
-                get { throw new NotImplementedException(); }
-                set { throw new NotImplementedException(); }
+                get => throw new NotImplementedException();
+                set => throw new NotImplementedException();
             }
         }
 
         sealed class ThingWithSpecialReadOnlyProperty
         {
             [JsonExport]
-            public object SpecialReadOnlyProperty { get { return null; } }
+            public object SpecialReadOnlyProperty => null;
         }
 
         sealed class FakePropertyImpl : IPropertyImpl
@@ -343,13 +342,9 @@ namespace Jayrock.Json.Conversion
     [CompilerGenerated]
     sealed class AnonymousThing<T>
     {
-        readonly T _value;
+        AnonymousThing(T value) =>
+            Value = value;
 
-        AnonymousThing(T value)
-        {
-            _value = value;
-        }
-
-        public T Value { get { return _value; } }
+        public T Value { get; }
     }
 }

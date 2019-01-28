@@ -143,7 +143,7 @@ namespace Jayrock.Json
         /// Gets the number of tokens contained in the buffer.
         /// </summary>
 
-        public int Length { get { return _end - _start; } }
+        public int Length => _end - _start;
 
         JsonToken FirstToken
         {
@@ -158,54 +158,39 @@ namespace Jayrock.Json
         /// Indicates whether the buffer is empty or not.
         /// </summary>
 
-        public bool IsEmpty { get { return Length == 0; } }
+        public bool IsEmpty => Length == 0;
 
         /// <summary>
         /// Indicates whether the buffer represents simply a JSON null or not.
         /// </summary>
 
-        public bool IsNull
-        {
-            get { return Length == 1 && FirstToken.Class == JsonTokenClass.Null; }
-        }
+        public bool IsNull => Length == 1 && FirstToken.Class == JsonTokenClass.Null;
 
         /// <summary>
         /// Indicates whether the buffer represents a JSON scalar value
         /// (number, string or Boolean) or not.
         /// </summary>
 
-        public bool IsScalar
-        {
-            get { return Length == 1 && FirstToken.Class.IsScalar; }
-        }
+        public bool IsScalar => Length == 1 && FirstToken.Class.IsScalar;
 
         /// <summary>
         /// Indicates whether the buffer represents a JSON structured value,
         /// that is, an array or object or not.
         /// </summary>
 
-        public bool IsStructured
-        {
-            get { return !IsEmpty && !IsNull && !IsScalar; }
-        }
+        public bool IsStructured => !IsEmpty && !IsNull && !IsScalar;
 
         /// <summary>
         /// Indicates whether the buffer represents a JSON object or not.
         /// </summary>
 
-        public bool IsObject
-        {
-            get { return IsStructured && FirstToken.Class == JsonTokenClass.Object; }
-        }
+        public bool IsObject => IsStructured && FirstToken.Class == JsonTokenClass.Object;
 
         /// <summary>
         /// Indicates whether the buffer represents a JSON array or not.
         /// </summary>
 
-        public bool IsArray
-        {
-            get { return IsStructured && FirstToken.Class == JsonTokenClass.Array; }
-        }
+        public bool IsArray => IsStructured && FirstToken.Class == JsonTokenClass.Array;
 
         /// <summary>
         /// Creates a <see cref="JsonBufferReader" /> object that can be

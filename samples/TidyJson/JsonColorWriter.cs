@@ -34,107 +34,93 @@ namespace TidyJson
 
     sealed class JsonColorWriter : JsonWriter
     {
-        readonly JsonWriter inner;
-
         public JsonColorWriter(JsonWriter inner) :
             this(inner, null) {}
 
         public JsonColorWriter(JsonWriter inner, JsonPalette palette)
         {
-            this.inner = inner;
+            this.InnerWriter = inner;
             this.Palette = palette ?? JsonPalette.Auto();
         }
 
-        public JsonWriter InnerWriter
-        {
-            get { return inner; }
-        }
+        public JsonWriter InnerWriter { get; }
 
         public JsonPalette Palette { get; set; }
 
-        public override int Index
-        {
-            get { return inner.Index; }
-        }
+        public override int Index => InnerWriter.Index;
 
-        public override JsonWriterBracket Bracket
-        {
-            get { return inner.Bracket; }
-        }
+        public override JsonWriterBracket Bracket => InnerWriter.Bracket;
 
         public override void WriteStartObject()
         {
             Palette.Object.Apply();
-            inner.WriteStartObject();
+            InnerWriter.WriteStartObject();
         }
 
         public override void WriteEndObject()
         {
             Palette.Object.Apply();
-            inner.WriteEndObject();
+            InnerWriter.WriteEndObject();
         }
 
         public override void WriteMember(string name)
         {
             Palette.Member.Apply();
-            inner.WriteMember(name);
+            InnerWriter.WriteMember(name);
         }
 
         public override void WriteStartArray()
         {
             Palette.Array.Apply();
-            inner.WriteStartArray();
+            InnerWriter.WriteStartArray();
         }
 
         public override void WriteEndArray()
         {
             Palette.Array.Apply();
-            inner.WriteEndArray();
+            InnerWriter.WriteEndArray();
         }
 
         public override void WriteString(string value)
         {
             Palette.String.Apply();
-            inner.WriteString(value);
+            InnerWriter.WriteString(value);
         }
 
         public override void WriteNumber(string value)
         {
             Palette.Number.Apply();
-            inner.WriteNumber(value);
+            InnerWriter.WriteNumber(value);
         }
 
         public override void WriteBoolean(bool value)
         {
             Palette.Boolean.Apply();
-            inner.WriteBoolean(value);
+            InnerWriter.WriteBoolean(value);
         }
 
         public override void WriteNull()
         {
             Palette.Null.Apply();
-            inner.WriteNull();
+            InnerWriter.WriteNull();
         }
 
         public override void Flush()
         {
-            inner.Flush();
+            InnerWriter.Flush();
         }
 
         public override void Close()
         {
-            inner.Close();
+            InnerWriter.Close();
         }
 
-        public override int Depth
-        {
-            get { return inner.Depth; }
-        }
+        public override int Depth => InnerWriter.Depth;
 
         public override int MaxDepth
         {
-            get { throw new NotSupportedException(); }
-            set { throw new NotSupportedException(); }
+            get => throw new NotSupportedException();
+            set => throw new NotSupportedException();
         }
     }
 }

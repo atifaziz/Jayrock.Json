@@ -60,10 +60,7 @@ namespace Jayrock.Json.Conversion.Converters
     [ TestFixture ]
     public class TestByteExporter : TestNumberExporter
     {
-        protected override object SampleValue
-        {
-            get { return (byte) 123; }
-        }
+        protected override object SampleValue => (byte) 123;
 
         protected override IExporter CreateExporter()
         {
@@ -74,10 +71,7 @@ namespace Jayrock.Json.Conversion.Converters
     [ TestFixture ]
     public class TestInt16Exporter : TestNumberExporter
     {
-        protected override object SampleValue
-        {
-            get { return (short) 1234; }
-        }
+        protected override object SampleValue => (short) 1234;
 
         protected override IExporter CreateExporter()
         {
@@ -88,10 +82,7 @@ namespace Jayrock.Json.Conversion.Converters
     [ TestFixture ]
     public class TestInt32Exporter : TestNumberExporter
     {
-        protected override object SampleValue
-        {
-            get { return 123456; }
-        }
+        protected override object SampleValue => 123456;
 
         protected override IExporter CreateExporter()
         {
@@ -102,10 +93,7 @@ namespace Jayrock.Json.Conversion.Converters
     [ TestFixture ]
     public class TestInt64Exporter : TestNumberExporter
     {
-        protected override object SampleValue
-        {
-            get { return 9876543210L; }
-        }
+        protected override object SampleValue => 9876543210L;
 
         protected override IExporter CreateExporter()
         {
@@ -116,10 +104,7 @@ namespace Jayrock.Json.Conversion.Converters
     [ TestFixture ]
     public class TestSingleExporter : TestNumberExporter
     {
-        protected override object SampleValue
-        {
-            get { return 12.345f; }
-        }
+        protected override object SampleValue => 12.345f;
 
         protected override IExporter CreateExporter()
         {
@@ -130,10 +115,7 @@ namespace Jayrock.Json.Conversion.Converters
     [ TestFixture ]
     public class TestDoubleExporter : TestNumberExporter
     {
-        protected override object SampleValue
-        {
-            get { return 12.345m; }
-        }
+        protected override object SampleValue => 12.345m;
 
         protected override IExporter CreateExporter()
         {
@@ -144,10 +126,7 @@ namespace Jayrock.Json.Conversion.Converters
     [ TestFixture ]
     public class TestBigIntegerExporter : TestNumberExporter
     {
-        protected override object SampleValue
-        {
-            get { return BigInteger.Pow(long.MaxValue, 3); }
-        }
+        protected override object SampleValue => BigInteger.Pow(long.MaxValue, 3);
 
         protected override IExporter CreateExporter()
         {

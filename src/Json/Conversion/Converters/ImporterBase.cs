@@ -28,20 +28,12 @@ namespace Jayrock.Json.Conversion.Converters
 
     public abstract class ImporterBase : IImporter
     {
-        readonly Type _outputType;
-
         protected ImporterBase(Type outputType)
         {
-            if (outputType == null)
-                throw new ArgumentNullException(nameof(outputType));
-
-            _outputType = outputType;
+            OutputType = outputType ?? throw new ArgumentNullException(nameof(outputType));
         }
 
-        public Type OutputType
-        {
-            get { return _outputType; }
-        }
+        public Type OutputType { get; }
 
         public virtual object Import(ImportContext context, JsonReader reader)
         {

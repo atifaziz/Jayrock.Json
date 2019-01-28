@@ -121,10 +121,7 @@ namespace Jayrock.Json.Conversion.Converters
         {
             public DataTable LastExported;
 
-            public Type InputType
-            {
-                get { return typeof(DataTable); }
-            }
+            public Type InputType => typeof(DataTable);
 
             public void Export(ExportContext context, object value, JsonWriter writer)
             {

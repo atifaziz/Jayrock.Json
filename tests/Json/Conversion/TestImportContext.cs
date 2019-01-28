@@ -129,10 +129,7 @@ namespace Jayrock.Json.Conversion
 
         sealed class ThingImporter : IImporter
         {
-            public Type OutputType
-            {
-                get { return typeof(Thing); }
-            }
+            public Type OutputType => typeof(Thing);
 
             public object Import(ImportContext context, JsonReader reader)
             {
@@ -189,15 +186,9 @@ namespace Jayrock.Json.Conversion
                 throw new NotImplementedException();
             }
 
-            public int Count
-            {
-                get { throw new NotImplementedException(); }
-            }
+            public int Count => throw new NotImplementedException();
 
-            public bool IsReadOnly
-            {
-                get { throw new NotImplementedException(); }
-            }
+            public bool IsReadOnly => throw new NotImplementedException();
 
             #endregion
 
@@ -225,19 +216,13 @@ namespace Jayrock.Json.Conversion
 
             public string this[Guid key]
             {
-                get { throw new NotImplementedException(); }
-                set { throw new NotImplementedException(); }
+                get => throw new NotImplementedException();
+                set => throw new NotImplementedException();
             }
 
-            public System.Collections.Generic.ICollection<Guid> Keys
-            {
-                get { throw new NotImplementedException(); }
-            }
+            public System.Collections.Generic.ICollection<Guid> Keys => throw new NotImplementedException();
 
-            public System.Collections.Generic.ICollection<string> Values
-            {
-                get { throw new NotImplementedException(); }
-            }
+            public System.Collections.Generic.ICollection<string> Values => throw new NotImplementedException();
 
             #endregion
         }

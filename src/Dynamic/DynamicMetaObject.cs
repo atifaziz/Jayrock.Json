@@ -171,7 +171,7 @@ namespace Jayrock.Dynamic
             return _runtime.GetDynamicMemberNames(Value);
         }
 
-        new T Value { get { return (T) base.Value; } }
+        new T Value => (T) base.Value;
 
         public override DynamicMetaObject BindGetMember(GetMemberBinder binder)
         {

@@ -26,10 +26,7 @@ namespace Jayrock.Json.Conversion.Converters
 
     public class JsonBufferImporter : IImporter
     {
-        public Type OutputType
-        {
-            get { return typeof(JsonBuffer); }
-        }
+        public Type OutputType => typeof(JsonBuffer);
 
         public virtual object Import(ImportContext context, JsonReader reader)
         {

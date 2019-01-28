@@ -34,33 +34,19 @@ namespace Jayrock.Json
     {
         WriterStateStack _stateStack;
         WriterState _state;
-        int _maxDepth = 30;
 
         protected JsonWriterBase()
         {
             _state = new WriterState(JsonWriterBracket.Pending);
         }
 
-        public sealed override int Depth
-        {
-            get { return HasStates ? States.Count : 0; }
-        }
+        public sealed override int Depth => HasStates ? States.Count : 0;
 
-        public override int MaxDepth
-        {
-            get { return _maxDepth; }
-            set { _maxDepth = value; }
-        }
+        public override int MaxDepth { get; set; } = 30;
 
-        public sealed override int Index
-        {
-            get { return Depth == 0 ? -1 : _state.Index; }
-        }
+        public sealed override int Index => Depth == 0 ? -1 : _state.Index;
 
-        public sealed override JsonWriterBracket Bracket
-        {
-            get { return _state.Bracket; }
-        }
+        public sealed override JsonWriterBracket Bracket => _state.Bracket;
 
         public sealed override void WriteStartObject()
         {
@@ -195,21 +181,8 @@ namespace Jayrock.Json
         protected abstract void WriteBooleanImpl(bool value);
         protected abstract void WriteNullImpl();
 
-        bool HasStates
-        {
-            get { return _stateStack != null && _stateStack.Count > 0; }
-        }
-
-        WriterStateStack States
-        {
-            get
-            {
-                if (_stateStack == null)
-                    _stateStack = new WriterStateStack();
-
-                return _stateStack;
-            }
-        }
+        bool HasStates => _stateStack?.Count > 0;
+        WriterStateStack States => _stateStack ?? (_stateStack = new WriterStateStack());
 
         void EnteringBracket()
         {
@@ -277,12 +250,8 @@ namespace Jayrock.Json
         sealed class WriterStateStack
         {
             WriterState[] _states;
-            int _count;
 
-            public int Count
-            {
-                get { return _count; }
-            }
+            public int Count { get; private set; }
 
             public void Push(WriterState state)
             {
@@ -290,24 +259,24 @@ namespace Jayrock.Json
                 {
                     _states = new WriterState[6];
                 }
-                else if (_count == _states.Length)
+                else if (Count == _states.Length)
                 {
                     var items = new WriterState[_states.Length * 2];
                     _states.CopyTo(items, 0);
                     _states = items;
                 }
 
-                _states[_count++] = state;
+                _states[Count++] = state;
             }
 
             public WriterState Pop()
             {
-                if (_count == 0)
+                if (Count == 0)
                     throw new InvalidOperationException();
 
-                var state = _states[--_count];
+                var state = _states[--Count];
 
-                if (_count == 0)
+                if (Count == 0)
                     _states = null;
 
                 return state;

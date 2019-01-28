@@ -35,9 +35,6 @@ namespace Jayrock.Json
         int _end;
         bool _backed;
         char _backup;
-        int _charCount;
-        int _lineNumber;
-        int _linePosition;
         int _lastLinePosition;
         bool _sawLineFeed = true;
 
@@ -54,9 +51,9 @@ namespace Jayrock.Json
             _bufferSize = Math.Max(256, bufferSize);
         }
 
-        public int CharCount { get { return _charCount; } }
-        public int LineNumber { get { return _lineNumber; } }
-        public int LinePosition { get { return _linePosition; } }
+        public int CharCount    { get; private set; }
+        public int LineNumber   { get; private set; }
+        public int LinePosition { get; private set; }
 
         /// <summary>
         /// Back up one character. This provides a sort of lookahead capability,
@@ -72,18 +69,18 @@ namespace Jayrock.Json
         {
             Debug.Assert(!_backed);
 
-            if (_charCount == 0)
+            if (CharCount == 0)
                 return;
 
             _backed = true;
 
-            _charCount--;
-            _linePosition--;
+            CharCount--;
+            LinePosition--;
 
-            if (_linePosition == 0)
+            if (LinePosition == 0)
             {
-                _lineNumber--;
-                _linePosition = _lastLinePosition;
+                LineNumber--;
+                LinePosition = _lastLinePosition;
                 _sawLineFeed = true;
             }
         }
@@ -139,18 +136,18 @@ namespace Jayrock.Json
 
         char UpdateCounters(char ch)
         {
-            _charCount++;
+            CharCount++;
 
             if (_sawLineFeed)
             {
-                _lineNumber++;
-                _lastLinePosition = _linePosition;
-                _linePosition = 1;
+                LineNumber++;
+                _lastLinePosition = LinePosition;
+                LinePosition = 1;
                 _sawLineFeed = false;
             }
             else
             {
-                _linePosition++;
+                LinePosition++;
             }
 
             _sawLineFeed = ch == '\n';

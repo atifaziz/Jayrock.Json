@@ -33,7 +33,6 @@ namespace Jayrock.Json
     {
         JsonToken _token;
         int _depth;
-        int _maxDepth = 100;
 
         protected JsonReaderBase()
         {
@@ -44,31 +43,21 @@ namespace Jayrock.Json
         /// Gets the current token.
         /// </summary>
 
-        public sealed override JsonToken Token
-        {
-            get { return _token; }
-        }
+        public sealed override JsonToken Token => _token;
 
         /// <summary>
         /// Return the current level of nesting as the reader encounters
         /// nested objects and arrays.
         /// </summary>
 
-        public sealed override int Depth
-        {
-            get { return _depth; }
-        }
+        public sealed override int Depth => _depth;
 
         /// <summary>
         /// Sets or returns the maximum allowed depth or level of nestings
         /// of objects and arrays.
         /// </summary>
 
-        public sealed override int MaxDepth
-        {
-            get { return _maxDepth; }
-            set { _maxDepth = value; }
-        }
+        public sealed override int MaxDepth { get; set; } = 100;
 
         /// <summary>
         /// Reads the next token and returns true if one was found.

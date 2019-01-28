@@ -178,7 +178,7 @@ namespace Jayrock.Json
                 }
             }
 
-            object IEnumerator.Current { get { return Current; } }
+            object IEnumerator.Current => Current;
 
             void EnsureNotDisposed()
             {
@@ -186,7 +186,7 @@ namespace Jayrock.Json
                     throw new ObjectDisposedException(GetType().FullName);
             }
 
-            bool IsDisposed { get { return _enumerator == null; } }
+            bool IsDisposed => _enumerator == null;
 
             public void Dispose()
             {
@@ -201,25 +201,13 @@ namespace Jayrock.Json
 
         public virtual object this[string key]
         {
-            get { return InnerHashtable[key]; }
-            set { Put(key, value); }
+            get => InnerHashtable[key];
+            set => Put(key, value);
         }
 
-        public virtual bool HasMembers
-        {
-            get { return Count > 0; }
-        }
+        public virtual bool HasMembers => Count > 0;
 
-        ArrayList NameIndexList
-        {
-            get
-            {
-                if (_nameIndexList == null)
-                    _nameIndexList = new ArrayList();
-
-                return _nameIndexList;
-            }
-        }
+        ArrayList NameIndexList => _nameIndexList ?? (_nameIndexList = new ArrayList());
 
         /// <summary>
         /// Accumulate values under a key. It is similar to the Put method except
@@ -298,16 +286,8 @@ namespace Jayrock.Json
             Dictionary.Remove(name);
         }
 
-        public virtual ICollection Names
-        {
-            get
-            {
-                if (_readOnlyNameIndexList == null)
-                    _readOnlyNameIndexList = ArrayList.ReadOnly(NameIndexList);
-
-                return _readOnlyNameIndexList;
-            }
-        }
+        public virtual ICollection Names =>
+            _readOnlyNameIndexList ?? (_readOnlyNameIndexList = ArrayList.ReadOnly(NameIndexList));
 
         /// <summary>
         /// Produce a JsonArray containing the names of the elements of this
@@ -476,10 +456,7 @@ namespace Jayrock.Json
             return true;
         }
 
-        ICollection<string> IDictionary<string, object>.Keys
-        {
-            get { return _keys ?? (_keys = GetMembers(m => m.Name)); }
-        }
+        ICollection<string> IDictionary<string, object>.Keys => _keys ?? (_keys = GetMembers(m => m.Name));
 
         T[] GetMembers<T>(Func<JsonMember, T> selector)
         {
@@ -490,10 +467,7 @@ namespace Jayrock.Json
             return arr;
         }
 
-        ICollection<object> IDictionary<string, object>.Values
-        {
-            get { return _values ?? (_values = GetMembers(m => m.Value)); }
-        }
+        ICollection<object> IDictionary<string, object>.Values => _values ?? (_values = GetMembers(m => m.Value));
 
         bool IDictionary<string, object>.ContainsKey(string key)
         {
@@ -552,10 +526,7 @@ namespace Jayrock.Json
             return true;
         }
 
-        bool ICollection<KeyValuePair<string, object>>.IsReadOnly
-        {
-            get { return InnerHashtable.IsReadOnly; }
-        }
+        bool ICollection<KeyValuePair<string, object>>.IsReadOnly => InnerHashtable.IsReadOnly;
 
         DynamicMetaObject IDynamicMetaObjectProvider.GetMetaObject(Expression parameter)
         {

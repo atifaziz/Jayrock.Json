@@ -338,12 +338,9 @@ namespace Jayrock.Json.Conversion
             public override void ResetValue(object component) {}
             public override bool CanResetValue(object component) { return false; }
             public override bool ShouldSerializeValue(object component) { return true; }
-            public override Type ComponentType { get { return Member.DeclaringType; } }
+            public override Type ComponentType => Member.DeclaringType;
 
-            public override Type PropertyType
-            {
-                get { return _propertyType; }
-            }
+            public override Type PropertyType => _propertyType;
 
             public override object GetValue(object component)
             {
@@ -358,15 +355,9 @@ namespace Jayrock.Json.Conversion
                 _impl.SetValue(component, value);
             }
 
-            public override string Name
-            {
-                get { return _customName != null ? _customName : base.Name; }
-            }
+            public override string Name => _customName ?? base.Name;
 
-            protected override int NameHashCode
-            {
-                get { return _customName != null ? _customNameHashCode : base.NameHashCode; }
-            }
+            protected override int NameHashCode => _customName != null ? _customNameHashCode : base.NameHashCode;
 
             protected abstract object GetValueImpl(object component);
             protected abstract void SetValueImpl(object component, object value);
@@ -438,16 +429,7 @@ namespace Jayrock.Json.Conversion
                 return char.ToLower(s[0], CultureInfo.InvariantCulture) + s.Substring(1);
             }
 
-            ServiceContainer Services
-            {
-                get
-                {
-                    if (_services == null)
-                        _services = new ServiceContainer();
-
-                    return _services;
-                }
-            }
+            ServiceContainer Services => _services ?? (_services = new ServiceContainer());
 
             #region IServiceContainer implementation
 
@@ -505,15 +487,9 @@ namespace Jayrock.Json.Conversion
                 _field = field;
             }
 
-            protected override MemberInfo Member
-            {
-                get { return _field; }
-            }
+            protected override MemberInfo Member => _field;
 
-            public override bool IsReadOnly
-            {
-                get { return _field.IsInitOnly; }
-            }
+            public override bool IsReadOnly => _field.IsInitOnly;
 
             protected override object GetValueImpl(object component)
             {
@@ -541,15 +517,9 @@ namespace Jayrock.Json.Conversion
                 _property = property;
             }
 
-            protected override MemberInfo Member
-            {
-                get { return _property; }
-            }
+            protected override MemberInfo Member => _property;
 
-            public override bool IsReadOnly
-            {
-                get { return !_property.CanWrite; }
-            }
+            public override bool IsReadOnly => !_property.CanWrite;
 
             protected override object GetValueImpl(object component)
             {

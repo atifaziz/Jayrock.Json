@@ -32,7 +32,6 @@ namespace Jayrock.Json
     sealed class JsonBufferStorage
     {
         JsonToken[] _tokens;
-        int _count;
 
         internal JsonBufferStorage(int initialCapacity)
         {
@@ -41,7 +40,7 @@ namespace Jayrock.Json
                 _tokens = new JsonToken[initialCapacity];
         }
 
-        public int Length { get { return _count; } }
+        public int Length { get; private set; }
 
         public JsonBufferStorage Write(JsonToken token)
         {
@@ -49,14 +48,14 @@ namespace Jayrock.Json
             {
                 _tokens = new JsonToken[16];
             }
-            else if (_count == _tokens.Length)
+            else if (Length == _tokens.Length)
             {
                 var tokens = new JsonToken[_tokens.Length * 2];
                 _tokens.CopyTo(tokens, 0);
                 _tokens = tokens;
             }
 
-            _tokens[_count++] = token;
+            _tokens[Length++] = token;
             return this;
         }
 
@@ -72,14 +71,14 @@ namespace Jayrock.Json
             get
             {
                 Debug.Assert(index >= 0);
-                Debug.Assert(index < _count);
+                Debug.Assert(index < Length);
                 return _tokens[index];
             }
         }
 
         public JsonBuffer ToBuffer()
         {
-            return new JsonBuffer(this, 0, _count);
+            return new JsonBuffer(this, 0, Length);
         }
     }
 }

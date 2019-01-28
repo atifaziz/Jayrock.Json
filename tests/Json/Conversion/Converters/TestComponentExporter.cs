@@ -264,9 +264,9 @@ namespace Jayrock.Json.Conversion.Converters
             public override void ResetValue(object component) { throw new NotImplementedException(); }
             public override void SetValue(object component, object value) { throw new NotImplementedException(); }
             public override bool ShouldSerializeValue(object component) { throw new NotImplementedException(); }
-            public override Type ComponentType { get { throw new NotImplementedException(); } }
-            public override bool IsReadOnly { get { throw new NotImplementedException(); } }
-            public override Type PropertyType { get { throw new NotImplementedException(); } }
+            public override Type ComponentType => throw new NotImplementedException();
+            public override bool IsReadOnly => throw new NotImplementedException();
+            public override Type PropertyType => throw new NotImplementedException();
 
             #endregion
         }
@@ -390,52 +390,16 @@ namespace Jayrock.Json.Conversion.Converters
 
         public sealed class Car
         {
-            string _manufacturer;
-            string _model;
-            int _year;
-            string _color;
-
-            public string Manufacturer
-            {
-                get { return _manufacturer; }
-                set { _manufacturer = value; }
-            }
-
-            public string Model
-            {
-                get { return _model; }
-                set { _model = value; }
-            }
-
-            public int Year
-            {
-                get { return _year; }
-                set { _year = value; }
-            }
-
-            public string Color
-            {
-                get { return _color; }
-                set { _color = value; }
-            }
+            public string Manufacturer { get; set; }
+            public string Model        { get; set; }
+            public int Year            { get; set; }
+            public string Color        { get; set; }
         }
 
         public sealed class Person
         {
-            int _id;
-            string _fullName;
-
-            public int Id
-            {
-                get { return _id; }
-                set { _id = value; }
-            }
-
-            public string FullName
-            {
-                get { return _fullName; }
-                set { _fullName = value; }
-            }
+            public int Id          { get; set; }
+            public string FullName { get; set; }
         }
 
         public sealed class Marriage
@@ -452,9 +416,6 @@ namespace Jayrock.Json.Conversion.Converters
 
         public class Point : IJsonExportable
         {
-            int _x;
-            int _y;
-
             static readonly ICustomTypeDescriptor _componentType;
 
             static Point()
@@ -467,12 +428,12 @@ namespace Jayrock.Json.Conversion.Converters
 
             public Point(int x, int y)
             {
-                _x = x;
-                _y = y;
+                X = x;
+                Y = y;
             }
 
-            public int X { get { return _x; } set { _x = value; } }
-            public int Y { get { return _y; } set { _y = value; } }
+            public int X { get; set; }
+            public int Y { get; set; }
 
             public void Export(ExportContext context, JsonWriter writer)
             {

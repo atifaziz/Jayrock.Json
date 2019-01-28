@@ -26,40 +26,39 @@ namespace Jayrock.Json
         readonly Stack<string> _memberStack = new Stack<string>();
         JsonObject _object;
         JsonArray _array;
-        object _value;
         string _member;
 
-        public object Value { get { return _value; } }
-        public bool IsObject { get { return _object != null; } }
-        public bool IsArray { get { return _array != null; } }
+        public object Value { get; private set; }
+        public bool IsObject => _object != null;
+        public bool IsArray => _array != null;
 
         void Push()
         {
-            _valueStack.Push(_value);
+            _valueStack.Push(Value);
             _memberStack.Push(_member);
             _array = null;
             _object = null;
-            _value = null;
+            Value = null;
             _member = null;
         }
 
         void Pop()
         {
-            var current = _value;
+            var current = Value;
             var popped = _valueStack.Pop();
             _member = _memberStack.Pop();
             if (popped == null) // Final result?
                 return;
             _object = popped as JsonObject;
             _array = _object == null ? (JsonArray) popped : null;
-            _value = popped;
+            Value = popped;
             WriteValue(current);
         }
 
         protected override void WriteStartObjectImpl()
         {
             Push();
-            _value = _object = new JsonObject();
+            Value = _object = new JsonObject();
         }
 
         protected override void WriteEndObjectImpl()
@@ -75,7 +74,7 @@ namespace Jayrock.Json
         protected override void WriteStartArrayImpl()
         {
             Push();
-            _value = _array = new JsonArray();
+            Value = _array = new JsonArray();
         }
 
         protected override void WriteEndArrayImpl()

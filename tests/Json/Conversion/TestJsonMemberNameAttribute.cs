@@ -123,9 +123,9 @@ namespace Jayrock.Json.Conversion
             public override void ResetValue(object component) { throw new NotImplementedException(); }
             public override void SetValue(object component, object value) { throw new NotImplementedException(); }
             public override bool ShouldSerializeValue(object component) { throw new NotImplementedException(); }
-            public override Type ComponentType { get { throw new NotImplementedException(); } }
-            public override bool IsReadOnly { get { throw new NotImplementedException(); } }
-            public override Type PropertyType { get { throw new NotImplementedException(); } }
+            public override Type ComponentType => throw new NotImplementedException();
+            public override bool IsReadOnly => throw new NotImplementedException();
+            public override Type PropertyType => throw new NotImplementedException();
 
             #endregion
         }

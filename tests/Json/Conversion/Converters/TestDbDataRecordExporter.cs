@@ -91,7 +91,6 @@ namespace Jayrock.Json.Conversion.Converters
         {
             readonly DataTable _table;
             int _index = -1;
-            bool _closed;
 
             public FakeDataTableReader(DataTable table)
             {
@@ -100,10 +99,7 @@ namespace Jayrock.Json.Conversion.Converters
                 _table = table;
             }
 
-            DataRow CurrentRow
-            {
-                get { return _table.Rows[_index]; }
-            }
+            DataRow CurrentRow => _table.Rows[_index];
 
             public IEnumerator GetEnumerator()
             {
@@ -112,7 +108,7 @@ namespace Jayrock.Json.Conversion.Converters
 
             public void Close()
             {
-                _closed = true;
+                IsClosed = true;
             }
 
             public bool Read()
@@ -124,20 +120,11 @@ namespace Jayrock.Json.Conversion.Converters
                 return true;
             }
 
-            public int Depth
-            {
-                get { return 0; }
-            }
+            public int Depth => 0;
 
-            public bool IsClosed
-            {
-                get { return _closed; }
-            }
+            public bool IsClosed { get; private set; }
 
-            public int RecordsAffected
-            {
-                get { return 0; }
-            }
+            public int RecordsAffected => 0;
 
             public void Dispose()
             {
@@ -167,10 +154,7 @@ namespace Jayrock.Json.Conversion.Converters
                 return length;
             }
 
-            public int FieldCount
-            {
-                get { return _table.Columns.Count; }
-            }
+            public int FieldCount => _table.Columns.Count;
 
             public bool NextResult()
             {
@@ -284,15 +268,9 @@ namespace Jayrock.Json.Conversion.Converters
                 throw new NotImplementedException();
             }
 
-            public object this[int i]
-            {
-                get { throw new NotImplementedException(); }
-            }
+            public object this[int i] => throw new NotImplementedException();
 
-            public object this[string name]
-            {
-                get { throw new NotImplementedException(); }
-            }
+            public object this[string name] => throw new NotImplementedException();
 
             #endregion
         }

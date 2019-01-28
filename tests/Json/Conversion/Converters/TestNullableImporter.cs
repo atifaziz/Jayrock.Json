@@ -99,7 +99,7 @@ namespace Jayrock.Json.Conversion.Converters
         {
             public bool ImportCalled;
 
-            public Type OutputType { get { return typeof(Thing); } }
+            public Type OutputType => typeof(Thing);
 
             public object Import(ImportContext context, JsonReader reader)
             {

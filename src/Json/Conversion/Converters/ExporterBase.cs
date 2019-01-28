@@ -26,20 +26,12 @@ namespace Jayrock.Json.Conversion.Converters
 
     public abstract class ExporterBase : IExporter
     {
-        readonly Type _inputType;
-
         protected ExporterBase(Type inputType)
         {
-            if (inputType == null)
-                throw new ArgumentNullException(nameof(inputType));
-
-            _inputType = inputType;
+            InputType = inputType ?? throw new ArgumentNullException(nameof(inputType));
         }
 
-        public Type InputType
-        {
-            get { return _inputType; }
-        }
+        public Type InputType { get; }
 
         public virtual void Export(ExportContext context, object value, JsonWriter writer)
         {

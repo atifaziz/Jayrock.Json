@@ -51,7 +51,6 @@ namespace Jayrock.Json
                 Object, EndObject, Member
             });
 
-        readonly string _name;
         [ NonSerialized ] readonly Superclass _superclass;
 
         enum Superclass
@@ -69,24 +68,15 @@ namespace Jayrock.Json
             Debug.Assert(name != null);
             Debug.Assert(name.Length > 0);
 
-            _name = name;
+            Name = name;
             _superclass = superclass;
         }
 
-        public string Name
-        {
-            get { return _name; }
-        }
+        public string Name { get; }
 
-        internal bool IsTerminator
-        {
-            get { return _superclass == Superclass.Terminator; }
-        }
+        internal bool IsTerminator => _superclass == Superclass.Terminator;
 
-        internal bool IsScalar
-        {
-            get { return _superclass == Superclass.Scalar; }
-        }
+        internal bool IsScalar => _superclass == Superclass.Scalar;
 
         public override int GetHashCode()
         {

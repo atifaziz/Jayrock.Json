@@ -62,9 +62,9 @@ namespace Jayrock.Json
             Push(ParseMethod);
         }
 
-        public int LineNumber   { get { return _reader != null ? _reader.LineNumber   : _endLineNumber; } }
-        public int LinePosition { get { return _reader != null ? _reader.LinePosition : _endLinePosition; } }
-        public int CharCount    { get { return _reader != null ? _reader.CharCount    : _endCharCount; } }
+        public int LineNumber   => _reader?.LineNumber   ?? _endLineNumber;
+        public int LinePosition => _reader?.LinePosition ?? _endLinePosition;
+        public int CharCount    => _reader?.CharCount    ?? _endCharCount;
 
         /// <summary>
         /// Reads the next token and returns it.
@@ -211,14 +211,7 @@ namespace Jayrock.Json
             return Yield(JsonToken.String(s));
         }
 
-        Continuation ParseMethod
-        {
-            get
-            {
-                if (_methodParse == null) _methodParse = Parse;
-                return _methodParse;
-            }
-        }
+        Continuation ParseMethod => _methodParse ?? (_methodParse = Parse);
 
         /// <summary>
         /// Parses expecting an array in the source.
@@ -246,14 +239,8 @@ namespace Jayrock.Json
             return Parse();
         }
 
-        Continuation ParseArrayFirstMethod
-        {
-            get
-            {
-                if (_methodParseArrayFirst == null) _methodParseArrayFirst = ParseArrayFirst;
-                return _methodParseArrayFirst;
-            }
-        }
+        Continuation ParseArrayFirstMethod =>
+            _methodParseArrayFirst ?? (_methodParseArrayFirst = ParseArrayFirst);
 
         /// <summary>
         /// Parses the next element in the array.
@@ -286,14 +273,8 @@ namespace Jayrock.Json
             return Parse();
         }
 
-        Continuation ParseArrayNextMethod
-        {
-            get
-            {
-                if (_methodParseArrayNext == null) _methodParseArrayNext = ParseArrayNext;
-                return _methodParseArrayNext;
-            }
-        }
+        Continuation ParseArrayNextMethod =>
+            _methodParseArrayNext ?? (_methodParseArrayNext = ParseArrayNext);
 
         /// <summary>
         /// Parses expecting an object in the source.
@@ -325,14 +306,8 @@ namespace Jayrock.Json
             return Yield(JsonToken.Member(name), ParseObjectMemberValueMethod);
         }
 
-        Continuation ParseObjectMemberMethod
-        {
-            get
-            {
-                if (_methodParseObjectMember == null) _methodParseObjectMember = ParseObjectMember;
-                return _methodParseObjectMember;
-            }
-        }
+        Continuation ParseObjectMemberMethod =>
+            _methodParseObjectMember ?? (_methodParseObjectMember = ParseObjectMember);
 
         JsonToken ParseObjectMemberValue()
         {
@@ -350,14 +325,8 @@ namespace Jayrock.Json
             return Parse();
         }
 
-        Continuation ParseObjectMemberValueMethod
-        {
-            get
-            {
-                if (_methodParseObjectMemberValue == null) _methodParseObjectMemberValue = ParseObjectMemberValue;
-                return _methodParseObjectMemberValue;
-            }
-        }
+        Continuation ParseObjectMemberValueMethod =>
+            _methodParseObjectMemberValue ?? (_methodParseObjectMemberValue = ParseObjectMemberValue);
 
         JsonToken ParseNextMember()
         {
@@ -383,14 +352,8 @@ namespace Jayrock.Json
             return Yield(JsonToken.Member(name), ParseObjectMemberValueMethod);
         }
 
-        Continuation ParseNextMemberMethod
-        {
-            get
-            {
-                if (_methodParseNextMember == null) _methodParseNextMember = ParseNextMember;
-                return _methodParseNextMember;
-            }
-        }
+        Continuation ParseNextMemberMethod =>
+            _methodParseNextMember ?? (_methodParseNextMember = ParseNextMember);
 
         /// <summary>
         /// Yields control back to the reader's user while updating the

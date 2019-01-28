@@ -25,16 +25,15 @@ namespace Jayrock.Json
     public struct JsonMember
     {
         readonly string _name;
-        readonly object _value;
 
         public JsonMember(string name, object value)
         {
             _name = name;
-            _value = value;
+            Value = value;
         }
 
-        [JsonExport] public string Name { get { return Mask.NullString(_name); } }
-        [JsonExport] public object Value { get { return _value; } }
+        [JsonExport] public string Name => Mask.NullString(_name);
+        [JsonExport] public object Value { get; }
 
         public override string ToString()
         {

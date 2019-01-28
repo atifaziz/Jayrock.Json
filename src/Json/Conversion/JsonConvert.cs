@@ -36,16 +36,13 @@ namespace Jayrock.Json.Conversion
 
     public static class JsonConvert
     {
-        static readonly ExportContextFactoryHandler _defaultExportContextFactoryHandler;
-        static readonly ImportContextFactoryHandler _defaultImportContextFactoryHandler;
-
         static ExportContextFactoryHandler _currentExportContextFactoryHandler;
         static ImportContextFactoryHandler _currentImportContextFactoryHandler;
 
         static JsonConvert()
         {
-            _currentExportContextFactoryHandler = _defaultExportContextFactoryHandler = CreateDefaultExportContext;
-            _currentImportContextFactoryHandler = _defaultImportContextFactoryHandler = CreateDefaultImportContext;
+            _currentExportContextFactoryHandler = DefaultExportContextFactory = CreateDefaultExportContext;
+            _currentImportContextFactoryHandler = DefaultImportContextFactory = CreateDefaultImportContext;
         }
 
         public static void Export(object value, JsonWriter writer)
@@ -146,39 +143,18 @@ namespace Jayrock.Json.Conversion
 
         public static ExportContextFactoryHandler CurrentExportContextFactory
         {
-            get { return _currentExportContextFactoryHandler; }
-
-            set
-            {
-                if (value == null)
-                    throw new ArgumentNullException(nameof(value));
-
-                _currentExportContextFactoryHandler = value;
-            }
+            get => _currentExportContextFactoryHandler;
+            set => _currentExportContextFactoryHandler = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         public static ImportContextFactoryHandler CurrentImportContextFactory
         {
-            get { return _currentImportContextFactoryHandler; }
-
-            set
-            {
-                if (value == null)
-                    throw new ArgumentNullException(nameof(value));
-
-                _currentImportContextFactoryHandler = value;
-            }
+            get => _currentImportContextFactoryHandler;
+            set => _currentImportContextFactoryHandler = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        public static ExportContextFactoryHandler DefaultExportContextFactory
-        {
-            get { return _defaultExportContextFactoryHandler; }
-        }
-
-        public static ImportContextFactoryHandler DefaultImportContextFactory
-        {
-            get { return _defaultImportContextFactoryHandler; }
-        }
+        public static ExportContextFactoryHandler DefaultExportContextFactory { get; }
+        public static ImportContextFactoryHandler DefaultImportContextFactory { get; }
 
         static ExportContext CreateDefaultExportContext()
         {
