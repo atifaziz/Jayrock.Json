@@ -127,26 +127,6 @@ namespace Jayrock.Json.Conversion.Converters
             JsonConvert.Import<Tuple<int, string, bool>>("[123,foo]");
         }
 
-        [ Test, ExpectedException(typeof(ArgumentNullException)) ]
-        public void SubClassCannotExportValueWithNullContext()
-        {
-            var tuple = Tuple.Create(42);
-            var exporter = new ExportValueTestExporter(tuple.GetType()) { ForceNullContext = true };
-            var context = JsonConvert.CreateExportContext();
-            var writer = new JsonBufferWriter();
-            exporter.Export(context, tuple, writer);
-        }
-
-        [ Test, ExpectedException(typeof(ArgumentNullException)) ]
-        public void SubClassCannotExportValueWithNullWriter()
-        {
-            var tuple = Tuple.Create(42);
-            var exporter = new ExportValueTestExporter(tuple.GetType()) { ForceNullWriter = true };
-            var context = JsonConvert.CreateExportContext();
-            var writer = new JsonBufferWriter();
-            exporter.Export(context, tuple, writer);
-        }
-
         static void AssertImport(object expected, string input)
         {
             var importer = new TupleImporter(expected.GetType());
@@ -155,20 +135,6 @@ namespace Jayrock.Json.Conversion.Converters
             var actual = importer.Import(context, reader);
             Assert.IsTrue(reader.EOF, "Reader must be at EOF.");
             Assert.AreEqual(expected, actual);
-        }
-
-        class ExportValueTestExporter : TupleExporter
-        {
-            public bool ForceNullContext;
-            public bool ForceNullWriter;
-
-            public ExportValueTestExporter(Type inputType) :
-                base(inputType) {}
-
-            protected override void ExportValue(ExportContext context, object value, JsonWriter writer)
-            {
-                base.ExportValue(ForceNullContext ? null : context, value, ForceNullWriter ? null : writer);
-            }
         }
     }
 }

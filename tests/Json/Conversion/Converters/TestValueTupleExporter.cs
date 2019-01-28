@@ -61,5 +61,39 @@ namespace Jayrock.Json.Conversion.Converters
             JsonConvert.Export(value, writer);
             return writer.GetBuffer().CreateReader();
         }
+
+        [ Test, ExpectedException(typeof(ArgumentNullException)) ]
+        public void SubClassCannotExportValueWithNullContext()
+        {
+            var tuple = ValueTuple.Create(42);
+            var exporter = new ExportValueTestExporter(tuple.GetType()) { ForceNullContext = true };
+            var context = JsonConvert.CreateExportContext();
+            var writer = new JsonBufferWriter();
+            exporter.Export(context, tuple, writer);
+        }
+
+        [ Test, ExpectedException(typeof(ArgumentNullException)) ]
+        public void SubClassCannotExportValueWithNullWriter()
+        {
+            var tuple = ValueTuple.Create(42);
+            var exporter = new ExportValueTestExporter(tuple.GetType()) { ForceNullWriter = true };
+            var context = JsonConvert.CreateExportContext();
+            var writer = new JsonBufferWriter();
+            exporter.Export(context, tuple, writer);
+        }
+
+        class ExportValueTestExporter : ValueTupleExporter
+        {
+            public bool ForceNullContext;
+            public bool ForceNullWriter;
+
+            public ExportValueTestExporter(Type inputType) :
+                base(inputType) {}
+
+            protected override void ExportValue(ExportContext context, object value, JsonWriter writer)
+            {
+                base.ExportValue(ForceNullContext ? null : context, value, ForceNullWriter ? null : writer);
+            }
+        }
     }
 }
