@@ -43,10 +43,9 @@ namespace Jayrock.Json
 
         public static string Enquote(string str)
         {
-            if (str == null || str.Length == 0)
-                return "\"\"";
-
-            return Enquote(str, null).ToString();
+            return string.IsNullOrEmpty(str)
+                 ? "\"\""
+                 : Enquote(str, null).ToString();
         }
 
         public static StringBuilder Enquote(string str, StringBuilder sb)

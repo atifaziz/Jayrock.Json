@@ -422,10 +422,8 @@ namespace Jayrock.Json.Conversion
 
             static string ToCamelCase(string s)
             {
-                if (s == null || s.Length == 0)
-                    return s;
-
-                return char.ToLower(s[0], CultureInfo.InvariantCulture) + s.Substring(1);
+                return string.IsNullOrEmpty(s) ? s
+                     : char.ToLower(s[0], CultureInfo.InvariantCulture) + s.Substring(1);
             }
 
             ServiceContainer Services => _services ?? (_services = new ServiceContainer());
