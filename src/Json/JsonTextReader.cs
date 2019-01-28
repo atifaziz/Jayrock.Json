@@ -36,7 +36,7 @@ namespace Jayrock.Json
 
     public sealed class JsonTextReader : JsonReaderBase
     {
-        static readonly char[] _numNonDigitChars = { '.', 'e', 'E', '+', '-'};
+        static readonly char[] NumNonDigitChars = { '.', 'e', 'E', '+', '-'};
 
         BufferedCharReader _reader;
         Stack<Continuation> _stack;
@@ -180,7 +180,7 @@ namespace Jayrock.Json
 
             if ((b >= '0' && b <= '9') || b == '.' || b == '-' || b == '+')
             {
-                if (b == '0' && s.Length > 1 && s.IndexOfAny(_numNonDigitChars) < 0)
+                if (b == '0' && s.Length > 1 && s.IndexOfAny(NumNonDigitChars) < 0)
                 {
                     if (s.Length > 2 && (s[1] == 'x' || s[1] == 'X'))
                     {

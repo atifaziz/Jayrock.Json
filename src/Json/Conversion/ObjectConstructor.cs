@@ -34,7 +34,7 @@ namespace Jayrock.Json.Conversion
         readonly ConstructorInfo[] _ctors;
 
         static readonly IComparer<ConstructorInfo>
-            _arrayLengthComparer =
+            ArrayLengthComparer =
                 Comparer<ConstructorInfo>.Create((a, b) =>
                     -1 * a.GetParameters().Length.CompareTo(b.GetParameters().Length));
 
@@ -72,7 +72,7 @@ namespace Jayrock.Json.Conversion
 
             _type = type;
             _ctors = ctors;
-            Array.Sort(_ctors, _arrayLengthComparer);
+            Array.Sort(_ctors, ArrayLengthComparer);
         }
 
         public ObjectConstructionResult CreateObject(ImportContext context, JsonReader reader)

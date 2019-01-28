@@ -40,9 +40,9 @@ namespace Jayrock.Json
         readonly int _start;
         readonly int _end;
 
-        static readonly JsonBuffer _null;
-        static readonly JsonBuffer _true;
-        static readonly JsonBuffer _false;
+        static readonly JsonBuffer Null;
+        static readonly JsonBuffer True;
+        static readonly JsonBuffer False;
 
         static JsonBuffer()
         {
@@ -52,9 +52,9 @@ namespace Jayrock.Json
                 .Write(JsonToken.EndArray())
                 .ToBuffer();
 
-            _null = buffer.SliceImpl(1, 2);
-            _true = buffer.SliceImpl(2, 3);
-            _false = buffer.SliceImpl(3, 4);
+            Null = buffer.SliceImpl(1, 2);
+            True = buffer.SliceImpl(2, 3);
+            False = buffer.SliceImpl(3, 4);
         }
 
         internal JsonBuffer(JsonBufferStorage storage, int start, int end)
@@ -78,13 +78,13 @@ namespace Jayrock.Json
             var clazz = token.Class;
 
             if (clazz == JsonTokenClass.Null)
-                return _null;
+                return Null;
 
             if (!clazz.IsScalar)
                 throw new ArgumentException("Token must represent a JSON scalar value or null.", nameof(token));
 
             if (clazz == JsonTokenClass.Boolean)
-                return token.Equals(JsonToken.True()) ? _true : _false;
+                return token.Equals(JsonToken.True()) ? True : False;
 
             var storage = new JsonBufferStorage(1);
             storage.Write(token);

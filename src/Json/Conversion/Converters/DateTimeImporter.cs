@@ -29,7 +29,7 @@ namespace Jayrock.Json.Conversion.Converters
 
     public class DateTimeImporter : ImporterBase
     {
-        static readonly string[] _formats =
+        static readonly string[] Formats =
         {
             "yyyy-MM-dd'T'HH:mm:ss.fffffffK",
             "yyyy-MM-dd'T'HH:mm:ss.ffffK",
@@ -89,7 +89,7 @@ namespace Jayrock.Json.Conversion.Converters
                     return ReadReturning(reader, time);
                 }
 
-                return ReadReturning(reader, DateTime.ParseExact(reader.Text, _formats, CultureInfo.InvariantCulture, DateTimeStyles.None));
+                return ReadReturning(reader, DateTime.ParseExact(reader.Text, Formats, CultureInfo.InvariantCulture, DateTimeStyles.None));
             }
             catch (FormatException e)
             {

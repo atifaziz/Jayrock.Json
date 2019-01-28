@@ -33,7 +33,7 @@ namespace Jayrock.Json.Conversion.Converters
     public class TupleExporter : ExporterBase
     {
         readonly Action<ExportContext, object, JsonWriter> _exporter;
-        static readonly MethodInfo _exportMethod = ((MethodCallExpression) ((Expression<Action<ExportContext>>) (context => context.Export(null, null))).Body).Method;
+        static readonly MethodInfo ExportMethod = ((MethodCallExpression) ((Expression<Action<ExportContext>>) (context => context.Export(null, null))).Body).Method;
 
         public TupleExporter(Type inputType)
             : base(inputType)
@@ -93,7 +93,7 @@ namespace Jayrock.Json.Conversion.Converters
             return from property in properties
                    select Expression.Call
                    (
-                       context, _exportMethod,
+                       context, ExportMethod,
                            Expression.Convert(Expression.MakeMemberAccess(tuple, property), typeof(object)),
                            writer
                    );

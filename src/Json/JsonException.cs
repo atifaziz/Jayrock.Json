@@ -30,16 +30,16 @@ namespace Jayrock.Json
     [ Serializable ]
     public class JsonException : Exception
     {
-        const string _defaultMessage = "An error occurred dealing with JSON data.";
+        const string DefaultMessage = "An error occurred dealing with JSON data.";
 
         public JsonException() :
             this(null) {}
 
         public JsonException(string message) :
-            base(message ?? _defaultMessage, null) {}
+            base(message ?? DefaultMessage, null) {}
 
         public JsonException(string message, Exception innerException) :
-            base(message ?? _defaultMessage, innerException) {}
+            base(message ?? DefaultMessage, innerException) {}
 
         protected JsonException(SerializationInfo info, StreamingContext context) :
             base(info, context) {}

@@ -90,7 +90,7 @@ namespace Jayrock.Reflection
             return IsConstructionOfGenericTypeDefinition(type, (Type) criteria);
         }
 
-        static readonly Type[] _commonTupleTypes =
+        static readonly Type[] CommonTupleTypes =
         {
             // Tuple of 1 not expected to be common so excluded from here
             typeof(Tuple<,>), typeof(Tuple<,,>), typeof(Tuple<,,,>), typeof(Tuple<,,,,>)
@@ -113,7 +113,7 @@ namespace Jayrock.Reflection
             // Quick check against common generic type definitions
             //
 
-            if (Array.IndexOf(_commonTupleTypes, type.GetGenericTypeDefinition()) >= 0)
+            if (Array.IndexOf(CommonTupleTypes, type.GetGenericTypeDefinition()) >= 0)
                 return true;
 
             //
@@ -121,7 +121,7 @@ namespace Jayrock.Reflection
             // just way too many items.
             //
 
-            var someTupleType = _commonTupleTypes[0];
+            var someTupleType = CommonTupleTypes[0];
             const char tick = '`';
             var i = type.FullName.IndexOf(tick);
             return type.Assembly == someTupleType.Assembly

@@ -316,8 +316,8 @@ namespace Jayrock.Json
         {
             if (text == null) throw new ArgumentNullException(nameof(text));
 
-            if (styles >= 0 && (int) styles < _grammars.Length)
-                return _grammars[(int) styles].IsMatch(text);
+            if (styles >= 0 && (int) styles < Grammars.Length)
+                return Grammars[(int) styles].IsMatch(text);
 
             throw new ArgumentException(null, nameof(styles));
         }
@@ -326,7 +326,7 @@ namespace Jayrock.Json
         // We assume that MS will never change the values assigned to
         // the members of NumberStyles, at least not the following ones.
 
-        static readonly Regex[] _grammars =
+        static readonly Regex[] Grammars =
         {
             Regex(false, false), // 0 = None
             Regex(true,  false), // 1 = AllowLeadingWhite

@@ -33,7 +33,7 @@ namespace Jayrock.Json.Conversion.Converters
     {
         readonly Func<ImportContext, JsonReader, object> _importer;
         readonly bool _single;
-        static readonly MethodInfo _importMethod = ((MethodCallExpression)((Expression<Func<ImportContext, object>>)(context => context.Import(null, null))).Body).Method;
+        static readonly MethodInfo ImportMethod = ((MethodCallExpression)((Expression<Func<ImportContext, object>>)(context => context.Import(null, null))).Body).Method;
 
         public TupleImporter(Type outputType) :
             base(outputType)
@@ -108,7 +108,7 @@ namespace Jayrock.Json.Conversion.Converters
             //
 
             var args = from argType in argTypes
-                       select Expression.Convert(Expression.Call(context, _importMethod, Expression.Constant(argType), reader), argType);
+                       select Expression.Convert(Expression.Call(context, ImportMethod, Expression.Constant(argType), reader), argType);
             var body = Expression.Call(createMethod, args);
             var lambda = Expression.Lambda<Func<ImportContext, JsonReader, object>>(body, context, reader);
             return lambda.Compile();

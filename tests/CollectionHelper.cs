@@ -27,12 +27,12 @@ namespace Jayrock
 
     static class CollectionHelper
     {
-        static readonly object[] _zeroObjects = new object[0];
+        static readonly object[] ZeroObjects = new object[0];
 
         public static object[] ToArray(ICollection collection)
         {
             if (collection == null)
-                return _zeroObjects;
+                return ZeroObjects;
 
             var values = new object[collection.Count];
             collection.CopyTo(values, 0);
@@ -45,7 +45,7 @@ namespace Jayrock
                 elementType = typeof(object);
 
             if (collection == null)
-                return _zeroObjects;
+                return ZeroObjects;
 
             return (new ArrayList(collection)).ToArray(elementType);
         }
