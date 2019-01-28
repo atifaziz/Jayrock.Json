@@ -83,7 +83,7 @@ namespace TidyJson
                         case "m":
                         case "mono":
                         {
-                            if (Convert.ToBoolean(Mask.EmptyString(value, Boolean.TrueString)))
+                            if (Convert.ToBoolean(Mask.EmptyString(value, bool.TrueString)))
                                 Palette = new JsonPalette(ConsoleBrush.Current);
                             break;
                         }

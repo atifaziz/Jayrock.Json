@@ -65,7 +65,7 @@ namespace Jayrock.Json
 
         public override string ToString()
         {
-            return IsEmpty ? String.Empty : Mask.EmptyString(Name, "(anonymous)") + ": " + Buffer;
+            return IsEmpty ? string.Empty : Mask.EmptyString(Name, "(anonymous)") + ": " + Buffer;
         }
 
         public static JsonBuffer ToObject(params NamedJsonBuffer[] members)

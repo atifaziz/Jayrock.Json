@@ -50,7 +50,7 @@ namespace Jayrock.Json.Conversion.Converters
             {
                 var ch = s[0];
 
-                if (Char.IsDigit(ch) || ch == '+' || ch == '-')
+                if (char.IsDigit(ch) || ch == '+' || ch == '-')
                     throw Error(s, null);
             }
 

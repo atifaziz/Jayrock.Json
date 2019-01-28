@@ -47,7 +47,7 @@ namespace Jayrock.Diagnostics
 
             for (var i = 0; i < Math.Min(width, s.Length); i++)
             {
-                sb.Append(!Char.IsControl(s, i) ? s[i] : ControlReplacement);
+                sb.Append(!char.IsControl(s, i) ? s[i] : ControlReplacement);
             }
 
             if (s.Length > width)
