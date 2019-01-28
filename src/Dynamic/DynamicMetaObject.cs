@@ -75,7 +75,7 @@ namespace Jayrock.Dynamic
 
         public override bool Equals(object obj)
         {
-            return obj is Option<T> && Equals((Option<T>)obj);
+            return obj is Option<T> other && Equals(other);
         }
 
         public override int GetHashCode()
