@@ -18,13 +18,8 @@
 
 namespace Jayrock.Json.Conversion.Converters
 {
-    #region Imports
-
-    using System;
     using System.IO;
     using NUnit.Framework;
-
-    #endregion
 
     [ TestFixture ]
     public class TestNumberImporter

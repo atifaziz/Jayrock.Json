@@ -18,12 +18,7 @@
 
 namespace Jayrock.Reflection
 {
-    #region Imports
-
     using System;
-    using System.Reflection;
-
-    #endregion
 
     static class Reflector
     {

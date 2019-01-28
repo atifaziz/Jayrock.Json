@@ -18,13 +18,8 @@
 
 namespace Jayrock.Json.Conversion
 {
-    #region Imports
-
     using System;
-    using System.Collections.Generic;
     using Jayrock.Collections;
-
-    #endregion
 
     [ Serializable ]
     sealed class ImporterCollection : KeyedCollection<Type, IImporter>
