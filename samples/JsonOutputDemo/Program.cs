@@ -20,11 +20,9 @@ namespace JsonOutputDemo
     {
         const string newsSourceUrl = "http://feeds.bbci.co.uk/news/rss.xml";
 
-        delegate void Demo();
-
         static void Main()
         {
-            var demos = new Demo[]
+            var demos = new Action[]
             {
                 WriteContinents,
                 WriteContact,
