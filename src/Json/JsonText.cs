@@ -26,9 +26,6 @@ namespace Jayrock.Json
 
     #endregion
 
-    public delegate JsonReader JsonTextReaderFactoryHandler(TextReader reader, object options);
-    public delegate JsonWriter JsonTextWriterFactoryHandler(TextWriter writer, object options);
-
     /// <summary>
     /// Facade for working with JsonReader and JsonWriter implementations
     /// that work with JSON text.
@@ -36,35 +33,25 @@ namespace Jayrock.Json
 
     public static class JsonText
     {
-        static JsonTextReaderFactoryHandler _currentReaderFactory;
-        static JsonTextWriterFactoryHandler _currentWriterFactory;
+        static Func<TextReader, JsonReader> _currentReaderFactory;
+        static Func<TextWriter, JsonWriter> _currentWriterFactory;
 
         static JsonText()
         {
-            _currentReaderFactory = DefaultReaderFactory = DefaultReaderFactoryImpl;
-            _currentWriterFactory = DefaultWriterFactory = DefaultWriterFactoryImpl;
+            _currentReaderFactory = DefaultReaderFactory = reader => new JsonTextReader(reader);
+            _currentWriterFactory = DefaultWriterFactory = writer => new JsonTextWriter(writer);
         }
 
-        static JsonReader DefaultReaderFactoryImpl(TextReader reader, object options)
-        {
-            return new JsonTextReader(reader);
-        }
+        public static Func<TextReader, JsonReader> DefaultReaderFactory { get; }
+        public static Func<TextWriter, JsonWriter> DefaultWriterFactory { get; }
 
-        static JsonWriter DefaultWriterFactoryImpl(TextWriter writer, object options)
-        {
-            return new JsonTextWriter(writer);
-        }
-
-        public static JsonTextReaderFactoryHandler DefaultReaderFactory { get; }
-        public static JsonTextWriterFactoryHandler DefaultWriterFactory { get; }
-
-        public static JsonTextReaderFactoryHandler CurrentReaderFactory
+        public static Func<TextReader, JsonReader> CurrentReaderFactory
         {
             get => _currentReaderFactory;
             set => _currentReaderFactory = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        public static JsonTextWriterFactoryHandler CurrentWriterFactory
+        public static Func<TextWriter, JsonWriter> CurrentWriterFactory
         {
             get => _currentWriterFactory;
             set => _currentWriterFactory = value ?? throw new ArgumentNullException(nameof(value));
@@ -72,7 +59,7 @@ namespace Jayrock.Json
 
         public static JsonReader CreateReader(TextReader reader)
         {
-            return CurrentReaderFactory(reader, null);
+            return CurrentReaderFactory(reader);
         }
 
         public static JsonReader CreateReader(string source)
@@ -82,7 +69,7 @@ namespace Jayrock.Json
 
         public static JsonWriter CreateWriter(TextWriter writer)
         {
-            return CurrentWriterFactory(writer, null);
+            return CurrentWriterFactory(writer);
         }
 
         public static JsonWriter CreateWriter(StringBuilder sb)
