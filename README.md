@@ -1,4 +1,4 @@
-# What is Jayrock JSON?
+# Jayrock JSON
 
 [Jayrock JSON][jayrock.json] is a modest and an open source ([LGPL])
 implementation of [JSON] ([RFC 4627][rfc4627]) for .NET Standard.
