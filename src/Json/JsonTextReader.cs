@@ -357,15 +357,6 @@ namespace Jayrock.Json
 
         /// <summary>
         /// Yields control back to the reader's user while updating the
-        /// reader with the new found token and its text.
-        /// </summary>
-        JsonToken Yield(JsonToken token)
-        {
-            return Yield(token, null);
-        }
-
-        /// <summary>
-        /// Yields control back to the reader's user while updating the
         /// reader with the new found token, its text and the next
         /// continuation point into the reader.
         /// </summary>
@@ -374,7 +365,7 @@ namespace Jayrock.Json
         /// is returned back to the reader's user. This must be done by
         /// Yield's caller by way of explicit return.
         /// </remarks>
-        JsonToken Yield(JsonToken token, Continuation continuation)
+        JsonToken Yield(JsonToken token, Continuation continuation = null)
         {
             if (continuation != null)
                 Push(continuation);
@@ -476,12 +467,7 @@ namespace Jayrock.Json
             return _stack.Pop();
         }
 
-        JsonException SyntaxError(string message)
-        {
-            return SyntaxError(message, null);
-        }
-
-        JsonException SyntaxError(string message, Exception inner)
+        JsonException SyntaxError(string message, Exception inner = null)
         {
             if (LineNumber > 0)
             {

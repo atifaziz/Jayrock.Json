@@ -60,10 +60,7 @@ namespace Jayrock.Json
             Terminator
         }
 
-        JsonTokenClass(string name) :
-            this(name, Superclass.Unspecified) {}
-
-        JsonTokenClass(string name, Superclass superclass)
+        JsonTokenClass(string name, Superclass superclass = Superclass.Unspecified)
         {
             Debug.Assert(name != null);
             Debug.Assert(name.Length > 0);

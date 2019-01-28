@@ -798,17 +798,12 @@ namespace Jayrock.Json
                 Assert.AreEqual(text, _reader.Text);
         }
 
-        void AssertMember(string name, JsonTokenClass valueToken)
-        {
-            AssertMember(name, valueToken, null);
-        }
-
         void AssertMember(string name, string value)
         {
             AssertMember(name, JsonTokenClass.String, value);
         }
 
-        void AssertMember(string name, JsonTokenClass valueToken, string valueText)
+        void AssertMember(string name, JsonTokenClass valueToken, string valueText = null)
         {
             AssertTokenText(JsonTokenClass.Member, name);
             AssertTokenText(valueToken, valueText);

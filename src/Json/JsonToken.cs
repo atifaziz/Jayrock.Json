@@ -28,10 +28,7 @@ namespace Jayrock.Json
     [ Serializable ]
     public struct JsonToken : IEquatable<JsonToken>
     {
-        JsonToken(JsonTokenClass clazz) :
-            this(clazz, null) {}
-
-        JsonToken(JsonTokenClass clazz, string text)
+        JsonToken(JsonTokenClass clazz, string text = null)
         {
             Class = clazz;
             Text = text;

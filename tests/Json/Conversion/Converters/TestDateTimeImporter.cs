@@ -135,12 +135,7 @@ namespace Jayrock.Json.Conversion.Converters
             Assert.AreEqual(new DateTime(2013, 10, 29, 11, 04, 09, 144), time);
         }
 
-        static void AssertImport(DateTime expected, string input)
-        {
-            AssertImport(expected, input, false);
-        }
-
-        static void AssertImport(DateTime expected, string input, bool expectingUTC)
+        static void AssertImport(DateTime expected, string input, bool expectingUTC = false)
         {
             var o = Import(input);
             Assert.IsInstanceOf<DateTime>(o);
