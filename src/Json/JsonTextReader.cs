@@ -215,7 +215,7 @@ namespace Jayrock.Json
         {
             get
             {
-                if (_methodParse == null) _methodParse = new Continuation(Parse);
+                if (_methodParse == null) _methodParse = Parse;
                 return _methodParse;
             }
         }
@@ -250,7 +250,7 @@ namespace Jayrock.Json
         {
             get
             {
-                if (_methodParseArrayFirst == null) _methodParseArrayFirst = new Continuation(ParseArrayFirst);
+                if (_methodParseArrayFirst == null) _methodParseArrayFirst = ParseArrayFirst;
                 return _methodParseArrayFirst;
             }
         }
@@ -290,7 +290,7 @@ namespace Jayrock.Json
         {
             get
             {
-                if (_methodParseArrayNext == null) _methodParseArrayNext = new Continuation(ParseArrayNext);
+                if (_methodParseArrayNext == null) _methodParseArrayNext = ParseArrayNext;
                 return _methodParseArrayNext;
             }
         }
@@ -329,7 +329,7 @@ namespace Jayrock.Json
         {
             get
             {
-                if (_methodParseObjectMember == null) _methodParseObjectMember = new Continuation(ParseObjectMember);
+                if (_methodParseObjectMember == null) _methodParseObjectMember = ParseObjectMember;
                 return _methodParseObjectMember;
             }
         }
@@ -354,7 +354,7 @@ namespace Jayrock.Json
         {
             get
             {
-                if (_methodParseObjectMemberValue == null) _methodParseObjectMemberValue = new Continuation(ParseObjectMemberValue);
+                if (_methodParseObjectMemberValue == null) _methodParseObjectMemberValue = ParseObjectMemberValue;
                 return _methodParseObjectMemberValue;
             }
         }
@@ -387,7 +387,7 @@ namespace Jayrock.Json
         {
             get
             {
-                if (_methodParseNextMember == null) _methodParseNextMember = new Continuation(ParseNextMember);
+                if (_methodParseNextMember == null) _methodParseNextMember = ParseNextMember;
                 return _methodParseNextMember;
             }
         }

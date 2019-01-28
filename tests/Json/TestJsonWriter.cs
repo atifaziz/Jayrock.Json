@@ -40,7 +40,7 @@ namespace Jayrock.Json
         public void ClosingRaisesDisposed()
         {
             JsonWriter writer = new StubJsonWriter();
-            writer.Disposed += new EventHandler(Writer_Disposed);
+            writer.Disposed += Writer_Disposed;
             Assert.IsFalse(_disposed);
             writer.Close();
             Assert.IsTrue(_disposed);

@@ -44,8 +44,8 @@ namespace Jayrock.Json
 
         static JsonText()
         {
-            _currentReaderFactory = _defaultReaderFactory = new JsonTextReaderFactoryHandler(DefaultReaderFactoryImpl);
-            _currentWriterFactory = _defaultWriterFactory = new JsonTextWriterFactoryHandler(DefaultWriterFactoryImpl);
+            _currentReaderFactory = _defaultReaderFactory = DefaultReaderFactoryImpl;
+            _currentWriterFactory = _defaultWriterFactory = DefaultWriterFactoryImpl;
         }
 
         static JsonReader DefaultReaderFactoryImpl(TextReader reader, object options)

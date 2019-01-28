@@ -40,7 +40,7 @@ namespace Jayrock.Json
         public void ClosingRaisesDisposed()
         {
             JsonReader reader = new StubJsonReader();
-            reader.Disposed += new EventHandler(Reader_Disposed);
+            reader.Disposed += Reader_Disposed;
             Assert.IsFalse(_disposed);
             reader.Close();
             Assert.IsTrue(_disposed);

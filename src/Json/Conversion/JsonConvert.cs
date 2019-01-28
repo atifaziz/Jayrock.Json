@@ -44,8 +44,8 @@ namespace Jayrock.Json.Conversion
 
         static JsonConvert()
         {
-            _currentExportContextFactoryHandler = _defaultExportContextFactoryHandler = new ExportContextFactoryHandler(CreateDefaultExportContext);
-            _currentImportContextFactoryHandler = _defaultImportContextFactoryHandler = new ImportContextFactoryHandler(CreateDefaultImportContext);
+            _currentExportContextFactoryHandler = _defaultExportContextFactoryHandler = CreateDefaultExportContext;
+            _currentImportContextFactoryHandler = _defaultImportContextFactoryHandler = CreateDefaultImportContext;
         }
 
         public static void Export(object value, JsonWriter writer)
