@@ -15,7 +15,7 @@ namespace JsonConversionsDemo
 
     public abstract class DuckCollectionImporterBase : CollectionImporterBase
     {
-        public DuckCollectionImporterBase(Type outputType, Type elementType) :
+        protected DuckCollectionImporterBase(Type outputType, Type elementType) :
             base(outputType, elementType) {}
 
         protected override void ImportElements(object collection, ImportContext context, JsonReader reader)
