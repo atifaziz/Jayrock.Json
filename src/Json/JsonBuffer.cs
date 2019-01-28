@@ -96,8 +96,7 @@ namespace Jayrock.Json
             if (reader == null)
                 throw new ArgumentNullException(nameof(reader));
 
-            var bufferReader = reader as JsonBufferReader;
-            if (bufferReader != null)
+            if (reader is JsonBufferReader bufferReader)
                 return bufferReader.BufferValue();
 
             if (!reader.MoveToContent())

@@ -345,9 +345,7 @@ namespace Jayrock.Json
             {
                 foreach (var value in values)
                 {
-                    var arrayValue = value as JsonArray;
-
-                    if (arrayValue != null)
+                    if (value is JsonArray arrayValue)
                     {
                         foreach (var arrayValueValue in arrayValue)
                             newArray.Push(arrayValueValue);

@@ -330,8 +330,7 @@ namespace Jayrock.Json.Conversion
 
             public override bool Equals(object obj)
             {
-                var other = obj as TypeMemberDescriptor;
-                return other != null && other.Member.Equals(Member);
+                return obj is TypeMemberDescriptor other && other.Member.Equals(Member);
             }
 
             public override int GetHashCode() { return Member.GetHashCode(); }

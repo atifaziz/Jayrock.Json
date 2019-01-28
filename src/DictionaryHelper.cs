@@ -65,9 +65,7 @@ namespace Jayrock
             }
             finally
             {
-                var disposable = e as IDisposable;
-
-                if (disposable != null)
+                if (e is IDisposable disposable)
                     disposable.Dispose();
             }
         }

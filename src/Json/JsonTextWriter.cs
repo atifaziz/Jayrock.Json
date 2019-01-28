@@ -66,9 +66,9 @@ namespace Jayrock.Json
 
         public override string ToString()
         {
-            var stringWriter = InnerWriter as StringWriter;
-            return stringWriter != null ?
-                stringWriter.ToString() : base.ToString();
+            return InnerWriter is StringWriter sw
+                 ? sw.ToString()
+                 : base.ToString();
         }
 
         protected override void WriteStartObjectImpl()

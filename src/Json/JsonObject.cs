@@ -230,9 +230,7 @@ namespace Jayrock.Json
             }
             else
             {
-                var values = current as IList;
-
-                if (values != null)
+                if (current is IList values)
                 {
                     values.Add(value);
                 }
