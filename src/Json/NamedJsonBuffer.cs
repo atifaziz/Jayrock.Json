@@ -25,7 +25,7 @@ namespace Jayrock.Json
     #endregion
 
     [ Serializable ]
-    public struct NamedJsonBuffer
+    public struct NamedJsonBuffer : IEquatable<NamedJsonBuffer>
     {
         public static readonly NamedJsonBuffer Empty = new NamedJsonBuffer();
 
