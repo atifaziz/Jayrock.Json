@@ -223,7 +223,8 @@ namespace Jayrock.Dynamic
             // "error", giving the language the option of using this
             // tree or doing .NET binding.
             //
-            Fallback fallback = e => binder.FallbackInvokeMember(this, args, e);
+            DynamicMetaObject Fallback(DynamicMetaObject e) =>
+                binder.FallbackInvokeMember(this, args, e);
 
             var call = BuildCallMethodWithResult(
                 "TryInvokeMember",
@@ -233,13 +234,13 @@ namespace Jayrock.Dynamic
                     "TryGetMember",
                     new GetBinderAdapter(binder),
                     NoArgs,
-                    fallback(null),
+                    Fallback(null),
                     e => binder.FallbackInvoke(e, args, null)
                 ),
                 null
             );
 
-            return _dontFallbackFirst ? call : fallback(call);
+            return _dontFallbackFirst ? call : Fallback(call);
             //
             // See http://gist.github.com/386261 for why this is commented out
             //
