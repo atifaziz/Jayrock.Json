@@ -34,8 +34,8 @@ namespace Jayrock.Json.Conversion.Converters
 
         protected override void ExportValue(ExportContext context, object value, JsonWriter writer)
         {
-            if (context == null) throw new ArgumentNullException("context");
-            if (writer == null) throw new ArgumentNullException("writer");
+            if (context == null) throw new ArgumentNullException(nameof(context));
+            if (writer == null) throw new ArgumentNullException(nameof(writer));
 
             writer.WriteStartObject();
             ExportMembers(context, (ExpandoObject) value, writer);

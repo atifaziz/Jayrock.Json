@@ -105,7 +105,7 @@ namespace Jayrock.Json
 
         public sealed override void WriteString(char[] chars, int offset, int length)
         {
-            if (chars == null) throw new ArgumentNullException("chars");
+            if (chars == null) throw new ArgumentNullException(nameof(chars));
             WriteStringOrChars(null, chars, offset, length);
         }
 

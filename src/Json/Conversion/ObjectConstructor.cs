@@ -42,7 +42,7 @@ namespace Jayrock.Json.Conversion
 
         public ObjectConstructor(Type type, ConstructorInfo[] ctors)
         {
-            if (type == null) throw new ArgumentNullException("type");
+            if (type == null) throw new ArgumentNullException(nameof(type));
 
             if (ctors == null)
             {
@@ -53,7 +53,7 @@ namespace Jayrock.Json.Conversion
                 foreach (ConstructorInfo ctor in ctors)
                 {
                     if (ctor.DeclaringType != type)
-                        throw new ArgumentException(null, "ctors");
+                        throw new ArgumentException(null, nameof(ctors));
                 }
 
                 ctors = (ConstructorInfo[]) ctors.Clone();
@@ -67,7 +67,7 @@ namespace Jayrock.Json.Conversion
                 // show up in reflection.
                 //
 
-                throw new ArgumentException(null, "ctors");
+                throw new ArgumentException(null, nameof(ctors));
             }
 
             _type = type;
@@ -77,16 +77,16 @@ namespace Jayrock.Json.Conversion
 
         public ObjectConstructionResult CreateObject(ImportContext context, JsonReader reader)
         {
-            if (context == null) throw new ArgumentNullException("context");
-            if (reader == null) throw new ArgumentNullException("reader");
+            if (context == null) throw new ArgumentNullException(nameof(context));
+            if (reader == null) throw new ArgumentNullException(nameof(reader));
 
             return CreateObject(context, JsonBuffer.From(reader).GetMembersArray());
         }
 
         public ObjectConstructionResult CreateObject(ImportContext context, NamedJsonBuffer[] members)
         {
-            if (context == null) throw new ArgumentNullException("context");
-            if (members == null) throw new ArgumentNullException("members");
+            if (context == null) throw new ArgumentNullException(nameof(context));
+            if (members == null) throw new ArgumentNullException(nameof(members));
 
             if (_ctors.Length > 0)
             {
@@ -181,9 +181,9 @@ namespace Jayrock.Json.Conversion
 
         private static int[] Bind(ImportContext context, ParameterInfo[] parameters, NamedJsonBuffer[] members)
         {
-            if (context == null) throw new ArgumentNullException("context");
-            if (parameters == null) throw new ArgumentNullException("parameters");
-            if (members == null) throw new ArgumentNullException("members");
+            if (context == null) throw new ArgumentNullException(nameof(context));
+            if (parameters == null) throw new ArgumentNullException(nameof(parameters));
+            if (members == null) throw new ArgumentNullException(nameof(members));
 
             int[] bindings = new int[members.Length];
 
@@ -192,7 +192,7 @@ namespace Jayrock.Json.Conversion
                 ParameterInfo parameter = parameters[i];
 
                 if (parameter == null)
-                    throw new ArgumentException(null, "parameters");
+                    throw new ArgumentException(null, nameof(parameters));
 
                 int mi = FindMember(members, parameter.Name);
 
@@ -210,7 +210,7 @@ namespace Jayrock.Json.Conversion
                 NamedJsonBuffer member = members[i];
 
                 if (member.IsEmpty)
-                    throw new ArgumentException(null, "members");
+                    throw new ArgumentException(null, nameof(members));
 
                 if (0 == CultureInfo.InvariantCulture.CompareInfo.Compare(name, member.Name, CompareOptions.IgnoreCase))
                     return i;

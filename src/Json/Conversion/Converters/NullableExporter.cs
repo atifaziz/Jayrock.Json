@@ -31,7 +31,7 @@ namespace Jayrock.Json.Conversion.Converters
         public NullableExporter(Type inputType) : base(inputType)
         {
             if (!Reflector.IsConstructionOfNullable(inputType))
-                throw new ArgumentException(null, "inputType");
+                throw new ArgumentException(null, nameof(inputType));
         }
 
         protected override void ExportValue(ExportContext context, object value, JsonWriter writer)

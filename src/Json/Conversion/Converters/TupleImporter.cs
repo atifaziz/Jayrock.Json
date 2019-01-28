@@ -39,7 +39,7 @@ namespace Jayrock.Json.Conversion.Converters
             base(outputType)
         {
             if (!Reflector.IsTupleFamily(outputType))
-                throw new ArgumentException(null, "outputType");
+                throw new ArgumentException(null, nameof(outputType));
             _importer = CompileItemsImporter(outputType);
             _single = outputType.GetGenericArguments().Length == 1;
         }

@@ -52,7 +52,7 @@ namespace Jayrock.Json.Conversion
         protected virtual void ApplyCustomization(PropertyDescriptor property)
         {
             if (property == null)
-                throw new ArgumentNullException("property");
+                throw new ArgumentNullException(nameof(property));
 
             if (Name.Length == 0)
                 return;

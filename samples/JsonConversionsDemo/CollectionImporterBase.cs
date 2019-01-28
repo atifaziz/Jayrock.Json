@@ -21,7 +21,7 @@ namespace JsonConversionsDemo
         public CollectionImporterBase(Type outputType, Type elementType) :
             base(outputType)
         {
-            if (elementType == null) throw new ArgumentNullException("elementType");
+            if (elementType == null) throw new ArgumentNullException(nameof(elementType));
 
             _elementType = elementType;
         }
@@ -33,8 +33,8 @@ namespace JsonConversionsDemo
 
         protected override object ImportFromArray(ImportContext context, JsonReader reader)
         {
-            if (context == null) throw new ArgumentNullException("context");
-            if (reader == null) throw new ArgumentNullException("reader");
+            if (context == null) throw new ArgumentNullException(nameof(context));
+            if (reader == null) throw new ArgumentNullException(nameof(reader));
 
             object collection = CreateCollection();
 

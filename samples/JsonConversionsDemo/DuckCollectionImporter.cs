@@ -32,7 +32,7 @@ namespace JsonConversionsDemo
             }
             catch (ArgumentException e)
             {
-                throw new ArgumentException(e.Message, "outputType", e);
+                throw new ArgumentException(e.Message, nameof(outputType), e);
             }
         }
 
@@ -54,9 +54,9 @@ namespace JsonConversionsDemo
 
         protected override void ImportElements(object collection, ImportContext context, JsonReader reader)
         {
-            if (collection == null) throw new ArgumentNullException("collection");
-            if (context == null) throw new ArgumentNullException("context");
-            if (reader == null) throw new ArgumentNullException("reader");
+            if (collection == null) throw new ArgumentNullException(nameof(collection));
+            if (context == null) throw new ArgumentNullException(nameof(context));
+            if (reader == null) throw new ArgumentNullException(nameof(reader));
 
             Action<Element> adder = DuckCollectionReflector.GetAdder<Element>(collection);
 
@@ -71,9 +71,9 @@ namespace JsonConversionsDemo
 
         protected override void InvokeAdd(object collection, object[] args)
         {
-            if (collection == null) throw new ArgumentNullException("collection");
-            if (args == null) throw new ArgumentNullException("args");
-            if (args.Length != 1) throw new ArgumentException(null, "args");
+            if (collection == null) throw new ArgumentNullException(nameof(collection));
+            if (args == null) throw new ArgumentNullException(nameof(args));
+            if (args.Length != 1) throw new ArgumentException(null, nameof(args));
 
             //
             // NOTE! This implementation is horribly slow.

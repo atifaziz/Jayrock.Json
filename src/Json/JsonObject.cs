@@ -232,7 +232,7 @@ namespace Jayrock.Json
         public virtual void Accumulate(string name, object value)
         {
             if (name == null)
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             object current = InnerHashtable[name];
 
@@ -266,7 +266,7 @@ namespace Jayrock.Json
         public virtual void Add(string name, object value)
         {
             if (name == null)
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             Dictionary.Add(name, value);
         }
@@ -279,7 +279,7 @@ namespace Jayrock.Json
         public virtual void Put(string name, object value)
         {
             if (name == null)
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             Dictionary[name] = value;
         }
@@ -287,7 +287,7 @@ namespace Jayrock.Json
         public virtual bool Contains(string name)
         {
             if (name == null)
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             return Dictionary.Contains(name);
         }
@@ -295,7 +295,7 @@ namespace Jayrock.Json
         public virtual void Remove(string name)
         {
             if (name == null)
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             Dictionary.Remove(name);
         }
@@ -326,7 +326,7 @@ namespace Jayrock.Json
         public virtual void ListNames(IList list)
         {
             if (list == null)
-                throw new ArgumentNullException("list");
+                throw new ArgumentNullException(nameof(list));
 
             foreach (string name in NameIndexList)
                 list.Add(name);
@@ -356,10 +356,10 @@ namespace Jayrock.Json
         protected virtual void Export(ExportContext context, JsonWriter writer)
         {
             if (context == null)
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
 
             if (writer == null)
-                throw new ArgumentNullException("writer");
+                throw new ArgumentNullException(nameof(writer));
 
             writer.WriteStartObject();
 
@@ -390,10 +390,10 @@ namespace Jayrock.Json
         protected virtual void Import(ImportContext context, JsonReader reader)
         {
             if (context == null)
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
 
             if (reader == null)
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
 
             // FIXME: Consider making this method exception-safe.
             // Right now this is a problem because of reliance on
@@ -414,10 +414,10 @@ namespace Jayrock.Json
             base.OnValidate(key, value);
 
             if (key == null)
-                throw new ArgumentNullException("key");
+                throw new ArgumentNullException(nameof(key));
 
             if (!(key is string))
-                throw new ArgumentException(string.Format("The key cannot be of the supplied type {0}. It must be typed System.String.", key.GetType().FullName), "key");
+                throw new ArgumentException(string.Format("The key cannot be of the supplied type {0}. It must be typed System.String.", key.GetType().FullName), nameof(key));
         }
 
         protected override void OnInsert(object key, object value)
@@ -536,11 +536,11 @@ namespace Jayrock.Json
         void ICollection<KeyValuePair<string, object>>.CopyTo(KeyValuePair<string, object>[] array, int arrayIndex)
         {
             if (array == null)
-                throw new ArgumentNullException("array");
+                throw new ArgumentNullException(nameof(array));
             if (arrayIndex < 0)
-                throw new ArgumentOutOfRangeException("arrayIndex", arrayIndex, null);
+                throw new ArgumentOutOfRangeException(nameof(arrayIndex), arrayIndex, null);
             if (Count > array.Length - arrayIndex)
-                throw new ArgumentException(null, "arrayIndex");
+                throw new ArgumentException(null, nameof(arrayIndex));
 
             int i = arrayIndex;
             foreach (JsonMember member in this)

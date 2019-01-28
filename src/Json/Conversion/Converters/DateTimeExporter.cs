@@ -36,16 +36,16 @@ namespace Jayrock.Json.Conversion.Converters
 
         protected override void ExportValue(ExportContext context, object value, JsonWriter writer)
         {
-            if (context == null) throw new ArgumentNullException("context");
-            if (value == null) throw new ArgumentNullException("value");
-            if (writer == null) throw new ArgumentNullException("writer");
+            if (context == null) throw new ArgumentNullException(nameof(context));
+            if (value == null) throw new ArgumentNullException(nameof(value));
+            if (writer == null) throw new ArgumentNullException(nameof(writer));
 
             ExportTime((DateTime) value, writer);
         }
 
         protected virtual void ExportTime(DateTime time, JsonWriter writer)
         {
-            if (writer == null) throw new ArgumentNullException("writer");
+            if (writer == null) throw new ArgumentNullException(nameof(writer));
 
             writer.WriteString(FormatDateTime(time));
         }

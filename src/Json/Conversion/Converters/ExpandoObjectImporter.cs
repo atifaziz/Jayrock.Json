@@ -35,8 +35,8 @@ namespace Jayrock.Json.Conversion.Converters
 
         protected override object ImportFromObject(ImportContext context, JsonReader reader)
         {
-            if (context == null) throw new ArgumentNullException("context");
-            if (reader == null) throw new ArgumentNullException("reader");
+            if (context == null) throw new ArgumentNullException(nameof(context));
+            if (reader == null) throw new ArgumentNullException(nameof(reader));
 
             reader.ReadToken(JsonTokenClass.Object);
             var expando = (IDictionary<string, object>) new ExpandoObject();

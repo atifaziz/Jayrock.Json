@@ -79,7 +79,7 @@ namespace Jayrock.Json
         public FreeJsonMemberReadingHelper(JsonReader reader)
         {
             if (reader == null)
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
 
             JsonTokenClass clazz = reader.TokenClass;
 
@@ -87,7 +87,7 @@ namespace Jayrock.Json
                 && clazz != JsonTokenClass.Object
                 && clazz != JsonTokenClass.Member)
             {
-                throw new ArgumentException(null, "reader");
+                throw new ArgumentException(null, nameof(reader));
             }
 
             _reader = reader;

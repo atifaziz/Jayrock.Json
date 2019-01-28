@@ -213,7 +213,7 @@ namespace Jayrock.Json
         public void WriteNumber(float value)
         {
             if (float.IsNaN(value))
-                throw new ArgumentOutOfRangeException("value");
+                throw new ArgumentOutOfRangeException(nameof(value));
 
             WriteNumber(value.ToString(CultureInfo.InvariantCulture));
         }
@@ -225,7 +225,7 @@ namespace Jayrock.Json
         public void WriteNumber(double value)
         {
             if (double.IsNaN(value))
-                throw new ArgumentOutOfRangeException("value");
+                throw new ArgumentOutOfRangeException(nameof(value));
 
             WriteNumber(value.ToString(CultureInfo.InvariantCulture));
         }
@@ -294,7 +294,7 @@ namespace Jayrock.Json
         public virtual void WriteFromReader(JsonReader reader)
         {
             if (reader == null)
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
 
             if (!reader.MoveToContent())
                 return;

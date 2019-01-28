@@ -33,10 +33,10 @@ namespace Jayrock.Json.Conversion.Converters
             base(type)
         {
             if (!type.IsEnum)
-                throw new ArgumentException(string.Format("{0} does not inherit from System.Enum.", type), "type");
+                throw new ArgumentException(string.Format("{0} does not inherit from System.Enum.", type), nameof(type));
 
             if (type.IsDefined(typeof(FlagsAttribute), true))
-                throw new ArgumentException(string.Format("{0} is a bit field, which are not currently supported.", type), "type");
+                throw new ArgumentException(string.Format("{0} is a bit field, which are not currently supported.", type), nameof(type));
         }
 
         protected override object ImportFromString(ImportContext context, JsonReader reader)

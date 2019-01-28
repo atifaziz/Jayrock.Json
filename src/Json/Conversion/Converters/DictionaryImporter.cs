@@ -48,10 +48,10 @@ namespace Jayrock.Json.Conversion.Converters
         protected override object ImportFromObject(ImportContext context, JsonReader reader)
         {
             if (context == null)
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
 
             if (reader == null)
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
 
             IDictionary<TKey, TValue> dictionary = CreateDictionary();
             bool isKeyOfString = IsKeyOfString;

@@ -35,7 +35,7 @@ namespace JsonConversionsDemo
 
             public Builder(Type type)
             {
-                if (type == null) throw new ArgumentNullException("type");
+                if (type == null) throw new ArgumentNullException(nameof(type));
 
                 _type = type;
                 _members = new List<MemberInfo>();
@@ -88,7 +88,7 @@ namespace JsonConversionsDemo
 
             public Builder Register(ExportContext context)
             {
-                if (context == null) throw new ArgumentNullException("context");
+                if (context == null) throw new ArgumentNullException(nameof(context));
 
                 context.Register(new ComponentExporter(_type, ToCustomType()));
                 return this;
@@ -96,7 +96,7 @@ namespace JsonConversionsDemo
 
             public Builder Register(ImportContext context)
             {
-                if (context == null) throw new ArgumentNullException("context");
+                if (context == null) throw new ArgumentNullException(nameof(context));
 
                 context.Register(new ComponentImporter(_type, ToCustomType()));
                 return this;

@@ -39,7 +39,7 @@ namespace Jayrock.Json.Conversion
         public virtual void Export(object value, JsonWriter writer)
         {
             if (writer == null)
-                throw new ArgumentNullException("writer");
+                throw new ArgumentNullException(nameof(writer));
 
             if (JsonNull.LogicallyEquals(value))
             {
@@ -59,7 +59,7 @@ namespace Jayrock.Json.Conversion
         public virtual void Register(IExporter exporter)
         {
             if (exporter == null)
-                throw new ArgumentNullException("exporter");
+                throw new ArgumentNullException(nameof(exporter));
 
             Exporters.Put(exporter);
         }
@@ -67,7 +67,7 @@ namespace Jayrock.Json.Conversion
         public virtual IExporter FindExporter(Type type)
         {
             if (type == null)
-                throw new ArgumentNullException("type");
+                throw new ArgumentNullException(nameof(type));
 
             IExporter exporter = Exporters[type];
 

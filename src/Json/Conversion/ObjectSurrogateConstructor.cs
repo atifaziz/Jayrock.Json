@@ -31,14 +31,14 @@ namespace Jayrock.Json.Conversion
         public ObjectSurrogateConstructor(Type surrogateType)
         {
             if (surrogateType == null)
-                throw new ArgumentNullException("surrogateType");
+                throw new ArgumentNullException(nameof(surrogateType));
 
             if (!typeof(IObjectSurrogateConstructor).IsAssignableFrom(surrogateType))
             {
                 throw new ArgumentException(string.Format(
                     "Surrogate type must implement {0} whereas {1} does not.",
                         typeof (IObjectSurrogateConstructor), surrogateType),
-                    "surrogateType");
+                    nameof(surrogateType));
             }
 
             _surrogateType = surrogateType;
@@ -49,9 +49,9 @@ namespace Jayrock.Json.Conversion
         public virtual ObjectConstructionResult CreateObject(ImportContext context, JsonReader reader)
         {
             if (context == null)
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
             if (reader == null)
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
 
             IObjectSurrogateConstructor ctor = (IObjectSurrogateConstructor) context.Import(_surrogateType, reader);
             return ctor.CreateObject(context);

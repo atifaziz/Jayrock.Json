@@ -54,7 +54,7 @@ namespace Jayrock.Json.Conversion
         public static void Export(object value, JsonWriter writer)
         {
             if (writer == null)
-                throw new ArgumentNullException("writer");
+                throw new ArgumentNullException(nameof(writer));
 
             CreateExportContext().Export(value, writer);
         }
@@ -62,7 +62,7 @@ namespace Jayrock.Json.Conversion
         public static void Export(object value, TextWriter writer)
         {
             if (writer == null)
-                throw new ArgumentNullException("writer");
+                throw new ArgumentNullException(nameof(writer));
 
             Export(value, JsonText.CreateWriter(writer));
         }
@@ -70,7 +70,7 @@ namespace Jayrock.Json.Conversion
         public static void Export(object value, StringBuilder sb)
         {
             if (sb == null)
-                throw new ArgumentNullException("sb");
+                throw new ArgumentNullException(nameof(sb));
 
             Export(value, new StringWriter(sb));
         }
@@ -110,10 +110,10 @@ namespace Jayrock.Json.Conversion
         public static object Import(Type type, JsonReader reader)
         {
             if (type == null)
-                throw new ArgumentNullException("type");
+                throw new ArgumentNullException(nameof(type));
 
             if (reader == null)
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
 
             return CreateImportContext().Import(type, reader);
         }
@@ -154,7 +154,7 @@ namespace Jayrock.Json.Conversion
             set
             {
                 if (value == null)
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
 
                 _currentExportContextFactoryHandler = value;
             }
@@ -167,7 +167,7 @@ namespace Jayrock.Json.Conversion
             set
             {
                 if (value == null)
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
 
                 _currentImportContextFactoryHandler = value;
             }

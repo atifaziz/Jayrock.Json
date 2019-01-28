@@ -33,10 +33,10 @@ namespace Jayrock.Json.Conversion.Converters
         protected override object ImportFromObject(ImportContext context, JsonReader reader)
         {
             if (context == null)
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
 
             if (reader == null)
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
 
             //
             // Reader must be sitting on an object.
@@ -93,7 +93,7 @@ namespace Jayrock.Json.Conversion.Converters
         protected virtual string GetValueAsString(JsonReader reader)
         {
             if (reader == null)
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
 
             if (reader.TokenClass == JsonTokenClass.String ||
                 reader.TokenClass == JsonTokenClass.Boolean ||

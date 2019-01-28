@@ -36,8 +36,8 @@ namespace Jayrock.Json.Conversion
 
         public ObjectConstructionResult(object obj, JsonReader tail)
         {
-            if (obj == null) throw new ArgumentNullException("obj");
-            if (tail == null) throw new ArgumentNullException("tail");
+            if (obj == null) throw new ArgumentNullException(nameof(obj));
+            if (tail == null) throw new ArgumentNullException(nameof(tail));
 
             _obj = obj;
             _tail = tail;

@@ -56,7 +56,7 @@ namespace Jayrock.Json
         public JsonTextReader(TextReader reader)
         {
             if (reader == null)
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
 
             _reader = new BufferedCharReader(reader);
             Push(ParseMethod);

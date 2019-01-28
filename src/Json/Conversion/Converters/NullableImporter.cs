@@ -34,7 +34,7 @@ namespace Jayrock.Json.Conversion.Converters
             base(outputType)
         {
             if (!Reflector.IsConstructionOfNullable(outputType))
-                throw new ArgumentException(null, "outputType");
+                throw new ArgumentException(null, nameof(outputType));
             _underlyingType =
                 Nullable.GetUnderlyingType(outputType);
                 // MONO: outputType.GetGenericArguments()[0];

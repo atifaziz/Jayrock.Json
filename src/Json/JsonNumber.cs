@@ -317,12 +317,12 @@ namespace Jayrock.Json
 
         public static bool IsValid(string text, NumberStyles styles)
         {
-            if (text == null) throw new ArgumentNullException("text");
+            if (text == null) throw new ArgumentNullException(nameof(text));
 
             if (styles >= 0 && (int) styles < _grammars.Length)
                 return _grammars[(int) styles].IsMatch(text);
 
-            throw new ArgumentException(null, "styles");
+            throw new ArgumentException(null, nameof(styles));
         }
 
         // WARNING! There be dragons!

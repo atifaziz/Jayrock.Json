@@ -28,8 +28,8 @@ namespace Jayrock.Json.Conversion
 
         public virtual bool Import(ImportContext context, string name, JsonReader reader)
         {
-            if (context == null) throw new ArgumentNullException("context");
-            if (reader == null) throw new ArgumentNullException("reader");
+            if (context == null) throw new ArgumentNullException(nameof(context));
+            if (reader == null) throw new ArgumentNullException(nameof(reader));
 
             JsonBufferWriter tailw = _tailw;
             if (tailw == null)
@@ -44,7 +44,7 @@ namespace Jayrock.Json.Conversion
 
         public virtual ObjectConstructionResult CreateObject(ImportContext context)
         {
-            if (context == null) throw new ArgumentNullException("context");
+            if (context == null) throw new ArgumentNullException(nameof(context));
 
             JsonBufferWriter tailw = _tailw;
             _tailw = null;

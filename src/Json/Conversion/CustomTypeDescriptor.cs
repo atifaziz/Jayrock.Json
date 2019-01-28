@@ -64,7 +64,7 @@ namespace Jayrock.Json.Conversion
         private CustomTypeDescriptor(Type type, bool isAnonymousClass, MemberInfo[] members, string[] names)
         {
             if (type == null)
-                throw new ArgumentNullException("type");
+                throw new ArgumentNullException(nameof(type));
 
             // TODO Remove dependency on JsonIgnore & JsonExport
             // This class should not have any JSON specifics.
@@ -121,7 +121,7 @@ namespace Jayrock.Json.Conversion
                     //
 
                     if (field.DeclaringType != type && field.ReflectedType != type)
-                        throw new ArgumentException(null, "members");
+                        throw new ArgumentException(null, nameof(members));
 
                     writable = !field.IsInitOnly;
                     if ((writable || immutable) && !field.IsLiteral)
@@ -134,7 +134,7 @@ namespace Jayrock.Json.Conversion
                     PropertyInfo property = member as PropertyInfo;
 
                     if (property == null)
-                        throw new ArgumentException(null, "members");
+                        throw new ArgumentException(null, nameof(members));
 
                     //
                     // Add public properties that can be read and modified.
@@ -148,7 +148,7 @@ namespace Jayrock.Json.Conversion
                     //
 
                     if (property.DeclaringType != type && property.ReflectedType != type)
-                        throw new ArgumentException(null, "members");
+                        throw new ArgumentException(null, nameof(members));
 
                     writable = property.CanWrite;
 
@@ -194,7 +194,7 @@ namespace Jayrock.Json.Conversion
         public static CustomTypeDescriptor TryCreateForAnonymousClass(Type type)
         {
             if (type == null)
-                throw new ArgumentNullException("type");
+                throw new ArgumentNullException(nameof(type));
 
             bool like = LikeAnonymousClass(type);
             return like ? new CustomTypeDescriptor(type, like, null, null) : null;
@@ -203,7 +203,7 @@ namespace Jayrock.Json.Conversion
         public static PropertyDescriptor CreateProperty(FieldInfo field)
         {
             if (field == null)
-                throw new ArgumentNullException("field");
+                throw new ArgumentNullException(nameof(field));
 
             return new TypeFieldDescriptor(field, field.Name);
         }
@@ -211,7 +211,7 @@ namespace Jayrock.Json.Conversion
         public static PropertyDescriptor CreateProperty(PropertyInfo property)
         {
             if (property == null)
-                throw new ArgumentNullException("property");
+                throw new ArgumentNullException(nameof(property));
 
             return new TypePropertyDescriptor(property, property.Name);
         }
@@ -385,10 +385,10 @@ namespace Jayrock.Json.Conversion
             void IPropertyCustomization.SetName(string name)
             {
                 if (name == null)
-                    throw new ArgumentNullException("name");
+                    throw new ArgumentNullException(nameof(name));
 
                 if (name.Length == 0)
-                    throw new ArgumentException(null, "name");
+                    throw new ArgumentException(null, nameof(name));
 
                 _customName = name;
                 _customNameHashCode = name.GetHashCode();
@@ -397,7 +397,7 @@ namespace Jayrock.Json.Conversion
             void IPropertyCustomization.SetType(Type type)
             {
                 if (type == null)
-                    throw new ArgumentNullException("type");
+                    throw new ArgumentNullException(nameof(type));
 
                 _propertyType = type;
             }
@@ -405,7 +405,7 @@ namespace Jayrock.Json.Conversion
             IPropertyImpl IPropertyCustomization.OverrideImpl(IPropertyImpl impl)
             {
                 if (impl == null)
-                    throw new ArgumentNullException("impl");
+                    throw new ArgumentNullException(nameof(impl));
 
                 IPropertyImpl baseImpl = _impl;
                 _impl = impl;

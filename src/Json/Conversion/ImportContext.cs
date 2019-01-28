@@ -45,10 +45,10 @@ namespace Jayrock.Json.Conversion
         public virtual object Import(Type type, JsonReader reader)
         {
             if (type == null)
-                throw new ArgumentNullException("type");
+                throw new ArgumentNullException(nameof(type));
 
             if (reader == null)
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
 
             IImporter importer = FindImporter(type);
 
@@ -67,7 +67,7 @@ namespace Jayrock.Json.Conversion
         public virtual void Register(IImporter importer)
         {
             if (importer == null)
-                throw new ArgumentNullException("importer");
+                throw new ArgumentNullException(nameof(importer));
 
             Importers.Put(importer);
         }
@@ -75,7 +75,7 @@ namespace Jayrock.Json.Conversion
         public virtual IImporter FindImporter(Type type)
         {
             if (type == null)
-                throw new ArgumentNullException("type");
+                throw new ArgumentNullException(nameof(type));
 
             IImporter importer = Importers[type];
 

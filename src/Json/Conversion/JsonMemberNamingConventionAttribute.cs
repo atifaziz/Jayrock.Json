@@ -79,7 +79,7 @@ namespace Jayrock.Json.Conversion
         void IPropertyDescriptorCustomization.Apply(PropertyDescriptor property)
         {
             if (property == null)
-                throw new ArgumentNullException("property");
+                throw new ArgumentNullException(nameof(property));
 
             NamingConvention naming = Convention;
             UnderscoreConvention underscoring = Underscores;

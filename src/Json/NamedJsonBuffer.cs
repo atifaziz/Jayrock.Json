@@ -35,10 +35,10 @@ namespace Jayrock.Json
         public NamedJsonBuffer(string name, JsonBuffer buffer)
         {
             if (name == null)
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             if (buffer.IsEmpty)
-                throw new ArgumentException(null, "buffer");
+                throw new ArgumentException(null, nameof(buffer));
 
             _name = Mask.NullString(name);
             _buffer = buffer;
@@ -71,7 +71,7 @@ namespace Jayrock.Json
         public static JsonBuffer ToObject(params NamedJsonBuffer[] members)
         {
             if (members == null)
-                throw new ArgumentNullException("members");
+                throw new ArgumentNullException(nameof(members));
 
             if (members.Length == 0)
                 return StockJsonBuffers.EmptyObject;

@@ -39,7 +39,7 @@ namespace Jayrock.Json
         public JsonBufferWriter(int initialCapacity)
         {
             if (initialCapacity < 0)
-                throw new ArgumentOutOfRangeException("initialCapacity", initialCapacity, null);
+                throw new ArgumentOutOfRangeException(nameof(initialCapacity), initialCapacity, null);
 
             _storage = new JsonBufferStorage(initialCapacity);
         }

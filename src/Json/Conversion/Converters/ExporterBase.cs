@@ -31,7 +31,7 @@ namespace Jayrock.Json.Conversion.Converters
         protected ExporterBase(Type inputType)
         {
             if (inputType == null)
-                throw new ArgumentNullException("inputType");
+                throw new ArgumentNullException(nameof(inputType));
 
             _inputType = inputType;
         }
@@ -44,10 +44,10 @@ namespace Jayrock.Json.Conversion.Converters
         public virtual void Export(ExportContext context, object value, JsonWriter writer)
         {
             if (context == null)
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
 
             if (writer == null)
-                throw new ArgumentNullException("writer");
+                throw new ArgumentNullException(nameof(writer));
 
             if (JsonNull.LogicallyEquals(value))
                 writer.WriteNull();

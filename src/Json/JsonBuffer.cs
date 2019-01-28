@@ -81,7 +81,7 @@ namespace Jayrock.Json
                 return _null;
 
             if (!clazz.IsScalar)
-                throw new ArgumentException("Token must represent a JSON scalar value or null.", "token");
+                throw new ArgumentException("Token must represent a JSON scalar value or null.", nameof(token));
 
             if (clazz == JsonTokenClass.Boolean)
                 return token.Equals(JsonToken.True()) ? _true : _false;
@@ -94,7 +94,7 @@ namespace Jayrock.Json
         public static JsonBuffer From(JsonReader reader)
         {
             if (reader == null)
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
 
             JsonBufferReader bufferReader = reader as JsonBufferReader;
             if (bufferReader != null)
@@ -134,7 +134,7 @@ namespace Jayrock.Json
             get
             {
                 if (index < 0 || index >= Length)
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
 
                 return _storage[_start + index];
             }
@@ -262,7 +262,7 @@ namespace Jayrock.Json
         public int GetArray(JsonBuffer[] values, int index, int count)
         {
             if (index < 0)
-                throw new ArgumentOutOfRangeException("index", index, null);
+                throw new ArgumentOutOfRangeException(nameof(index), index, null);
 
             JsonBufferReader reader = CreateReader();
 
@@ -304,7 +304,7 @@ namespace Jayrock.Json
         public int GetMembers(NamedJsonBuffer[] members, int index, int count)
         {
             if (index < 0)
-                throw new ArgumentOutOfRangeException("index", index, null);
+                throw new ArgumentOutOfRangeException(nameof(index), index, null);
 
             JsonBufferReader reader = CreateReader();
 

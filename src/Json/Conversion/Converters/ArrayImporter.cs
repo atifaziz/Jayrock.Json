@@ -40,7 +40,7 @@ namespace Jayrock.Json.Conversion.Converters
                 return typeof(object[]);
 
             if (!type.IsArray)
-                throw new ArgumentException(string.Format("{0} is not an array.", type.FullName), "type");
+                throw new ArgumentException(string.Format("{0} is not an array.", type.FullName), nameof(type));
 
             if (type.GetArrayRank() != 1)
                 throw new ArgumentException(string.Format("{0} is not one-dimension array. Multi-dimensional arrays are not supported.", type.FullName), "arrayType");

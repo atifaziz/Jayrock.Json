@@ -18,13 +18,13 @@ namespace JsonConversionsDemo
     {
         public static Type InferElementType(Type type)
         {
-            if (type == null) throw new ArgumentNullException("type");
+            if (type == null) throw new ArgumentNullException(nameof(type));
 
             MemberInfo[] indexers = type.FindMembers(MemberTypes.Property,
                 BindingFlags.Instance | BindingFlags.Public, IsIndexer, null);
 
             if (indexers.Length == 0)
-                throw new ArgumentException(string.Format("{0} does not appear to have an indexer property.", type.FullName), "type");
+                throw new ArgumentException(string.Format("{0} does not appear to have an indexer property.", type.FullName), nameof(type));
 
             return ((PropertyInfo) indexers[0]).PropertyType;
         }
@@ -47,7 +47,7 @@ namespace JsonConversionsDemo
 
         public static MethodInfo FindAddMethod(Type type, Type elementType)
         {
-            if (type == null) throw new ArgumentNullException("type");
+            if (type == null) throw new ArgumentNullException(nameof(type));
 
             if (elementType == null)
                 elementType = InferElementType(type);
@@ -69,7 +69,7 @@ namespace JsonConversionsDemo
             {
                 throw new ArgumentException(string.Format(
                     "{0} has no public Add method that takes a single {1} argument.",
-                    type.FullName, elementType.FullName), "type");
+                    type.FullName, elementType.FullName), nameof(type));
             }
 
             return adder;
@@ -83,7 +83,7 @@ namespace JsonConversionsDemo
             {
                 throw new ArgumentException(string.Format(
                     "{0} has no public Add method that takes a single {1} argument.",
-                    collection.GetType().FullName, typeof(Element).FullName), "collection");
+                    collection.GetType().FullName, typeof(Element).FullName), nameof(collection));
             }
 
             return adder;
@@ -91,7 +91,7 @@ namespace JsonConversionsDemo
 
         public static Action<Element> FindAddder<Element>(object collection)
         {
-            if (collection == null) throw new ArgumentNullException("collection");
+            if (collection == null) throw new ArgumentNullException(nameof(collection));
 
             MethodInfo adder = FindAddMethod(collection.GetType(), typeof(Element));
 

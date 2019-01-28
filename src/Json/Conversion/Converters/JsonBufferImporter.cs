@@ -34,9 +34,9 @@ namespace Jayrock.Json.Conversion.Converters
         public virtual object Import(ImportContext context, JsonReader reader)
         {
             if (context == null)
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
             if (reader == null)
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
 
             return JsonBuffer.From(reader);
         }

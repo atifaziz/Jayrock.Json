@@ -57,8 +57,8 @@ namespace Jayrock.Json.Conversion.Converters
 
         protected override object ImportFromArray(ImportContext context, JsonReader reader)
         {
-            if (context == null) throw new ArgumentNullException("context");
-            if (reader == null) throw new ArgumentNullException("reader");
+            if (context == null) throw new ArgumentNullException(nameof(context));
+            if (reader == null) throw new ArgumentNullException(nameof(reader));
 
             reader.Read();
             TCollection collection = new TCollection();

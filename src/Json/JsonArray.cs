@@ -197,10 +197,10 @@ namespace Jayrock.Json
         protected virtual void Export(ExportContext context, JsonWriter writer)
         {
             if (context == null)
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
 
             if (writer == null)
-                throw new ArgumentNullException("writer");
+                throw new ArgumentNullException(nameof(writer));
 
             writer.WriteStartArray();
 
@@ -223,10 +223,10 @@ namespace Jayrock.Json
         protected virtual void Import(ImportContext context, JsonReader reader)
         {
             if (context == null)
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
 
             if (reader == null)
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
 
             //
             // IMPORTANT! A new list is created and then committed to make

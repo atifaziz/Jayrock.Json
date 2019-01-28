@@ -61,7 +61,7 @@ namespace Jayrock.Json
 
         public static StringBuilder Enquote(char[] chars, int offset, int length, StringBuilder sb)
         {
-            if (chars == null) throw new ArgumentNullException("chars");
+            if (chars == null) throw new ArgumentNullException(nameof(chars));
             return EnquoteStringOrChars(null, chars, offset, length, sb);
         }
 
@@ -69,8 +69,8 @@ namespace Jayrock.Json
         {
             if (chars != null)
             {
-                if (offset < 0) throw new ArgumentOutOfRangeException("offset", offset, null);
-                if (length < 0) throw new ArgumentOutOfRangeException("length", offset, null);
+                if (offset < 0) throw new ArgumentOutOfRangeException(nameof(offset), offset, null);
+                if (length < 0) throw new ArgumentOutOfRangeException(nameof(length), offset, null);
             }
 
             if (sb == null)

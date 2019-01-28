@@ -67,7 +67,7 @@ namespace Jayrock.Json.Conversion
         void IPropertyDescriptorCustomization.Apply(PropertyDescriptor property)
         {
             if (property == null)
-                throw new ArgumentNullException("property");
+                throw new ArgumentNullException(nameof(property));
 
             if (Value == null)
                 return;
@@ -91,9 +91,9 @@ namespace Jayrock.Json.Conversion
 
             public void Export(ExportContext context, JsonWriter writer, object source)
             {
-                if (context == null) throw new ArgumentNullException("context");
-                if (writer == null) throw new ArgumentNullException("writer");
-                if (source == null) throw new ArgumentNullException("source");
+                if (context == null) throw new ArgumentNullException(nameof(context));
+                if (writer == null) throw new ArgumentNullException(nameof(writer));
+                if (source == null) throw new ArgumentNullException(nameof(source));
 
                 object value = _property.GetValue(source);
 

@@ -60,11 +60,11 @@ namespace Jayrock.Reflection
 
         internal static bool IsConstructionOfGenericTypeDefinition(Type type, Type genericTypeDefinition)
         {
-            if (type == null) throw new ArgumentNullException("type");
-            if (genericTypeDefinition == null) throw new ArgumentNullException("genericTypeDefinition");
+            if (type == null) throw new ArgumentNullException(nameof(type));
+            if (genericTypeDefinition == null) throw new ArgumentNullException(nameof(genericTypeDefinition));
 
             if (!genericTypeDefinition.IsGenericTypeDefinition)
-                throw new ArgumentException(string.Format("{0} is not a generic type definition.", genericTypeDefinition), "genericTypeDefinition");
+                throw new ArgumentException(string.Format("{0} is not a generic type definition.", genericTypeDefinition), nameof(genericTypeDefinition));
 
             return type.IsGenericType
                 && !type.IsGenericTypeDefinition
@@ -83,8 +83,8 @@ namespace Jayrock.Reflection
 
         internal static Type FindConstructionOfGenericInterfaceDefinition(Type type, Type genericTypeDefinition)
         {
-            if (type == null) throw new ArgumentNullException("type");
-            if (genericTypeDefinition == null) throw new ArgumentNullException("genericTypeDefinition");
+            if (type == null) throw new ArgumentNullException(nameof(type));
+            if (genericTypeDefinition == null) throw new ArgumentNullException(nameof(genericTypeDefinition));
 
             Type[] interfaces = type.FindInterfaces(new TypeFilter(IsConstructionOfGenericInterfaceDefinition), genericTypeDefinition);
             return interfaces.Length == 0 ? null : interfaces[0];
@@ -109,7 +109,7 @@ namespace Jayrock.Reflection
         public static bool IsTupleFamily(Type type)
         {
             if (type == null)
-                throw new ArgumentNullException("type");
+                throw new ArgumentNullException(nameof(type));
 
             if (!type.IsGenericType || type.IsGenericTypeDefinition)
                 return false;

@@ -20,9 +20,9 @@ namespace JsonConversionsDemo
 
         protected override void ImportElements(object collection, ImportContext context, JsonReader reader)
         {
-            if (collection == null) throw new ArgumentNullException("collection");
-            if (context == null) throw new ArgumentNullException("context");
-            if (reader == null) throw new ArgumentNullException("reader");
+            if (collection == null) throw new ArgumentNullException(nameof(collection));
+            if (context == null) throw new ArgumentNullException(nameof(context));
+            if (reader == null) throw new ArgumentNullException(nameof(reader));
 
             object[] args = null;
             while (reader.TokenClass != JsonTokenClass.EndArray)
