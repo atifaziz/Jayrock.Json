@@ -61,7 +61,7 @@ namespace Jayrock.Json.Conversion.Converters
             Assert.IsInstanceOf<ExpandoObject>((object) obj.obj);
             Assert.AreEqual(456, ((JsonNumber) obj.obj.x).ToInt32());
             Assert.AreEqual(789, ((JsonNumber) obj.obj.y).ToInt32());
-            Assert.IsTrue(typeof(IList<object>).IsAssignableFrom(((object)obj.arr).GetType()));
+            Assert.IsInstanceOf<IList<object>>((object)obj.arr);
             var arr = (IList<object>) obj.arr;
             Assert.AreEqual(123, ((JsonNumber) arr[0]).ToInt32());
             Assert.IsInstanceOf<ExpandoObject>(arr[1]);
