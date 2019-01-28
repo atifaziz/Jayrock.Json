@@ -39,9 +39,9 @@ namespace Jayrock.Json
     /// </summary>
     /// <remarks>
     /// <para>
-    /// Althought the collection should be considered unordered by the user,
+    /// Although the collection should be considered unordered by the user,
     /// the implementation does internally try to remember the order in which
-    /// the keys were added in order facilitate human-readability as in when
+    /// the keys were added in order facilitate human-readability, as in when
     /// an instance is rendered as text.</para>
     /// <para>
     /// Public Domain 2002 JSON.org, ported to C# by Are Bjolseth (teleplan.no)
