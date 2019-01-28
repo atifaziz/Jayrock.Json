@@ -526,8 +526,7 @@ namespace Jayrock.Json
 
         bool Contains(KeyValuePair<string, object> item)
         {
-            object value;
-            return ((IDictionary<string, object>) this).TryGetValue(item.Key, out value)
+            return ((IDictionary<string, object>) this).TryGetValue(item.Key, out var value)
                 && EqualityComparer<object>.Default.Equals(item.Value, value);
         }
 
