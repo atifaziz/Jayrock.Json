@@ -21,7 +21,7 @@ namespace Jayrock.Json.Conversion
     #region Imports
 
     using System;
-    using System.Collections;
+    using System.Collections.Generic;
     using System.ComponentModel.Design;
     using System.Diagnostics;
     using System.Globalization;
@@ -85,13 +85,13 @@ namespace Jayrock.Json.Conversion
                 // Filter out members marked with JsonIgnore attribute.
                 //
 
-                var memberList = new ArrayList(fields.Length + properties.Length);
+                var memberList = new List<MemberInfo>(fields.Length + properties.Length);
                 memberList.AddRange(fields);
                 memberList.AddRange(properties);
 
                 for (var i = 0; i < memberList.Count; i++)
                 {
-                    var member = (MemberInfo) memberList[i];
+                    var member = memberList[i];
 
                     if (!member.IsDefined(typeof(JsonIgnoreAttribute), true))
                         continue;
@@ -99,7 +99,7 @@ namespace Jayrock.Json.Conversion
                     memberList.RemoveAt(i--);
                 }
 
-                members = (MemberInfo[]) memberList.ToArray(typeof(MemberInfo));
+                members = memberList.ToArray();
             }
 
             var logicalProperties = new PropertyDescriptorCollection(null);
