@@ -46,11 +46,11 @@ namespace JsonConversionsDemo
     /// This is the generic version of <see cref="DuckCollectionImporter"/>.
     /// </summary>
 
-    public sealed class DuckCollectionImporter<Collection, Element> : DuckCollectionImporterBase
-        where Collection : new()
+    public sealed class DuckCollectionImporter<TCollection, TElement> : DuckCollectionImporterBase
+        where TCollection : new()
     {
         public DuckCollectionImporter() :
-            base(typeof(Collection), typeof(Element)) { }
+            base(typeof(TCollection), typeof(TElement)) { }
 
         protected override void ImportElements(object collection, ImportContext context, JsonReader reader)
         {
@@ -58,15 +58,15 @@ namespace JsonConversionsDemo
             if (context == null) throw new ArgumentNullException(nameof(context));
             if (reader == null) throw new ArgumentNullException(nameof(reader));
 
-            var adder = DuckCollectionReflector.GetAdder<Element>(collection);
+            var adder = DuckCollectionReflector.GetAdder<TElement>(collection);
 
             while (reader.TokenClass != JsonTokenClass.EndArray)
-                adder((Element) context.Import(typeof(Element), reader));
+                adder((TElement) context.Import(typeof(TElement), reader));
         }
 
         protected override object CreateCollection()
         {
-            return new Collection();
+            return new TCollection();
         }
 
         protected override void InvokeAdd(object collection, object[] args)
@@ -81,7 +81,7 @@ namespace JsonConversionsDemo
             // should never be needed for any practical reason.
             //
 
-            DuckCollectionReflector.GetAdder<Element>(collection)((Element) args[0]);
+            DuckCollectionReflector.GetAdder<TElement>(collection)((TElement) args[0]);
         }
     }
 }
