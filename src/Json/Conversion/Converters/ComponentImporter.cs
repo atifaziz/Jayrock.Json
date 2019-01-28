@@ -56,10 +56,7 @@ namespace Jayrock.Json.Conversion.Converters
             {
                 var sp = properties[i] as IServiceProvider;
 
-                if (sp == null)
-                    continue;
-
-                var importer = (IObjectMemberImporter) sp.GetService(typeof(IObjectMemberImporter));
+                var importer = (IObjectMemberImporter) sp?.GetService(typeof(IObjectMemberImporter));
 
                 if (importer == null)
                     continue;

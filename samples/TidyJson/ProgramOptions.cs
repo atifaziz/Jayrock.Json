@@ -91,8 +91,7 @@ namespace TidyJson
                         case "?":
                         case "help":
                         {
-                            if (Help != null)
-                                Help(this, EventArgs.Empty);
+                            Help?.Invoke(this, EventArgs.Empty);
                             break;
                         }
 

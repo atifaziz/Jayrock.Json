@@ -159,17 +159,14 @@ namespace Jayrock.Json.Conversion
                 }
             }
 
-            if (tailw != null)
-                tailw.WriteEndObject();
+            tailw?.WriteEndObject();
 
             if (argc != parameters.Length)
                 return null;
 
             var obj = ctor.Invoke(args);
 
-            var tail = tailw != null
-                            ? tailw.GetBuffer()
-                            : StockJsonBuffers.EmptyObject;
+            var tail = tailw?.GetBuffer() ?? StockJsonBuffers.EmptyObject;
 
             return new ObjectConstructionResult(obj, tail.CreateReader());
         }

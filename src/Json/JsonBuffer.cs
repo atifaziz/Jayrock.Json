@@ -281,7 +281,7 @@ namespace Jayrock.Json
 
         public int GetMembers(NamedJsonBuffer[] members)
         {
-            return GetMembers(members, 0, members != null ? members.Length : int.MaxValue);
+            return GetMembers(members, 0, members?.Length ?? int.MaxValue);
         }
 
         public int GetMembers(NamedJsonBuffer[] members, int index, int count)

@@ -109,7 +109,7 @@ namespace Jayrock.Json.Conversion
                             }
                             sb.Append('_');
                         }
-                        if (sb != null) sb.Append(ch);
+                        sb?.Append(ch);
                     }
                     return sb != null ? sb.ToString() : name;
                 default:

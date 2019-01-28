@@ -55,10 +55,7 @@ namespace Jayrock.Json.Conversion.Converters
             {
                 var sp = properties[i] as IServiceProvider;
 
-                if (sp == null)
-                    continue;
-
-                var exporter = (IObjectMemberExporter)sp.GetService(typeof(IObjectMemberExporter));
+                var exporter = (IObjectMemberExporter) sp?.GetService(typeof(IObjectMemberExporter));
 
                 if (exporter == null)
                     continue;
@@ -133,8 +130,7 @@ namespace Jayrock.Json.Conversion.Converters
                 }
                 finally
                 {
-                    if (tracker != null)
-                        tracker.Pop(value);
+                    tracker?.Pop(value);
                 }
             }
         }

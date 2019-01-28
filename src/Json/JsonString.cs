@@ -88,7 +88,7 @@ namespace Jayrock.Json
             for (var index = offset; index < end; index++)
             {
                 last = ch;
-                ch = chars != null ? chars[index] : str[index];
+                ch = chars?[index] ?? str[index];
                 Enquote(sb, last, ch);
             }
 

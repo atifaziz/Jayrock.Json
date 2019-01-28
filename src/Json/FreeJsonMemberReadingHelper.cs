@@ -223,9 +223,7 @@ namespace Jayrock.Json
                 // later when it is sought or as part of the tail.
                 //
 
-                var members = _members;
-                if (members == null)
-                    members = _members = new NamedJsonBufferList(4);
+                var members = _members ?? (_members = new NamedJsonBufferList(4));
                 members.Add(new NamedJsonBuffer(actualName, JsonBuffer.From(reader)));
             }
 
@@ -331,9 +329,8 @@ namespace Jayrock.Json
                             // object) value if not already acquired.
                             //
 
-                            var valueReader = _memberStructuredValueReader;
-                            if (valueReader == null)
-                                valueReader = _memberStructuredValueReader = value.CreateReader();
+                            var valueReader = _memberStructuredValueReader
+                                ?? (_memberStructuredValueReader = value.CreateReader());
 
                             //
                             // Serve tokens from the value reader until OEF.

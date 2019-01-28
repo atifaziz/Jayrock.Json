@@ -96,8 +96,7 @@ namespace Jayrock.Json
 
         public virtual object GetValue(int index, object defaultValue)
         {
-            var value = this[index];
-            return value != null ? value : defaultValue;
+            return this[index] ?? defaultValue;
         }
 
         public virtual bool GetBoolean(int index)

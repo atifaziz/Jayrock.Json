@@ -87,8 +87,8 @@ namespace Jayrock.Json
 
         public JsonObject(string[] keys, object[] values)
         {
-            var keyCount = keys == null ? 0 : keys.Length;
-            var valueCount = values == null ? 0 : values.Length;
+            var keyCount = keys?.Length ?? 0;
+            var valueCount = values?.Length ?? 0;
             var count = Math.Max(keyCount, valueCount);
 
             var key = string.Empty;

@@ -82,10 +82,7 @@ namespace Jayrock.Json.Conversion
             if (importer != null)
                 return importer;
 
-            importer = StockImporters[type];
-
-            if (importer == null)
-               importer = FindCompatibleImporter(type);
+            importer = StockImporters[type] ?? FindCompatibleImporter(type);
 
             if (importer != null)
             {

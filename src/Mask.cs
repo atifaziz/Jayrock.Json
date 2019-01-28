@@ -29,7 +29,7 @@ namespace Jayrock
     {
         public static string NullString(string actual)
         {
-            return actual == null ? string.Empty : actual;
+            return actual ?? string.Empty;
         }
 
         public static string EmptyString(string actual, string emptyValue)

@@ -48,9 +48,8 @@ namespace Jayrock.Json.Conversion
 
             var tailw = _tailw;
             _tailw = null;
-            if (tailw != null)
-                tailw.WriteEndObject();
-            var tail = (tailw != null ? tailw.GetBuffer() : StockJsonBuffers.EmptyObject);
+            tailw?.WriteEndObject();
+            var tail = tailw?.GetBuffer() ?? StockJsonBuffers.EmptyObject;
             var obj = OnCreateObject(context);
             return new ObjectConstructionResult(obj, tail.CreateReader());
         }

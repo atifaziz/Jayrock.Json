@@ -80,10 +80,8 @@ namespace JsonConversionsDemo
 
             public ICustomTypeDescriptor ToCustomType()
             {
-                if (_customType == null)
-                    _customType = new CustomTypeDescriptor(_type, _members.ToArray(), _names.ToArray());
-
-                return _customType;
+                return _customType
+                    ?? (_customType = new CustomTypeDescriptor(_type, _members.ToArray(), _names.ToArray()));
             }
 
             public Builder Register(ExportContext context)

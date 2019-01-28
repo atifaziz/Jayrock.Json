@@ -454,19 +454,17 @@ namespace Jayrock.Json.Conversion
 
             object IServiceProvider.GetService(Type serviceType)
             {
-                return _services != null ? _services.GetService(serviceType) : null;
+                return _services?.GetService(serviceType);
             }
 
             void IServiceContainer.RemoveService(Type serviceType)
             {
-                if (_services != null)
-                    _services.RemoveService(serviceType);
+                _services?.RemoveService(serviceType);
             }
 
             void IServiceContainer.RemoveService(Type serviceType, bool promote)
             {
-                if (_services != null)
-                    _services.RemoveService(serviceType, promote);
+                _services?.RemoveService(serviceType, promote);
             }
 
             #endregion

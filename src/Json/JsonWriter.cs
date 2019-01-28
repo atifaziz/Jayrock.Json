@@ -384,10 +384,7 @@ namespace Jayrock.Json
 
         void OnDisposed(EventArgs e)
         {
-            var handler = Disposed;
-
-            if (handler != null)
-                handler(this, e);
+            Disposed?.Invoke(this, e);
         }
     }
 }

@@ -74,10 +74,7 @@ namespace Jayrock.Json.Conversion
             if (exporter != null)
                 return exporter;
 
-            exporter = StockExporters[type];
-
-            if (exporter == null)
-                exporter = FindCompatibleExporter(type);
+            exporter = StockExporters[type] ?? FindCompatibleExporter(type);
 
             if (exporter != null)
             {
