@@ -212,7 +212,7 @@ namespace Jayrock.Json
             o.Export(writer);
             var reader = writer.CreatePlayer();
             reader.ReadToken(JsonTokenClass.Object);
-            var members = (string[]) o.GetNamesArray().ToArray(typeof(string));
+            var members = o.GetNamesArray().Cast<string>().ToArray();
             Assert.AreEqual(members[0], reader.ReadMember());
             Assert.AreEqual(o[members[0]], reader.ReadNumber().ToInt32());
             Assert.AreEqual(members[1], reader.ReadMember());

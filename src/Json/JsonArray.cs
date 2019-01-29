@@ -23,6 +23,7 @@ namespace Jayrock.Json
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Globalization;
     using System.IO;
     using Jayrock.Json.Conversion;
@@ -41,48 +42,25 @@ namespace Jayrock.Json
 
     [ Serializable ]
     public class JsonArray :
-        CollectionBase, IJsonImportable, IJsonExportable, IList<object>
+        Collection<object>, IJsonImportable, IJsonExportable
     {
-        public JsonArray() {}
+        static List<object> CreateList(out List<object> items) =>
+            items = new List<object>();
 
-        public JsonArray(IEnumerable collection)
+        public JsonArray() : base(CreateList(out var items))
+        {
+            Items = items;
+        }
+
+        public JsonArray(IEnumerable collection) : this()
         {
             foreach (var item in collection)
-                InnerList.Add(item);
+                Items.Add(item);
         }
 
-        public virtual object this[int index]
-        {
-            get => InnerList[index];
-            set => InnerList[index] = value;
-        }
+        new List<object> Items { get; }
 
         public int Length => Count;
-
-        public void Put(object value)
-        {
-            Add(value);
-        }
-
-        public virtual void Add(object value)
-        {
-            InnerList.Add(value);
-        }
-
-        public virtual void Remove(object value)
-        {
-            InnerList.Remove(value);
-        }
-
-        public virtual bool Contains(object value)
-        {
-            return InnerList.Contains(value);
-        }
-
-        public virtual int IndexOf(object value)
-        {
-            return InnerList.IndexOf(value);
-        }
 
         public virtual bool HasValueAt(int index)
         {
@@ -231,7 +209,7 @@ namespace Jayrock.Json
             // will remain largely untouched.
             //
 
-            var list = new ArrayList();
+            var list = new List<object>();
 
             reader.ReadToken(JsonTokenClass.Array);
 
@@ -240,8 +218,8 @@ namespace Jayrock.Json
 
             reader.Read();
 
-            InnerList.Clear();
-            InnerList.AddRange(list);
+            Items.Clear();
+            Items.AddRange(list);
         }
 
         /// <summary>
@@ -250,21 +228,18 @@ namespace Jayrock.Json
 
         public virtual object[] ToArray()
         {
-            return (object[]) ToArray(typeof(object));
+            if (Count == 0)
+                return ZeroObjects;
+            var array = new object[Count];
+            CopyTo(array, 0);
+            return array;
         }
 
-        /// <summary>
-        /// Copies the elements to a new array of the specified type.
-        /// </summary>
-
-        public virtual Array ToArray(Type elementType)
-        {
-            return InnerList.ToArray(elementType);
-        }
+        static readonly object[] ZeroObjects = new object[0];
 
         public virtual void Reverse()
         {
-            InnerList.Reverse();
+            Items.Reverse();
         }
 
         //
@@ -326,7 +301,7 @@ namespace Jayrock.Json
             if (Count == 0)
                 return null;
 
-            var lastValue = InnerList[Count - 1];
+            var lastValue = Items[Count - 1];
             RemoveAt(Count - 1);
             return lastValue;
         }
@@ -368,7 +343,7 @@ namespace Jayrock.Json
             if (Count == 0)
                 return null;
 
-            var firstValue = InnerList[0];
+            var firstValue = Items[0];
             RemoveAt(0);
             return firstValue;
         }
@@ -384,7 +359,7 @@ namespace Jayrock.Json
 
         public virtual void Unshift(object value)
         {
-            InnerList.Insert(0, value);
+            Items.Insert(0, value);
         }
 
         /// <summary>
@@ -403,48 +378,6 @@ namespace Jayrock.Json
                 foreach (var value in values)
                     Unshift(value);
             }
-        }
-
-        protected override void OnValidate(object value)
-        {
-            // NOP other base implementation does not allow null values.
-        }
-
-        /// <summary>
-        /// Returns an enumerator that iterates through the elements
-        /// of the array.
-        /// </summary>
-
-        public new IEnumerator<object> GetEnumerator()
-        {
-            foreach (var item in InnerList)
-                yield return item;
-        }
-
-        /// <summary>
-        /// Copies the elements to an <see cref="T:System.Array"/>,
-        /// starting at a particular given index.
-        /// </summary>
-
-        public void CopyTo(object[] array, int arrayIndex)
-        {
-            InnerList.CopyTo(array, arrayIndex);
-        }
-
-        bool ICollection<object>.Remove(object item)
-        {
-            var index = IndexOf(item);
-            if (index < 0)
-                return false;
-            RemoveAt(index);
-            return true;
-        }
-
-        bool ICollection<object>.IsReadOnly => InnerList.IsReadOnly;
-
-        void IList<object>.Insert(int index, object item)
-        {
-            List.Insert(index, item);
         }
     }
 }
