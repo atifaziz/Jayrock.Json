@@ -60,18 +60,28 @@ namespace Jayrock.Json
         }
 
         [ Test ]
-        public void InitWithKeyValuePairs()
+        public void InitWithMembers()
         {
-            var o = new JsonObject(new[] { "one", "two", }, new object[] { 1, 2 });
+            var o = new JsonObject(new[]
+            {
+                new JsonMember("one", 1),
+                new JsonMember("two", 2),
+            });
             Assert.AreEqual(2, o.Count);
             Assert.AreEqual(1, o["one"]);
             Assert.AreEqual(2, o["two"]);
         }
 
         [ Test ]
-        public void InitWithKeyValuePairsAccumulates()
+        public void InitWithMembersAccumulates()
         {
-            var o = new JsonObject(new[] { "one", "two", "three", "two" }, new object[] { 1, 2, 3, 4 });
+            var o = new JsonObject(new[]
+            {
+                new JsonMember("one"  , 1),
+                new JsonMember("two"  , 2),
+                new JsonMember("three", 3),
+                new JsonMember("two"  , 4),
+            });
             Assert.AreEqual(3, o.Count);
             Assert.AreEqual(1, o["one"]);
             var two = o["two"] as IList;
@@ -83,49 +93,11 @@ namespace Jayrock.Json
         }
 
         [ Test ]
-        public void InitWithExtraKeys()
+        public void CannotInitWithDefaultMember()
         {
-            var o = new JsonObject(new[] { "one", "two", "three" }, new object[] { 1, 2 });
-            Assert.AreEqual(3, o.Count);
-            Assert.AreEqual(1, o["one"]);
-            Assert.AreEqual(2, o["two"]);
-            Assert.IsTrue(JsonNull.LogicallyEquals(o["three"]));
-        }
-
-        [ Test ]
-        public void InitWithNullValues()
-        {
-            var o = new JsonObject(new[] { "one", "two", "three" }, null);
-            Assert.AreEqual(3, o.Count);
-            Assert.IsTrue(JsonNull.LogicallyEquals(o["one"]));
-            Assert.IsTrue(JsonNull.LogicallyEquals(o["two"]));
-            Assert.IsTrue(JsonNull.LogicallyEquals(o["three"]));
-        }
-
-        [ Test ]
-        public void InitWithExtraValues()
-        {
-            var o = new JsonObject(new[] { "one", "two" }, new object[] { 1, 2, 3, 4 });
-            Assert.AreEqual(2, o.Count);
-            Assert.AreEqual(1, o["one"]);
-            var two = (IList) o["two"];
-            Assert.AreEqual(3, two.Count, "Count of values under 'two'.");
-            Assert.AreEqual(2, two[0]);
-            Assert.AreEqual(3, two[1]);
-            Assert.AreEqual(4, two[2]);
-        }
-
-        [ Test ]
-        public void InitWithNullKeys()
-        {
-            var o = new JsonObject(null, new object[] { 1, 2, 3, 4 });
-            Assert.AreEqual(1, o.Count);
-            var values = (IList) o[""];
-            Assert.AreEqual(4, values.Count, "Count of values.");
-            Assert.AreEqual(1, values[0]);
-            Assert.AreEqual(2, values[1]);
-            Assert.AreEqual(3, values[2]);
-            Assert.AreEqual(4, values[3]);
+            var e = Assert.Throws<ArgumentException>(() =>
+                new JsonObject(new JsonMember[1]));
+            Assert.AreEqual("members", e.ParamName);
         }
 
         [ Test ]

@@ -53,30 +53,17 @@ namespace Jayrock.Json
 
         public JsonObject() {}
 
-        public JsonObject(string[] keys, object[] values)
-        {
-            var keyCount = keys?.Length ?? 0;
-            var valueCount = values?.Length ?? 0;
-            var count = Math.Max(keyCount, valueCount);
-
-            var key = string.Empty;
-
-            for (var i = 0; i < count; i++)
-            {
-                if (i < keyCount)
-                    key = Mask.NullString(keys[i]);
-
-                Accumulate(key, i < valueCount ? values[i] : null);
-            }
-        }
-
         public JsonObject(IEnumerable<JsonMember> members)
         {
             if (members == null)
                 return;
 
             foreach (var member in members)
+            {
+                if (member.Name == null)
+                    throw new ArgumentException(null, nameof(members));
                 Accumulate(member.Name, member.Value);
+            }
         }
 
         ReadOnlyCollection<string> CachedKeys   => _keys   ?? (_keys   = GetMembers(m => m.Name ));

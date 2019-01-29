@@ -50,9 +50,15 @@ namespace Jayrock.Json.Conversion.Converters
                 Color        = "Silver"
             };
 
-            Test(new JsonObject(
-                new[] { "manufacturer", "model", "year", "color" },
-                new object[] { car.Manufacturer, car.Model, car.Year, car.Color }), car);
+            var obj = new JsonObject
+            {
+                new JsonMember("manufacturer", car.Manufacturer),
+                new JsonMember("model"       , car.Model       ),
+                new JsonMember("year"        , car.Year        ),
+                new JsonMember("color"       , car.Color       ),
+            };
+
+            Test(obj, car);
         }
 
         [ Test ]
@@ -74,16 +80,21 @@ namespace Jayrock.Json.Conversion.Converters
             var albert = new Person { Id = 1, FullName = "Albert White" };
             var m      = new Marriage { Husband = albert, Wife = snow };
 
-            Test(new JsonObject(
-                new[] { "husband", "wife" },
-                new object[] {
-                    /* Husband */ new JsonObject(
-                        new[] { "id", "fullName" },
-                        new object[] { albert.Id, albert.FullName }),
-                    /* Wife */ new JsonObject(
-                        new[] { "id", "fullName" },
-                        new object[] { snow.Id, snow.FullName })
-                }), m);
+            var obj = new JsonObject
+            {
+                new JsonMember("husband", new JsonObject
+                {
+                    new JsonMember("id", albert.Id),
+                    new JsonMember("fullName", albert.FullName),
+                }),
+                new JsonMember("wife", new JsonObject
+                {
+                    new JsonMember("id", snow.Id),
+                    new JsonMember("fullName", snow.FullName),
+                }),
+            };
+
+            Test(obj, m);
         }
 
         [ Test ]
@@ -126,18 +137,24 @@ namespace Jayrock.Json.Conversion.Converters
 
             johnCars.Cars.Add(beamer);
 
-            var test = new JsonObject(
-                new[] { "owner", "cars" },
-                new object[] {
-                    /* Owner */ new JsonObject(
-                        new[] { "id", "fullName" },
-                        new object[] { john.Id,  john.FullName }),
-                    /* Cars */ new object[] {
-                        new JsonObject(
-                            new[] { "manufacturer", "model", "year", "color" },
-                            new object[] { beamer.Manufacturer, beamer.Model, beamer.Year, beamer.Color })
+            var test = new JsonObject
+            {
+                new JsonMember("owner", new JsonObject
+                {
+                    new JsonMember("id"      , john.Id      ),
+                    new JsonMember("fullName", john.FullName),
+                }),
+                new JsonMember("cars", new[]
+                {
+                    new JsonObject
+                    {
+                        new JsonMember("manufacturer", beamer.Manufacturer),
+                        new JsonMember("model"       , beamer.Model       ),
+                        new JsonMember("year"        , beamer.Year        ),
+                        new JsonMember("color"       , beamer.Color       ),
                     }
-                });
+                }),
+            };
 
             Test(test, johnCars);
         }
