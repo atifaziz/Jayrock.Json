@@ -256,15 +256,9 @@ namespace Jayrock.Json
             public void Push(WriterState state)
             {
                 if (_states == null)
-                {
                     _states = new WriterState[6];
-                }
                 else if (Count == _states.Length)
-                {
-                    var items = new WriterState[_states.Length * 2];
-                    _states.CopyTo(items, 0);
-                    _states = items;
-                }
+                    Array.Resize(ref _states, _states.Length * 2);
 
                 _states[Count++] = state;
             }
