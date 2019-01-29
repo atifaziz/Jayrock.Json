@@ -48,8 +48,8 @@ namespace Jayrock.Json
         IJsonImportable, IJsonExportable,
         IDynamicMetaObjectProvider
     {
-        [ NonSerialized ] ReadOnlyCollection<string> _keys;
-        [ NonSerialized ] ReadOnlyCollection<object> _values;
+        [ NonSerialized ] ReadOnlyCollection<string> _cachedNames;
+        [ NonSerialized ] ReadOnlyCollection<object> _cachedValues;
 
         public JsonObject() {}
 
@@ -66,13 +66,13 @@ namespace Jayrock.Json
             }
         }
 
-        ReadOnlyCollection<string> CachedKeys   => _keys   ?? (_keys   = GetMembers(m => m.Name ));
-        ReadOnlyCollection<object> CachedValues => _values ?? (_values = GetMembers(m => m.Value));
+        ReadOnlyCollection<string> CachedNames  => _cachedNames  ?? (_cachedNames  = GetMembers(m => m.Name ));
+        ReadOnlyCollection<object> CachedValues => _cachedValues ?? (_cachedValues = GetMembers(m => m.Value));
 
         void OnUpdating()
         {
-            _keys = null;
-            _values = null;
+            _cachedNames = null;
+            _cachedValues = null;
         }
 
         protected override string GetKeyForItem(JsonMember item)
@@ -107,11 +107,12 @@ namespace Jayrock.Json
         }
 
         /// <summary>
-        /// Accumulate values under a key. It is similar to the Put method except
-        /// that if there is already an object stored under the key then a
-        /// JsonArray is stored under the key to hold all of the accumulated values.
-        /// If there is already a JsonArray, then the new value is appended to it.
-        /// In contrast, the Put method replaces the previous value.
+        /// Accumulate values under a name. It is similar to the Put method
+        /// except that if there is already an object stored under the name
+        /// then a JsonArray is stored under the name to hold all of the
+        /// accumulated values. If there is already a JsonArray, then the new
+        /// value is appended to it. In contrast, the Put method replaces the
+        /// previous value.
         /// </summary>
 
         public void Accumulate(string name, object value)
@@ -177,7 +178,7 @@ namespace Jayrock.Json
             Add(name, value);
         }
 
-        public ICollection<string> Names => CachedKeys;
+        public ICollection<string> Names => CachedNames;
 
         /// <summary>
         /// Produce a JsonArray containing the names of the elements of this
@@ -409,7 +410,7 @@ namespace Jayrock.Json
         bool IDictionary.IsFixedSize => false;
         bool IDictionary.IsReadOnly => false;
 
-        ICollection IDictionary.Keys => CachedKeys;
+        ICollection IDictionary.Keys => CachedNames;
         ICollection IDictionary.Values => CachedValues;
 
         object IDictionary.this[object key]
