@@ -18,6 +18,7 @@
 
 namespace Jayrock.Json
 {
+    using System;
     using Conversion;
     using NUnit.Framework;
 
@@ -28,9 +29,17 @@ namespace Jayrock.Json
         public void Default()
         {
             var member = new JsonMember();
-            Assert.AreEqual(string.Empty, member.Name);
+            Assert.IsNull(member.Name);
             Assert.IsNull(member.Value);
-            Assert.AreEqual(string.Empty, member.ToString());
+            Assert.IsEmpty(member.ToString());
+        }
+
+        [ Test ]
+        public void CannotInitWithNullName()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() =>
+                new JsonMember(null, null));
+            Assert.AreEqual("name", e.ParamName);
         }
 
         [ Test ]

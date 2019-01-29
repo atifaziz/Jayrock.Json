@@ -24,20 +24,18 @@ namespace Jayrock.Json
     [Serializable]
     public struct JsonMember
     {
-        readonly string _name;
-
         public JsonMember(string name, object value)
         {
-            _name = name;
+            Name  = name ?? throw new ArgumentNullException(nameof(name));
             Value = value;
         }
 
-        [JsonExport] public string Name => Mask.NullString(_name);
+        [JsonExport] public string Name  { get; }
         [JsonExport] public object Value { get; }
 
         public override string ToString()
         {
-            return Name.Length == 0 && Value == null
+            return (Name?.Length ?? 0) == 0 && Value == null
                  ? string.Empty
                  : Name + ": " + Value;
         }

@@ -234,6 +234,12 @@ namespace Jayrock.Json
             (new JsonObject()).Add(null, new object());
         }
 
+        [ Test, ExpectedException(typeof(ArgumentException)) ]
+        public void CannotAddUsingMemberWithNullName()
+        {
+            (new JsonObject()).Add(default);
+        }
+
         [ Test, ExpectedException(typeof(ArgumentNullException)) ]
         public void CannotRemoveByNullName()
         {
