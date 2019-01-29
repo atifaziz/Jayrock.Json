@@ -255,7 +255,8 @@ namespace Jayrock.Json
         [ Test, ExpectedException(typeof(ArgumentNullException)) ]
         public void CannotExportToNullWriter()
         {
-            (new SubJsonObject()).SubExport(new ExportContext(), null);
+            IJsonExportable obj = new JsonObject();
+            obj.Export(new ExportContext(), null);
         }
 
         [ Test, ExpectedException(typeof(ArgumentNullException)) ]
@@ -332,14 +333,6 @@ namespace Jayrock.Json
             Assert.AreEqual(4, e.Current.Value);
 
             Assert.IsFalse(e.MoveNext());
-        }
-
-        sealed class SubJsonObject : JsonObject
-        {
-            public void SubExport(ExportContext context, JsonWriter writer)
-            {
-                Export(context, writer);
-            }
         }
 
         [ Test ]

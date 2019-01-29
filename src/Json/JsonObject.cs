@@ -41,7 +41,7 @@ namespace Jayrock.Json
     // and re-adapted by Atif Aziz (www.raboof.com)</para>
 
     [ Serializable ]
-    public class JsonObject :
+    public sealed class JsonObject :
         KeyedCollection<string, JsonMember>,
         IDictionary<string, object>,
         IDictionary,
@@ -108,13 +108,13 @@ namespace Jayrock.Json
             return item.Name;
         }
 
-        public new virtual object this[string name]
+        public new object this[string name]
         {
             get => TryGetMemberByName(name, out var member) ? member.Value : null;
             set => Put(name, value);
         }
 
-        public virtual bool HasMembers => Count > 0;
+        public bool HasMembers => Count > 0;
 
         bool TryGetMemberByName(string name, out JsonMember member)
         {
@@ -142,7 +142,7 @@ namespace Jayrock.Json
         /// In contrast, the Put method replaces the previous value.
         /// </summary>
 
-        public virtual void Accumulate(string name, object value)
+        public void Accumulate(string name, object value)
         {
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
@@ -172,7 +172,7 @@ namespace Jayrock.Json
         /// present then an exception is thrown.
         /// </summary>
 
-        public virtual void Add(string name, object value)
+        public void Add(string name, object value)
         {
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
@@ -185,7 +185,7 @@ namespace Jayrock.Json
         /// then the key will be removed from the JsonObject if it is present.
         /// </summary>
 
-        public virtual void Put(string name, object value)
+        public void Put(string name, object value)
         {
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
@@ -205,19 +205,19 @@ namespace Jayrock.Json
             Add(name, value);
         }
 
-        public virtual ICollection<string> Names => CachedKeys;
+        public ICollection<string> Names => CachedKeys;
 
         /// <summary>
         /// Produce a JsonArray containing the names of the elements of this
         /// JsonObject.
         /// </summary>
 
-        public virtual JsonArray GetNamesArray()
+        public JsonArray GetNamesArray()
         {
             return new JsonArray(Names);
         }
 
-        public virtual void ListNames(IList<string> list)
+        public void ListNames(IList<string> list)
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
@@ -247,7 +247,7 @@ namespace Jayrock.Json
             Export(context, writer);
         }
 
-        protected virtual void Export(ExportContext context, JsonWriter writer)
+        void Export(ExportContext context, JsonWriter writer)
         {
             if (context == null)
                 throw new ArgumentNullException(nameof(context));
@@ -281,7 +281,7 @@ namespace Jayrock.Json
             Import(context, reader);
         }
 
-        protected virtual void Import(ImportContext context, JsonReader reader)
+        void Import(ImportContext context, JsonReader reader)
         {
             if (context == null)
                 throw new ArgumentNullException(nameof(context));
@@ -303,7 +303,7 @@ namespace Jayrock.Json
             reader.Read();
         }
 
-        protected void OnValidate(JsonMember member, string paramName)
+        static void OnValidate(JsonMember member, string paramName)
         {
             if (member.Name == null)
                 throw new ArgumentException(null, paramName);
