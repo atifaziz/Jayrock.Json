@@ -466,10 +466,10 @@ namespace Jayrock.Json
 
         DynamicMetaObject IDynamicMetaObjectProvider.GetMetaObject(Expression parameter)
         {
-            return new DynamicMetaObject<JsonObject>(parameter, this, _runtime, /* dontFallbackFirst */ true);
+            return new DynamicMetaObject<JsonObject>(parameter, this, Dor, /* dontFallbackFirst */ true);
         }
 
-        readonly DynamicObjectRuntime<JsonObject> _runtime = new DynamicObjectRuntime<JsonObject>
+        static readonly DynamicObjectRuntime<JsonObject> Dor = new DynamicObjectRuntime<JsonObject>
         {
             TryGetMember = TryGetMember,
             TrySetMember = TrySetMember,
