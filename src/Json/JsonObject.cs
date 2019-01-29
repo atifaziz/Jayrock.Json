@@ -53,21 +53,6 @@ namespace Jayrock.Json
 
         public JsonObject() {}
 
-        /// <summary>
-        /// Construct a JsonObject from a IDictionary
-        /// </summary>
-
-        public JsonObject(IDictionary members)
-        {
-            foreach (var entry in DictionaryHelper.GetEntries(members))
-            {
-                if (entry.Key == null)
-                    throw new InvalidMemberException();
-
-                Add(entry.Key.ToString(), entry.Value);
-            }
-        }
-
         public JsonObject(string[] keys, object[] values)
         {
             var keyCount = keys?.Length ?? 0;
