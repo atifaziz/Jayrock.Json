@@ -229,6 +229,12 @@ namespace Jayrock.Json
         }
 
         [ Test, ExpectedException(typeof(ArgumentNullException)) ]
+        public void CannotAddUsingNullName()
+        {
+            (new JsonObject()).Add(null, new object());
+        }
+
+        [ Test, ExpectedException(typeof(ArgumentNullException)) ]
         public void CannotRemoveByNullName()
         {
             (new JsonObject()).Remove(null);
@@ -280,7 +286,7 @@ namespace Jayrock.Json
             Assert.AreEqual("bar", o["foo"]);
             var names = o.Names;
             Assert.AreEqual(1, names.Count);
-            Assert.AreEqual(new[] { "foo" }, CollectionHelper.ToArray(names, typeof(string)));
+            Assert.AreEqual(new[] { "foo" }, names);
         }
 
         [ Test ]

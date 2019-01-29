@@ -23,10 +23,9 @@ namespace Jayrock.Json
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Diagnostics;
+    using System.Collections.ObjectModel;
     using System.Dynamic;
     using System.IO;
-    using System.Linq;
     using System.Linq.Expressions;
 
     using Jayrock.Dynamic;
@@ -35,36 +34,22 @@ namespace Jayrock.Json
     #endregion
 
     /// <summary>
-    /// An unordered collection of name/value pairs.
+    /// A collection of name-value member pairs making up a JSON object.
     /// </summary>
-    /// <remarks>
-    /// <para>
-    /// Although the collection should be considered unordered by the user,
-    /// the implementation does internally try to remember the order in which
-    /// the keys were added in order facilitate human-readability, as in when
-    /// an instance is rendered as text.</para>
-    /// <para>
-    /// Public Domain 2002 JSON.org, ported to C# by Are Bjolseth (teleplan.no)
-    /// and re-adapted by Atif Aziz (www.raboof.com)</para>
-    /// </remarks>
+
+    // Public Domain 2002 JSON.org, ported to C# by Are Bjolseth (teleplan.no)
+    // and re-adapted by Atif Aziz (www.raboof.com)</para>
 
     [ Serializable ]
-    public class JsonObject : DictionaryBase, IJsonImportable, IJsonExportable,
-        IEnumerable<JsonMember>,
+    public class JsonObject :
+        KeyedCollection<string, JsonMember>,
         IDictionary<string, object>,
+        IDictionary,
+        IJsonImportable, IJsonExportable,
         IDynamicMetaObjectProvider
     {
-        ArrayList _nameIndexList;
-        [ NonSerialized ] IList _readOnlyNameIndexList;
-
-        [ NonSerialized ] string[] _keys;
-        [ NonSerialized ] object[] _values;
-
-        void OnUpdating()
-        {
-            _keys = null;
-            _values = null;
-        }
+        [ NonSerialized ] ReadOnlyCollection<string> _keys;
+        [ NonSerialized ] ReadOnlyCollection<object> _values;
 
         public JsonObject() {}
 
@@ -79,10 +64,8 @@ namespace Jayrock.Json
                 if (entry.Key == null)
                     throw new InvalidMemberException();
 
-                InnerHashtable.Add(entry.Key.ToString(), entry.Value);
+                Add(entry.Key.ToString(), entry.Value);
             }
-
-            _nameIndexList = new ArrayList(members.Keys);
         }
 
         public JsonObject(string[] keys, object[] values)
@@ -102,16 +85,6 @@ namespace Jayrock.Json
             }
         }
 
-        public virtual new JsonMemberEnumerator GetEnumerator()
-        {
-            return new JsonMemberEnumerator(this, NameIndexList.GetEnumerator());
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
         public JsonObject(IEnumerable<JsonMember> members)
         {
             if (members == null)
@@ -121,93 +94,45 @@ namespace Jayrock.Json
                 Accumulate(member.Name, member.Value);
         }
 
-        IEnumerator<JsonMember> IEnumerable<JsonMember>.GetEnumerator()
+        ReadOnlyCollection<string> CachedKeys   => _keys   ?? (_keys   = GetMembers(m => m.Name ));
+        ReadOnlyCollection<object> CachedValues => _values ?? (_values = GetMembers(m => m.Value));
+
+        void OnUpdating()
         {
-            return GetEnumerator();
+            _keys = null;
+            _values = null;
         }
 
-        [Serializable]
-        public sealed class JsonMemberEnumerator : IEnumerator<JsonMember>
+        protected override string GetKeyForItem(JsonMember item)
         {
-            JsonObject _obj;
-            IEnumerator _enumerator;
-            JsonMember _member;
-            bool _memberInitialized;
-
-            public JsonMemberEnumerator(JsonObject obj, IEnumerator enumerator)
-            {
-                Debug.Assert(obj != null);
-                Debug.Assert(enumerator != null);
-
-                _obj = obj;
-                _enumerator = enumerator;
-            }
-
-            public bool MoveNext()
-            {
-                EnsureNotDisposed();
-                ResetMember();
-                return _enumerator.MoveNext();
-            }
-
-            public void Reset()
-            {
-                EnsureNotDisposed();
-                ResetMember();
-                _enumerator.Reset();
-            }
-
-            void ResetMember()
-            {
-                _member = new JsonMember();
-                _memberInitialized = false;
-            }
-
-            public JsonMember Current
-            {
-                get
-                {
-                    EnsureNotDisposed();
-                    if (!_memberInitialized)
-                    {
-                        var name = (string) _enumerator.Current;
-                        _member = new JsonMember(name, _obj[name]);
-                        _memberInitialized = true;
-                    }
-                    return _member;
-                }
-            }
-
-            object IEnumerator.Current => Current;
-
-            void EnsureNotDisposed()
-            {
-                if (IsDisposed)
-                    throw new ObjectDisposedException(GetType().FullName);
-            }
-
-            bool IsDisposed => _enumerator == null;
-
-            public void Dispose()
-            {
-                if (IsDisposed)
-                    return;
-
-                _obj = null;
-                _enumerator = null;
-                ResetMember();
-            }
+            return item.Name;
         }
 
-        public virtual object this[string key]
+        public new virtual object this[string name]
         {
-            get => InnerHashtable[key];
-            set => Put(key, value);
+            get => TryGetMemberByName(name, out var member) ? member.Value : null;
+            set => Put(name, value);
         }
 
         public virtual bool HasMembers => Count > 0;
 
-        ArrayList NameIndexList => _nameIndexList ?? (_nameIndexList = new ArrayList());
+        bool TryGetMemberByName(string name, out JsonMember member)
+        {
+            if (Dictionary != null)
+                return Dictionary.TryGetValue(name, out member);
+
+            foreach (var e in this)
+            {
+                if (Comparer.Equals(e.Name, name))
+                {
+                    member = e;
+                    return true;
+                }
+            }
+
+            member = default;
+            return false;
+        }
 
         /// <summary>
         /// Accumulate values under a key. It is similar to the Put method except
@@ -222,7 +147,7 @@ namespace Jayrock.Json
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
 
-            var current = InnerHashtable[name];
+            var current = this[name];
 
             if (current == null)
             {
@@ -252,7 +177,7 @@ namespace Jayrock.Json
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
 
-            Dictionary.Add(name, value);
+            Add(new JsonMember(name, value));
         }
 
         /// <summary>
@@ -265,27 +190,22 @@ namespace Jayrock.Json
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
 
-            Dictionary[name] = value;
+            if (Dictionary == null || Dictionary.ContainsKey(name))
+            {
+                for (var i = 0; i < Count; i++)
+                {
+                    if (Comparer.Equals(GetKeyForItem(this[i]), name))
+                    {
+                        this[i] = new JsonMember(name, value);
+                        return;
+                    }
+                }
+            }
+
+            Add(name, value);
         }
 
-        public virtual bool Contains(string name)
-        {
-            if (name == null)
-                throw new ArgumentNullException(nameof(name));
-
-            return Dictionary.Contains(name);
-        }
-
-        public virtual void Remove(string name)
-        {
-            if (name == null)
-                throw new ArgumentNullException(nameof(name));
-
-            Dictionary.Remove(name);
-        }
-
-        public virtual ICollection Names =>
-            _readOnlyNameIndexList ?? (_readOnlyNameIndexList = ArrayList.ReadOnly(NameIndexList));
+        public virtual ICollection<string> Names => CachedKeys;
 
         /// <summary>
         /// Produce a JsonArray containing the names of the elements of this
@@ -294,17 +214,15 @@ namespace Jayrock.Json
 
         public virtual JsonArray GetNamesArray()
         {
-            var names = new JsonArray();
-            ListNames(names);
-            return names;
+            return new JsonArray(Names);
         }
 
-        public virtual void ListNames(IList list)
+        public virtual void ListNames(IList<string> list)
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
 
-            foreach (string name in NameIndexList)
+            foreach (var name in Names)
                 list.Add(name);
         }
 
@@ -339,10 +257,10 @@ namespace Jayrock.Json
 
             writer.WriteStartObject();
 
-            foreach (string name in NameIndexList)
+            foreach (var member in this)
             {
-                writer.WriteMember(name);
-                context.Export(InnerHashtable[name], writer);
+                writer.WriteMember(member.Name);
+                context.Export(member.Value, writer);
             }
 
             writer.WriteEndObject();
@@ -385,61 +303,37 @@ namespace Jayrock.Json
             reader.Read();
         }
 
-        protected override void OnValidate(object key, object value)
+        protected void OnValidate(JsonMember member, string paramName)
         {
-            base.OnValidate(key, value);
-
-            if (key == null)
-                throw new ArgumentNullException(nameof(key));
-
-            if (!(key is string))
-                throw new ArgumentException(string.Format("The key cannot be of the supplied type {0}. It must be typed System.String.", key.GetType().FullName), nameof(key));
+            if (member.Name == null)
+                throw new ArgumentException(null, paramName);
         }
 
-        protected override void OnInsert(object key, object value)
+        protected override void InsertItem(int index, JsonMember item)
         {
+            OnValidate(item, nameof(item));
             OnUpdating();
-
-            //
-            // NOTE: OnInsert leads one to believe that keys are ordered in the
-            // base dictionary in that they can be inserted somewhere in the
-            // middle. However, the base implementation only calls OnInsert
-            // during the Add operation, so we known it is safe here to simply
-            // add the new key at the end of the name list.
-            //
-
-            NameIndexList.Add(key);
+            base.InsertItem(index, item);
         }
 
-        protected override void OnSet(object key, object oldValue, object newValue)
+
+        protected override void SetItem(int index, JsonMember item)
         {
+            OnValidate(item, nameof(item));
             OnUpdating();
-
-            //
-            // NOTE: OnSet is called when the base dictionary is modified via
-            // the indexer. We need to trap this and detect when a new key is
-            // being added via the indexer. If the old value is null for the
-            // key, then there is a big chance it is a new key. But just to be
-            // sure, we also check out key index if it does not already exist.
-            // Finally, we just delegate to OnInsert. In effect, we're
-            // converting OnSet to OnInsert where needed. Ideally, the base
-            // implementation would have done this for.
-            //
-
-            if (oldValue == null && !NameIndexList.Contains(key))
-                OnInsert(key, newValue);
+            base.SetItem(index, item);
         }
 
-        protected override void OnRemove(object key, object value)
+        protected override void RemoveItem(int index)
         {
             OnUpdating();
-            NameIndexList.Remove(key);
+            base.RemoveItem(index);
         }
 
-        protected override void OnClear()
+        protected override void ClearItems()
         {
             OnUpdating();
-            NameIndexList.Clear();
+            base.ClearItems();
         }
 
         bool IDictionary<string, object>.TryGetValue(string key, out object value)
@@ -454,18 +348,18 @@ namespace Jayrock.Json
             return true;
         }
 
-        ICollection<string> IDictionary<string, object>.Keys => _keys ?? (_keys = GetMembers(m => m.Name));
+        ICollection<string> IDictionary<string, object>.Keys => Names;
 
-        T[] GetMembers<T>(Func<JsonMember, T> selector)
+        ReadOnlyCollection<T> GetMembers<T>(Func<JsonMember, T> selector)
         {
             var arr = new T[Count];
             var i = 0;
             foreach (var member in this)
                 arr[i++] = selector(member);
-            return arr;
+            return Array.AsReadOnly(arr);
         }
 
-        ICollection<object> IDictionary<string, object>.Values => _values ?? (_values = GetMembers(m => m.Value));
+        ICollection<object> IDictionary<string, object>.Values => CachedValues;
 
         bool IDictionary<string, object>.ContainsKey(string key)
         {
@@ -524,7 +418,51 @@ namespace Jayrock.Json
             return true;
         }
 
-        bool ICollection<KeyValuePair<string, object>>.IsReadOnly => InnerHashtable.IsReadOnly;
+        bool ICollection<KeyValuePair<string, object>>.IsReadOnly => false;
+
+        void IDictionary.Add(object key, object value) =>
+            Add(NameFromKeyObject(key), value);
+
+        bool IDictionary.Contains(object key) =>
+            Contains(NameFromKeyObject(key));
+
+        void IDictionary.Remove(object key) =>
+            Remove(NameFromKeyObject(key));
+
+        string NameFromKeyObject(object key)
+            => key == null ? throw new ArgumentNullException(nameof(key))
+             : key is string name ? name
+             : throw new ArgumentException(null, nameof(key));
+
+        bool IDictionary.IsFixedSize => false;
+        bool IDictionary.IsReadOnly => false;
+
+        ICollection IDictionary.Keys => CachedKeys;
+        ICollection IDictionary.Values => CachedValues;
+
+        object IDictionary.this[object key]
+        {
+            get => this[NameFromKeyObject(key)];
+            set => this[NameFromKeyObject(key)] = value;
+        }
+
+        IDictionaryEnumerator IDictionary.GetEnumerator() =>
+            new DictionaryEnumerator(GetEnumerator());
+
+        sealed class DictionaryEnumerator : IDictionaryEnumerator
+        {
+            readonly IEnumerator<JsonMember> _enumerator;
+
+            public DictionaryEnumerator(IEnumerator<JsonMember> enumerator) =>
+                _enumerator = enumerator ?? throw new ArgumentNullException(nameof(enumerator));
+
+            public bool MoveNext() => _enumerator.MoveNext();
+            public void Reset() => _enumerator.Reset();
+            public object Current => Entry;
+            public DictionaryEntry Entry => new DictionaryEntry(_enumerator.Current.Name, _enumerator.Current.Value);
+            public object Key => Entry.Key;
+            public object Value => Entry.Value;
+        }
 
         DynamicMetaObject IDynamicMetaObjectProvider.GetMetaObject(Expression parameter)
         {
@@ -537,7 +475,7 @@ namespace Jayrock.Json
             TrySetMember = TrySetMember,
             TryInvokeMember = TryInvokeMember,
             TryDeleteMember = TryDeleteMember,
-            GetDynamicMemberNames = o => o.Names.Cast<string>()
+            GetDynamicMemberNames = o => o.Names
         };
 
         static Option<object> TryInvokeMember(JsonObject obj, InvokeMemberBinder arg2, object[] arg3)
